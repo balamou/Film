@@ -40,6 +40,10 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         let tapToHideControlls = UITapGestureRecognizer(target: self, action: #selector(hideControlls))
         videoPlayerView.controlView.addGestureRecognizer(tapToHideControlls)
         
+        videoPlayerView.forward10sButton.addTarget(self, action: #selector(rewindForward), for: .touchUpInside)
+        videoPlayerView.backward10sButton.addTarget(self, action: #selector(rewindBack), for: .touchUpInside)
+        
+        // Slider
         mediaPlayer.addObserver(self, forKeyPath: "time", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
         videoPlayerView.slider.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
         videoPlayerView.slider.addTarget(self, action: #selector(touchUpInside(_:)), for: .touchUpInside)
@@ -88,12 +92,18 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         if isPlaying {
             mediaPlayer.pause()
             isPlaying = false
-            sender.setTitle("▶", for: .normal)
+            //sender.setTitle("▶", for: .normal)
+            sender.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
         } else {
             mediaPlayer.play()
             isPlaying = true
-            sender.setTitle("▌▌", for: .normal)
+            //sender.setTitle("▌▌", for: .normal)
+            sender.setImage(#imageLiteral(resourceName: "Pause"), for: .normal)
         }
+    }
+    
+    @objc func rewindForward() {
+        mediaPlayer.jumpForward(Int32(10))
     }
     
     @objc func rewindBack() {

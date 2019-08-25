@@ -25,7 +25,6 @@ class VideoPlayerView: UIView {
     
     var topBar: UIView = {
         let view = UIView()
-//        view.backgroundColor = .red
         
         return view
     }()
@@ -33,7 +32,6 @@ class VideoPlayerView: UIView {
     
     var bottomBar: UIView = {
         let view = UIView()
-//        view.backgroundColor = .yellow
         
         return view
     }()
@@ -80,6 +78,9 @@ class VideoPlayerView: UIView {
     var pausePlayButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .green
+        button.setImage(#imageLiteral(resourceName: "Pause"), for: .normal)
+        button.imageView?.contentMode = ContentMode.scaleAspectFit
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         return button
     }()
@@ -148,8 +149,8 @@ class VideoPlayerView: UIView {
         static func setPausePlayButton(_ button: UIButton, _ parent: UIView) {
             button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             button.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
-            button.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
-            button.heightAnchor.constraint(equalToConstant: (4/3) * 40.0).isActive = true
+            button.widthAnchor.constraint(equalToConstant: 41.0).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
         }
         
         static func setForwardButton(_ button: UIButton, _ pause: UIView) {
