@@ -15,4 +15,12 @@ extension UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    func setGradient(colors: [UIColor]) {
+        let gradient = CAGradientLayer()
+        
+        gradient.frame = self.bounds
+        gradient.colors = colors.map { $0.cgColor }
+        
+        self.layer.insertSublayer(gradient, at: 0)
+    }
 }

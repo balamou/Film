@@ -23,8 +23,12 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         videoPlayerView = VideoPlayerView(frame: self.view.frame)
         self.view = videoPlayerView
         
-        setUpPlayer(url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
+        setUpPlayer(url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4")
         setActions()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        videoPlayerView.didAppear()
     }
     
     func setActions() {

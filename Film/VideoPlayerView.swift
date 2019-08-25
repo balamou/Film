@@ -25,7 +25,7 @@ class VideoPlayerView: UIView {
     
     var topBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+//        view.backgroundColor = .red
         
         return view
     }()
@@ -33,7 +33,7 @@ class VideoPlayerView: UIView {
     
     var bottomBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .yellow
+//        view.backgroundColor = .yellow
         
         return view
     }()
@@ -100,7 +100,7 @@ class VideoPlayerView: UIView {
     
     class Constraints {
         
-        static let topBottomBarsHeight: CGFloat = 70.0
+        static let topBottomBarsHeight: CGFloat = 80.0
         static let controlHorizontalSpacing: CGFloat = 130.0
         
         static func setMediaView(_ view: UIView, _ parent: UIView) {
@@ -217,6 +217,13 @@ class VideoPlayerView: UIView {
         Constraints.setCloseButton(closeButton, titleLabel, topBar)
     }
     
+    func didAppear() {
+        applyGradient()
+    }
+    
+    func applyGradient() {
+        controlView.setGradient(colors: [UIColor.black.setAlpha(0.8), UIColor.black.setAlpha(0), UIColor.black.setAlpha(0.8)])
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
