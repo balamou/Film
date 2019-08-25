@@ -60,9 +60,33 @@ class VideoPlayerView: UIView {
         return label
     }()
     
+    // MAIN CONTROLS
+    
+    var pausePlayButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .green
+        
+        return button
+    }()
+    
+    var forward10sButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        
+        return button
+    }()
+    
+    var backward10sButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        
+        return button
+    }()
+    
     class Constraints {
         
         static let topBottomBarsHeight: CGFloat = 70.0
+        static let controlHorizontalSpacing: CGFloat = 130.0
         
         static func setMediaView(_ view: UIView, _ parent: UIView) {
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
@@ -86,16 +110,16 @@ class VideoPlayerView: UIView {
         }
         
         static func setTitleLabel(_ label: UILabel, _ parent: UIView) {
-            label.topAnchor.constraint(equalTo: parent.topAnchor, constant: 20.0).isActive = true
+            label.topAnchor.constraint(equalTo: parent.topAnchor, constant: 30.0).isActive = true
             label.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
         }
         
         static func setDurationLabel(_ label: UILabel, _ parent: UIView) {
-            let labelDistanceFromBottom: CGFloat = 40.0
+            let labelDistanceFromBottom: CGFloat = 30.0
             let labelDistanceFromEdge: CGFloat = 20.0
             
             label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -1 * labelDistanceFromEdge).isActive = true
-            label.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: labelDistanceFromBottom)
+            label.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -1 * labelDistanceFromBottom).isActive = true
         }
         
         static func setSlider(_ slider: UISlider, _ durationLabel: UILabel, _ parent: UIView) {
@@ -106,6 +130,28 @@ class VideoPlayerView: UIView {
             slider.centerYAnchor.constraint(equalTo: durationLabel.centerYAnchor).isActive = true
         }
         
+        static func setPausePlayButton(_ button: UIButton, _ parent: UIView) {
+            button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            button.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+            button.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+            button.heightAnchor.constraint(equalToConstant: (4/3) * 40.0).isActive = true
+        }
+        
+        static func setForwardButton(_ button: UIButton, _ pause: UIView) {
+            button.centerYAnchor.constraint(equalTo: pause.centerYAnchor).isActive = true
+            button.centerXAnchor.constraint(equalTo: pause.centerXAnchor, constant: controlHorizontalSpacing).isActive = true
+            
+            button.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        }
+        
+        static func setBackwardButton(_ button: UIButton, _ pause: UIView) {
+            button.centerYAnchor.constraint(equalTo: pause.centerYAnchor).isActive = true
+            button.centerXAnchor.constraint(equalTo: pause.centerXAnchor, constant: -1 * controlHorizontalSpacing).isActive = true
+            
+            button.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        }
     }
     
     override init(frame: CGRect) {
@@ -114,6 +160,9 @@ class VideoPlayerView: UIView {
         addSubviewLayout(mediaView)
         addSubviewLayout(topBar)
         addSubviewLayout(bottomBar)
+        addSubviewLayout(pausePlayButton)
+        addSubviewLayout(forward10sButton)
+        addSubviewLayout(backward10sButton)
         
         topBar.addSubviewLayout(titleLabel)
         bottomBar.addSubviewLayout(durationLabel)
@@ -122,6 +171,9 @@ class VideoPlayerView: UIView {
         Constraints.setMediaView(mediaView, self)
         Constraints.setTopBar(topBar, self)
         Constraints.setBottomBar(bottomBar, self)
+        Constraints.setPausePlayButton(pausePlayButton, self)
+        Constraints.setForwardButton(forward10sButton, pausePlayButton)
+        Constraints.setBackwardButton(backward10sButton, pausePlayButton)
         
         Constraints.setTitleLabel(titleLabel, topBar)
         Constraints.setDurationLabel(durationLabel, bottomBar)
