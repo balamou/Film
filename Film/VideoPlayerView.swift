@@ -44,6 +44,14 @@ class VideoPlayerView: UIView {
         return slider
     }()
     
+    var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "S1:E1 \"El Camino\""
+        label.textColor = .white
+        
+        return label
+    }()
+    
     class Constraints {
         
         static let topBottomBarsHeight: CGFloat = 70.0
@@ -69,6 +77,11 @@ class VideoPlayerView: UIView {
             view.heightAnchor.constraint(equalToConstant: topBottomBarsHeight).isActive = true
         }
         
+        static func setTitleLabel(_ label: UILabel, _ parent: UIView) {
+            label.topAnchor.constraint(equalTo: parent.topAnchor, constant: 20.0).isActive = true
+            label.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        }
+        
         static func setSlider(_ slider: UISlider, _ parent: UIView) {
             let sliderDistanceFromEdge: CGFloat = 20.0
             let sliderDistanceFromBottom: CGFloat = 40.0
@@ -76,7 +89,6 @@ class VideoPlayerView: UIView {
             slider.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -1 * sliderDistanceFromBottom).isActive = true
             slider.widthAnchor.constraint(equalTo: parent.widthAnchor, constant: -2 * sliderDistanceFromEdge ).isActive = true
             slider.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: sliderDistanceFromEdge).isActive = true
-            //slider.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
         }
         
     }
@@ -87,12 +99,16 @@ class VideoPlayerView: UIView {
         addSubviewLayout(mediaView)
         addSubviewLayout(topBar)
         addSubviewLayout(bottomBar)
+        
+        addSubviewLayout(titleLabel)
         addSubviewLayout(slider)
         
         Constraints.setMediaView(mediaView, self)
         Constraints.setTopBar(topBar, self)
         Constraints.setBottomBar(bottomBar, self)
-        Constraints.setSlider(slider, self)
+        
+        Constraints.setTitleLabel(titleLabel, topBar)
+        Constraints.setSlider(slider, bottomBar)
     }
     
     
