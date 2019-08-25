@@ -30,29 +30,16 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     func setActions() {
         videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
         
-        let tapOnVideo = UITapGestureRecognizer(target: self, action: #selector(videoTapped))
-        videoPlayerView.mediaView.addGestureRecognizer(tapOnVideo)
+        let tapToShowControlls = UITapGestureRecognizer(target: self, action: #selector(showControlls))
+        videoPlayerView.mediaView.addGestureRecognizer(tapToShowControlls)
         
-        let tapTohideControlls = UITapGestureRecognizer(target: self, action: #selector(hideControlls))
-        videoPlayerView.controlView.addGestureRecognizer(tapTohideControlls)
+        let tapToHideControlls = UITapGestureRecognizer(target: self, action: #selector(hideControlls))
+        videoPlayerView.controlView.addGestureRecognizer(tapToHideControlls)
         
         mediaPlayer.addObserver(self, forKeyPath: "time", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
         videoPlayerView.slider.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
         videoPlayerView.slider.addTarget(self, action: #selector(touchUpInside(_:)), for: .touchUpInside)
         videoPlayerView.slider.addTarget(self, action: #selector(touchUpOutside(_:)), for: .touchUpOutside)
-    }
-    
-    func forceLandscapeOrientation() {
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscapeRight
-    }
-    
-    override var shouldAutorotate: Bool {
-        return true
     }
     
     func setUpPlayer(url: String) {
@@ -67,9 +54,25 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     //----------------------------------------------------------------------
+    // Orientation
+    //----------------------------------------------------------------------
+    func forceLandscapeOrientation() {
+        let value = UIInterfaceOrientation.landscapeRight.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .landscapeRight
+    }
+    
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    //----------------------------------------------------------------------
     // Actions
     //----------------------------------------------------------------------
-    @objc func videoTapped() {
+    @objc func showControlls() {
         videoPlayerView.controlView.isHidden = false
     }
     
@@ -92,7 +95,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     @objc func rewindBack() {
         mediaPlayer.jumpBackward(Int32(10))
     }
-    
     
     //----------------------------------------------------------------------
     // Slider
