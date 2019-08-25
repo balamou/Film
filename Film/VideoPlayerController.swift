@@ -8,15 +8,18 @@
 
 import UIKit
 
+
 class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
 
+    var videoPlayerView: VideoPlayerView!
     var mediaPlayer = VLCMediaPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        view.backgroundColor = .red
+        videoPlayerView = VideoPlayerView(frame: self.view.frame)
+        self.view = videoPlayerView
         
         setUpPlayer()
     }
@@ -26,7 +29,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         let vlcMedia = VLCMedia(url: streamURL)
         
         mediaPlayer.media = vlcMedia
-        mediaPlayer.drawable = view
+        mediaPlayer.drawable = videoPlayerView.mediaView
+        mediaPlayer.delegate = self
         
         mediaPlayer.play()
     }

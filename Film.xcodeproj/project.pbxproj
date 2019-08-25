@@ -15,6 +15,8 @@
 		ED909B48230F006A00A67AC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED909B46230F006A00A67AC6 /* LaunchScreen.storyboard */; };
 		ED909B53230F006A00A67AC6 /* FilmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED909B52230F006A00A67AC6 /* FilmTests.swift */; };
 		ED909B6323123C8300A67AC6 /* header.m in Sources */ = {isa = PBXBuildFile; fileRef = ED909B6223123C8300A67AC6 /* header.m */; };
+		ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED909B8323124C8F00A67AC6 /* UIView+extensions.swift */; };
+		ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		ED909B7C2312449500A67AC6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		ED909B7E2312449B00A67AC6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		ED909B80231244A000A67AC6 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		ED909B8323124C8F00A67AC6 /* UIView+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extensions.swift"; sourceTree = "<group>"; };
+		ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,10 +145,12 @@
 			isa = PBXGroup;
 			children = (
 				ED909B49230F006A00A67AC6 /* Info.plist */,
+				ED909B8223124C8000A67AC6 /* Extensions */,
 				ED909B5F231232FD00A67AC6 /* Singletons */,
 				ED909B5E230F00A100A67AC6 /* Resources */,
 				ED909B5D230F009400A67AC6 /* Supporting Files */,
 				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
+				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
 			);
 			path = Film;
 			sourceTree = "<group>";
@@ -182,6 +188,14 @@
 				ED909B3D230F006600A67AC6 /* AppDelegate.swift */,
 			);
 			path = Singletons;
+			sourceTree = "<group>";
+		};
+		ED909B8223124C8000A67AC6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				ED909B8323124C8F00A67AC6 /* UIView+extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,7 +350,9 @@
 			files = (
 				ED909B6323123C8300A67AC6 /* header.m in Sources */,
 				ED909B40230F006600A67AC6 /* VideoPlayerController.swift in Sources */,
+				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
+				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
