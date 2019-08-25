@@ -52,6 +52,14 @@ class VideoPlayerView: UIView {
         return label
     }()
     
+    var durationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "56:00"
+        label.textColor = .white
+        
+        return label
+    }()
+    
     class Constraints {
         
         static let topBottomBarsHeight: CGFloat = 70.0
@@ -82,13 +90,20 @@ class VideoPlayerView: UIView {
             label.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
         }
         
-        static func setSlider(_ slider: UISlider, _ parent: UIView) {
-            let sliderDistanceFromEdge: CGFloat = 20.0
-            let sliderDistanceFromBottom: CGFloat = 40.0
+        static func setDurationLabel(_ label: UILabel, _ parent: UIView) {
+            let labelDistanceFromBottom: CGFloat = 40.0
+            let labelDistanceFromEdge: CGFloat = 20.0
             
-            slider.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -1 * sliderDistanceFromBottom).isActive = true
-            slider.widthAnchor.constraint(equalTo: parent.widthAnchor, constant: -2 * sliderDistanceFromEdge ).isActive = true
+            label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -1 * labelDistanceFromEdge).isActive = true
+            label.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: labelDistanceFromBottom)
+        }
+        
+        static func setSlider(_ slider: UISlider, _ durationLabel: UILabel, _ parent: UIView) {
+            let sliderDistanceFromEdge: CGFloat = 20.0
+         
             slider.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: sliderDistanceFromEdge).isActive = true
+            slider.trailingAnchor.constraint(equalTo: durationLabel.leadingAnchor, constant: -10.0).isActive = true
+            slider.centerYAnchor.constraint(equalTo: durationLabel.centerYAnchor).isActive = true
         }
         
     }
@@ -100,15 +115,17 @@ class VideoPlayerView: UIView {
         addSubviewLayout(topBar)
         addSubviewLayout(bottomBar)
         
-        addSubviewLayout(titleLabel)
-        addSubviewLayout(slider)
+        topBar.addSubviewLayout(titleLabel)
+        bottomBar.addSubviewLayout(durationLabel)
+        bottomBar.addSubviewLayout(slider)
         
         Constraints.setMediaView(mediaView, self)
         Constraints.setTopBar(topBar, self)
         Constraints.setBottomBar(bottomBar, self)
         
         Constraints.setTitleLabel(titleLabel, topBar)
-        Constraints.setSlider(slider, bottomBar)
+        Constraints.setDurationLabel(durationLabel, bottomBar)
+        Constraints.setSlider(slider, durationLabel, bottomBar)
     }
     
     
