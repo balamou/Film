@@ -16,14 +16,27 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        forceLandscape()
         
         videoPlayerView = VideoPlayerView(frame: self.view.frame)
         self.view = videoPlayerView
         
         setUpPlayer()
     }
+    
+    func forceLandscape() {
+        let value = UIInterfaceOrientation.landscapeRight.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+    }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .landscapeRight
+    }
+    
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
     func setUpPlayer() {
         let streamURL = URL(string: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")!
         let vlcMedia = VLCMedia(url: streamURL)
@@ -34,6 +47,4 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         
         mediaPlayer.play()
     }
-
 }
-
