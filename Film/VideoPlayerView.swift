@@ -60,6 +60,13 @@ class VideoPlayerView: UIView {
         return label
     }()
     
+    var closeButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .cyan
+        
+        return button
+    }()
+    
     // MAIN CONTROLS
     
     var pausePlayButton: UIButton = {
@@ -152,6 +159,13 @@ class VideoPlayerView: UIView {
             button.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
             button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
         }
+        
+        static func setCloseButton(_ button: UIButton, _ label: UILabel, _ parent: UIView) {
+            button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -10.0).isActive = true
+            button.centerYAnchor.constraint(equalTo: label.centerYAnchor).isActive = true
+            button.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
+        }
     }
     
     override init(frame: CGRect) {
@@ -160,9 +174,6 @@ class VideoPlayerView: UIView {
         addSubviewLayout(mediaView)
         addSubviewLayout(topBar)
         addSubviewLayout(bottomBar)
-        addSubviewLayout(pausePlayButton)
-        addSubviewLayout(forward10sButton)
-        addSubviewLayout(backward10sButton)
         
         topBar.addSubviewLayout(titleLabel)
         bottomBar.addSubviewLayout(durationLabel)
@@ -171,13 +182,21 @@ class VideoPlayerView: UIView {
         Constraints.setMediaView(mediaView, self)
         Constraints.setTopBar(topBar, self)
         Constraints.setBottomBar(bottomBar, self)
-        Constraints.setPausePlayButton(pausePlayButton, self)
-        Constraints.setForwardButton(forward10sButton, pausePlayButton)
-        Constraints.setBackwardButton(backward10sButton, pausePlayButton)
         
         Constraints.setTitleLabel(titleLabel, topBar)
         Constraints.setDurationLabel(durationLabel, bottomBar)
         Constraints.setSlider(slider, durationLabel, bottomBar)
+        
+        // CONTROLLS
+        addSubviewLayout(pausePlayButton)
+        addSubviewLayout(forward10sButton)
+        addSubviewLayout(backward10sButton)
+        topBar.addSubviewLayout(closeButton)
+        
+        Constraints.setPausePlayButton(pausePlayButton, self)
+        Constraints.setForwardButton(forward10sButton, pausePlayButton)
+        Constraints.setBackwardButton(backward10sButton, pausePlayButton)
+        Constraints.setCloseButton(closeButton, titleLabel, topBar)
     }
     
     
