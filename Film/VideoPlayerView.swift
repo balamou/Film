@@ -16,6 +16,21 @@ class VideoPlayerView: UIView {
         return view
     }()
     
+    var topBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        
+        return view
+    }()
+    
+    
+    var bottomBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .yellow
+        
+        return view
+    }()
+    
     var slider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 0.0
@@ -31,6 +46,8 @@ class VideoPlayerView: UIView {
     
     class Constraints {
         
+        static let topBottomBarsHeight: CGFloat = 70.0
+        
         static func setMediaView(_ view: UIView, _ parent: UIView) {
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
@@ -38,12 +55,28 @@ class VideoPlayerView: UIView {
             view.heightAnchor.constraint(equalTo: parent.heightAnchor).isActive = true
         }
         
+        static func setTopBar(_ view: UIView, _ parent: UIView) {
+            view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
+            view.heightAnchor.constraint(equalToConstant: topBottomBarsHeight).isActive = true
+        }
+        
+        static func setBottomBar(_ view: UIView, _ parent: UIView) {
+            view.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
+            view.heightAnchor.constraint(equalToConstant: topBottomBarsHeight).isActive = true
+        }
+        
         static func setSlider(_ slider: UISlider, _ parent: UIView) {
-            let offsetX: CGFloat = 20.0
-            slider.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -40.0).isActive = true
-            slider.widthAnchor.constraint(equalTo: parent.widthAnchor, constant: -2.0 * offsetX ).isActive = true
-            slider.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: offsetX).isActive = true
-            slider.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+            let sliderDistanceFromEdge: CGFloat = 20.0
+            let sliderDistanceFromBottom: CGFloat = 40.0
+            
+            slider.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -1 * sliderDistanceFromBottom).isActive = true
+            slider.widthAnchor.constraint(equalTo: parent.widthAnchor, constant: -2 * sliderDistanceFromEdge ).isActive = true
+            slider.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: sliderDistanceFromEdge).isActive = true
+            //slider.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
         }
         
     }
@@ -51,10 +84,14 @@ class VideoPlayerView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubviewLayout(mediaView)
-        self.addSubviewLayout(slider)
+        addSubviewLayout(mediaView)
+        addSubviewLayout(topBar)
+        addSubviewLayout(bottomBar)
+        addSubviewLayout(slider)
         
         Constraints.setMediaView(mediaView, self)
+        Constraints.setTopBar(topBar, self)
+        Constraints.setBottomBar(bottomBar, self)
         Constraints.setSlider(slider, self)
     }
     
