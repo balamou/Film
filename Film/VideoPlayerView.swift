@@ -57,7 +57,7 @@ class VideoPlayerView: UIView {
         print( UIFont.familyNames.reduce("") { $0 + "\n" + $1 })
         print( UIFont.fontNames(forFamilyName: "Helvetica Neue").reduce("") { $0 + "\n" + $1 })
         
-        let customFont = UIFont(name: "HelveticaNeue", size: UIFont.labelFontSize) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
+        let customFont = UIFont(name: "HelveticaNeue", size: 16.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
         label.font = customFont
         
         return label
@@ -85,10 +85,10 @@ class VideoPlayerView: UIView {
     
     var pausePlayButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .green
         button.setImage(#imageLiteral(resourceName: "Pause"), for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
+        button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
         
         return button
     }()
