@@ -16,6 +16,13 @@ class VideoPlayerView: UIView {
         return view
     }()
     
+    var controlView: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        
+        return view
+    }()
+    
     var topBar: UIView = {
         let view = UIView()
         view.backgroundColor = .red
@@ -166,34 +173,44 @@ class VideoPlayerView: UIView {
             button.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
             button.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
         }
+        
+        static func setControlView(_ view: UIView, _ parent: UIView) {
+            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            view.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
+            view.heightAnchor.constraint(equalTo: parent.heightAnchor).isActive = true
+        }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubviewLayout(mediaView)
-        addSubviewLayout(topBar)
-        addSubviewLayout(bottomBar)
+        
+        addSubviewLayout(controlView)
+        controlView.addSubviewLayout(topBar)
+        controlView.addSubviewLayout(bottomBar)
         
         topBar.addSubviewLayout(titleLabel)
         bottomBar.addSubviewLayout(durationLabel)
         bottomBar.addSubviewLayout(slider)
         
         Constraints.setMediaView(mediaView, self)
-        Constraints.setTopBar(topBar, self)
-        Constraints.setBottomBar(bottomBar, self)
+        Constraints.setControlView(controlView, self)
+        Constraints.setTopBar(topBar, controlView)
+        Constraints.setBottomBar(bottomBar, controlView)
         
         Constraints.setTitleLabel(titleLabel, topBar)
         Constraints.setDurationLabel(durationLabel, bottomBar)
         Constraints.setSlider(slider, durationLabel, bottomBar)
         
         // CONTROLLS
-        addSubviewLayout(pausePlayButton)
-        addSubviewLayout(forward10sButton)
-        addSubviewLayout(backward10sButton)
+        controlView.addSubviewLayout(pausePlayButton)
+        controlView.addSubviewLayout(forward10sButton)
+        controlView.addSubviewLayout(backward10sButton)
         topBar.addSubviewLayout(closeButton)
         
-        Constraints.setPausePlayButton(pausePlayButton, self)
+        Constraints.setPausePlayButton(pausePlayButton, controlView)
         Constraints.setForwardButton(forward10sButton, pausePlayButton)
         Constraints.setBackwardButton(backward10sButton, pausePlayButton)
         Constraints.setCloseButton(closeButton, titleLabel, topBar)

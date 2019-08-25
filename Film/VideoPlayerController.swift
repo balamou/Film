@@ -11,6 +11,8 @@ import UIKit
 
 class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
 
+    var isPlaying: Bool = true
+    
     var videoPlayerView: VideoPlayerView!
     var mediaPlayer = VLCMediaPlayer()
     
@@ -22,6 +24,34 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         self.view = videoPlayerView
         
         setUpPlayer()
+        
+        videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
+        
+        let tapOnVideo = UITapGestureRecognizer(target: self, action: #selector(videoTapped))
+        videoPlayerView.mediaView.addGestureRecognizer(tapOnVideo)
+        
+        let tapTohideControlls = UITapGestureRecognizer(target: self, action: #selector(hideControlls))
+        videoPlayerView.controlView.addGestureRecognizer(tapTohideControlls)
+    }
+    
+    @objc func videoTapped() {
+        videoPlayerView.controlView.isHidden = false
+    }
+    
+    @objc func hideControlls() {
+        videoPlayerView.controlView.isHidden = true
+    }
+    
+    @objc func pausePlayButtonPressed(sender: UIButton) {
+        if isPlaying {
+            mediaPlayer.pause()
+            isPlaying = false
+            sender.setTitle("▶", for: .normal)
+        } else {
+            mediaPlayer.play()
+            isPlaying = true
+            sender.setTitle("▌▌", for: .normal)
+        }
     }
     
     func forceLandscape() {
