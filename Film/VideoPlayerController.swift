@@ -43,6 +43,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         videoPlayerView.forward10sButton.addTarget(self, action: #selector(rewindForward), for: .touchUpInside)
         videoPlayerView.backward10sButton.addTarget(self, action: #selector(rewindBack), for: .touchUpInside)
         
+        videoPlayerView.closeButton.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
+        
         // Slider
         mediaPlayer.addObserver(self, forKeyPath: "time", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
         videoPlayerView.slider.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
@@ -108,6 +110,10 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     
     @objc func rewindBack() {
         mediaPlayer.jumpBackward(Int32(10))
+    }
+    
+    @objc func closeVideo() {
+        print("Close video")
     }
     
     //----------------------------------------------------------------------

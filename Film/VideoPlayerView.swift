@@ -54,6 +54,11 @@ class VideoPlayerView: UIView {
         let label = UILabel()
         label.text = "S1:E1 \"El Camino\""
         label.textColor = .white
+        print( UIFont.familyNames.reduce("") { $0 + "\n" + $1 })
+        print( UIFont.fontNames(forFamilyName: "Helvetica Neue").reduce("") { $0 + "\n" + $1 })
+        
+        let customFont = UIFont(name: "HelveticaNeue", size: UIFont.labelFontSize) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
+        label.font = customFont
         
         return label
     }()
@@ -62,6 +67,9 @@ class VideoPlayerView: UIView {
         let label = UILabel()
         label.text = "56:00"
         label.textColor = .white
+        
+        let customFont = UIFont(name: "HelveticaNeue", size: 15.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
+        label.font = customFont
         
         return label
     }()
