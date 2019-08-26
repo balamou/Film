@@ -225,7 +225,7 @@ class VideoPlayerView: UIView {
         bottomBar.addSubviewLayout(durationLabel)
         bottomBar.addSubviewLayout(slider)
         
-        controlView.addSubviewLayout(currentPositionLabel)
+        controlView.addSubview(currentPositionLabel)
         
         Constraints.setMediaView(mediaView, self)
         Constraints.setControlView(controlView, self)

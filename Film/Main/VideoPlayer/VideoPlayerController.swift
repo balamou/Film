@@ -17,7 +17,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     var timer: Timer?
     var film: Film = Film.provideMock()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         forceLandscapeOrientation()
@@ -83,11 +82,14 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         return true
     }
     
+    //----------------------------------------------------------------------
+    // Status bar
+    //----------------------------------------------------------------------
+    var isStatusBarHidden = false
+    
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
     }
-    
-    var isStatusBarHidden = false
     
     override var prefersStatusBarHidden: Bool {
         return self.isStatusBarHidden
@@ -102,7 +104,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     //----------------------------------------------------------------------
     func setTimerForControlHide() {
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] timer in
-            print("Timer fired!")
             self?.hideControlls()
         }
     }
@@ -212,13 +213,19 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     //----------------------------------------------------------------------
     @objc func valueChanged(_ sender: UISlider) {
         let label = videoPlayerView.currentPositionLabel
-        let position = setUISliderThumbValueWithLabel(slider: videoPlayerView.slider, label: label)
-        let rect = label.frame
+        label.sizeToFit()
         
-        label.text = film.durationMin(seconds: Int(sender.value * Float(film.duration)))
+        let position = setUISliderThumbValueWithLabel(slider: videoPlayerView.slider, label: label)
+        let rect = label.frame.addToWidth(5.0)
+        let duration = mediaPlayer.media.length.intValue/1000
+        label.text = film.durationMin(seconds: Int(sender.value * Float(duration)))
             
         label.isHidden = false
         label.frame = CGRect(origin: position, size: rect.size)
+        
+        label.setNeedsDisplay()
+            
+        print(position)
     }
     
     func setUISliderThumbValueWithLabel(slider: UISlider, label: UILabel) -> CGPoint {
