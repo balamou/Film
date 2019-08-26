@@ -55,7 +55,7 @@ class VideoPlayerView: UIView {
         label.text = "S1:E1 \"El Camino\""
         label.textColor = .white
 //        print( UIFont.familyNames.reduce("") { $0 + "\n" + $1 })
-//        print( UIFont.fontNames(forFamilyName: "Helvetica Neue").reduce("") { $0 + "\n" + $1 })
+//        print( UIFont.fontNames(forFamilyName: "Roboto Condensed").reduce("") { $0 + "\n" + $1 })
         
         let customFont = UIFont(name: "HelveticaNeue", size: 16.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
         label.font = customFont

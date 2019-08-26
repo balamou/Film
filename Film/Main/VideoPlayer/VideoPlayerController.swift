@@ -64,8 +64,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         let vlcMedia = VLCMedia(url: streamURL)
         
         mediaPlayer.media = vlcMedia
-        mediaPlayer.drawable = videoPlayerView.mediaView
         mediaPlayer.delegate = self
+        mediaPlayer.drawable = videoPlayerView.mediaView
         
         mediaPlayer.play()
     }
