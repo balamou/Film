@@ -11,6 +11,10 @@ import UIKit
 extension VideoPlayerController {
     
     func overrideVolumeBar() {
+        if !Debuger.allowVolumeOverride {
+            return
+        }
+        
         vol = VolumeController(view: view, onHide: { [weak self] in
             guard let strongSelf = self else {
                 return
