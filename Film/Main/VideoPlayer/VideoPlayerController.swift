@@ -15,7 +15,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     var videoPlayerView: VideoPlayerView!
     var mediaPlayer = VLCMediaPlayer()
     var timer: Timer?
-    var film: Film = Film()
+    var film: Film = Film.provideMock()
     
     
     override func viewDidLoad() {
@@ -226,61 +226,5 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         let sliderFrm = slider .thumbRect(forBounds: slider.bounds, trackRect: sliderTrack, value: slider.value)
         return CGPoint(x: sliderFrm.origin.x + slider.frame.origin.x + sliderFrm.size.width/2 - label.frame.size.width/2, y: videoPlayerView.bottomBar.frame.origin.y)
     }
-    
-    
-    
-}
 
-class Film {
-    // Mandatory
-    var id: Int
-    var URL: String
-    var duration: Int
-    
-    // Optional
-    var stoppedAt: Int?
-    var poster: String?
-    var title: String?
-    
-    init() {
-        var testVideos = ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
-                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4" ]
-        
-        id = 0
-        URL = testVideos[7]
-        duration = 15
-    }
-    
-    func label() -> String {
-        return ""
-    }
-    
-    func durationMin() -> String {
-        return durationMin(seconds: duration)
-    }
-    
-    func durationMin(seconds sec: Int) -> String
-    {
-        let hours: Int = sec / 3600
-        let minutes: Int = (sec % 3600) / 60
-        let seconds: Int = sec - minutes * 60
-        
-        if hours == 0 {
-            return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
-        } else {
-            return "\(String(format: "%02d", hours)):\(String(format: "%02d", minutes))"
-        }
-    }
 }
-

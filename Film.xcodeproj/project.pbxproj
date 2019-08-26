@@ -22,6 +22,7 @@
 		ED57FCAB231350F40001A9AB /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED57FC9F231350F40001A9AB /* Roboto-Regular.ttf */; };
 		ED57FCAC231350F40001A9AB /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED57FCA0231350F40001A9AB /* Roboto-Bold.ttf */; };
 		ED57FCAD231350F40001A9AB /* Roboto-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED57FCA1231350F40001A9AB /* Roboto-RegularItalic.ttf */; };
+		ED57FCB123137CB30001A9AB /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED57FCB023137CB20001A9AB /* Film.swift */; };
 		ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED909B3D230F006600A67AC6 /* AppDelegate.swift */; };
 		ED909B40230F006600A67AC6 /* VideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */; };
 		ED909B45230F006A00A67AC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED909B44230F006A00A67AC6 /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 		ED57FC9F231350F40001A9AB /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		ED57FCA0231350F40001A9AB /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		ED57FCA1231350F40001A9AB /* Roboto-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-RegularItalic.ttf"; sourceTree = "<group>"; };
+		ED57FCB023137CB20001A9AB /* Film.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Film.swift; sourceTree = "<group>"; };
 		ED909B3A230F006600A67AC6 /* Film.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Film.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED909B3D230F006600A67AC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerController.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			children = (
 				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
 				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
+				ED57FCB023137CB20001A9AB /* Film.swift */,
 			);
 			path = VideoPlayer;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
 				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
+				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
