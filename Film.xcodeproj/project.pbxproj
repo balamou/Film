@@ -25,6 +25,8 @@
 		ED57FCB123137CB30001A9AB /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED57FCB023137CB20001A9AB /* Film.swift */; };
 		ED57FCB3231383540001A9AB /* CGRect+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED57FCB2231383540001A9AB /* CGRect+extensions.swift */; };
 		ED57FCB523138B970001A9AB /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED57FCB423138B970001A9AB /* UIImage+extensions.swift */; };
+		ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBBF2314620F00FEC56A /* VolumeController.swift */; };
+		ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */; };
 		ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED909B3D230F006600A67AC6 /* AppDelegate.swift */; };
 		ED909B40230F006600A67AC6 /* VideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */; };
 		ED909B45230F006A00A67AC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED909B44230F006A00A67AC6 /* Assets.xcassets */; };
@@ -68,6 +70,8 @@
 		ED57FCB023137CB20001A9AB /* Film.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Film.swift; sourceTree = "<group>"; };
 		ED57FCB2231383540001A9AB /* CGRect+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+extensions.swift"; sourceTree = "<group>"; };
 		ED57FCB423138B970001A9AB /* UIImage+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
+		ED82DBBF2314620F00FEC56A /* VolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeController.swift; sourceTree = "<group>"; };
+		ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerController+Volume.swift"; sourceTree = "<group>"; };
 		ED909B3A230F006600A67AC6 /* Film.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Film.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED909B3D230F006600A67AC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerController.swift; sourceTree = "<group>"; };
@@ -183,11 +187,21 @@
 		ED57FCAF231366A80001A9AB /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				ED82DBC3231464F900FEC56A /* Volume */,
 				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
 				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
 				ED57FCB023137CB20001A9AB /* Film.swift */,
 			);
 			path = VideoPlayer;
+			sourceTree = "<group>";
+		};
+		ED82DBC3231464F900FEC56A /* Volume */ = {
+			isa = PBXGroup;
+			children = (
+				ED82DBBF2314620F00FEC56A /* VolumeController.swift */,
+				ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */,
+			);
+			path = Volume;
 			sourceTree = "<group>";
 		};
 		ED909B31230F006600A67AC6 = {
@@ -432,6 +446,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */,
 				ED909B6323123C8300A67AC6 /* header.m in Sources */,
 				ED909B40230F006600A67AC6 /* VideoPlayerController.swift in Sources */,
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
@@ -439,6 +454,7 @@
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
 				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 				ED57FCB3231383540001A9AB /* CGRect+extensions.swift in Sources */,
+				ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */,
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
 				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,
 			);

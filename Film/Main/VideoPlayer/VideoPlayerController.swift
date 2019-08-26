@@ -16,6 +16,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     var mediaPlayer = VLCMediaPlayer()
     var timer: Timer?
     var film: Film = Film.provideMock()
+    var vol: VolumeController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         setUpPlayer(url: film.URL)
         setActions()
         setTimerForControlHide()
+        overrideVolumeBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,10 +114,13 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     
     @objc func showControlls() {
         videoPlayerView.controlView.isHidden = false
-        self.isStatusBarHidden = false
         
-        UIView.animate(withDuration: 0.1) {
-            self.setNeedsStatusBarAppearanceUpdate()
+        if videoPlayerView.volumeBar.isHidden { // show status bar only if volume bar is hidden
+            self.isStatusBarHidden = false
+            
+            UIView.animate(withDuration: 0.1) {
+                self.setNeedsStatusBarAppearanceUpdate()
+            }
         }
         
         setTimerForControlHide()

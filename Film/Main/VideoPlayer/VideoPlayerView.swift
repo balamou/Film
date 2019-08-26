@@ -128,7 +128,7 @@ class VideoPlayerView: UIView {
     var nextEpisodeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Next episode", for: .normal)
-        let img = #imageLiteral(resourceName: "Next_episode").scaled(to: CGSize(width: 16, height: 17))
+        let img = #imageLiteral(resourceName: "Next_episode")
         button.setImage(img, for: .normal)
         
         let customFont = UIFont(name: "HelveticaNeue", size: 15.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
@@ -137,6 +137,26 @@ class VideoPlayerView: UIView {
         
         return button
     }()
+    
+    // VOLUME BAR
+    
+    var volumeBar: UIProgressView = {
+        let progressView = UIProgressView()
+        progressView.progress = 0.7
+        progressView.tintColor = .white
+        progressView.trackTintColor = #colorLiteral(red: 0.2941176471, green: 0.2941176471, blue: 0.2941176471, alpha: 1)
+        progressView.isHidden = true
+        
+        return progressView
+    }()
+    
+    var volumeImage: UIImageView = {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "Volume"))
+        imageView.isHidden = true
+        
+        return imageView
+    }()
+    
     
     class Constraints {
         
@@ -226,6 +246,18 @@ class VideoPlayerView: UIView {
             button.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -20.0).isActive = true
             button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
         }
+        
+        // VOLUME BAR
+        static func setVolumeBar(_ progressView: UIProgressView, _ parent: UIView) {
+            progressView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 10.0).isActive = true
+            progressView.widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: 0.5).isActive = true
+            progressView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        }
+        
+        static func setVolumeImage(_ image: UIImageView, _ rightNeighbour: UIView) {
+            image.centerYAnchor.constraint(equalTo: rightNeighbour.centerYAnchor).isActive = true
+            image.trailingAnchor.constraint(equalTo: rightNeighbour.leadingAnchor, constant: -15.0).isActive = true
+        }
     }
     
     override init(frame: CGRect) {
@@ -267,6 +299,13 @@ class VideoPlayerView: UIView {
         
         bottomBar.addSubviewLayout(nextEpisodeButton)
         Constraints.setNextEpisodeButton(nextEpisodeButton, bottomBar)
+        
+        // VOLUME
+        addSubviewLayout(volumeBar)
+        addSubviewLayout(volumeImage)
+        
+        Constraints.setVolumeBar(volumeBar, self)
+        Constraints.setVolumeImage(volumeImage, volumeBar)
     }
     
     func didAppear() {
