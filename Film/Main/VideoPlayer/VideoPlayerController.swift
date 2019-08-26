@@ -15,6 +15,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     var videoPlayerView: VideoPlayerView!
     var mediaPlayer = VLCMediaPlayer()
     var timer: Timer?
+    var film: Film = Film()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +24,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         
         videoPlayerView = VideoPlayerView(frame: self.view.frame)
         self.view = videoPlayerView
-        
-        setUpPlayer(url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4")
+       
+        setUpPlayer(url: film.URL)
         setActions()
         setTimerForControlHide()
     }
@@ -51,6 +53,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         videoPlayerView.slider.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
         videoPlayerView.slider.addTarget(self, action: #selector(touchUpInside(_:)), for: .touchUpInside)
         videoPlayerView.slider.addTarget(self, action: #selector(touchUpOutside(_:)), for: .touchUpOutside)
+        videoPlayerView.slider.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
     }
     
     func setUpPlayer(url: String) {
@@ -174,11 +177,13 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     // When the value of the slider is set but the finger is outside the slider
     @objc func touchUpOutside(_ sender: UISlider) {
         positionSliderAction()
+        videoPlayerView.currentPositionLabel.isHidden = true
     }
     
     // When the value of the slider is set but the finger is inside the slider
     @objc func touchUpInside(_ sender: UISlider) {
         positionSliderAction()
+        videoPlayerView.currentPositionLabel.isHidden = true
     }
     
     // When the slider is touched
@@ -201,6 +206,29 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
             setPosition = true
         }
     }
+    
+    //----------------------------------------------------------------------
+    // MARK: Update time label as slider is moving
+    //----------------------------------------------------------------------
+    @objc func valueChanged(_ sender: UISlider) {
+        let label = videoPlayerView.currentPositionLabel
+        let position = setUISliderThumbValueWithLabel(slider: videoPlayerView.slider, label: label)
+        let rect = label.frame
+        
+        label.text = film.durationMin(seconds: Int(sender.value * Float(film.duration)))
+            
+        label.isHidden = false
+        label.frame = CGRect(origin: position, size: rect.size)
+    }
+    
+    func setUISliderThumbValueWithLabel(slider: UISlider, label: UILabel) -> CGPoint {
+        let sliderTrack = slider.trackRect(forBounds: slider.bounds)
+        let sliderFrm = slider .thumbRect(forBounds: slider.bounds, trackRect: sliderTrack, value: slider.value)
+        return CGPoint(x: sliderFrm.origin.x + slider.frame.origin.x + sliderFrm.size.width/2 - label.frame.size.width/2, y: videoPlayerView.bottomBar.frame.origin.y)
+    }
+    
+    
+    
 }
 
 class Film {
@@ -215,18 +243,44 @@ class Film {
     var title: String?
     
     init() {
+        var testVideos = ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+                          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4" ]
+        
         id = 0
-        URL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+        URL = testVideos[7]
         duration = 15
     }
     
-    // Methods
     func label() -> String {
         return ""
     }
     
     func durationMin() -> String {
-        return "0"
+        return durationMin(seconds: duration)
+    }
+    
+    func durationMin(seconds sec: Int) -> String
+    {
+        let hours: Int = sec / 3600
+        let minutes: Int = (sec % 3600) / 60
+        let seconds: Int = sec - minutes * 60
+        
+        if hours == 0 {
+            return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
+        } else {
+            return "\(String(format: "%02d", hours)):\(String(format: "%02d", minutes))"
+        }
     }
 }
 

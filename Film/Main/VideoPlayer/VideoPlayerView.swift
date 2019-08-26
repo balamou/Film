@@ -116,6 +116,15 @@ class VideoPlayerView: UIView {
         return button
     }()
     
+    var currentPositionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "00:00"
+        label.textColor = .white
+        label.isHidden = true
+        
+        return label
+    }()
+    
     class Constraints {
         
         static let topBottomBarsHeight: CGFloat = 80.0
@@ -215,6 +224,8 @@ class VideoPlayerView: UIView {
         topBar.addSubviewLayout(titleLabel)
         bottomBar.addSubviewLayout(durationLabel)
         bottomBar.addSubviewLayout(slider)
+        
+        controlView.addSubviewLayout(currentPositionLabel)
         
         Constraints.setMediaView(mediaView, self)
         Constraints.setControlView(controlView, self)
