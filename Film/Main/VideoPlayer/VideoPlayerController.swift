@@ -47,6 +47,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         
         videoPlayerView.closeButton.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
         
+        videoPlayerView.nextEpisodeButton.addTarget(self, action: #selector(playNextEpisode), for: .touchUpInside)
+        
         // Slider
         mediaPlayer.addObserver(self, forKeyPath: "time", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
         videoPlayerView.slider.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
@@ -154,6 +156,10 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     
     @objc func closeVideo() {
         print("Close video")
+    }
+    
+    @objc func playNextEpisode() {
+        print("Next episode")
     }
     
     //----------------------------------------------------------------------
