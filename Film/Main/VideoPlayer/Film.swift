@@ -17,7 +17,6 @@ class Film {
     
     // Optional
     var stoppedAt: Int?
-    var poster: String?
     var title: String?
     
     init(id: Int, URL: String, duration: Int) {
@@ -62,6 +61,7 @@ extension Film {
     
     static func provideMock() -> Film {
         return Film(id: 0, URL: testVideos[9], duration: 15)
+//        return Film(id: 0, URL: "http://192.168.72.46:9989/EN/movies/get_out/movie.mp4", duration: 15)
     }
     
 }

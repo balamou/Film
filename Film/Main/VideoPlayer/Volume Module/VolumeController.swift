@@ -15,11 +15,12 @@ import AVFoundation
 class VolumeController {
     
     let notificationCenter = NotificationCenter.default
+    let volumeIndicatorTimeout = 2.0
+    
     var previousVolumeLevel: Float?
     var action: ((Float) -> ())?
     var onHide: (() -> ())?
     var timer: Timer?
-    
     
     init(view: UIView, onHide: @escaping () -> (), onChange: @escaping (Float) -> ()) {
         hideVolumeHUD(targetView: view)
@@ -49,7 +50,7 @@ class VolumeController {
             
             timer?.invalidate()
             // Execute "Hide" after 3 seconds
-            timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] timer in
+            timer = Timer.scheduledTimer(withTimeInterval: volumeIndicatorTimeout, repeats: false) { [weak self] timer in
                 self?.onHide?()
             }
         }
