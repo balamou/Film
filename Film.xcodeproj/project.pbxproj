@@ -166,6 +166,23 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		ED57FCAE2313669A0001A9AB /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				ED57FCAF231366A80001A9AB /* VideoPlayer */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		ED57FCAF231366A80001A9AB /* VideoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
+				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
+			);
+			path = VideoPlayer;
+			sourceTree = "<group>";
+		};
 		ED909B31230F006600A67AC6 = {
 			isa = PBXGroup;
 			children = (
@@ -194,8 +211,7 @@
 				ED909B5F231232FD00A67AC6 /* Singletons */,
 				ED909B5E230F00A100A67AC6 /* Resources */,
 				ED909B5D230F009400A67AC6 /* Supporting Files */,
-				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
-				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
+				ED57FCAE2313669A0001A9AB /* Main */,
 			);
 			path = Film;
 			sourceTree = "<group>";
