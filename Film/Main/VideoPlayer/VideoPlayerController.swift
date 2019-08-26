@@ -14,7 +14,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     var isPlaying: Bool = true
     var videoPlayerView: VideoPlayerView!
     var mediaPlayer = VLCMediaPlayer()
-    
+    var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         
         setUpPlayer(url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4")
         setActions()
+        setTimerForControlHide()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -96,6 +97,13 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     //----------------------------------------------------------------------
     // Actions
     //----------------------------------------------------------------------
+    func setTimerForControlHide() {
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] timer in
+            print("Timer fired!")
+            self?.hideControlls()
+        }
+    }
+    
     @objc func showControlls() {
         videoPlayerView.controlView.isHidden = false
         self.isStatusBarHidden = false
@@ -103,6 +111,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         UIView.animate(withDuration: 0.1) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
+        
+        setTimerForControlHide()
     }
     
     @objc func hideControlls() {
@@ -112,6 +122,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         UIView.animate(withDuration: 0.1) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
+        
+        timer?.invalidate()
     }
     
     @objc func pausePlayButtonPressed(sender: UIButton) {

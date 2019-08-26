@@ -54,8 +54,8 @@ class VideoPlayerView: UIView {
         let label = UILabel()
         label.text = "S1:E1 \"El Camino\""
         label.textColor = .white
-        print( UIFont.familyNames.reduce("") { $0 + "\n" + $1 })
-        print( UIFont.fontNames(forFamilyName: "Helvetica Neue").reduce("") { $0 + "\n" + $1 })
+//        print( UIFont.familyNames.reduce("") { $0 + "\n" + $1 })
+//        print( UIFont.fontNames(forFamilyName: "Helvetica Neue").reduce("") { $0 + "\n" + $1 })
         
         let customFont = UIFont(name: "HelveticaNeue", size: 16.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
         label.font = customFont
@@ -156,10 +156,10 @@ class VideoPlayerView: UIView {
         }
         
         static func setSlider(_ slider: UISlider, _ durationLabel: UILabel, _ parent: UIView) {
-            let sliderDistanceFromEdge: CGFloat = 20.0
+            let sliderDistanceFromEdge: CGFloat = 25.0
          
             slider.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: sliderDistanceFromEdge).isActive = true
-            slider.trailingAnchor.constraint(equalTo: durationLabel.leadingAnchor, constant: -10.0).isActive = true
+            slider.trailingAnchor.constraint(equalTo: durationLabel.leadingAnchor, constant: -15.0).isActive = true
             slider.centerYAnchor.constraint(equalTo: durationLabel.centerYAnchor).isActive = true
         }
         
@@ -203,6 +203,8 @@ class VideoPlayerView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        backgroundColor = .black
         
         addSubviewLayout(mediaView)
         
