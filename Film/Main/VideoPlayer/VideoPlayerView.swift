@@ -18,7 +18,7 @@ class VideoPlayerView: UIView {
     
     var controlView: UIView = {
         let view = UIView()
-        view.isHidden = true
+        view.isHidden = false
         
         return view
     }()
@@ -108,8 +108,7 @@ class VideoPlayerView: UIView {
     
     var backward10sButton: UIButton = {
         let button = UIButton()
-        var image = UIImage(cgImage: #imageLiteral(resourceName: "forward").cgImage!, scale: 1.0, orientation: .upMirrored)
-        button.setImage(image, for: .normal)
+        button.setImage(#imageLiteral(resourceName: "backward"), for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill

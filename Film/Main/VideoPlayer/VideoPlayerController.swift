@@ -79,15 +79,39 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         return true
     }
     
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
+    
+    var isStatusBarHidden = false
+    
+    override var prefersStatusBarHidden: Bool {
+        return self.isStatusBarHidden
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     //----------------------------------------------------------------------
     // Actions
     //----------------------------------------------------------------------
     @objc func showControlls() {
         videoPlayerView.controlView.isHidden = false
+        self.isStatusBarHidden = false
+        
+        UIView.animate(withDuration: 0.1) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
     
     @objc func hideControlls() {
         videoPlayerView.controlView.isHidden = true
+        self.isStatusBarHidden = true
+        
+        UIView.animate(withDuration: 0.1) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
     
     @objc func pausePlayButtonPressed(sender: UIButton) {
