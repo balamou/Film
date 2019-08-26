@@ -125,10 +125,23 @@ class VideoPlayerView: UIView {
         return label
     }()
     
+    var nextEpisodeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Next episode", for: .normal)
+        let img = #imageLiteral(resourceName: "Next_episode").scaled(to: CGSize(width: 16, height: 17))
+        button.setImage(img, for: .normal)
+        
+        let customFont = UIFont(name: "HelveticaNeue", size: 15.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
+        button.titleLabel?.font = customFont
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
+        
+        return button
+    }()
+    
     class Constraints {
         
         static let topBottomBarsHeight: CGFloat = 80.0
-        static let controlHorizontalSpacing: CGFloat = 130.0
+        static let controlHorizontalSpacing: CGFloat = 150.0
         
         static func setMediaView(_ view: UIView, _ parent: UIView) {
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
@@ -148,7 +161,7 @@ class VideoPlayerView: UIView {
             view.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: topBottomBarsHeight).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
         }
         
         static func setTitleLabel(_ label: UILabel, _ parent: UIView) {
@@ -157,7 +170,7 @@ class VideoPlayerView: UIView {
         }
         
         static func setDurationLabel(_ label: UILabel, _ parent: UIView) {
-            let labelDistanceFromBottom: CGFloat = 30.0
+            let labelDistanceFromBottom: CGFloat = 50.0
             let labelDistanceFromEdge: CGFloat = 20.0
             
             label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -1 * labelDistanceFromEdge).isActive = true
@@ -208,6 +221,11 @@ class VideoPlayerView: UIView {
             view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
             view.heightAnchor.constraint(equalTo: parent.heightAnchor).isActive = true
         }
+        
+        static func setNextEpisodeButton(_ button: UIButton, _ parent: UIView) {
+            button.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -20.0).isActive = true
+            button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        }
     }
     
     override init(frame: CGRect) {
@@ -246,6 +264,9 @@ class VideoPlayerView: UIView {
         Constraints.setForwardButton(forward10sButton, pausePlayButton)
         Constraints.setBackwardButton(backward10sButton, pausePlayButton)
         Constraints.setCloseButton(closeButton, titleLabel, topBar)
+        
+        bottomBar.addSubviewLayout(nextEpisodeButton)
+        Constraints.setNextEpisodeButton(nextEpisodeButton, bottomBar)
     }
     
     func didAppear() {

@@ -61,7 +61,7 @@ extension Film {
                              "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4" ]
     
     static func provideMock() -> Film {
-        return Film(id: 0, URL: testVideos[7], duration: 15)
+        return Film(id: 0, URL: testVideos[9], duration: 15)
     }
     
 }

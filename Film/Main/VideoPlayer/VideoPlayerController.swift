@@ -222,10 +222,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
             
         label.isHidden = false
         label.frame = CGRect(origin: position, size: rect.size)
-        
-        label.setNeedsDisplay()
-            
-        print(position)
     }
     
     func setUISliderThumbValueWithLabel(slider: UISlider, label: UILabel) -> CGPoint {
