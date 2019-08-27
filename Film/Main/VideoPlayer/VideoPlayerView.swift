@@ -54,11 +54,7 @@ class VideoPlayerView: UIView {
         let label = UILabel()
         label.text = "S1:E1 \"El Camino\""
         label.textColor = .white
-//        print( UIFont.familyNames.reduce("") { $0 + "\n" + $1 })
-//        print( UIFont.fontNames(forFamilyName: "Roboto Condensed").reduce("") { $0 + "\n" + $1 })
-        
-        let customFont = UIFont(name: "HelveticaNeue", size: 16.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
-        label.font = customFont
+        label.font = FontStandard.helveticaNeue(size: 16.0)
         
         return label
     }()
@@ -67,9 +63,7 @@ class VideoPlayerView: UIView {
         let label = UILabel()
         label.text = "56:00"
         label.textColor = .white
-        
-        let customFont = UIFont(name: "HelveticaNeue", size: 15.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
-        label.font = customFont
+        label.font = FontStandard.helveticaNeue(size: 15.0)
         
         return label
     }()
@@ -129,9 +123,7 @@ class VideoPlayerView: UIView {
         let button = UIButton()
         button.setTitle("Next episode", for: .normal)
         button.setImage(ImageConstants.nextEpisodeImage, for: .normal)
-        
-        let customFont = UIFont(name: "HelveticaNeue", size: 15.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
-        button.titleLabel?.font = customFont
+        button.titleLabel?.font = FontStandard.helveticaNeue(size: 15.0)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
         
         return button

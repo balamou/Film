@@ -28,7 +28,7 @@ class WatchingView: UIView {
         let label = UILabel()
         label.text = "watching"
         label.textColor = .white
-        label.font = UIFont(name: "RobotoCondensed-Bold", size: 21.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
+        label.font = FontStandard.RobotoCondensedBold(size: 21.0)
        
         return label
     }()
@@ -59,7 +59,7 @@ class WatchingView: UIView {
         let label = UILabel()
         label.text = "Nothing watched yet"
         label.textColor = #colorLiteral(red: 0.2352941176, green: 0.231372549, blue: 0.231372549, alpha: 1)
-        label.font = UIFont(name: "RobotoCondensed-Bold", size: 25.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
+        label.font = FontStandard.RobotoCondensedBold(size: 25.0)
         
         return label
     }()
