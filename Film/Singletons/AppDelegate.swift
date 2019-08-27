@@ -32,12 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let moviesVC = MoviewsViewController()
         let settingsVC = SettingsViewController()
         
-//        let playerVC = VideoPlayerController()
-        
-        watchingVC.title = "Watching".localize()
-        showsVC.title = "Shows".localize()
-        moviesVC.title = "Movies".localize()
-        settingsVC.title = "Settings".localize()
+        watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: ImageConstants.watchingImage, tag: 0)
+        showsVC.tabBarItem = UITabBarItem(title: "Shows".localize(), image: ImageConstants.showsImage, tag: 1)
+        moviesVC.tabBarItem = UITabBarItem(title: "Movies".localize(), image: ImageConstants.moviesImage, tag: 2)
+        settingsVC.tabBarItem = UITabBarItem(title: "Settings".localize(), image: ImageConstants.settingsImage, tag: 3)
         
         let tabViewConroller = UITabBarController()
         tabViewConroller.viewControllers = [watchingVC, showsVC, moviesVC, settingsVC]
