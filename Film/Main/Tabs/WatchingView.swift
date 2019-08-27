@@ -35,8 +35,8 @@ class WatchingView: UIView {
     
     var logoImage: UIImageView = {
         let imageView = UIImageView()
-        // TODO: Upload logo
-        imageView.backgroundColor = .red
+        
+        imageView.image = #imageLiteral(resourceName: "Logo")
         
         return imageView
     }()
@@ -55,7 +55,7 @@ class WatchingView: UIView {
             view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: 19.0).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
         }
         
         static func setNavBar(_ view: UIView, _ parent: UIView) {
@@ -74,8 +74,8 @@ class WatchingView: UIView {
             imageView.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 15.0).isActive = true
             imageView.centerYAnchor.constraint(equalTo: rightNeighbour.centerYAnchor).isActive = true
             
-            imageView.widthAnchor.constraint(equalToConstant: 20.0).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
         }
     }
     

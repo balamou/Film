@@ -17,16 +17,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let mainView = WatchingViewController() //VideoPlayerController()
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
         
-        window.rootViewController = mainView
+        window.rootViewController = initializeViewControllers()
         window.makeKeyAndVisible()
         
         return true
     }
 
+    func initializeViewControllers() -> UIViewController {
+        let watchingVC = WatchingViewController()
+        let playerVC = VideoPlayerController()
+        
+        watchingVC.title = "Watching"
+        
+        let tabViewConroller = UITabBarController()
+        tabViewConroller.viewControllers = [watchingVC]
+        tabViewConroller.tabBar.barTintColor = .black
+        
+        let navigation = UINavigationController()
+        navigation.isNavigationBarHidden = true
+        navigation.viewControllers = [tabViewConroller]
+        
+        return navigation
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
