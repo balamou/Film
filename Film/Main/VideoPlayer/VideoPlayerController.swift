@@ -256,6 +256,9 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     
     override func viewWillDisappear(_ animated: Bool)
     {
+        mediaPlayer.stop()
+        timer?.invalidate()
+        
         // RESET ORIENTATION
         if (self.isMovingFromParent) {
             let portrait = UIInterfaceOrientation.portrait.rawValue
@@ -263,4 +266,25 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         }
     }
     
+    
+    //----------------------------------------------------------------------
+    // MARK: Application Life Cycle
+    //----------------------------------------------------------------------
+    
+    // When leaving the app
+    func applicationWillResignActive() {
+        // Pause the player
+        mediaPlayer.pause()
+        isPlaying = false
+        videoPlayerView.pausePlayButton.setImage(ImageConstants.playImage, for: .normal) // ▶
+        
+        // SHOW CONTROLLS
+        videoPlayerView.controlView.isHidden = false
+        isStatusBarHidden = false
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    func applicationDidBecomeActive() {
+        forceLandscapeOrientation()
+    }
 }

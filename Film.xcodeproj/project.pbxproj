@@ -36,6 +36,7 @@
 		ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1192314DE610098A161 /* WelcomeView.swift */; };
 		ED5AC11F2314E5DE0098A161 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED5AC1212314E5DE0098A161 /* Localizable.strings */; };
 		ED5AC1242314E6A40098A161 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1232314E6A40098A161 /* String+extension.swift */; };
+		ED5AC12623157A260098A161 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12523157A260098A161 /* Coordinator.swift */; };
 		ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBBF2314620F00FEC56A /* VolumeController.swift */; };
 		ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */; };
 		ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC423146B0F00FEC56A /* Debugger.swift */; };
@@ -103,6 +104,7 @@
 		ED5AC1202314E5DE0098A161 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ED5AC1222314E6670098A161 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ED5AC1232314E6A40098A161 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
+		ED5AC12523157A260098A161 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		ED82DBBF2314620F00FEC56A /* VolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeController.swift; sourceTree = "<group>"; };
 		ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerController+Volume.swift"; sourceTree = "<group>"; };
 		ED82DBC423146B0F00FEC56A /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				ED909B3D230F006600A67AC6 /* AppDelegate.swift */,
 				ED82DBC423146B0F00FEC56A /* Debugger.swift */,
 				ED5AC1042314C45A0098A161 /* ImageConstants.swift */,
+				ED5AC12523157A260098A161 /* Coordinator.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				ED57FCB3231383540001A9AB /* CGRect+extensions.swift in Sources */,
 				ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */,
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
+				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
 				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,
 				ED5AC1102314DDD00098A161 /* MoviesViewController.swift in Sources */,
 			);

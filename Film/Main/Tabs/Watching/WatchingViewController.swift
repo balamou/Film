@@ -9,9 +9,14 @@
 import UIKit
 
 
+protocol WatchingViewControllerDelegate {
+    func tappedPreviouslyWatchedShow()
+}
+
 class WatchingViewController: UIViewController {
     
     var watchingView: WatchingView!
+    var delegate: WatchingViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +36,10 @@ class WatchingViewController: UIViewController {
     }
     
     @objc func tmpCODETap() {
-        let playerVC = VideoPlayerController()
-        
-        self.navigationController?.pushViewController(playerVC, animated: false)
+//        let playerVC = VideoPlayerController()
+//
+//        self.navigationController?.pushViewController(playerVC, animated: false)
+         delegate?.tappedPreviouslyWatchedShow()
     }
     // TMP CODE---
     

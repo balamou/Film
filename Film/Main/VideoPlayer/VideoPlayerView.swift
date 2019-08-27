@@ -303,8 +303,11 @@ class VideoPlayerView: UIView {
         applyGradient()
     }
     
+    var gradientLayer: CAGradientLayer?
+    
     func applyGradient() {
-        controlView.setGradient(colors: [UIColor.black.setAlpha(0.8), UIColor.black.setAlpha(0), UIColor.black.setAlpha(0.8)])
+        gradientLayer?.removeFromSuperlayer()
+        gradientLayer = controlView.setGradient(colors: [UIColor.black.setAlpha(0.8), UIColor.black.setAlpha(0), UIColor.black.setAlpha(0.8)])
     }
     
     required init?(coder aDecoder: NSCoder) {
