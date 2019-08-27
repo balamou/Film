@@ -18,7 +18,24 @@ class WatchingViewController: UIViewController {
         
         watchingView = WatchingView()
         view = watchingView
+        
+        // TMP CODE
+        tmpCODE()
     }
+    
+    // TMP CODE+++
+    func tmpCODE() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tmpCODETap))
+        watchingView.logoImage.isUserInteractionEnabled = true
+        watchingView.logoImage.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func tmpCODETap() {
+        let playerVC = VideoPlayerController()
+        
+        self.navigationController?.pushViewController(playerVC, animated: false)
+    }
+    // TMP CODE---
     
     override func viewDidAppear(_ animated: Bool) {
         

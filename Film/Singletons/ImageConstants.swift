@@ -10,6 +10,12 @@ import Foundation
 
 class ImageConstants {
     
+    // Tab View Controller Icons
+    static let watchingImage: UIImage = #imageLiteral(resourceName: "Watching")
+    static let showsImage: UIImage = #imageLiteral(resourceName: "Shows")
+    static let moviesImage: UIImage = #imageLiteral(resourceName: "Movies")
+    static let settingsImage: UIImage = #imageLiteral(resourceName: "Settings")
+    
     // Watching View Controller Images
     static let idleImage: UIImage = #imageLiteral(resourceName: "Nothing_found")
     static let logoImage: UIImage = #imageLiteral(resourceName: "Logo")

@@ -28,12 +28,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func initializeViewControllers() -> UIViewController {
         let watchingVC = WatchingViewController()
-        let playerVC = VideoPlayerController()
+        let showsVC = WatchingViewController()
+        let moviesVC = WatchingViewController()
+        let settingsVC = WatchingViewController()
+        
+//        let playerVC = VideoPlayerController()
         
         watchingVC.title = "Watching"
+        showsVC.title = "Shows"
+        moviesVC.title = "Movies"
+        settingsVC.title = "Settings"
         
         let tabViewConroller = UITabBarController()
-        tabViewConroller.viewControllers = [watchingVC]
+        tabViewConroller.viewControllers = [watchingVC, showsVC, moviesVC, settingsVC]
         tabViewConroller.tabBar.barTintColor = .black
         
         let navigation = UINavigationController()
