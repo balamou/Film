@@ -99,16 +99,18 @@ class CustomNavigationBar: UIView {
         Constraints.setLogoImage(logoImage, tabLabel, navBar)
     }
     
-    convenience init(title: String, parent: UIView) {
+    convenience init(title: String, showLogo: Bool = false) {
         self.init()
         tabLabel.text = title
         
-        parent.addSubviewLayout(self)
-        Constraints.set(self, parent: parent)
+        logoImage.isHidden = !showLogo
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
+    func setConstraints(parent: UIView) {
+        Constraints.set(self, parent: parent)
+    }
 }

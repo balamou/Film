@@ -11,8 +11,7 @@ import UIKit
 class WatchingView: UIView {
     
     lazy var navBar: CustomNavigationBar = {
-        // automatically adds itself to the hiearchy
-        return CustomNavigationBar(title: "watching".localize(), parent: self)
+        return CustomNavigationBar(title: "watching".localize(), showLogo: true)
     }()
     
     // IDLE
@@ -62,6 +61,9 @@ class WatchingView: UIView {
         super.init(frame: frame)
         
         backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
+        
+        addSubviewLayout(navBar)
+        navBar.setConstraints(parent: self)
         
         addSubviewLayout(idleView)
         idleView.addSubviewLayout(idleImage)

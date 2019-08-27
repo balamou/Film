@@ -11,8 +11,7 @@ import UIKit
 class SettingsView: UIView {
     
     lazy var navBar: CustomNavigationBar = {
-        // automatically adds itself to the hiearchy
-        return CustomNavigationBar(title: "settings".localize(), parent: self)
+        return CustomNavigationBar(title: "settings".localize())
     }()
     
     class Constraints {
@@ -24,7 +23,8 @@ class SettingsView: UIView {
         
         backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
         
-       let _ = navBar.backgroundColor
+        addSubviewLayout(navBar)
+        navBar.setConstraints(parent: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
