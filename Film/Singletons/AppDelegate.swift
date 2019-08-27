@@ -34,10 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        let playerVC = VideoPlayerController()
         
-        watchingVC.title = "Watching"
-        showsVC.title = "Shows"
-        moviesVC.title = "Movies"
-        settingsVC.title = "Settings"
+        watchingVC.title = "Watching".localize()
+        showsVC.title = "Shows".localize()
+        moviesVC.title = "Movies".localize()
+        settingsVC.title = "Settings".localize()
         
         let tabViewConroller = UITabBarController()
         tabViewConroller.viewControllers = [watchingVC, showsVC, moviesVC, settingsVC]

@@ -121,7 +121,7 @@ class VideoPlayerView: UIView {
     
     var nextEpisodeButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Next episode", for: .normal)
+        button.setTitle("Next episode".localize(), for: .normal)
         button.setImage(ImageConstants.nextEpisodeImage, for: .normal)
         button.titleLabel?.font = FontStandard.helveticaNeue(size: 15.0)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)

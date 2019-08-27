@@ -26,7 +26,7 @@ class WatchingView: UIView {
     
     var tabLabel: UILabel = {
         let label = UILabel()
-        label.text = "watching"
+        label.text = "watching".localize()
         label.textColor = .white
         label.font = FontStandard.RobotoCondensedBold(size: 21.0)
        
@@ -57,7 +57,7 @@ class WatchingView: UIView {
     
     var idleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Nothing watched yet"
+        label.text = "Nothing watched yet".localize()
         label.textColor = #colorLiteral(red: 0.2352941176, green: 0.231372549, blue: 0.231372549, alpha: 1)
         label.font = FontStandard.RobotoCondensedBold(size: 25.0)
         

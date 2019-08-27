@@ -34,6 +34,8 @@
 		ED5AC1162314DE140098A161 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1152314DE140098A161 /* SettingsView.swift */; };
 		ED5AC1182314DE590098A161 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1172314DE590098A161 /* WelcomeViewController.swift */; };
 		ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1192314DE610098A161 /* WelcomeView.swift */; };
+		ED5AC11F2314E5DE0098A161 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED5AC1212314E5DE0098A161 /* Localizable.strings */; };
+		ED5AC1242314E6A40098A161 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1232314E6A40098A161 /* String+extension.swift */; };
 		ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBBF2314620F00FEC56A /* VolumeController.swift */; };
 		ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */; };
 		ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC423146B0F00FEC56A /* Debugger.swift */; };
@@ -97,6 +99,10 @@
 		ED5AC1152314DE140098A161 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		ED5AC1172314DE590098A161 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		ED5AC1192314DE610098A161 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		ED5AC11B2314E5600098A161 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		ED5AC1202314E5DE0098A161 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ED5AC1222314E6670098A161 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ED5AC1232314E6A40098A161 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
 		ED82DBBF2314620F00FEC56A /* VolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeController.swift; sourceTree = "<group>"; };
 		ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerController+Volume.swift"; sourceTree = "<group>"; };
 		ED82DBC423146B0F00FEC56A /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
@@ -333,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				ED909B44230F006A00A67AC6 /* Assets.xcassets */,
+				ED5AC1212314E5DE0098A161 /* Localizable.strings */,
 				ED57FC7D23134AF50001A9AB /* Fonts */,
 			);
 			path = Resources;
@@ -355,6 +362,7 @@
 				ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */,
 				ED57FCB2231383540001A9AB /* CGRect+extensions.swift */,
 				ED57FCB423138B970001A9AB /* UIImage+extensions.swift */,
+				ED5AC1232314E6A40098A161 /* String+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -469,6 +477,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = ED909B31230F006600A67AC6;
 			productRefGroup = ED909B3B230F006600A67AC6 /* Products */;
@@ -496,6 +505,7 @@
 				ED57FCA4231350F40001A9AB /* Roboto-LightItalic.ttf in Resources */,
 				ED9B00B523149B7F004D509C /* RobotoCondensed-Bold.ttf in Resources */,
 				ED9B00B823149B7F004D509C /* RobotoCondensed-RegularItalic.ttf in Resources */,
+				ED5AC11F2314E5DE0098A161 /* Localizable.strings in Resources */,
 				ED9B00BA23149B7F004D509C /* RobotoCondensed-BoldItalic.ttf in Resources */,
 				ED57FCAD231350F40001A9AB /* Roboto-RegularItalic.ttf in Resources */,
 				ED57FCA3231350F40001A9AB /* Roboto-Light.ttf in Resources */,
@@ -578,6 +588,7 @@
 				ED909B40230F006600A67AC6 /* VideoPlayerController.swift in Sources */,
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
 				ED5AC1122314DDEF0098A161 /* MoviesView.swift in Sources */,
+				ED5AC1242314E6A40098A161 /* String+extension.swift in Sources */,
 				ED57FCB523138B970001A9AB /* UIImage+extensions.swift in Sources */,
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
 				ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */,
@@ -615,10 +626,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		ED5AC1212314E5DE0098A161 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ED5AC1202314E5DE0098A161 /* en */,
+				ED5AC1222314E6670098A161 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		ED909B46230F006A00A67AC6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				ED909B47230F006A00A67AC6 /* Base */,
+				ED5AC11B2314E5600098A161 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -630,6 +651,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -692,6 +714,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

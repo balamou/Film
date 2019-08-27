@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  Film
+
+  Created by Michel Balamou on 2019-08-27.
+  Copyright © 2019 ElasticPanda. All rights reserved.
+*/
+
+
+// Tabs
+"Watching" = "Просмотры";
+"Shows" = "Сериалы";
+"Movies" = "Фильмы";
+"Settings" = "Настройки";
+
+// Watching VC
+"Nothing watched yet" = "Вы пока ничего не смотрели";
+"watching" = "просмотры";
+
+// Player VC
+"Next episode" = "Следующий эпизод";
