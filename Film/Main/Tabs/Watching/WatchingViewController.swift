@@ -68,6 +68,31 @@ class WatchingViewController: UIViewController {
         collectionView.register(WatchingCell.self, forCellWithReuseIdentifier: WatchingCell.identifier)
         collectionView.alwaysBounceVertical = true
     }
+    
+    //----------------------------------------------------------------------
+    // Scrolling: "Infinite Scroll"
+    //----------------------------------------------------------------------
+    var isFetchingMore = false
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if offsetY > contentHeight - scrollView.frame.height, !isFetchingMore {
+            beginBatchFetch()
+        }
+    }
+    
+    func beginBatchFetch() {
+        isFetchingMore = true
+        print("beginBatchFetch!")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            // fake API call
+            
+            self.isFetchingMore = false
+        })
+    }
 }
 
 
