@@ -32,6 +32,10 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+//        videoPlayerView.didAppear()
+    }
+    
+    override func viewDidLayoutSubviews() {
         videoPlayerView.didAppear()
     }
     
@@ -71,7 +75,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     //----------------------------------------------------------------------
-    // Orientation
+    // Orientation: Landscape
     //----------------------------------------------------------------------
     func forceLandscapeOrientation() {
         let value = UIInterfaceOrientation.landscapeRight.rawValue
@@ -83,7 +87,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     //----------------------------------------------------------------------
@@ -161,6 +165,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     
     @objc func closeVideo() {
         print("Close video")
+        navigationController?.popViewController(animated: false)
     }
     
     @objc func playNextEpisode() {
@@ -241,4 +246,12 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         return CGPoint(x: sliderFrm.origin.x + slider.frame.origin.x + sliderFrm.size.width/2 - label.frame.size.width/2, y: videoPlayerView.bottomBar.frame.origin.y)
     }
 
+    //----------------------------------------------------------------------
+    // MARK: Removing observers/pointers
+    //----------------------------------------------------------------------
+    deinit {
+        print("Remove Observers: Deinit")
+        mediaPlayer.removeObserver(self, forKeyPath: "time")
+        timer?.invalidate()
+    }
 }
