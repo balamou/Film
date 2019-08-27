@@ -78,8 +78,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     // Orientation: Landscape
     //----------------------------------------------------------------------
     func forceLandscapeOrientation() {
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+        let landscapeRight = UIInterfaceOrientation.landscapeRight.rawValue
+        UIDevice.current.setValue(landscapeRight, forKey: "orientation")
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -250,6 +250,17 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     deinit {
         print("Remove Observers: Deinit")
         mediaPlayer.removeObserver(self, forKeyPath: "time")
+        mediaPlayer.stop()
         timer?.invalidate()
     }
+    
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        // RESET ORIENTATION
+        if (self.isMovingFromParent) {
+            let portrait = UIInterfaceOrientation.portrait.rawValue
+            UIDevice.current.setValue(portrait, forKey: "orientation")
+        }
+    }
+    
 }

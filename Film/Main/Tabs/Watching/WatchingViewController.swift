@@ -38,7 +38,6 @@ class WatchingViewController: UIViewController {
     // TMP CODE---
     
     override func viewDidAppear(_ animated: Bool) {
-        forceLandscapeOrientation()
     }
     
     
@@ -47,21 +46,5 @@ class WatchingViewController: UIViewController {
     //----------------------------------------------------------------------
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-    
-    //----------------------------------------------------------------------
-    // Orientation: portrait
-    //----------------------------------------------------------------------
-    func forceLandscapeOrientation() {
-        let value = UIInterfaceOrientation.portrait.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
-    override var shouldAutorotate: Bool {
-        return false
     }
 }
