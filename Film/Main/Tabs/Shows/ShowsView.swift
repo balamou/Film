@@ -14,7 +14,21 @@ class ShowsView: UIView {
         return CustomNavigationBar(title: "shows".localize())
     }()
     
+    var showListCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = .clear
+        
+        return collectionView
+    }()
+    
     class Constraints {
+        
+        static func setShowListCollectionView(_ collectionView: UICollectionView, _ navBar: UIView, _ parent: UIView) {
+            collectionView.topAnchor.constraint(equalTo: navBar.bottomAnchor).isActive = true
+            collectionView.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
+            collectionView.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+            collectionView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        }
         
     }
     
@@ -24,7 +38,10 @@ class ShowsView: UIView {
         backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
         
         addSubviewLayout(navBar)
+        addSubviewLayout(showListCollectionView)
+        
         navBar.setConstraints(parent: self)
+        Constraints.setShowListCollectionView(showListCollectionView, navBar, self)
     }
     
     required init?(coder aDecoder: NSCoder) {
