@@ -19,4 +19,11 @@ class MoviewsViewController: UIViewController {
         moviewView = MoviesView()
         view = moviewView
     }
+    
+    //----------------------------------------------------------------------
+    // MARK: Status bar
+    //----------------------------------------------------------------------
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }

@@ -17,6 +17,7 @@ class SettingsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
     }
     
     required init?(coder aDecoder: NSCoder) {

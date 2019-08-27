@@ -19,6 +19,13 @@ class ShowsViewController: UIViewController {
         showsView = ShowsView()
         view = showsView
     }
+    
+    //----------------------------------------------------------------------
+    // MARK: Status bar
+    //----------------------------------------------------------------------
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 
 

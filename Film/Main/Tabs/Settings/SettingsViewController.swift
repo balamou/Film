@@ -19,4 +19,11 @@ class SettingsViewController: UIViewController {
         settingsView = SettingsView()
         view = settingsView
     }
+    
+    //----------------------------------------------------------------------
+    // MARK: Status bar
+    //----------------------------------------------------------------------
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }

@@ -28,9 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func initializeViewControllers() -> UIViewController {
         let watchingVC = WatchingViewController()
-        let showsVC = WatchingViewController()
-        let moviesVC = WatchingViewController()
-        let settingsVC = WatchingViewController()
+        let showsVC = ShowsViewController()
+        let moviesVC = MoviewsViewController()
+        let settingsVC = SettingsViewController()
         
 //        let playerVC = VideoPlayerController()
         
