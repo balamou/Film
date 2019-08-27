@@ -76,7 +76,7 @@ class VideoPlayerView: UIView {
     
     var closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
+        button.setImage(ImageConstants.closeImage, for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -88,7 +88,7 @@ class VideoPlayerView: UIView {
     
     var pausePlayButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Pause"), for: .normal)
+        button.setImage(ImageConstants.pauseImage, for: .normal) // ▌▌
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -98,7 +98,7 @@ class VideoPlayerView: UIView {
     
     var forward10sButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "forward"), for: .normal)
+        button.setImage(ImageConstants.forwardImage, for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -108,7 +108,7 @@ class VideoPlayerView: UIView {
     
     var backward10sButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "backward"), for: .normal)
+        button.setImage(ImageConstants.backwardImage, for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -128,8 +128,7 @@ class VideoPlayerView: UIView {
     var nextEpisodeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Next episode", for: .normal)
-        let img = #imageLiteral(resourceName: "Next_episode")
-        button.setImage(img, for: .normal)
+        button.setImage(ImageConstants.nextEpisodeImage, for: .normal)
         
         let customFont = UIFont(name: "HelveticaNeue", size: 15.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
         button.titleLabel?.font = customFont
@@ -151,7 +150,7 @@ class VideoPlayerView: UIView {
     }()
     
     var volumeImage: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "Volume"))
+        let imageView = UIImageView(image: ImageConstants.volumeImage)
         imageView.isHidden = true
         
         return imageView

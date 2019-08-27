@@ -145,13 +145,11 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         if isPlaying {
             mediaPlayer.pause()
             isPlaying = false
-            //sender.setTitle("▶", for: .normal)
-            sender.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
+            sender.setImage(ImageConstants.playImage, for: .normal) // ▶
         } else {
             mediaPlayer.play()
             isPlaying = true
-            //sender.setTitle("▌▌", for: .normal)
-            sender.setImage(#imageLiteral(resourceName: "Pause"), for: .normal)
+            sender.setImage(ImageConstants.pauseImage, for: .normal) // ▌▌
         }
     }
     

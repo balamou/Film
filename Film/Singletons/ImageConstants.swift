@@ -30,3 +30,7 @@ class ImageConstants {
     static let closeImage: UIImage = #imageLiteral(resourceName: "Close")
 }
 
+class FontStandard {
+    
+    static let helvetica = UIFont(name: "HelveticaNeue", size: 15.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
+}
