@@ -44,13 +44,13 @@ class WatchingCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Title"
         label.textColor = #colorLiteral(red: 0.6431372549, green: 0.6431372549, blue: 0.6431372549, alpha: 1)
+        label.font = FontStandard.RobotoBold(size: 15.0)
         
         return label
     }()
     
     var informationImage: UIImageView = {
         let imageView = UIImageView()
-//        imageView.backgroundColor = #colorLiteral(red: 0.6431372549, green: 0.6431372549, blue: 0.6431372549, alpha: 1) // #A4A4A4
         imageView.image = ImageConstants.informationImage
         
         return imageView
@@ -58,16 +58,11 @@ class WatchingCell: UICollectionViewCell {
     
     class Constraints {
         
-        static func setBottomBar(_ view: UIView, _ parent: UIView) {
-            view.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-        }
-        
-        static func setViewedLabel(_ label: UILabel, _ parent: UIView) {
-            label.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 10.0).isActive = true
-            label.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+        static func setPosterImage(_ imageView: UIImageView, _ progressView: UIView, _ parent: UIView) {
+            imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            imageView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            imageView.bottomAnchor.constraint(equalTo: progressView.bottomAnchor).isActive = true
+            imageView.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
         }
         
         static func setProgressView(_ view: UIView, _ bottomNeighbour: UIView, _ parent: UIView) {
@@ -84,19 +79,24 @@ class WatchingCell: UICollectionViewCell {
             view.widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: 0.5).isActive = true
         }
         
+        
+        static func setBottomBar(_ view: UIView, _ parent: UIView) {
+            view.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        }
+        
+        static func setViewedLabel(_ label: UILabel, _ parent: UIView) {
+            label.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 5.0).isActive = true
+            label.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+        }
+        
         static func setInformationImage(_ imageView: UIImageView, _ parent: UIView) {
             imageView.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
             imageView.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -10.0).isActive = true
-            imageView.widthAnchor.constraint(greaterThanOrEqualToConstant: 20.0).isActive = true
-            imageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 20.0).isActive = true
         }
         
-        static func setPosterImage(_ imageView: UIImageView, _ progressView: UIView, _ parent: UIView) {
-            imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            imageView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-            imageView.bottomAnchor.constraint(equalTo: progressView.bottomAnchor).isActive = true
-            imageView.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-        }
     }
     
     

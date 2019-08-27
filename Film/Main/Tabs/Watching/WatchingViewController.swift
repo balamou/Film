@@ -58,7 +58,7 @@ class WatchingViewController: UIViewController {
     //----------------------------------------------------------------------
     weak var collectionView: UICollectionView!
     
-    var data: [String] = ["S1:E1", "S2:E1", "2 h 30 min", "1 h 25 min"]
+    var data: [String] = ["S1:E1", "S2:E1", "2h 30 min", "1h 25 min"]
     
     func setupCollectionView() {
         collectionView = watchingView.collectionView
