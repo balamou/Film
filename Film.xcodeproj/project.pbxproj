@@ -37,6 +37,7 @@
 		ED5AC11F2314E5DE0098A161 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED5AC1212314E5DE0098A161 /* Localizable.strings */; };
 		ED5AC1242314E6A40098A161 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1232314E6A40098A161 /* String+extension.swift */; };
 		ED5AC12623157A260098A161 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12523157A260098A161 /* Coordinator.swift */; };
+		ED5AC12823158FED0098A161 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */; };
 		ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBBF2314620F00FEC56A /* VolumeController.swift */; };
 		ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */; };
 		ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC423146B0F00FEC56A /* Debugger.swift */; };
@@ -105,6 +106,7 @@
 		ED5AC1222314E6670098A161 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ED5AC1232314E6A40098A161 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
 		ED5AC12523157A260098A161 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		ED82DBBF2314620F00FEC56A /* VolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeController.swift; sourceTree = "<group>"; };
 		ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerController+Volume.swift"; sourceTree = "<group>"; };
 		ED82DBC423146B0F00FEC56A /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 		EDFDB054231495EF0045E8D6 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */,
 				ED5AC1062314DCF00098A161 /* Watching */,
 				ED5AC1072314DCF70098A161 /* Shows */,
 				ED5AC1082314DD0C0098A161 /* Movies */,
@@ -599,6 +602,7 @@
 				ED5AC1052314C45A0098A161 /* ImageConstants.swift in Sources */,
 				ED5AC10E2314DDA30098A161 /* ShowsView.swift in Sources */,
 				ED5AC1182314DE590098A161 /* WelcomeViewController.swift in Sources */,
+				ED5AC12823158FED0098A161 /* CustomNavigationBar.swift in Sources */,
 				ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */,
 				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 				EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */,

@@ -10,35 +10,9 @@ import UIKit
 
 class WatchingView: UIView {
     
-    var vanityBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        
-        return view
-    }()
-    
-    var navBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        
-        return view
-    }()
-    
-    var tabLabel: UILabel = {
-        let label = UILabel()
-        label.text = "watching".localize()
-        label.textColor = .white
-        label.font = FontStandard.RobotoCondensedBold(size: 21.0)
-       
-        return label
-    }()
-    
-    var logoImage: UIImageView = {
-        let imageView = UIImageView()
-        
-        imageView.image = ImageConstants.logoImage
-        
-        return imageView
+    lazy var navBar: CustomNavigationBar = {
+        // automatically adds itself to the hiearchy
+        return CustomNavigationBar(title: "watching".localize(), parent: self)
     }()
     
     // IDLE
@@ -66,35 +40,6 @@ class WatchingView: UIView {
     
     class Constraints {
         
-        static let navigationBarHeight: CGFloat = 67.0
-        
-        static func setVanityBar(_ view: UIView, _ parent: UIView) {
-            view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-        }
-        
-        static func setNavBar(_ view: UIView, _ parent: UIView) {
-            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            view.topAnchor.constraint(equalTo: parent.safeAreaLayoutGuide.topAnchor).isActive = true
-            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: navigationBarHeight).isActive = true
-        }
-        
-        static func setTabLabel(_ label: UILabel, _ parent: UIView) {
-            label.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            label.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
-        }
-        
-        static func setLogoImage(_ imageView: UIImageView, _ rightNeighbour: UIView, _ parent: UIView) {
-            imageView.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 15.0).isActive = true
-            imageView.centerYAnchor.constraint(equalTo: rightNeighbour.centerYAnchor).isActive = true
-            
-            imageView.widthAnchor.constraint(equalToConstant: 48.0).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 48.0).isActive = true
-        }
-        
         // IDLE
         static func setIdleView(_ view: UIView, _ parent: UIView) {
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
@@ -118,19 +63,9 @@ class WatchingView: UIView {
         
         backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
         
-        addSubviewLayout(vanityBar)
-        addSubviewLayout(navBar)
-        navBar.addSubviewLayout(tabLabel)
-        navBar.addSubviewLayout(logoImage)
-        
         addSubviewLayout(idleView)
         idleView.addSubviewLayout(idleImage)
         idleView.addSubviewLayout(idleLabel)
-        
-        Constraints.setVanityBar(vanityBar, self)
-        Constraints.setNavBar(navBar, self)
-        Constraints.setTabLabel(tabLabel, navBar)
-        Constraints.setLogoImage(logoImage, tabLabel, navBar)
         
         Constraints.setIdleView(idleView, self)
         Constraints.setIdleImage(idleImage, idleView)

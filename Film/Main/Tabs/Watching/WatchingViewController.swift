@@ -31,8 +31,8 @@ class WatchingViewController: UIViewController {
     // TMP CODE+++
     func tmpCODE() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tmpCODETap))
-        watchingView.logoImage.isUserInteractionEnabled = true
-        watchingView.logoImage.addGestureRecognizer(tapGesture)
+        watchingView.navBar.logoImage.isUserInteractionEnabled = true
+        watchingView.navBar.logoImage.addGestureRecognizer(tapGesture)
     }
     
     @objc func tmpCODETap() {
