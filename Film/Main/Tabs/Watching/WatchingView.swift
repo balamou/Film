@@ -14,9 +14,18 @@ class WatchingView: UIView {
         return CustomNavigationBar(title: "watching".localize(), showLogo: true)
     }()
     
+    let collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = .clear
+    
+        return collectionView
+    }()
+    
+    
     // IDLE
     var idleView: UIView = {
         let view = UIView()
+        view.isHidden = true
         
         return view
     }()
@@ -38,6 +47,13 @@ class WatchingView: UIView {
     }()
     
     class Constraints {
+        
+        static func setCollectionView(_ collectionView: UICollectionView, _ navBar: UIView, _ parent: UIView) {
+            collectionView.topAnchor.constraint(equalTo: navBar.bottomAnchor).isActive = true
+            collectionView.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+            collectionView.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
+            collectionView.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
+        }
         
         // IDLE
         static func setIdleView(_ view: UIView, _ parent: UIView) {
@@ -64,6 +80,9 @@ class WatchingView: UIView {
         
         addSubviewLayout(navBar)
         navBar.setConstraints(parent: self)
+       
+        addSubviewLayout(collectionView)
+        Constraints.setCollectionView(collectionView, navBar, self)
         
         addSubviewLayout(idleView)
         idleView.addSubviewLayout(idleImage)

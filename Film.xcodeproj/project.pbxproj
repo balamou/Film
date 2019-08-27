@@ -35,9 +35,11 @@
 		ED5AC1182314DE590098A161 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1172314DE590098A161 /* WelcomeViewController.swift */; };
 		ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1192314DE610098A161 /* WelcomeView.swift */; };
 		ED5AC11F2314E5DE0098A161 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED5AC1212314E5DE0098A161 /* Localizable.strings */; };
-		ED5AC1242314E6A40098A161 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1232314E6A40098A161 /* String+extension.swift */; };
+		ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1232314E6A40098A161 /* String+extensions.swift */; };
 		ED5AC12623157A260098A161 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12523157A260098A161 /* Coordinator.swift */; };
 		ED5AC12823158FED0098A161 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */; };
+		ED5AC12A2315A65F0098A161 /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1292315A65F0098A161 /* UIViewController+extensions.swift */; };
+		ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12B2315A7600098A161 /* WatchingCell.swift */; };
 		ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBBF2314620F00FEC56A /* VolumeController.swift */; };
 		ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */; };
 		ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC423146B0F00FEC56A /* Debugger.swift */; };
@@ -104,9 +106,11 @@
 		ED5AC11B2314E5600098A161 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		ED5AC1202314E5DE0098A161 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ED5AC1222314E6670098A161 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		ED5AC1232314E6A40098A161 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
+		ED5AC1232314E6A40098A161 /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		ED5AC12523157A260098A161 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
+		ED5AC1292315A65F0098A161 /* UIViewController+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extensions.swift"; sourceTree = "<group>"; };
+		ED5AC12B2315A7600098A161 /* WatchingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingCell.swift; sourceTree = "<group>"; };
 		ED82DBBF2314620F00FEC56A /* VolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeController.swift; sourceTree = "<group>"; };
 		ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerController+Volume.swift"; sourceTree = "<group>"; };
 		ED82DBC423146B0F00FEC56A /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
@@ -238,6 +242,7 @@
 			children = (
 				EDFDB055231497C90045E8D6 /* WatchingViewController.swift */,
 				EDFDB0572314985A0045E8D6 /* WatchingView.swift */,
+				ED5AC12B2315A7600098A161 /* WatchingCell.swift */,
 			);
 			path = Watching;
 			sourceTree = "<group>";
@@ -367,7 +372,8 @@
 				ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */,
 				ED57FCB2231383540001A9AB /* CGRect+extensions.swift */,
 				ED57FCB423138B970001A9AB /* UIImage+extensions.swift */,
-				ED5AC1232314E6A40098A161 /* String+extension.swift */,
+				ED5AC1232314E6A40098A161 /* String+extensions.swift */,
+				ED5AC1292315A65F0098A161 /* UIViewController+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -588,13 +594,14 @@
 			files = (
 				ED5AC1162314DE140098A161 /* SettingsView.swift in Sources */,
 				ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */,
+				ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */,
 				EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */,
 				ED909B6323123C8300A67AC6 /* header.m in Sources */,
 				ED5AC1142314DE0C0098A161 /* SettingsViewController.swift in Sources */,
 				ED909B40230F006600A67AC6 /* VideoPlayerController.swift in Sources */,
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
 				ED5AC1122314DDEF0098A161 /* MoviesView.swift in Sources */,
-				ED5AC1242314E6A40098A161 /* String+extension.swift in Sources */,
+				ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */,
 				ED57FCB523138B970001A9AB /* UIImage+extensions.swift in Sources */,
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
 				ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */,
@@ -611,6 +618,7 @@
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
 				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
 				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,
+				ED5AC12A2315A65F0098A161 /* UIViewController+extensions.swift in Sources */,
 				ED5AC1102314DDD00098A161 /* MoviesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

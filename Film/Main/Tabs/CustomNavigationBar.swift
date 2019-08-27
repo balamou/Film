@@ -50,7 +50,6 @@ class CustomNavigationBar: UIView {
             view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: navigationBarHeight).isActive = true
         }
         
         //
@@ -112,5 +111,6 @@ class CustomNavigationBar: UIView {
     
     func setConstraints(parent: UIView) {
         Constraints.set(self, parent: parent)
+        self.bottomAnchor.constraint(equalTo: navBar.bottomAnchor).isActive = true
     }
 }
