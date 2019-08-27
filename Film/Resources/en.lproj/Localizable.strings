@@ -16,6 +16,10 @@
 // Watching VC
 "Nothing watched yet" = "Nothing watched yet";
 "watching" = "watching";
+"h" = "h";
+"min" = "min";
+"S" = "S"; // Season
+"E" = "E"; // Episode
 
 // Player VC
 "Next episode" = "Next episode";

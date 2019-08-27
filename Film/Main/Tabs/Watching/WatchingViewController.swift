@@ -58,7 +58,7 @@ class WatchingViewController: UIViewController {
     //----------------------------------------------------------------------
     weak var collectionView: UICollectionView!
     
-    var data: [Int] = Array(0..<10)
+    var data: [String] = ["S1:E1", "S2:E1", "2 h 30 min", "1 h 25 min"]
     
     func setupCollectionView() {
         collectionView = watchingView.collectionView
@@ -80,7 +80,7 @@ extension WatchingViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchingCell.identifier, for: indexPath) as! WatchingCell
         let data = self.data[indexPath.item]
-        cell.viewedLabel.text = String(data)
+        cell.viewedLabel.text = data
         return cell
     }
 }
@@ -96,18 +96,18 @@ extension WatchingViewController: UICollectionViewDelegate {
 extension WatchingViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 110, height: 197)
+        return CGSize(width: 110, height: 197) // size of a cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+        return UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) // overall insets of the collection view
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
+        return 10.0 // distance between columns
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20.0
+        return 20.0 // distance between rows
     }
 }

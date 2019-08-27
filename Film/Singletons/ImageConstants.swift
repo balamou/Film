@@ -19,6 +19,7 @@ class ImageConstants {
     // Watching View Controller Images
     static let idleImage: UIImage = #imageLiteral(resourceName: "Nothing_found")
     static let logoImage: UIImage = #imageLiteral(resourceName: "Logo")
+    static let informationImage: UIImage = #imageLiteral(resourceName: "info")
     
     // Player View Controller Images
     static let pauseImage: UIImage = #imageLiteral(resourceName: "Pause")

@@ -16,6 +16,10 @@
 // Watching VC
 "Nothing watched yet" = "Вы пока ничего не смотрели";
 "watching" = "просмотры";
+"h" = "ч";
+"min" = "мин";
+"S" = "С";
+"E" = "С";
 
 // Player VC
 "Next episode" = "Следующий эпизод";
