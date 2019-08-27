@@ -285,6 +285,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     func applicationDidBecomeActive() {
-        forceLandscapeOrientation()
+        if let _ = navigationController { // re-rotate only if on the navigation stack
+            forceLandscapeOrientation()
+        }
     }
 }

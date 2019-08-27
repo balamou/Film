@@ -36,9 +36,6 @@ class WatchingViewController: UIViewController {
     }
     
     @objc func tmpCODETap() {
-//        let playerVC = VideoPlayerController()
-//
-//        self.navigationController?.pushViewController(playerVC, animated: false)
          delegate?.tappedPreviouslyWatchedShow()
     }
     // TMP CODE---
