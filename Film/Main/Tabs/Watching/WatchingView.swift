@@ -17,10 +17,18 @@ class WatchingView: UIView {
     let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
-    
+        collectionView.isHidden = true
+        
         return collectionView
     }()
     
+    // Loading view
+    var loadingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        
+        return view
+    }()
     
     // IDLE
     var idleView: UIView = {
@@ -53,6 +61,13 @@ class WatchingView: UIView {
             collectionView.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
             collectionView.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
             collectionView.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
+        }
+        
+        static func setLoadingView(_ view: UIView, _ parent: UIView) {
+            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            view.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 150.0).isActive = true
         }
         
         // IDLE
@@ -88,9 +103,12 @@ class WatchingView: UIView {
         idleView.addSubviewLayout(idleImage)
         idleView.addSubviewLayout(idleLabel)
         
+        addSubviewLayout(loadingView)
+        
         Constraints.setIdleView(idleView, self)
         Constraints.setIdleImage(idleImage, idleView)
         Constraints.setIdleLabel(idleLabel, idleImage)
+        Constraints.setLoadingView(loadingView, self)
         
         idleView.bottomAnchor.constraint(equalTo: idleLabel.bottomAnchor).isActive = true
     }

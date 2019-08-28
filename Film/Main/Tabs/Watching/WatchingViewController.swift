@@ -13,7 +13,37 @@ protocol WatchingViewControllerDelegate {
     func tappedPreviouslyWatchedShow()
 }
 
+enum WatchingViewControllerMode {
+    case idle
+    case loading
+    case hasData([Watched])
+}
+
 class WatchingViewController: UIViewController {
+    
+    var mode: WatchingViewControllerMode = .loading {
+        didSet {
+            switch mode {
+            case .idle:
+                watchingView.idleView.isHidden = false
+                watchingView.loadingView.isHidden = true
+                watchingView.collectionView.isHidden = true
+            case .loading:
+                watchingView.idleView.isHidden = true
+                watchingView.loadingView.isHidden = false
+                watchingView.collectionView.isHidden = true
+            case .hasData(let freshData):
+                watchingView.idleView.isHidden = true
+                watchingView.loadingView.isHidden = true
+                watchingView.collectionView.isHidden = false
+                
+                self.data = freshData
+                watchingView.collectionView.reloadData()
+            }
+        }
+    }
+    
+    var data: [Watched] = Watched.getMockData()
     
     var watchingView: WatchingView!
     var delegate: WatchingViewControllerDelegate?
@@ -25,6 +55,24 @@ class WatchingViewController: UIViewController {
         view = watchingView
         
         setupCollectionView()
+        
+        // TMP
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedTMP))
+        watchingView.navBar.logoImage.isUserInteractionEnabled = true
+        watchingView.navBar.logoImage.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func tappedTMP() {
+        
+        switch mode{
+        case .idle:
+            mode = .loading
+        case .loading:
+            mode = .hasData(Watched.getMockData())
+        case .hasData(_):
+            mode = .idle
+        }
+        
     }
     
     //----------------------------------------------------------------------
@@ -38,8 +86,6 @@ class WatchingViewController: UIViewController {
     // Collection View
     //----------------------------------------------------------------------
     weak var collectionView: UICollectionView!
-    
-    var data: [String] = ["S1:E1", "S2:E1", "2h 30 min", "1h 25 min"]
     
     func setupCollectionView() {
         collectionView = watchingView.collectionView
@@ -80,14 +126,17 @@ class WatchingViewController: UIViewController {
 extension WatchingViewController: UICollectionViewDataSource, WatchingCellDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.data.count
+        return data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchingCell.identifier, for: indexPath) as! WatchingCell
         cell.delegate = self
         let data = self.data[indexPath.item]
-        cell.viewedLabel.text = data
+        cell.viewedLabel.text = data.label
+        cell.switchMultiplier(multiplier: data.stoppedAt)
+        //cell.setNeedsLayout()
+        
         return cell
     }
     

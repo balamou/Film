@@ -17,6 +17,7 @@ class WatchingCell: UICollectionViewCell {
     
     static var identifier: String = "WatchingCell"
     weak var delegate: WatchingCellDelegate?
+    var multiply: NSLayoutConstraint?
     
     var posterImage: UIImageView = {
         let imageView = UIImageView()
@@ -88,7 +89,6 @@ class WatchingCell: UICollectionViewCell {
             view.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
             view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             view.heightAnchor.constraint(equalTo: parent.heightAnchor).isActive = true
-            view.widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: 0.5).isActive = true
         }
         
         
@@ -135,6 +135,8 @@ class WatchingCell: UICollectionViewCell {
         Constraints.setViewedLabel(viewedLabel, bottomBar)
         Constraints.setProgressView(progressView, bottomBar, self)
         Constraints.setStoppedAt(stoppedAtView, progressView)
+        switchMultiplier(multiplier: 0.5)
+        
         Constraints.setInformationButton(informationButton, bottomBar)
         Constraints.setPosterImage(posterImage, progressView, self)
         Constraints.setPlayButton(playButton, posterImage)
@@ -143,6 +145,12 @@ class WatchingCell: UICollectionViewCell {
         informationButton.addTarget(self, action: #selector(informationButtonTapped), for: .touchUpInside)
         
         reset()
+    }
+    
+    func switchMultiplier(multiplier: Float) {
+        multiply?.isActive = false
+        multiply = stoppedAtView.widthAnchor.constraint(equalTo: progressView.widthAnchor, multiplier: CGFloat(multiplier))
+        multiply?.isActive = true
     }
     
     @objc func playButtonTapped() {
