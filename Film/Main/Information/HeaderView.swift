@@ -30,7 +30,7 @@ class HeaderView: UICollectionReusableView {
         let label = UILabel()
         label.text = "Title"
         label.textColor = .white
-        label.font = FontStandard.RobotoBold(size: 20.0)
+        label.font = FontStandard.helveticaNeue(size: 20.0)
         
         return label
     }()
@@ -52,6 +52,20 @@ class HeaderView: UICollectionReusableView {
         return label
     }()
     
+    var dividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        
+        return view
+    }()
+    
+    var seasonButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Season 1", for: .normal)
+        button.titleLabel?.textColor = .white
+        
+        return button
+    }()
     
     class Constraints {
         
@@ -87,25 +101,41 @@ class HeaderView: UICollectionReusableView {
             label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -10.0).isActive = true
         }
         
+        static func setDividerView(_ view: UIView, _ topNeighbour: UIView, parent: UIView) {
+            view.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 10.0).isActive = true
+            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 2.0).isActive = true
+        }
+        
+        static func setSeasonButton(_ button: UIButton, _ topNeighbour: UIView, parent: UIView) {
+            button.topAnchor.constraint(equalTo: topNeighbour.topAnchor, constant: 10.0).isActive = true
+            button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        }
+        
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         // custom code for layout
         
-        backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
+        backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1) // #191919
         
         addSubviewLayout(posterPicture)
         addSubviewLayout(exitButton)
         addSubviewLayout(titleLabel)
         addSubviewLayout(playButton)
         addSubviewLayout(descriptionLabel)
+        addSubviewLayout(dividerView)
+        addSubviewLayout(seasonButton)
         
         Constraints.setPosterPicture(posterPicture, self)
         Constraints.setExitButton(exitButton, self)
         Constraints.setTitleLabel(titleLabel, posterPicture)
         Constraints.setPlayButton(playButton, titleLabel, parent: self)
         Constraints.setDescriptionLabel(descriptionLabel, playButton, parent: self)
+        Constraints.setDividerView(dividerView, descriptionLabel, parent: self)
+        Constraints.setSeasonButton(seasonButton, dividerView, parent: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
