@@ -14,6 +14,7 @@ class ShowInfoView: UIView {
     var episodesCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1) // #191919
+        collectionView.contentInsetAdjustmentBehavior = .never
         
         return collectionView
     }()
