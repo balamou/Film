@@ -16,6 +16,10 @@ class FontStandard {
         return UIFont(name: "HelveticaNeue", size: size) ?? defaultFont
     }
     
+    static func helveticaBold(size: CGFloat) -> UIFont {
+        return UIFont(name: "Helvetica-Bold", size: size) ?? defaultFont
+    }
+    
     static func RobotoCondensedBold(size: CGFloat) -> UIFont {
         return UIFont(name: "RobotoCondensed-Bold", size: size) ?? defaultFont
     }

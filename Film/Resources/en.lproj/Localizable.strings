@@ -23,3 +23,9 @@
 
 // Player VC
 "Next episode" = "Next episode";
+
+// Settings
+"Username" = "Username";
+"Language" = "Language";
+"IP Address" = "IP Address";
+"Port" = "Port";
