@@ -12,6 +12,7 @@ import UIKit
 protocol HeaderViewDelegate: AnyObject {
     func exitButtonTapped()
     func playButtonTapped()
+    func seasonButtonTapped()
 }
 
 
@@ -147,6 +148,7 @@ class HeaderView: UICollectionReusableView {
         
         exitButton.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
+        seasonButton.addTarget(self, action: #selector(seasonButtonTapped), for: .touchUpInside)
     }
     
     @objc func exitButtonTapped() {
@@ -155,6 +157,10 @@ class HeaderView: UICollectionReusableView {
     
     @objc func playButtonTapped() {
         delegate?.playButtonTapped()
+    }
+    
+    @objc func seasonButtonTapped() {
+        delegate?.seasonButtonTapped()
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -82,6 +82,10 @@ extension ShowInfoViewController: HeaderViewDelegate {
     func playButtonTapped() {
         print("Play episode")
     }
+    
+    func seasonButtonTapped() {
+        print("Change season")
+    }
 }
 
 extension ShowInfoViewController: UICollectionViewDelegate {

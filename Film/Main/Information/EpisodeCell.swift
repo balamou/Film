@@ -17,13 +17,115 @@ class EpisodeCell: UICollectionViewCell {
     static let identifier: String = "EpisodeCell"
     weak var delegate: EpisodeCellDelegate?
     
+    
+    var thumbnail: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
+        
+        return imageView
+    }()
+    
+    var progressView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray
+        
+        return view
+    }()
+
+    var stoppedAtView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        
+        return view
+    }()
+    
+    var episodeTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1. Episode 1"
+        label.textColor = .white
+        
+        return label
+    }()
+    
+    var durationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "57 min"
+        label.textColor = .gray
+        label.font = FontStandard.helveticaNeue(size: 12.0)
+        
+        return label
+    }()
+    
+    var plotLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Plot"
+        label.textColor = .white
+        label.font = FontStandard.helveticaNeue(size: 15.0)
+        
+        return label
+    }()
+    
+    
+    class Constraints {
+        
+        static func setThumbnailView(_ imageView: UIImageView, _ parent: UIView) {
+            imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 10.0).isActive = true
+            imageView.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 10.0).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 130.0).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
+        }
+        
+        static func setProgressView(_ view: UIView, _ topNeighbour: UIView) {
+            view.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor).isActive = true
+            view.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
+            view.widthAnchor.constraint(equalTo: topNeighbour.widthAnchor).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 2.0).isActive = true
+        }
+        
+        static func setStoppedAtView(_ view: UIView, _ parent: UIView, progress: CGFloat) {
+            view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            view.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
+            view.heightAnchor.constraint(equalTo: parent.heightAnchor).isActive = true
+            view.widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: progress).isActive = true
+        }
+        
+        static func setEpisodeTitleLabel(_ label: UILabel, _ leftNeighbour: UIView) {
+            label.leadingAnchor.constraint(equalTo: leftNeighbour.trailingAnchor, constant: 10.0).isActive = true
+            label.topAnchor.constraint(equalTo: leftNeighbour.topAnchor).isActive = true
+        }
+
+        static func setDurationLabel(_ label: UILabel, _ topNeighbour: UIView) {
+            label.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
+            label.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor).isActive = true
+        }
+        
+        static func setPlotLabel(_ label: UILabel, _ topNeighbour: UIView, _ parent: UIView) {
+            label.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
+            label.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 10.0).isActive = true
+            label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -10.0).isActive = true
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
+        backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1) // #191919
         
+        addSubviewLayout(thumbnail)
+        addSubviewLayout(progressView)
+        progressView.addSubviewLayout(stoppedAtView)
+        addSubviewLayout(episodeTitleLabel)
+        addSubviewLayout(durationLabel)
+        addSubviewLayout(plotLabel)
         
-//        thumbnail.addTarget(self, action: #selector(thumbnailTapped), for: .touchUpInside)
+        Constraints.setThumbnailView(thumbnail, self)
+        Constraints.setProgressView(progressView, thumbnail)
+        Constraints.setStoppedAtView(stoppedAtView, progressView, progress: 0.2)
+        Constraints.setEpisodeTitleLabel(episodeTitleLabel, thumbnail)
+        Constraints.setDurationLabel(durationLabel, episodeTitleLabel)
+        Constraints.setPlotLabel(plotLabel, thumbnail, self)
+        
+        //thumbnail.addTarget(self, action: #selector(thumbnailTapped), for: .touchUpInside)
         
         reset()
     }
