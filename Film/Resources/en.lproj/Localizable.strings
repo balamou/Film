@@ -29,3 +29,7 @@
 "Language" = "Language";
 "IP Address" = "IP Address";
 "Port" = "Port";
+
+"Save" = "Save";
+"Refresh" = "Refresh";
+"Logout" = "Logout";
