@@ -61,7 +61,8 @@ extension ShowInfoViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.identifier, for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
+        header.delegate = self
         
         return header
     }
@@ -70,6 +71,17 @@ extension ShowInfoViewController: UICollectionViewDataSource {
         return .init(width: view.frame.width, height: 440)
     }
     
+}
+
+extension ShowInfoViewController: HeaderViewDelegate {
+    
+    func exitButtonTapped() {
+        navigationController?.popViewController(animated: false)
+    }
+    
+    func playButtonTapped() {
+        print("Play episode")
+    }
 }
 
 extension ShowInfoViewController: UICollectionViewDelegate {

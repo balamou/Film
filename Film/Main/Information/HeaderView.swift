@@ -8,20 +8,28 @@
 
 import UIKit
 
+
+protocol HeaderViewDelegate: AnyObject {
+    func exitButtonTapped()
+    func playButtonTapped()
+}
+
+
 class HeaderView: UICollectionReusableView {
     
     static let identifier = "HeaderView"
+    weak var delegate: HeaderViewDelegate?
     
     var posterPicture: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .blue
+        imageView.backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
         
         return imageView
     }()
     
     var exitButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .yellow
+        button.backgroundColor = .gray
         
         return button
     }()
@@ -136,6 +144,17 @@ class HeaderView: UICollectionReusableView {
         Constraints.setDescriptionLabel(descriptionLabel, playButton, parent: self)
         Constraints.setDividerView(dividerView, descriptionLabel, parent: self)
         Constraints.setSeasonButton(seasonButton, dividerView, parent: self)
+        
+        exitButton.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
+        playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func exitButtonTapped() {
+        delegate?.exitButtonTapped()
+    }
+    
+    @objc func playButtonTapped() {
+        delegate?.playButtonTapped()
     }
     
     required init?(coder aDecoder: NSCoder) {
