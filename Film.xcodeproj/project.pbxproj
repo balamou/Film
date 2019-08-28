@@ -10,6 +10,7 @@
 		74E7E0C53A3EEBF1995B28C8 /* Pods_FilmTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCFD42B2FB6B4EF121D0DDF /* Pods_FilmTests.framework */; };
 		A4845765411C5C49E0C935CB /* Pods_Film.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D06F59D32E4BE75B821F3E4 /* Pods_Film.framework */; };
 		ED1CC3A7231620790061EE21 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1CC3A6231620790061EE21 /* EpisodeCell.swift */; };
+		ED1CC3A9231624FC0061EE21 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1CC3A8231624FC0061EE21 /* HeaderView.swift */; };
 		ED2DBB412315E356009250EC /* ShowsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2DBB402315E356009250EC /* ShowsCell.swift */; };
 		ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */; };
 		ED57FCA2231350F40001A9AB /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED57FC96231350F30001A9AB /* Roboto-Thin.ttf */; };
@@ -84,6 +85,7 @@
 		C50E764FFA0C92871421D32A /* Pods-FilmTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilmTests.debug.xcconfig"; path = "Target Support Files/Pods-FilmTests/Pods-FilmTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CD48029F391D4C6B1D9C650C /* Pods-Film.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Film.debug.xcconfig"; path = "Target Support Files/Pods-Film/Pods-Film.debug.xcconfig"; sourceTree = "<group>"; };
 		ED1CC3A6231620790061EE21 /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
+		ED1CC3A8231624FC0061EE21 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		ED2DBB402315E356009250EC /* ShowsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsCell.swift; sourceTree = "<group>"; };
 		ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
 		ED57FC96231350F30001A9AB /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "../Roboto-Thin.ttf"; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */,
 				EDBEC55423161B3E00041D29 /* ShowInfoView.swift */,
 				ED1CC3A6231620790061EE21 /* EpisodeCell.swift */,
+				ED1CC3A8231624FC0061EE21 /* HeaderView.swift */,
 			);
 			path = Information;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				ED5AC1182314DE590098A161 /* WelcomeViewController.swift in Sources */,
 				ED5AC12823158FED0098A161 /* CustomNavigationBar.swift in Sources */,
 				EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */,
+				ED1CC3A9231624FC0061EE21 /* HeaderView.swift in Sources */,
 				ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */,
 				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 				EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */,
