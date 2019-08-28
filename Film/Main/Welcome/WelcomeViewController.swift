@@ -18,5 +18,27 @@ class WelcomeViewController: UIViewController {
         
         welcomeView = WelcomeView()
         view = welcomeView
+        
+        dismissKey()
+    }
+    
+    //----------------------------------------------------------------------
+    // Status bar
+    //----------------------------------------------------------------------
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}
+
+extension WelcomeViewController {
+    
+    func dismissKey() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

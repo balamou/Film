@@ -6,6 +6,8 @@
   Copyright © 2019 ElasticPanda. All rights reserved.
 */
 
+//Welcome
+"Start" = "Начать";
 
 // Tabs
 "Watching" = "Просмотры";

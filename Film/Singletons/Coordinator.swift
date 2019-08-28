@@ -33,7 +33,7 @@ class Coordinator {
         navigationController.isNavigationBarHidden = true
         navigationController.viewControllers = [tabViewConroller]
         
-        return navigationController
+        return WelcomeViewController()
     }
     
     
