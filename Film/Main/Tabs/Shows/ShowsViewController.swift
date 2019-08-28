@@ -64,6 +64,10 @@ extension ShowsViewController: UICollectionViewDelegate {
     // Item selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: Open Show Description
+        
+        if indexPath.row == 0 {
+            navigationController?.pushViewController(ShowInfoViewController(), animated: false)
+        }
     }
 }
 

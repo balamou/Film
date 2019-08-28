@@ -25,26 +25,7 @@ class WatchingViewController: UIViewController {
         view = watchingView
         
         setupCollectionView()
-        
-        // TMP CODE
-        tmpCODE()
     }
-    
-    // TMP CODE+++
-    func tmpCODE() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tmpCODETap))
-        watchingView.navBar.logoImage.isUserInteractionEnabled = true
-        watchingView.navBar.logoImage.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc func tmpCODETap() {
-         delegate?.tappedPreviouslyWatchedShow()
-    }
-    // TMP CODE---
-    
-    override func viewDidAppear(_ animated: Bool) {
-    }
-    
     
     //----------------------------------------------------------------------
     // Status bar
@@ -114,7 +95,12 @@ extension WatchingViewController: UICollectionViewDelegate {
     
     // Item selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO: Open video player
         
+        // Remove this
+        if indexPath.row == 0 {
+            delegate?.tappedPreviouslyWatchedShow()
+        }
     }
 }
 

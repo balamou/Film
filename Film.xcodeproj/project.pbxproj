@@ -59,6 +59,8 @@
 		ED9B00B823149B7F004D509C /* RobotoCondensed-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED9B00B223149B7F004D509C /* RobotoCondensed-RegularItalic.ttf */; };
 		ED9B00B923149B7F004D509C /* RobotoCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED9B00B323149B7F004D509C /* RobotoCondensed-LightItalic.ttf */; };
 		ED9B00BA23149B7F004D509C /* RobotoCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED9B00B423149B7F004D509C /* RobotoCondensed-BoldItalic.ttf */; };
+		EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */; };
+		EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55423161B3E00041D29 /* ShowInfoView.swift */; };
 		EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB055231497C90045E8D6 /* WatchingViewController.swift */; };
 		EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB0572314985A0045E8D6 /* WatchingView.swift */; };
 /* End PBXBuildFile section */
@@ -152,6 +154,8 @@
 		ED9B00B223149B7F004D509C /* RobotoCondensed-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-RegularItalic.ttf"; sourceTree = "<group>"; };
 		ED9B00B323149B7F004D509C /* RobotoCondensed-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
 		ED9B00B423149B7F004D509C /* RobotoCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
+		EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoViewController.swift; sourceTree = "<group>"; };
+		EDBEC55423161B3E00041D29 /* ShowInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoView.swift; sourceTree = "<group>"; };
 		EDFDB055231497C90045E8D6 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
 		EDFDB0572314985A0045E8D6 /* WatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -223,6 +227,7 @@
 		ED57FCAE2313669A0001A9AB /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				EDBEC5512316181A00041D29 /* Information */,
 				ED5AC10A2314DD330098A161 /* Welcome */,
 				EDFDB054231495EF0045E8D6 /* Tabs */,
 				ED57FCAF231366A80001A9AB /* VideoPlayer */,
@@ -395,6 +400,15 @@
 				ED9B00B223149B7F004D509C /* RobotoCondensed-RegularItalic.ttf */,
 			);
 			path = "Roboto Condensed";
+			sourceTree = "<group>";
+		};
+		EDBEC5512316181A00041D29 /* Information */ = {
+			isa = PBXGroup;
+			children = (
+				EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */,
+				EDBEC55423161B3E00041D29 /* ShowInfoView.swift */,
+			);
+			path = Information;
 			sourceTree = "<group>";
 		};
 		EDFDB054231495EF0045E8D6 /* Tabs */ = {
@@ -604,6 +618,7 @@
 				EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */,
 				ED909B6323123C8300A67AC6 /* header.m in Sources */,
 				ED5AC12E2315CE500098A161 /* FontStandard.swift in Sources */,
+				EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */,
 				ED5AC1142314DE0C0098A161 /* SettingsViewController.swift in Sources */,
 				ED909B40230F006600A67AC6 /* VideoPlayerController.swift in Sources */,
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
@@ -618,6 +633,7 @@
 				ED5AC10E2314DDA30098A161 /* ShowsView.swift in Sources */,
 				ED5AC1182314DE590098A161 /* WelcomeViewController.swift in Sources */,
 				ED5AC12823158FED0098A161 /* CustomNavigationBar.swift in Sources */,
+				EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */,
 				ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */,
 				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 				EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */,
