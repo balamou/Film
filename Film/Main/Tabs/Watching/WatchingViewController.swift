@@ -77,7 +77,7 @@ class WatchingViewController: UIViewController {
 }
 
 
-extension WatchingViewController: UICollectionViewDataSource {
+extension WatchingViewController: UICollectionViewDataSource, WatchingCellDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.data.count
@@ -85,9 +85,20 @@ extension WatchingViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchingCell.identifier, for: indexPath) as! WatchingCell
+        cell.delegate = self
         let data = self.data[indexPath.item]
         cell.viewedLabel.text = data
         return cell
+    }
+    
+    func playButtonTapped() {
+        print("Play button tapped")
+        
+        delegate?.tappedPreviouslyWatchedShow()
+    }
+    
+    func informationButtonTapped() {
+        print("Get info")
     }
 }
 
@@ -96,11 +107,6 @@ extension WatchingViewController: UICollectionViewDelegate {
     // Item selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: Open video player
-        
-        // Remove this
-        if indexPath.row == 0 {
-            delegate?.tappedPreviouslyWatchedShow()
-        }
     }
 }
 

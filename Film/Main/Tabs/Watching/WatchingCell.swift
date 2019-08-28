@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol WatchingCellDelegate: AnyObject {
+    func playButtonTapped()
+    func informationButtonTapped()
+}
+
 class WatchingCell: UICollectionViewCell {
     
     static var identifier: String = "WatchingCell"
+    weak var delegate: WatchingCellDelegate?
     
     var posterImage: UIImageView = {
         let imageView = UIImageView()
@@ -49,11 +55,17 @@ class WatchingCell: UICollectionViewCell {
         return label
     }()
     
-    var informationImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = ImageConstants.informationImage
+    var informationButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageConstants.informationImage, for: .normal)
         
-        return imageView
+        return button
+    }()
+    
+    var playButton: UIButton = {
+        let button = UIButton()
+        
+        return button
     }()
     
     class Constraints {
@@ -92,11 +104,17 @@ class WatchingCell: UICollectionViewCell {
             label.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
         }
         
-        static func setInformationImage(_ imageView: UIImageView, _ parent: UIView) {
-            imageView.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
-            imageView.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -10.0).isActive = true
+        static func setInformationButton(_ button: UIButton, _ parent: UIView) {
+            button.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+            button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -10.0).isActive = true
         }
         
+        static func setPlayButton(_ button: UIButton, _ poster: UIView) {
+            button.topAnchor.constraint(equalTo: poster.topAnchor).isActive = true
+            button.leadingAnchor.constraint(equalTo: poster.leadingAnchor).isActive = true
+            button.widthAnchor.constraint(equalTo: poster.widthAnchor).isActive = true
+            button.heightAnchor.constraint(equalTo: poster.heightAnchor).isActive = true
+        }
     }
     
     
@@ -110,16 +128,29 @@ class WatchingCell: UICollectionViewCell {
         bottomBar.addSubviewLayout(viewedLabel)
         addSubviewLayout(progressView)
         progressView.addSubviewLayout(stoppedAtView)
-        bottomBar.addSubviewLayout(informationImage)
+        bottomBar.addSubviewLayout(informationButton)
+        addSubviewLayout(playButton)
         
         Constraints.setBottomBar(bottomBar, self)
         Constraints.setViewedLabel(viewedLabel, bottomBar)
         Constraints.setProgressView(progressView, bottomBar, self)
         Constraints.setStoppedAt(stoppedAtView, progressView)
-        Constraints.setInformationImage(informationImage, bottomBar)
+        Constraints.setInformationButton(informationButton, bottomBar)
         Constraints.setPosterImage(posterImage, progressView, self)
+        Constraints.setPlayButton(playButton, posterImage)
+        
+        playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
+        informationButton.addTarget(self, action: #selector(informationButtonTapped), for: .touchUpInside)
         
         reset()
+    }
+    
+    @objc func playButtonTapped() {
+        delegate?.playButtonTapped()
+    }
+    
+    @objc func informationButtonTapped() {
+        delegate?.informationButtonTapped()
     }
     
     required init?(coder aDecoder: NSCoder) {
