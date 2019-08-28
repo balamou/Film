@@ -56,6 +56,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EpisodeCell.identifier, for: indexPath) as! EpisodeCell
+        cell.delegate = self
         
         return cell
     }
@@ -73,7 +74,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
     
 }
 
-extension ShowInfoViewController: HeaderViewDelegate {
+extension ShowInfoViewController: HeaderViewDelegate, EpisodeCellDelegate {
     
     func exitButtonTapped() {
         navigationController?.popViewController(animated: false)
@@ -85,6 +86,10 @@ extension ShowInfoViewController: HeaderViewDelegate {
     
     func seasonButtonTapped() {
         print("Change season")
+    }
+    
+    func thumbnailTapped() {
+        print("Thumbnail tapped")
     }
 }
 

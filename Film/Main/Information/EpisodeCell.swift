@@ -65,6 +65,13 @@ class EpisodeCell: UICollectionViewCell {
         return label
     }()
     
+    var playEpisodeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(ImageConstants.playImage, for: .normal)
+        
+        return button
+    }()
+    
     
     class Constraints {
         
@@ -104,6 +111,13 @@ class EpisodeCell: UICollectionViewCell {
             label.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 10.0).isActive = true
             label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -10.0).isActive = true
         }
+        
+        static func setPlayEpisodeButton(_ button: UIButton, _ thumnailView: UIView) {
+            button.topAnchor.constraint(equalTo: thumnailView.topAnchor).isActive = true
+            button.leadingAnchor.constraint(equalTo: thumnailView.leadingAnchor).isActive = true
+            button.widthAnchor.constraint(equalTo: thumnailView.widthAnchor).isActive = true
+            button.heightAnchor.constraint(equalTo: thumnailView.heightAnchor).isActive = true
+        }
     }
     
     override init(frame: CGRect) {
@@ -117,6 +131,7 @@ class EpisodeCell: UICollectionViewCell {
         addSubviewLayout(episodeTitleLabel)
         addSubviewLayout(durationLabel)
         addSubviewLayout(plotLabel)
+        addSubviewLayout(playEpisodeButton)
         
         Constraints.setThumbnailView(thumbnail, self)
         Constraints.setProgressView(progressView, thumbnail)
@@ -124,8 +139,9 @@ class EpisodeCell: UICollectionViewCell {
         Constraints.setEpisodeTitleLabel(episodeTitleLabel, thumbnail)
         Constraints.setDurationLabel(durationLabel, episodeTitleLabel)
         Constraints.setPlotLabel(plotLabel, thumbnail, self)
+        Constraints.setPlayEpisodeButton(playEpisodeButton, thumbnail)
         
-        //thumbnail.addTarget(self, action: #selector(thumbnailTapped), for: .touchUpInside)
+        playEpisodeButton.addTarget(self, action: #selector(thumbnailTapped), for: .touchUpInside)
         
         reset()
     }
