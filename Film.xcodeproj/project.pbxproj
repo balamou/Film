@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		74E7E0C53A3EEBF1995B28C8 /* Pods_FilmTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCFD42B2FB6B4EF121D0DDF /* Pods_FilmTests.framework */; };
 		A4845765411C5C49E0C935CB /* Pods_Film.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D06F59D32E4BE75B821F3E4 /* Pods_Film.framework */; };
+		ED1CC3A7231620790061EE21 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1CC3A6231620790061EE21 /* EpisodeCell.swift */; };
 		ED2DBB412315E356009250EC /* ShowsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2DBB402315E356009250EC /* ShowsCell.swift */; };
 		ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */; };
 		ED57FCA2231350F40001A9AB /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED57FC96231350F30001A9AB /* Roboto-Thin.ttf */; };
@@ -82,6 +83,7 @@
 		6FCFD42B2FB6B4EF121D0DDF /* Pods_FilmTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FilmTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50E764FFA0C92871421D32A /* Pods-FilmTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilmTests.debug.xcconfig"; path = "Target Support Files/Pods-FilmTests/Pods-FilmTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CD48029F391D4C6B1D9C650C /* Pods-Film.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Film.debug.xcconfig"; path = "Target Support Files/Pods-Film/Pods-Film.debug.xcconfig"; sourceTree = "<group>"; };
+		ED1CC3A6231620790061EE21 /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 		ED2DBB402315E356009250EC /* ShowsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsCell.swift; sourceTree = "<group>"; };
 		ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
 		ED57FC96231350F30001A9AB /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "../Roboto-Thin.ttf"; sourceTree = "<group>"; };
@@ -227,10 +229,10 @@
 		ED57FCAE2313669A0001A9AB /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				EDBEC5512316181A00041D29 /* Information */,
 				ED5AC10A2314DD330098A161 /* Welcome */,
 				EDFDB054231495EF0045E8D6 /* Tabs */,
 				ED57FCAF231366A80001A9AB /* VideoPlayer */,
+				EDBEC5512316181A00041D29 /* Information */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -407,6 +409,7 @@
 			children = (
 				EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */,
 				EDBEC55423161B3E00041D29 /* ShowInfoView.swift */,
+				ED1CC3A6231620790061EE21 /* EpisodeCell.swift */,
 			);
 			path = Information;
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */,
 				ED57FCB523138B970001A9AB /* UIImage+extensions.swift in Sources */,
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
+				ED1CC3A7231620790061EE21 /* EpisodeCell.swift in Sources */,
 				ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */,
 				ED2DBB412315E356009250EC /* ShowsCell.swift in Sources */,
 				ED5AC10C2314DD4D0098A161 /* ShowsViewController.swift in Sources */,
