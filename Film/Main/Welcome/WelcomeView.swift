@@ -20,8 +20,27 @@ class WelcomeView: UIView {
     let buttonsFont = FontStandard.RobotoBold(size: 15.0)
     
     
-    lazy var navBar: CustomNavigationBar = {
-        return CustomNavigationBar(title: "welcome".localize())
+    var topBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        
+        return view
+    }()
+    
+    var logoImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = ImageConstants.logoImage
+        
+        return imageView
+    }()
+    
+    var topLabel: UILabel = {
+        let label = UILabel()
+        label.text = "film"
+        label.textColor = .white
+        label.font = FontStandard.RobotoCondensedBold(size: 21.0)
+        
+        return label
     }()
     
     // Labels
@@ -114,7 +133,7 @@ class WelcomeView: UIView {
     lazy var startButton: UIButton = {
         let button = UIButton()
         button.setTitle("Start".localize(), for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.8980392157, green: 0.03529411765, blue: 0.07843137255, alpha: 1) // #E50914
+        button.backgroundColor = .black
         button.titleLabel?.font = buttonsFont
         
         return button
@@ -125,6 +144,25 @@ class WelcomeView: UIView {
         static let textFieldHeight: CGFloat = 30.0
         static var distanceBetweenFields: CGFloat = 15.0
         static let buttonsMargin: CGFloat = 20.0
+        
+        static func setTopBar(_ view: UIView, _ parent: UIView) {
+            view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            view.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
+            view.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 198.0).isActive = true
+        }
+        
+        static func setLogoImageView(_ imageView: UIImageView, _ parent: UIView) {
+            imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 50.0).isActive = true
+            imageView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 87.0).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 87.0).isActive = true
+        }
+        
+        static func setTopLabel(_ label: UILabel, _ parent: UIView) {
+            label.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -10.0).isActive = true
+            label.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        }
         
         // Labels
         
@@ -179,7 +217,7 @@ class WelcomeView: UIView {
         // Buttons
         
         static func setStartButton(_ button: UIButton, _ topNeighbour: UIView, _ parent: UIView) {
-            button.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 40.0).isActive = true
+            button.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 60.0).isActive = true
             button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
             button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin).isActive = true
             button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -buttonsMargin).isActive = true
@@ -192,7 +230,9 @@ class WelcomeView: UIView {
         
         backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
         
-        addSubviewLayout(navBar)
+        addSubviewLayout(topBar)
+        topBar.addSubviewLayout(logoImage)
+        topBar.addSubviewLayout(topLabel)
         addSubviewLayout(usernameLabel)
         addSubviewLayout(languageLabel)
         addSubviewLayout(ipAddressLabel)
@@ -205,13 +245,15 @@ class WelcomeView: UIView {
         
         addSubviewLayout(startButton)
         
-        navBar.setConstraints(parent: self)
+        Constraints.setTopBar(topBar, self)
+        Constraints.setLogoImageView(logoImage, topBar)
+        Constraints.setTopLabel(topLabel, topBar)
         Constraints.setUsernameLabel(usernameLabel, self, usernameField)
         Constraints.setLanguageLabel(languageLabel, self, languageField)
         Constraints.setIPAddressLabel(ipAddressLabel, self, ipAddressField)
         Constraints.setPortLabel(portLabel, self, portField)
         
-        Constraints.setUsernameTextField(usernameField, navBar)
+        Constraints.setUsernameTextField(usernameField, topBar)
         Constraints.setLanguageTextField(languageField, usernameField)
         Constraints.setIPAddressTextField(ipAddressField, languageField)
         Constraints.setPortTextField(portField, ipAddressField)
