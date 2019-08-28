@@ -89,7 +89,6 @@ class WelcomeView: UIView {
         textField.textColor = .white
         textField.font = textFieldFont
         textField.text = "michelbalamou"
-        textField.isEnabled = false
         textField.keyboardAppearance = .dark
         
         return textField

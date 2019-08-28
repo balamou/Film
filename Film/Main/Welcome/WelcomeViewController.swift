@@ -20,6 +20,13 @@ class WelcomeViewController: UIViewController {
         view = welcomeView
         
         dismissKey()
+        
+        welcomeView.startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+    }
+    
+    
+    @objc func startButtonTapped() {
+        print("Start tapped")
     }
     
     //----------------------------------------------------------------------
