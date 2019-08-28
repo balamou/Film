@@ -18,6 +18,27 @@ class SettingsViewController: UIViewController {
         
         settingsView = SettingsView()
         view = settingsView
+        
+        settingsView.saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        settingsView.refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
+        settingsView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        
+        dismissKey()
+    }
+    
+    //----------------------------------------------------------------------
+    // MARK: Action
+    //----------------------------------------------------------------------
+    @objc func saveButtonTapped() {
+        print("Save")
+    }
+    
+    @objc func refreshButtonTapped() {
+        print("Refresh")
+    }
+    
+    @objc func logoutButtonTapped() {
+        print("Logout")
     }
     
     //----------------------------------------------------------------------
@@ -27,3 +48,17 @@ class SettingsViewController: UIViewController {
         return .lightContent
     }
 }
+
+extension SettingsViewController {
+    
+    func dismissKey() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
