@@ -18,6 +18,7 @@ class ShowsViewController: UIViewController {
     
     var showsView: ShowsView!
     weak var showsCollectionView: UICollectionView!
+    var isFetchingMore = false
     var data: [SeriesPresenter] = SeriesPresenter.getMockData()
     var mode: ShowsViewControllerMode = .loading {
         didSet {
@@ -75,6 +76,34 @@ class ShowsViewController: UIViewController {
         showsCollectionView.delegate = self
         showsCollectionView.register(ShowsCell.self, forCellWithReuseIdentifier: ShowsCell.identifier)
         showsCollectionView.alwaysBounceVertical = true
+    }
+}
+
+//----------------------------------------------------------------------
+// Scrolling: "Infinite Scroll"
+//----------------------------------------------------------------------
+
+extension ShowsViewController {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if offsetY > contentHeight - scrollView.frame.height, !isFetchingMore {
+            beginBatchFetch()
+        }
+    }
+    
+    func beginBatchFetch() {
+        isFetchingMore = true
+        print("beginBatchFetch!")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            // fake API call
+            self.data += SeriesPresenter.getMockData()
+            self.showsView.showListCollectionView.reloadData()
+            self.isFetchingMore = false
+        })
     }
 }
 
