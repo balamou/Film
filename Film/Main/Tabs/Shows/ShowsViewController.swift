@@ -75,6 +75,7 @@ class ShowsViewController: UIViewController {
         showsCollectionView.dataSource = self
         showsCollectionView.delegate = self
         showsCollectionView.register(ShowsCell.self, forCellWithReuseIdentifier: ShowsCell.identifier)
+        showsCollectionView.register(LoadingCell.self, forCellWithReuseIdentifier: LoadingCell.identifier)
         showsCollectionView.alwaysBounceVertical = true
     }
 }
@@ -89,7 +90,7 @@ extension ShowsViewController {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
-        if offsetY > contentHeight - scrollView.frame.height, !isFetchingMore {
+        if offsetY > contentHeight - scrollView.frame.height * 2, !isFetchingMore { // mutlitpled by 2 so it start loading data earlier
             beginBatchFetch()
         }
     }
@@ -97,6 +98,8 @@ extension ShowsViewController {
     func beginBatchFetch() {
         isFetchingMore = true
         print("beginBatchFetch!")
+        
+        showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             // fake API call
@@ -109,17 +112,34 @@ extension ShowsViewController {
 
 extension ShowsViewController: UICollectionViewDataSource {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2 // one section for shows & the other for the spinner
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        if section == 0 {
+            return data.count
+        } else if section == 1 && isFetchingMore {
+            return 1
+        }
+        
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowsCell.identifier, for: indexPath) as! ShowsCell
-        let data = self.data[indexPath.item]
-        
-        cell.posterURL = data.posterURL
-        
-        return cell
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowsCell.identifier, for: indexPath) as! ShowsCell
+            let data = self.data[indexPath.item]
+            
+            cell.posterURL = data.posterURL
+            
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.identifier, for: indexPath) as! LoadingCell
+            cell.spinner.startAnimating()
+            
+            return cell
+        }
     }
     
 }
@@ -139,11 +159,23 @@ extension ShowsViewController: UICollectionViewDelegate {
 extension ShowsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 110, height: 160) // size of a cell
+        if indexPath.section == 0 {
+            return CGSize(width: 110, height: 160) // size of a cell
+        } else if indexPath.section == 1 && isFetchingMore {
+            return CGSize(width: collectionView.frame.width, height: 50)
+        }
+        
+        return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) // overall insets of the collection view
+        if section == 0 {
+           return UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) // overall insets of the collection view section
+        } else if section == 1 && isFetchingMore {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 10.0, right: 0) // overall insets of the collection view section
+        }
+        
+        return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

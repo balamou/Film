@@ -66,6 +66,7 @@
 		EDB57E9423176EC70049504E /* UIImageView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E9323176EC70049504E /* UIImageView+extensions.swift */; };
 		EDB57E96231885F10049504E /* MockAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E95231885F10049504E /* MockAPI.swift */; };
 		EDB57E9B231887030049504E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDB57E99231887030049504E /* InfoPlist.strings */; };
+		EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E9E23188B450049504E /* LoadingCell.swift */; };
 		EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */; };
 		EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55423161B3E00041D29 /* ShowInfoView.swift */; };
 		EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB055231497C90045E8D6 /* WatchingViewController.swift */; };
@@ -170,6 +171,7 @@
 		EDB57E9A231887030049504E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDB57E9C231887390049504E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDB57E9D2318873C0049504E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EDB57E9E23188B450049504E /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoViewController.swift; sourceTree = "<group>"; };
 		EDBEC55423161B3E00041D29 /* ShowInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoView.swift; sourceTree = "<group>"; };
 		EDFDB055231497C90045E8D6 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				ED5AC10B2314DD4D0098A161 /* ShowsViewController.swift */,
 				ED5AC10D2314DDA30098A161 /* ShowsView.swift */,
 				ED2DBB402315E356009250EC /* ShowsCell.swift */,
+				EDB57E9E23188B450049504E /* LoadingCell.swift */,
 			);
 			path = Shows;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				ED57FCB3231383540001A9AB /* CGRect+extensions.swift in Sources */,
 				EDB57E9423176EC70049504E /* UIImageView+extensions.swift in Sources */,
 				ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */,
+				EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */,
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
 				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
 				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,

@@ -51,7 +51,7 @@ class ShowsView: UIView {
         static func setShowListCollectionView(_ collectionView: UICollectionView, _ navBar: UIView, _ parent: UIView) {
             collectionView.topAnchor.constraint(equalTo: navBar.bottomAnchor).isActive = true
             collectionView.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            collectionView.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+            collectionView.bottomAnchor.constraint(equalTo: parent.safeAreaLayoutGuide.bottomAnchor).isActive = true
             collectionView.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
         }
         
