@@ -8,9 +8,19 @@
 
 import UIKit
 
+let imageCache = NSCache<NSString, AnyObject>()
+
+
 extension UIImageView {
     
-    func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+    func downloaded(from url: URL, urlString: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+        if let imageFromCache = imageCache.object(forKey: urlString as NSString) as? UIImage {
+            self.image = imageFromCache
+            
+            return 
+        }
+        
+        
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard
                 let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
@@ -19,13 +29,17 @@ extension UIImageView {
                 let image = UIImage(data: data)
                 else { return }
             DispatchQueue.main.async() {
-                self.image = image
+                let imageToCache = image
+                
+                imageCache.setObject(imageToCache, forKey: urlString as NSString)
+                
+                self.image = imageToCache
             }
             }.resume()
     }
     
     func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
+        downloaded(from: url, urlString: link , contentMode: mode)
     }
 }
