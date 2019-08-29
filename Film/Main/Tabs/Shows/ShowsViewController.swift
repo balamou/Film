@@ -117,9 +117,7 @@ extension ShowsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowsCell.identifier, for: indexPath) as! ShowsCell
         let data = self.data[indexPath.item]
         
-        if let posterURL = data.posterURL {
-            cell.posterImageView.downloaded(from: posterURL)
-        }
+        cell.posterURL = data.posterURL
         
         return cell
     }

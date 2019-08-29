@@ -11,6 +11,14 @@ import UIKit
 class ShowsCell: UICollectionViewCell {
     
     static let identifier: String = "ShowsCell"
+    var posterURL: String? = nil {
+        didSet {
+            if let url = posterURL {
+                posterImageView.downloaded(from: url)
+            }
+        }
+    }
+    
     
     var posterImageView: UIImageView = {
         let imageView = UIImageView()
