@@ -61,6 +61,7 @@
 		ED9B00B823149B7F004D509C /* RobotoCondensed-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED9B00B223149B7F004D509C /* RobotoCondensed-RegularItalic.ttf */; };
 		ED9B00B923149B7F004D509C /* RobotoCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED9B00B323149B7F004D509C /* RobotoCondensed-LightItalic.ttf */; };
 		ED9B00BA23149B7F004D509C /* RobotoCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED9B00B423149B7F004D509C /* RobotoCondensed-BoldItalic.ttf */; };
+		EDB57E90231766980049504E /* Watched.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E8F231766980049504E /* Watched.swift */; };
 		EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */; };
 		EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55423161B3E00041D29 /* ShowInfoView.swift */; };
 		EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB055231497C90045E8D6 /* WatchingViewController.swift */; };
@@ -158,6 +159,7 @@
 		ED9B00B223149B7F004D509C /* RobotoCondensed-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-RegularItalic.ttf"; sourceTree = "<group>"; };
 		ED9B00B323149B7F004D509C /* RobotoCondensed-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
 		ED9B00B423149B7F004D509C /* RobotoCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
+		EDB57E8F231766980049504E /* Watched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Watched.swift; sourceTree = "<group>"; };
 		EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoViewController.swift; sourceTree = "<group>"; };
 		EDBEC55423161B3E00041D29 /* ShowInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoView.swift; sourceTree = "<group>"; };
 		EDFDB055231497C90045E8D6 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				ED909B5F231232FD00A67AC6 /* Singletons */,
 				ED909B5E230F00A100A67AC6 /* Resources */,
 				ED909B5D230F009400A67AC6 /* Supporting Files */,
+				EDB57E8E231766890049504E /* Model */,
 				ED57FCAE2313669A0001A9AB /* Main */,
 			);
 			path = Film;
@@ -372,10 +375,10 @@
 			isa = PBXGroup;
 			children = (
 				ED909B3D230F006600A67AC6 /* AppDelegate.swift */,
+				ED5AC12523157A260098A161 /* Coordinator.swift */,
 				ED82DBC423146B0F00FEC56A /* Debugger.swift */,
 				ED5AC1042314C45A0098A161 /* ImageConstants.swift */,
 				ED5AC12D2315CE500098A161 /* FontStandard.swift */,
-				ED5AC12523157A260098A161 /* Coordinator.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -404,6 +407,14 @@
 				ED9B00B223149B7F004D509C /* RobotoCondensed-RegularItalic.ttf */,
 			);
 			path = "Roboto Condensed";
+			sourceTree = "<group>";
+		};
+		EDB57E8E231766890049504E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EDB57E8F231766980049504E /* Watched.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		EDBEC5512316181A00041D29 /* Information */ = {
@@ -645,6 +656,7 @@
 				ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */,
 				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 				EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */,
+				EDB57E90231766980049504E /* Watched.swift in Sources */,
 				ED57FCB3231383540001A9AB /* CGRect+extensions.swift in Sources */,
 				ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */,
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,

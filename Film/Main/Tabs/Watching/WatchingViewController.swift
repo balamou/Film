@@ -43,7 +43,7 @@ class WatchingViewController: UIViewController {
         }
     }
     
-    var data: [Watched] = Watched.getMockData()
+    var data: [Watched] = []
     
     var watchingView: WatchingView!
     var delegate: WatchingViewControllerDelegate?
@@ -68,7 +68,7 @@ class WatchingViewController: UIViewController {
         case .idle:
             mode = .loading
         case .loading:
-            mode = .hasData(Watched.getMockData())
+            mode = .hasData(data + Watched.getRandomMock())
         case .hasData(_):
             mode = .idle
         }
