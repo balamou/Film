@@ -136,6 +136,10 @@ extension WatchingViewController: UICollectionViewDataSource, WatchingCellDelega
         cell.viewedLabel.text = data.label
         cell.switchMultiplier(multiplier: data.stoppedAt)
         
+        if let posterURL = data.posterURL {
+            cell.posterImage.downloaded(from: posterURL)
+        }
+        
         return cell
     }
     
