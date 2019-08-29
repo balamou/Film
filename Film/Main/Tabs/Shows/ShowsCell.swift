@@ -12,10 +12,31 @@ class ShowsCell: UICollectionViewCell {
     
     static let identifier: String = "ShowsCell"
     
+    var posterImageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        return imageView
+    }()
+    
+    class Constraints {
+        
+        static func setPosterImageView(_ imageView: UIImageView, _ parent: UIView) {
+            imageView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            imageView.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
+            imageView.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
+            imageView.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+        }
+        
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
+        
+        addSubviewLayout(posterImageView)
+        
+        Constraints.setPosterImageView(posterImageView, self)
         
         reset()
     }

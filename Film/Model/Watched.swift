@@ -37,7 +37,10 @@ class Watched {
     static func getRandomMock() -> [Watched] {
         let imageURLs = ["https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_39_-_COVER_A_FNL_WEB_1024x.jpg?v=1530034748",
             "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_V9_TPB_-_COVER_B_FNL_WEB_1024x.jpg?v=1561666332",
-        "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_53_-_COVER_A_SOLICIT_WEB_1024x.jpg?v=1566330470"]
+        "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_53_-_COVER_A_SOLICIT_WEB_1024x.jpg?v=1566330470",
+        "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_PRESENTS_V1_-_COVER_B_FNL_WEB_1024x.jpg?v=1559159173",
+        "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_PRESENTS_V1_-_COVER_A_FNL_WEB_1024x.jpg?v=1559158092",
+        "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_45_-_COVER_A_SOLICIT_WEB_1024x.jpg?v=1546446607"]
         
         let videoURLs = ["http://192.168.72.46:9989/EN/series/rick_and_morty/S1/E01.mp4",
                          "http://192.168.72.46:9989/EN/movies/get_out/movie.mp4",

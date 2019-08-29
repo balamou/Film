@@ -11,7 +11,7 @@ import UIKit
 class ShowsView: UIView {
     
     lazy var navBar: CustomNavigationBar = {
-        return CustomNavigationBar(title: "shows".localize())
+        return CustomNavigationBar(title: "shows".localize(), showLogo: true)
     }()
     
     var showListCollectionView: UICollectionView = {

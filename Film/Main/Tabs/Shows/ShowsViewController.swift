@@ -9,9 +9,30 @@
 import UIKit
 
 
+enum ShowsViewControllerMode {
+    case loading
+    case hasShows([SeriesPresenter])
+}
+
 class ShowsViewController: UIViewController {
     
     var showsView: ShowsView!
+    weak var showsCollectionView: UICollectionView!
+    var data: [SeriesPresenter] = SeriesPresenter.getMockData()
+    var mode: ShowsViewControllerMode = .loading {
+        didSet {
+            switch mode {
+            case .loading:
+                showsView.loadingView.isHidden = false
+                showsView.showListCollectionView.isHidden = true
+            case .hasShows(let freshData):
+                showsView.loadingView.isHidden = true
+                showsView.showListCollectionView.isHidden = false
+                
+                self.data = freshData
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +41,21 @@ class ShowsViewController: UIViewController {
         view = showsView
         
         setupCollectionView()
+        
+        // TMP CODE
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedTMP))
+        showsView.navBar.logoImage.isUserInteractionEnabled = true
+        showsView.navBar.logoImage.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func tappedTMP() {
+        
+        switch mode{
+        case .loading:
+            mode = .hasShows(data)
+        case .hasShows(_):
+            mode = .loading
+        }
     }
     
     //----------------------------------------------------------------------
@@ -32,9 +68,6 @@ class ShowsViewController: UIViewController {
     //----------------------------------------------------------------------
     // MARK: Collection View
     //----------------------------------------------------------------------
-    weak var showsCollectionView: UICollectionView!
-    var data: [String] = ["Url1", "Url2", "Url3", "Url4"]
-    
     func setupCollectionView() {
         showsCollectionView = showsView.showListCollectionView
         
@@ -53,6 +86,11 @@ extension ShowsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowsCell.identifier, for: indexPath) as! ShowsCell
+        let data = self.data[indexPath.item]
+        
+        if let posterURL = data.posterURL {
+            cell.posterImageView.downloaded(from: posterURL)
+        }
         
         return cell
     }
