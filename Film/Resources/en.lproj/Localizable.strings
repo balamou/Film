@@ -24,10 +24,17 @@
 "E" = "E"; // Episode
 "Loading..." = "Loading...";
 
+// Shows
+"shows" = "shows";
+
+// Movies
+"movies" = "movies";
+
 // Player VC
 "Next episode" = "Next episode";
 
 // Settings
+"settings" = "settings";
 "Username" = "Username";
 "Language" = "Language";
 "IP Address" = "IP Address";

@@ -24,10 +24,17 @@
 "E" = "С";
 "Loading..." = "Загружается...";
 
+// Shows
+"shows" = "сериалы";
+
+// Movies
+"movies" = "фильмы";
+
 // Player VC
 "Next episode" = "Следующий эпизод";
 
 // Settings
+"settings" = "настройки";
 "Username" = "Имя";
 "Language" = "Язык";
 "IP Address" = "IP Address";

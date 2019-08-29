@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Film
+
+  Created by Michel Balamou on 2019-08-29.
+  Copyright © 2019 ElasticPanda. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "Film";
+"NSHumanReadableCopyright" = "2019 ElasticPanda Inc. All rights reserved.";
