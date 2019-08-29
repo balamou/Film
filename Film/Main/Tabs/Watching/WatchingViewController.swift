@@ -131,14 +131,12 @@ extension WatchingViewController: UICollectionViewDataSource, WatchingCellDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchingCell.identifier, for: indexPath) as! WatchingCell
-        cell.delegate = self
-        let data = self.data[indexPath.item]
-        cell.viewedLabel.text = data.label
-        cell.switchMultiplier(multiplier: data.stoppedAt)
         
-        if let posterURL = data.posterURL {
-            cell.posterImage.downloaded(from: posterURL)
-        }
+        let data = self.data[indexPath.item]
+        cell.delegate = self
+        cell.viewedLabel.text = data.label
+        cell.progress = data.stoppedAt
+        cell.posterURL = data.posterURL
         
         return cell
     }

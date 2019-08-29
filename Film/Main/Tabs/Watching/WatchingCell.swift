@@ -18,6 +18,18 @@ class WatchingCell: UICollectionViewCell {
     static var identifier: String = "WatchingCell"
     weak var delegate: WatchingCellDelegate?
     var multiply: NSLayoutConstraint?
+    var progress: Float = 0.5 {
+        didSet {
+            self.switchMultiplier(multiplier: progress)
+        }
+    }
+    var posterURL: String? = nil {
+        didSet {
+            if let url = posterURL {
+                 posterImage.downloaded(from: url)
+            }
+        }
+    }
     
     var posterImage: UIImageView = {
         let imageView = UIImageView()
