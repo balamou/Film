@@ -25,9 +25,25 @@ class WatchingView: UIView {
     // Loading view
     var loadingView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
         
         return view
+    }()
+    
+    var spinner: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.startAnimating()
+        activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge
+        
+        return activityIndicator
+    }()
+    
+    var loadingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Loading...".localize()
+        label.textColor = .white // NOTE: this is about to be deprecated
+        label.font = FontStandard.RobotoCondensedBold(size: 18.0)
+        
+        return label
     }()
     
     // IDLE
@@ -63,11 +79,22 @@ class WatchingView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
         }
         
+        // Loading View
         static func setLoadingView(_ view: UIView, _ parent: UIView) {
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             view.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
             view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: 150.0).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
+        }
+        
+        static func setSpinner(_ activityIndicator: UIActivityIndicatorView, _ parent: UIView) {
+            activityIndicator.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            activityIndicator.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        }
+        
+        static func setLoadingLabel(_ label: UILabel, _ topNeihgbour: UIView) {
+            label.topAnchor.constraint(equalTo: topNeihgbour.bottomAnchor, constant: 10.0).isActive = true
+            label.centerXAnchor.constraint(equalTo: topNeihgbour.centerXAnchor).isActive = true
         }
         
         // IDLE
@@ -104,11 +131,16 @@ class WatchingView: UIView {
         idleView.addSubviewLayout(idleLabel)
         
         addSubviewLayout(loadingView)
+        loadingView.addSubviewLayout(spinner)
+        loadingView.addSubviewLayout(loadingLabel)
         
         Constraints.setIdleView(idleView, self)
         Constraints.setIdleImage(idleImage, idleView)
         Constraints.setIdleLabel(idleLabel, idleImage)
+        
         Constraints.setLoadingView(loadingView, self)
+        Constraints.setSpinner(spinner, loadingView)
+        Constraints.setLoadingLabel(loadingLabel, spinner)
         
         idleView.bottomAnchor.constraint(equalTo: idleLabel.bottomAnchor).isActive = true
     }

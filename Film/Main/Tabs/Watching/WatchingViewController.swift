@@ -135,7 +135,6 @@ extension WatchingViewController: UICollectionViewDataSource, WatchingCellDelega
         let data = self.data[indexPath.item]
         cell.viewedLabel.text = data.label
         cell.switchMultiplier(multiplier: data.stoppedAt)
-        //cell.setNeedsLayout()
         
         return cell
     }
