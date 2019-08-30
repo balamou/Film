@@ -22,6 +22,7 @@ class ShowsViewController: UIViewController {
     
     var showsView: ShowsView!
     weak var showsCollectionView: UICollectionView!
+    weak var delegate: ShowsDelegate?
     
     var isFetchingMore = false
     var isInfiniteScrollEnabled = true
@@ -34,13 +35,9 @@ class ShowsViewController: UIViewController {
     // API
     var apiManager: SeriesMoviesAPI?
     let numberOfShowsToLoad = 9
-    weak var delegate: ShowsDelegate?
-    lazy var alert: AlertViewController = {
-        let alert = AlertViewController()
-        alert.addAsChild(self)
-        
-        return alert
-    }()
+    
+    // Alert
+    var alert: AlertViewController?
     
     //----------------------------------------------------------------------
     // MARK: Methods
@@ -52,8 +49,8 @@ class ShowsViewController: UIViewController {
         showsView = ShowsView()
         view = showsView
         showsView.delegate = self
+        alert = AlertViewController(parent: self)
         
-        _ = alert // initialize lazy alert
         setupCollectionView()
         initialLoadSeries()
     }
@@ -104,7 +101,7 @@ extension ShowsViewController {
             [weak self] series, isLast, error in
             if let error = error {
                 // TODO: Show idle image/icon with error message
-                self?.alert.mode = .showMessage(error)
+                self?.alert?.mode = .showMessage(error)
             } else {
                 self?.mode = .hasShows(series, isLast: isLast)
             }
@@ -115,7 +112,7 @@ extension ShowsViewController {
         apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
             [weak self] series, isLast, error in
             if let error = error {
-                self?.alert.mode = .showMessage(error) // show alert
+                self?.alert?.mode = .showMessage(error) // show alert
                 self?.isFetchingMore = false // stop displaying loading indicator
                 self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
             } else {
@@ -131,7 +128,7 @@ extension ShowsViewController {
         apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) {
             [weak self] series, isLast, error in
             if let error = error {
-                self?.alert.mode = .showMessage(error) // show alert
+                self?.alert?.mode = .showMessage(error) // show alert
             } else {
                 self?.data = SeriesPresenter.getMockData()
                 self?.showsView.showListCollectionView.reloadData()
