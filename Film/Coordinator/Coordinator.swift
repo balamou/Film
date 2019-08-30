@@ -12,22 +12,17 @@ class Coordinator {
     
     let navigationController = UINavigationController()
     var playerVC: VideoPlayerController?
+    let builder: Builder = Builder()
     
     func start() -> UIViewController {
-        let watchingVC = WatchingViewController()
-        let showsVC = ShowsViewController()
-        showsVC.apiManager = MockSeriesAPI()
-        showsVC.delegate = self
-        let moviesVC = MoviewsViewController()
-        let settingsVC = SettingsViewController()
         
-        watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: ImageConstants.watchingImage, tag: 0)
-        showsVC.tabBarItem = UITabBarItem(title: "Shows".localize(), image: ImageConstants.showsImage, tag: 1)
-        moviesVC.tabBarItem = UITabBarItem(title: "Movies".localize(), image: ImageConstants.moviesImage, tag: 2)
-        settingsVC.tabBarItem = UITabBarItem(title: "Settings".localize(), image: ImageConstants.settingsImage, tag: 3)
+        // Setup ViewController
+        let watchingVC = builder.createWatchingViewController(delegate: self)
+        let showsVC = builder.createShowViewController(delegate: self)
+        let moviesVC = builder.createMoviesViewController()
+        let settingsVC = builder.createSettingsViewController()
         
-        watchingVC.delegate = self
-        
+        // Setup Navigation
         let tabViewConroller = UITabBarController()
         tabViewConroller.viewControllers = [watchingVC, showsVC, moviesVC, settingsVC]
         tabViewConroller.tabBar.barTintColor = .black
