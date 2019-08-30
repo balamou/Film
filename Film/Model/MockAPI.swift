@@ -20,7 +20,7 @@ class MockSeriesAPI: SeriesMoviesAPI {
     
     func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ error: String?) -> ()) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
             let error: String? = self.count == 2 || self.count == 3 ? "Could not load" : nil
             
             result(SeriesPresenter.getMockData(), error)

@@ -11,6 +11,8 @@ import UIKit
 
 class AlertView: UIView {
     
+    var isAnimating = false
+    
     lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0.968627451, green: 0.3294117647, blue: 0.3803921569, alpha: 1)
@@ -22,6 +24,7 @@ class AlertView: UIView {
         let label = UILabel()
         label.text = "Warning message"
         label.textColor = UIColor.white
+        label.font = FontStandard.helveticaNeue(size: 15.0)
         
         return label
     }()
@@ -92,7 +95,11 @@ class AlertView: UIView {
     var currentPosition: [NSLayoutConstraint]?
     
     func startAnimatingDown() {
+        if isAnimating == true {
+            return // TODO: Add to a queue or interupt current animation
+        }
         
+        isAnimating = true
         pickNewConstraints(Constraints.bottomPosition(backgroundView, self))
     
         UIView.animate(withDuration: 0.6, animations: {
@@ -106,10 +113,11 @@ class AlertView: UIView {
         
         pickNewConstraints(Constraints.topPosition(backgroundView, self))
      
-        UIView.animate(withDuration: 1.5, delay: 2.0, options: [], animations: {
+        UIView.animate(withDuration: 0.6, delay: 2.0, options: [], animations: {
             self.layoutIfNeeded()
         }, completion: {  finished in
             self.isHidden = true
+            self.isAnimating = false
         })
     
     }
