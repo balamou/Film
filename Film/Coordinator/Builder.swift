@@ -9,7 +9,15 @@
 import UIKit
 
 
-class Builder {
+protocol Builder {
+    func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController
+    func createShowViewController(delegate: ShowsDelegate?) -> ShowsViewController
+    func createMoviesViewController() -> MoviewsViewController
+    func createSettingsViewController() -> SettingsViewController
+}
+
+
+class StandardBuilder: Builder {
     
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController {
         let watchingVC = WatchingViewController()
@@ -21,7 +29,9 @@ class Builder {
     
     func createShowViewController(delegate: ShowsDelegate?) -> ShowsViewController {
         let showsVC = ShowsViewController()
-        showsVC.apiManager = MockSeriesAPI()
+        let apiManager: SeriesMoviesAPI = MockSeriesAPI()
+        
+        showsVC.apiManager = apiManager
         showsVC.delegate = delegate
         showsVC.tabBarItem = UITabBarItem(title: "Shows".localize(), image: ImageConstants.showsImage, tag: 1)
         

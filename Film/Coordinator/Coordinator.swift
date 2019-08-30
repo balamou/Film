@@ -12,7 +12,7 @@ class Coordinator {
     
     let navigationController = UINavigationController()
     var playerVC: VideoPlayerController?
-    let builder: Builder = Builder()
+    let builder: Builder = StandardBuilder()
     
     func start() -> UIViewController {
         

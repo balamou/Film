@@ -35,12 +35,13 @@ class ShowsViewController: UIViewController {
                 showsView.showListCollectionView.isHidden = false
                 
                 self.data = freshData
+                showsView.showListCollectionView.reloadData()
             }
         }
     }
     // API
     var apiManager: SeriesMoviesAPI?
-    let numberOfShowsToLoad = 6
+    let numberOfShowsToLoad = 9
     weak var delegate: ShowsDelegate?
     lazy var alert: AlertViewController = {
         let alert = AlertViewController()
@@ -58,12 +59,33 @@ class ShowsViewController: UIViewController {
         
         setupCollectionView()
         
-        // TMP CODE
+        let _ = alert
+        
+        // TMP CODE for debugging
+        setupLogoTapTMP()
+        preloadSeries()
+    }
+    
+    func preloadSeries() {
+        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
+            [weak self] series, error in
+            if let error = error {
+                // TODO: Show idle image/icon with error message
+                self?.alert.mode = .showMessage(error)
+                self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
+            } else {
+                self?.mode = .hasShows(series)
+            }
+        }
+    }
+    
+    //----------------------------------------------------------------------
+    // MARK: TMP CODE for debugging
+    //----------------------------------------------------------------------
+    func setupLogoTapTMP() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedTMP))
         showsView.navBar.logoImage.isUserInteractionEnabled = true
         showsView.navBar.logoImage.addGestureRecognizer(tapGesture)
-        
-        let _ = alert
     }
     
     @objc func tappedTMP() {
@@ -113,16 +135,18 @@ extension ShowsViewController {
     }
     
     func beginBatchFetch() {
-        isFetchingMore = true
         print("Get more shows")
-        
+        isFetchingMore = true
         showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
         
+        makeAPICall()
+    }
+    
+    func makeAPICall() {
         apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
             [weak self] series, error in
             if let error = error {
-                // TODO: Show alert
-                self?.alert.mode = .showMessage(error)
+                self?.alert.mode = .showMessage(error) // show alert
                 self?.isFetchingMore = false // stop displaying loading indicator
                 self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
             } else {
