@@ -22,6 +22,7 @@ class ShowsViewController: UIViewController {
     
     var showsView: ShowsView!
     weak var showsCollectionView: UICollectionView!
+    
     var isFetchingMore = false
     var isInfiniteScrollEnabled = true
     var data: [SeriesPresenter] = []
@@ -41,6 +42,9 @@ class ShowsViewController: UIViewController {
         return alert
     }()
     
+    //----------------------------------------------------------------------
+    // MARK: Methods
+    //----------------------------------------------------------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,20 +55,7 @@ class ShowsViewController: UIViewController {
         
         _ = alert // initialize lazy alert
         setupCollectionView()
-        preloadSeries()
-    }
-    
-    func preloadSeries() {
-        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
-            [weak self] series, isLast, error in
-            if let error = error {
-                // TODO: Show idle image/icon with error message
-                self?.alert.mode = .showMessage(error)
-                self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
-            } else {
-                self?.mode = .hasShows(series, isLast: isLast)
-            }
-        }
+        initialLoadSeries()
     }
     
     func switchedMode(mode: ShowsViewControllerMode) {
@@ -104,6 +95,76 @@ class ShowsViewController: UIViewController {
 }
 
 //----------------------------------------------------------------------
+// MARK: API Calls
+//----------------------------------------------------------------------
+extension ShowsViewController {
+    
+    func initialLoadSeries() {
+        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) {
+            [weak self] series, isLast, error in
+            if let error = error {
+                // TODO: Show idle image/icon with error message
+                self?.alert.mode = .showMessage(error)
+            } else {
+                self?.mode = .hasShows(series, isLast: isLast)
+            }
+        }
+    }
+    
+    func loadMoreOnDragDown() {
+        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
+            [weak self] series, isLast, error in
+            if let error = error {
+                self?.alert.mode = .showMessage(error) // show alert
+                self?.isFetchingMore = false // stop displaying loading indicator
+                self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
+            } else {
+                self?.data += SeriesPresenter.getMockData()
+                self?.showsView.showListCollectionView.reloadData()
+                self?.isFetchingMore = false // stop displaying loading indicator
+                self?.isInfiniteScrollEnabled = !isLast
+            }
+        }
+    }
+    
+    func refreshOnPull(completion: @escaping () -> ()) {
+        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) {
+            [weak self] series, isLast, error in
+            if let error = error {
+                self?.alert.mode = .showMessage(error) // show alert
+            } else {
+                self?.data = SeriesPresenter.getMockData()
+                self?.showsView.showListCollectionView.reloadData()
+                self?.isInfiniteScrollEnabled = !isLast
+            }
+            
+            completion()
+        }
+    }
+    
+}
+
+//----------------------------------------------------------------------
+// Refresh on pull
+//----------------------------------------------------------------------
+extension ShowsViewController: ShowsViewDelegate {
+    
+    func refreshCollectionView(completion: @escaping () -> ()) {
+        refreshOnPull(completion: completion)
+    }
+    
+}
+
+extension ShowsViewController: UICollectionViewDelegate {
+    
+    // Show cell tapped
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.tappedOnSeriesPoster(series: data[indexPath.item])
+    }
+}
+
+
+//----------------------------------------------------------------------
 // Scrolling: "Infinite Scroll"
 //----------------------------------------------------------------------
 
@@ -127,49 +188,14 @@ extension ShowsViewController {
         isFetchingMore = true
         showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
         
-        makeAPICall()
-    }
-    
-    func makeAPICall() {
-        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
-            [weak self] series, isLast, error in
-            if let error = error {
-                self?.alert.mode = .showMessage(error) // show alert
-                self?.isFetchingMore = false // stop displaying loading indicator
-                self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
-            } else {
-                self?.data += SeriesPresenter.getMockData()
-                self?.showsView.showListCollectionView.reloadData()
-                self?.isFetchingMore = false // stop displaying loading indicator
-                self?.isInfiniteScrollEnabled = !isLast
-            }
-        }
+        loadMoreOnDragDown()
     }
 }
 
 
 //----------------------------------------------------------------------
-// Refresh on scroll
+// MARK: Data source
 //----------------------------------------------------------------------
-extension ShowsViewController: ShowsViewDelegate {
-    
-    func refreshCollectionView(completion: @escaping () -> ()) {
-        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) {
-            [weak self] series, isLast, error in
-            if let error = error {
-                self?.alert.mode = .showMessage(error) // show alert
-            } else {
-                self?.data = SeriesPresenter.getMockData()
-                self?.showsView.showListCollectionView.reloadData()
-                self?.isInfiniteScrollEnabled = !isLast
-            }
-            
-            completion()
-        }
-    }
-    
-}
-
 
 extension ShowsViewController: UICollectionViewDataSource {
     
@@ -205,13 +231,9 @@ extension ShowsViewController: UICollectionViewDataSource {
     
 }
 
-extension ShowsViewController: UICollectionViewDelegate {
-    
-    // Item selected
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.tappedOnSeriesPoster(series: data[indexPath.item])
-    }
-}
+//----------------------------------------------------------------------
+// Scrolling: Flow layout
+//----------------------------------------------------------------------
 
 extension ShowsViewController: UICollectionViewDelegateFlowLayout {
     
