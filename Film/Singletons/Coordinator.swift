@@ -16,6 +16,8 @@ class Coordinator {
     func start() -> UIViewController {
         let watchingVC = WatchingViewController()
         let showsVC = ShowsViewController()
+        showsVC.apiManager = MockSeriesAPI()
+        showsVC.delegate = self
         let moviesVC = MoviewsViewController()
         let settingsVC = SettingsViewController()
         
@@ -52,6 +54,18 @@ extension Coordinator: WatchingViewControllerDelegate {
         let playerVC = VideoPlayerController()
         self.playerVC = playerVC
         navigationController.pushViewController(playerVC, animated: false)
+    }
+    
+}
+
+extension Coordinator: ShowsDelegate {
+    
+    func tappedOnSeriesPoster(series: SeriesPresenter) {
+        let ShowInfoVC = ShowInfoViewController()
+        
+        // TODO: Pass 'series' to the VC
+        
+        navigationController.pushViewController(ShowInfoVC, animated: false)
     }
     
 }

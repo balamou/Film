@@ -9,10 +9,21 @@
 import Foundation
 
 
-protocol RequestAPI {
-    
+protocol SeriesMoviesAPI {
+    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter]) -> ())
+    func getMovies(start: Int, quantity: Int, result: @escaping ([MoviesPresenter]) -> ())
 }
 
-class MockAPI: RequestAPI {
+class MockSeriesAPI: SeriesMoviesAPI {
     
+    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter]) -> ()) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+           result(SeriesPresenter.getMockData())
+        })
+    }
+    
+    func getMovies(start: Int, quantity: Int, result: @escaping ([MoviesPresenter]) -> ()) {
+        
+    }
 }

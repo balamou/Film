@@ -47,3 +47,7 @@ class SeriesPresenter {
     }
     
 }
+
+class MoviesPresenter {
+    
+}

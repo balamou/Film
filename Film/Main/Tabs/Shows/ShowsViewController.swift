@@ -9,6 +9,10 @@
 import UIKit
 
 
+protocol ShowsDelegate: AnyObject {
+    func tappedOnSeriesPoster(series: SeriesPresenter) // tapped on poster to get more information
+}
+
 enum ShowsViewControllerMode {
     case loading
     case hasShows([SeriesPresenter])
@@ -19,7 +23,7 @@ class ShowsViewController: UIViewController {
     var showsView: ShowsView!
     weak var showsCollectionView: UICollectionView!
     var isFetchingMore = false
-    var data: [SeriesPresenter] = SeriesPresenter.getMockData()
+    var data: [SeriesPresenter] = []
     var mode: ShowsViewControllerMode = .loading {
         didSet {
             switch mode {
@@ -34,6 +38,12 @@ class ShowsViewController: UIViewController {
             }
         }
     }
+    // API
+    var apiManager: SeriesMoviesAPI?
+    let numberOfShowsToLoad = 6
+    weak var delegate: ShowsDelegate?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,16 +107,16 @@ extension ShowsViewController {
     
     func beginBatchFetch() {
         isFetchingMore = true
-        print("beginBatchFetch!")
+        print("Get more shows")
         
         showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            // fake API call
-            self.data += SeriesPresenter.getMockData()
-            self.showsView.showListCollectionView.reloadData()
-            self.isFetchingMore = false
-        })
+        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
+            [weak self] series in
+            self?.data += SeriesPresenter.getMockData()
+            self?.showsView.showListCollectionView.reloadData()
+            self?.isFetchingMore = false
+        }
     }
 }
 
@@ -149,10 +159,7 @@ extension ShowsViewController: UICollectionViewDelegate {
     // Item selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: Open Show Description
-        
-        if indexPath.row == 0 {
-            navigationController?.pushViewController(ShowInfoViewController(), animated: false)
-        }
+        delegate?.tappedOnSeriesPoster(series: data[indexPath.item])
     }
 }
 
