@@ -57,12 +57,8 @@ class ShowsViewController: UIViewController {
         showsView = ShowsView()
         view = showsView
         
+        _ = alert // initialize lazy alert
         setupCollectionView()
-        
-        let _ = alert
-        
-        // TMP CODE for debugging
-        setupLogoTapTMP()
         preloadSeries()
     }
     
@@ -76,25 +72,6 @@ class ShowsViewController: UIViewController {
             } else {
                 self?.mode = .hasShows(series)
             }
-        }
-    }
-    
-    //----------------------------------------------------------------------
-    // MARK: TMP CODE for debugging
-    //----------------------------------------------------------------------
-    func setupLogoTapTMP() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedTMP))
-        showsView.navBar.logoImage.isUserInteractionEnabled = true
-        showsView.navBar.logoImage.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc func tappedTMP() {
-        
-        switch mode{
-        case .loading:
-            mode = .hasShows(data)
-        case .hasShows(_):
-            mode = .loading
         }
     }
     
