@@ -8,19 +8,37 @@
 
 import UIKit
 
+
+protocol ShowsViewDelegate: AnyObject {
+    func refreshCollectionView(completion: @escaping () -> ())
+}
+
+
 class ShowsView: UIView {
+
+    weak var delegate: ShowsViewDelegate?
     
     lazy var navBar: CustomNavigationBar = {
         return CustomNavigationBar(title: "shows".localize(), showLogo: true)
     }()
     
-    var showListCollectionView: UICollectionView = {
+    lazy var showListCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
         collectionView.isHidden = true
+        let refreshControl =  UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
         
         return collectionView
     }()
+    
+    @objc func refreshTriggered(_ sender: UIRefreshControl) {
+        delegate?.refreshCollectionView {
+            print("Done refreshing")
+            sender.endRefreshing()
+        }
+    }
     
     // Loading view
     var loadingView: UIView = {

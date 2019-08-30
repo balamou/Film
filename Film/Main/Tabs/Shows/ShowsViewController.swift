@@ -47,6 +47,7 @@ class ShowsViewController: UIViewController {
         
         showsView = ShowsView()
         view = showsView
+        showsView.delegate = self
         
         _ = alert // initialize lazy alert
         setupCollectionView()
@@ -119,7 +120,7 @@ extension ShowsViewController {
     
     func beginBatchFetch() {
         guard isInfiniteScrollEnabled else {
-            return 
+            return
         }
         
         print("Get more shows")
@@ -145,6 +146,30 @@ extension ShowsViewController {
         }
     }
 }
+
+
+//----------------------------------------------------------------------
+// Refresh on scroll
+//----------------------------------------------------------------------
+extension ShowsViewController: ShowsViewDelegate {
+    
+    func refreshCollectionView(completion: @escaping () -> ()) {
+        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) {
+            [weak self] series, isLast, error in
+            if let error = error {
+                self?.alert.mode = .showMessage(error) // show alert
+            } else {
+                self?.data = SeriesPresenter.getMockData()
+                self?.showsView.showListCollectionView.reloadData()
+                self?.isInfiniteScrollEnabled = !isLast
+            }
+            
+            completion()
+        }
+    }
+    
+}
+
 
 extension ShowsViewController: UICollectionViewDataSource {
     
@@ -184,7 +209,6 @@ extension ShowsViewController: UICollectionViewDelegate {
     
     // Item selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Open Show Description
         delegate?.tappedOnSeriesPoster(series: data[indexPath.item])
     }
 }
