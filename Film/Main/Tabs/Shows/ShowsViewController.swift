@@ -15,7 +15,7 @@ protocol ShowsDelegate: AnyObject {
 
 enum ShowsViewControllerMode {
     case loading
-    case hasShows([SeriesPresenter])
+    case hasShows([SeriesPresenter], isLast: Bool)
 }
 
 class ShowsViewController: UIViewController {
@@ -23,20 +23,11 @@ class ShowsViewController: UIViewController {
     var showsView: ShowsView!
     weak var showsCollectionView: UICollectionView!
     var isFetchingMore = false
+    var isInfiniteScrollEnabled = true
     var data: [SeriesPresenter] = []
     var mode: ShowsViewControllerMode = .loading {
         didSet {
-            switch mode {
-            case .loading:
-                showsView.loadingView.isHidden = false
-                showsView.showListCollectionView.isHidden = true
-            case .hasShows(let freshData):
-                showsView.loadingView.isHidden = true
-                showsView.showListCollectionView.isHidden = false
-                
-                self.data = freshData
-                showsView.showListCollectionView.reloadData()
-            }
+            switchedMode(mode: mode)
         }
     }
     // API
@@ -64,14 +55,29 @@ class ShowsViewController: UIViewController {
     
     func preloadSeries() {
         apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
-            [weak self] series, error in
+            [weak self] series, isLast, error in
             if let error = error {
                 // TODO: Show idle image/icon with error message
                 self?.alert.mode = .showMessage(error)
                 self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
             } else {
-                self?.mode = .hasShows(series)
+                self?.mode = .hasShows(series, isLast: isLast)
             }
+        }
+    }
+    
+    func switchedMode(mode: ShowsViewControllerMode) {
+        switch mode {
+        case .loading:
+            showsView.loadingView.isHidden = false
+            showsView.showListCollectionView.isHidden = true
+        case .hasShows(let freshData, let isLast):
+            showsView.loadingView.isHidden = true
+            showsView.showListCollectionView.isHidden = false
+            
+            self.isInfiniteScrollEnabled = !isLast
+            self.data = freshData
+            showsView.showListCollectionView.reloadData()
         }
     }
     
@@ -112,6 +118,10 @@ extension ShowsViewController {
     }
     
     func beginBatchFetch() {
+        guard isInfiniteScrollEnabled else {
+            return 
+        }
+        
         print("Get more shows")
         isFetchingMore = true
         showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
@@ -121,7 +131,7 @@ extension ShowsViewController {
     
     func makeAPICall() {
         apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
-            [weak self] series, error in
+            [weak self] series, isLast, error in
             if let error = error {
                 self?.alert.mode = .showMessage(error) // show alert
                 self?.isFetchingMore = false // stop displaying loading indicator
@@ -130,6 +140,7 @@ extension ShowsViewController {
                 self?.data += SeriesPresenter.getMockData()
                 self?.showsView.showListCollectionView.reloadData()
                 self?.isFetchingMore = false // stop displaying loading indicator
+                self?.isInfiniteScrollEnabled = !isLast
             }
         }
     }
