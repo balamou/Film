@@ -174,7 +174,7 @@ extension ShowsViewController {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
-        if offsetY > contentHeight - scrollView.frame.height * 2, !isFetchingMore { // mutlitpled by 2 so it start loading data earlier
+        if offsetY > contentHeight - (scrollView.frame.height + 100) , !isFetchingMore { // mutlipled by 2 so it start loading data earlier
             beginBatchFetch()
         }
     }
