@@ -42,7 +42,12 @@ class ShowsViewController: UIViewController {
     var apiManager: SeriesMoviesAPI?
     let numberOfShowsToLoad = 6
     weak var delegate: ShowsDelegate?
-    
+    lazy var alert: AlertViewController = {
+        let alert = AlertViewController()
+        alert.addAsChild(self)
+        
+        return alert
+    }()
     
     
     override func viewDidLoad() {
@@ -57,6 +62,8 @@ class ShowsViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedTMP))
         showsView.navBar.logoImage.isUserInteractionEnabled = true
         showsView.navBar.logoImage.addGestureRecognizer(tapGesture)
+        
+        let _ = alert
     }
     
     @objc func tappedTMP() {
@@ -112,10 +119,17 @@ extension ShowsViewController {
         showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
         
         apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
-            [weak self] series in
-            self?.data += SeriesPresenter.getMockData()
-            self?.showsView.showListCollectionView.reloadData()
-            self?.isFetchingMore = false
+            [weak self] series, error in
+            if let error = error {
+                // TODO: Show alert
+                self?.alert.mode = .showMessage(error)
+                self?.isFetchingMore = false // stop displaying loading indicator
+                self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
+            } else {
+                self?.data += SeriesPresenter.getMockData()
+                self?.showsView.showListCollectionView.reloadData()
+                self?.isFetchingMore = false // stop displaying loading indicator
+            }
         }
     }
 }

@@ -10,16 +10,21 @@ import Foundation
 
 
 protocol SeriesMoviesAPI {
-    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter]) -> ())
+    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ error: String?) -> ())
     func getMovies(start: Int, quantity: Int, result: @escaping ([MoviesPresenter]) -> ())
 }
 
 class MockSeriesAPI: SeriesMoviesAPI {
     
-    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter]) -> ()) {
+    var count = 0
+    
+    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ error: String?) -> ()) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-           result(SeriesPresenter.getMockData())
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+            let error: String? = self.count == 2 || self.count == 3 ? "Could not load" : nil
+            
+            result(SeriesPresenter.getMockData(), error)
+            self.count += 1
         })
     }
     
