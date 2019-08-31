@@ -16,7 +16,9 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     var mediaPlayer = VLCMediaPlayer()
     var timer: Timer?
     var film: Film = Film.provideMock()
-    var vol: VolumeController?
+    
+    // Volume
+    var volumeController: VolumeController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
