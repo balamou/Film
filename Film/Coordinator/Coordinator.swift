@@ -53,6 +53,7 @@ extension Coordinator: WatchingViewControllerDelegate {
     
     func moreInfoTapped() {
         // TODO: open ShowInfoVC or MovieInfoVC
+        print("## Open info")
     }
 }
 

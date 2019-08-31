@@ -68,8 +68,8 @@ class VideoPlayerView: UIView {
         return label
     }()
     
-    var closeButton: UIButton = {
-        let button = UIButton()
+    var closeButton: CustomMarginButton = {
+        let button = CustomMarginButton()
         button.setImage(ImageConstants.closeImage, for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
