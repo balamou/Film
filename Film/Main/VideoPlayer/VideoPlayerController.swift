@@ -23,7 +23,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         forceLandscapeOrientation()
         
         videoPlayerView = VideoPlayerView(frame: self.view.frame)
-        self.view = videoPlayerView
+        view = videoPlayerView
        
         setUpPlayer(url: film.URL)
         setActions()
@@ -31,13 +31,24 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         overrideVolumeBar()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-//        videoPlayerView.didAppear()
-    }
-    
     override func viewDidLayoutSubviews() {
         videoPlayerView.didAppear()
     }
+    
+    func setUpPlayer(url: String) {
+        let streamURL = URL(string: url)!
+        let vlcMedia = VLCMedia(url: streamURL)
+        
+        mediaPlayer.media = vlcMedia
+        mediaPlayer.delegate = self
+        mediaPlayer.drawable = videoPlayerView.mediaView
+        
+        mediaPlayer.play()
+    }
+    
+    //----------------------------------------------------------------------
+    // MARK: Actions
+    //----------------------------------------------------------------------
     
     func setActions() {
         videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
@@ -61,17 +72,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         videoPlayerView.slider.addTarget(self, action: #selector(touchUpInside(_:)), for: .touchUpInside)
         videoPlayerView.slider.addTarget(self, action: #selector(touchUpOutside(_:)), for: .touchUpOutside)
         videoPlayerView.slider.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
-    }
-    
-    func setUpPlayer(url: String) {
-        let streamURL = URL(string: url)!
-        let vlcMedia = VLCMedia(url: streamURL)
-        
-        mediaPlayer.media = vlcMedia
-        mediaPlayer.delegate = self
-        mediaPlayer.drawable = videoPlayerView.mediaView
-        
-        mediaPlayer.play()
     }
     
     //----------------------------------------------------------------------
@@ -108,7 +108,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     //----------------------------------------------------------------------
-    // Actions
+    // Actions: Controlls
     //----------------------------------------------------------------------
     func setTimerForControlHide() {
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] timer in
@@ -265,11 +265,14 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
             UIDevice.current.setValue(portrait, forKey: "orientation")
         }
     }
-    
-    
-    //----------------------------------------------------------------------
-    // MARK: Application Life Cycle
-    //----------------------------------------------------------------------
+}
+
+
+//----------------------------------------------------------------------
+// MARK: Application Life Cycle
+//----------------------------------------------------------------------
+
+extension VideoPlayerController {
     
     // When leaving the app
     func applicationWillResignActive() {

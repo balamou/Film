@@ -21,13 +21,15 @@ class VolumeController {
     var action: ((Float) -> ())?
     var onHide: (() -> ())?
     var timer: Timer?
+    let observerName = NSNotification.Name(rawValue: "AVSystemController_SystemVolumeDidChangeNotification")
+    
     
     init(view: UIView, onHide: @escaping () -> (), onChange: @escaping (Float) -> ()) {
         hideVolumeHUD(targetView: view)
         self.action = onChange
         self.onHide = onHide
         
-        notificationCenter.addObserver(self, selector: #selector(systemVolumeDidChange), name: NSNotification.Name(rawValue: "AVSystemController_SystemVolumeDidChangeNotification"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(systemVolumeDidChange), name: observerName, object: nil)
     }
     
     func hideVolumeHUD(targetView: UIView) {
@@ -58,4 +60,7 @@ class VolumeController {
         previousVolumeLevel = volumeLevel
     }
     
+    deinit {
+        notificationCenter.removeObserver(self, name:  observerName, object: nil)
+    }
 }
