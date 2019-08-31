@@ -35,7 +35,6 @@ class ShowsView: UIView {
     
     @objc func refreshTriggered(_ sender: UIRefreshControl) {
         delegate?.refreshCollectionView {
-            print("Done refreshing")
             sender.endRefreshing()
         }
     }

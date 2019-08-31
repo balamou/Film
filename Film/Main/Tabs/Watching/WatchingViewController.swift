@@ -43,6 +43,7 @@ class WatchingViewController: UIViewController {
         
         watchingView = WatchingView()
         view = watchingView
+        watchingView.delegate = self
         alert = AlertViewController(parent: self)
         
         setupCollectionView()
@@ -104,12 +105,37 @@ extension WatchingViewController {
             if let error = error {
                 // TODO: Show new cell type section with error
                 self?.alert?.mode = .showMessage(error)
+                self?.mode = .hasData([])
             } else {
                 self?.mode = .hasData(watched)
                 // TODO: if data is empty, show idle cell
             }
         }
     }
+    
+    func refreshOnPull(completion: @escaping () -> ()) {
+        apiManager?.getWatched { [weak self] watched, error in
+            if let error = error {
+                self?.alert?.mode = .showMessage(error) // show alert
+            } else {
+                self?.data = watched
+                self?.watchingView.collectionView.reloadData()
+            }
+            
+            completion()
+        }
+    }
+}
+
+//----------------------------------------------------------------------
+// Refresh on pull
+//----------------------------------------------------------------------
+extension WatchingViewController: WatchingViewDelegate {
+    
+    func refreshCollectionView(completion: @escaping () -> ()) {
+        refreshOnPull(completion: completion)
+    }
+    
 }
 
 //----------------------------------------------------------------------
