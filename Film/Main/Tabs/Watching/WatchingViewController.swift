@@ -41,24 +41,6 @@ class WatchingViewController: UIViewController {
         
         setupCollectionView()
         initialLoadWatching()
-        
-        // TMP
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedTMP))
-        watchingView.navBar.logoImage.isUserInteractionEnabled = true
-        watchingView.navBar.logoImage.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc func tappedTMP() {
-        
-        switch mode{
-        case .idle:
-            mode = .loading
-        case .loading:
-            mode = .hasData(data + Watched.getRandomMock())
-        case .hasData(_):
-            mode = .idle
-        }
-        
     }
     
     func switchedMode(newMode: WatchingViewControllerMode) {

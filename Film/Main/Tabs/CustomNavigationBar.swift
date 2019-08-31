@@ -11,13 +11,6 @@ import UIKit
 
 class CustomNavigationBar: UIView {
     
-    var vanityBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        
-        return view
-    }()
-    
     var navBar: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -54,13 +47,6 @@ class CustomNavigationBar: UIView {
         
         //
         
-        static func setVanityBar(_ view: UIView, _ parent: UIView) {
-            view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-        }
-        
         static func setNavBar(_ view: UIView, _ parent: UIView) {
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             view.topAnchor.constraint(equalTo: parent.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -85,14 +71,12 @@ class CustomNavigationBar: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
+        backgroundColor = .black
         
-        addSubviewLayout(vanityBar)
         addSubviewLayout(navBar)
         navBar.addSubviewLayout(tabLabel)
         navBar.addSubviewLayout(logoImage)
         
-        Constraints.setVanityBar(vanityBar, self)
         Constraints.setNavBar(navBar, self)
         Constraints.setTabLabel(tabLabel, navBar)
         Constraints.setLogoImage(logoImage, tabLabel, navBar)
