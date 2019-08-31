@@ -14,13 +14,17 @@ protocol WatchedAPI {
 
 class MockWatchedAPI: WatchedAPI {
     
+    var count = 0
+    
     func getWatched(result: @escaping ([Watched], _ error: String?) -> ()) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-            let error: String? = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
+            let error: String? = (self?.count == 0) ? "Bad internet connection" : nil
             let data = Watched.getRandomMock()
             
             result(data, error)
+            
+            self?.count += 1
         })
         
     }

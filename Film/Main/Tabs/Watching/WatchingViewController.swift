@@ -31,13 +31,19 @@ class WatchingViewController: UIViewController {
     
     var watchingView: WatchingView!
     var delegate: WatchingViewControllerDelegate?
+    
+    // API
     var apiManager: WatchedAPI?
+    
+    // Alert
+    var alert: AlertViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         watchingView = WatchingView()
         view = watchingView
+        alert = AlertViewController(parent: self)
         
         setupCollectionView()
         initialLoadWatching()
@@ -96,9 +102,11 @@ extension WatchingViewController {
         apiManager?.getWatched {
             [weak self] watched, error in
             if let error = error {
-                // TODO: Set alert
+                // TODO: Show new cell type section with error
+                self?.alert?.mode = .showMessage(error)
             } else {
                 self?.mode = .hasData(watched)
+                // TODO: if data is empty, show idle cell
             }
         }
     }
