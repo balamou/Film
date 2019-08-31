@@ -22,6 +22,7 @@ class StandardBuilder: Builder {
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController {
         let watchingVC = WatchingViewController()
         watchingVC.delegate = delegate
+        watchingVC.apiManager = MockWatchedAPI()
         watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: ImageConstants.watchingImage, tag: 0)
         
         return watchingVC

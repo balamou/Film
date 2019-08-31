@@ -63,10 +63,12 @@
 		ED9B00B823149B7F004D509C /* RobotoCondensed-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED9B00B223149B7F004D509C /* RobotoCondensed-RegularItalic.ttf */; };
 		ED9B00B923149B7F004D509C /* RobotoCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED9B00B323149B7F004D509C /* RobotoCondensed-LightItalic.ttf */; };
 		ED9B00BA23149B7F004D509C /* RobotoCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED9B00B423149B7F004D509C /* RobotoCondensed-BoldItalic.ttf */; };
+		EDACC49C2319FE6B005DC09C /* MockWatchedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */; };
+		EDACC49E231A0D8E005DC09C /* CustomMarginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDACC49D231A0D8E005DC09C /* CustomMarginButton.swift */; };
 		EDB57E90231766980049504E /* Watched.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E8F231766980049504E /* Watched.swift */; };
 		EDB57E92231769E20049504E /* Series.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E91231769E20049504E /* Series.swift */; };
 		EDB57E9423176EC70049504E /* UIImageView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E9323176EC70049504E /* UIImageView+extensions.swift */; };
-		EDB57E96231885F10049504E /* MockAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E95231885F10049504E /* MockAPI.swift */; };
+		EDB57E96231885F10049504E /* MockSeriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E95231885F10049504E /* MockSeriesAPI.swift */; };
 		EDB57E9B231887030049504E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDB57E99231887030049504E /* InfoPlist.strings */; };
 		EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E9E23188B450049504E /* LoadingCell.swift */; };
 		EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */; };
@@ -169,10 +171,12 @@
 		ED9B00B223149B7F004D509C /* RobotoCondensed-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-RegularItalic.ttf"; sourceTree = "<group>"; };
 		ED9B00B323149B7F004D509C /* RobotoCondensed-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
 		ED9B00B423149B7F004D509C /* RobotoCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
+		EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWatchedAPI.swift; sourceTree = "<group>"; };
+		EDACC49D231A0D8E005DC09C /* CustomMarginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarginButton.swift; sourceTree = "<group>"; };
 		EDB57E8F231766980049504E /* Watched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Watched.swift; sourceTree = "<group>"; };
 		EDB57E91231769E20049504E /* Series.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Series.swift; sourceTree = "<group>"; };
 		EDB57E9323176EC70049504E /* UIImageView+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+extensions.swift"; sourceTree = "<group>"; };
-		EDB57E95231885F10049504E /* MockAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPI.swift; sourceTree = "<group>"; };
+		EDB57E95231885F10049504E /* MockSeriesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSeriesAPI.swift; sourceTree = "<group>"; };
 		EDB57E9A231887030049504E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDB57E9C231887390049504E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDB57E9D2318873C0049504E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -444,7 +448,8 @@
 			children = (
 				EDB57E8F231766980049504E /* Watched.swift */,
 				EDB57E91231769E20049504E /* Series.swift */,
-				EDB57E95231885F10049504E /* MockAPI.swift */,
+				EDB57E95231885F10049504E /* MockSeriesAPI.swift */,
+				EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -474,6 +479,7 @@
 			children = (
 				ED1FEEB92318B71900DE69AB /* Alert */,
 				ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */,
+				EDACC49D231A0D8E005DC09C /* CustomMarginButton.swift */,
 				ED5AC1062314DCF00098A161 /* Watching */,
 				ED5AC1072314DCF70098A161 /* Shows */,
 				ED5AC1082314DD0C0098A161 /* Movies */,
@@ -676,6 +682,7 @@
 				ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */,
 				ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */,
 				EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */,
+				EDACC49C2319FE6B005DC09C /* MockWatchedAPI.swift in Sources */,
 				ED909B6323123C8300A67AC6 /* header.m in Sources */,
 				ED1FEEBB2318B73900DE69AB /* AlertView.swift in Sources */,
 				ED5AC12E2315CE500098A161 /* FontStandard.swift in Sources */,
@@ -683,7 +690,7 @@
 				EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */,
 				ED5AC1142314DE0C0098A161 /* SettingsViewController.swift in Sources */,
 				ED909B40230F006600A67AC6 /* VideoPlayerController.swift in Sources */,
-				EDB57E96231885F10049504E /* MockAPI.swift in Sources */,
+				EDB57E96231885F10049504E /* MockSeriesAPI.swift in Sources */,
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
 				ED5AC1122314DDEF0098A161 /* MoviesView.swift in Sources */,
 				ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */,
@@ -711,6 +718,7 @@
 				EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */,
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
 				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
+				EDACC49E231A0D8E005DC09C /* CustomMarginButton.swift in Sources */,
 				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,
 				ED5AC12A2315A65F0098A161 /* UIViewController+extensions.swift in Sources */,
 				ED5AC1102314DDD00098A161 /* MoviesViewController.swift in Sources */,

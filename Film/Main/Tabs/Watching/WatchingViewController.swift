@@ -10,7 +10,8 @@ import UIKit
 
 
 protocol WatchingViewControllerDelegate {
-    func tappedPreviouslyWatchedShow()
+    func playTapped()
+    func moreInfoTapped()
 }
 
 enum WatchingViewControllerMode {
@@ -23,30 +24,14 @@ class WatchingViewController: UIViewController {
     
     var mode: WatchingViewControllerMode = .loading {
         didSet {
-            switch mode {
-            case .idle:
-                watchingView.idleView.isHidden = false
-                watchingView.loadingView.isHidden = true
-                watchingView.collectionView.isHidden = true
-            case .loading:
-                watchingView.idleView.isHidden = true
-                watchingView.loadingView.isHidden = false
-                watchingView.collectionView.isHidden = true
-            case .hasData(let freshData):
-                watchingView.idleView.isHidden = true
-                watchingView.loadingView.isHidden = true
-                watchingView.collectionView.isHidden = false
-                
-                self.data = freshData
-                watchingView.collectionView.reloadData()
-            }
+            switchedMode(newMode: mode)
         }
     }
-    
     var data: [Watched] = []
     
     var watchingView: WatchingView!
     var delegate: WatchingViewControllerDelegate?
+    var apiManager: WatchedAPI?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +60,26 @@ class WatchingViewController: UIViewController {
         
     }
     
+    func switchedMode(newMode: WatchingViewControllerMode) {
+        switch mode {
+        case .idle:
+            watchingView.idleView.isHidden = false
+            watchingView.loadingView.isHidden = true
+            watchingView.collectionView.isHidden = true
+        case .loading:
+            watchingView.idleView.isHidden = true
+            watchingView.loadingView.isHidden = false
+            watchingView.collectionView.isHidden = true
+        case .hasData(let freshData):
+            watchingView.idleView.isHidden = true
+            watchingView.loadingView.isHidden = true
+            watchingView.collectionView.isHidden = false
+            
+            self.data = freshData
+            watchingView.collectionView.reloadData()
+        }
+    }
+    
     //----------------------------------------------------------------------
     // Status bar
     //----------------------------------------------------------------------
@@ -96,34 +101,27 @@ class WatchingViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
     }
     
-    //----------------------------------------------------------------------
-    // Scrolling: "Infinite Scroll"
-    //----------------------------------------------------------------------
-    var isFetchingMore = false
+}
+
+//----------------------------------------------------------------------
+// MARK: Watching Cell Actions
+//----------------------------------------------------------------------
+extension WatchingViewController: WatchingCellDelegate {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        
-        if offsetY > contentHeight - scrollView.frame.height, !isFetchingMore {
-            beginBatchFetch()
-        }
+    func playButtonTapped() {
+        delegate?.playTapped()
     }
     
-    func beginBatchFetch() {
-        isFetchingMore = true
-        print("beginBatchFetch!")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            // fake API call
-            
-            self.isFetchingMore = false
-        })
+    func informationButtonTapped() {
+        delegate?.moreInfoTapped()
     }
 }
 
 
-extension WatchingViewController: UICollectionViewDataSource, WatchingCellDelegate {
+//----------------------------------------------------------------------
+// MARK: Data Source
+//----------------------------------------------------------------------
+extension WatchingViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
@@ -140,26 +138,12 @@ extension WatchingViewController: UICollectionViewDataSource, WatchingCellDelega
         
         return cell
     }
-    
-    func playButtonTapped() {
-        print("Play button tapped")
-        
-        delegate?.tappedPreviouslyWatchedShow()
-    }
-    
-    func informationButtonTapped() {
-        print("Get info")
-    }
 }
 
-extension WatchingViewController: UICollectionViewDelegate {
-    
-    // Item selected
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Open video player
-    }
-}
 
+//----------------------------------------------------------------------
+// MARK: Flow Layout
+//----------------------------------------------------------------------
 extension WatchingViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -45,12 +45,15 @@ class Coordinator {
 
 extension Coordinator: WatchingViewControllerDelegate {
     
-    func tappedPreviouslyWatchedShow() {
+    func playTapped() {
         let playerVC = VideoPlayerController()
         self.playerVC = playerVC
         navigationController.pushViewController(playerVC, animated: false)
     }
     
+    func moreInfoTapped() {
+        // TODO: open ShowInfoVC or MovieInfoVC
+    }
 }
 
 extension Coordinator: ShowsDelegate {
