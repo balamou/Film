@@ -28,9 +28,10 @@ class HeaderView: UICollectionReusableView {
         return imageView
     }()
     
-    var exitButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .gray
+    var exitButton: CustomMarginButton = {
+        let button = CustomMarginButton()
+        button.margin = 40.0
+        button.backgroundColor = .red
         
         return button
     }()
