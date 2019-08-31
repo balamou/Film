@@ -100,8 +100,9 @@ extension ShowsViewController {
         apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) {
             [weak self] series, isLast, error in
             if let error = error {
-                // TODO: Show idle image/icon with error message
+                // TODO: Show idle image/icon with error message (probably a new cell section)
                 self?.alert?.mode = .showMessage(error)
+                self?.mode = .hasShows([], isLast: true)
             } else {
                 self?.mode = .hasShows(series, isLast: isLast)
             }
@@ -116,7 +117,7 @@ extension ShowsViewController {
                 self?.isFetchingMore = false // stop displaying loading indicator
                 self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
             } else {
-                self?.data += SeriesPresenter.getMockData()
+                self?.data += series
                 self?.showsView.showListCollectionView.reloadData()
                 self?.isFetchingMore = false // stop displaying loading indicator
                 self?.isInfiniteScrollEnabled = !isLast
@@ -130,7 +131,7 @@ extension ShowsViewController {
             if let error = error {
                 self?.alert?.mode = .showMessage(error) // show alert
             } else {
-                self?.data = SeriesPresenter.getMockData()
+                self?.data = series
                 self?.showsView.showListCollectionView.reloadData()
                 self?.isInfiniteScrollEnabled = !isLast
             }

@@ -46,6 +46,18 @@ class SeriesPresenter {
                 SeriesPresenter(id: 8, posterURL: imageURLs[8])]
     }
     
+    
+    static func getMockData2() -> [SeriesPresenter] {
+        let imageURLs = ["https://images-na.ssl-images-amazon.com/images/I/71dXHCpZAXL._SL1051_.jpg",
+        "https://images-na.ssl-images-amazon.com/images/I/81e36u8GzsL._SL1500_.jpg",
+        "https://m.media-amazon.com/images/M/MV5BNTEyYmIzMDUtNWMwNC00Y2Q1LWIyZTgtMGY1YzUxOTAwYTAwXkEyXkFqcGdeQXVyMjIyMTc0ODQ@._V1_.jpg",
+        "https://m.media-amazon.com/images/M/MV5BMjM3MjQ1MzkxNl5BMl5BanBnXkFtZTgwODk1ODgyMjI@._V1_.jpg"]
+        
+        return [SeriesPresenter(id: 0, posterURL: imageURLs[0]),
+                SeriesPresenter(id: 1, posterURL: imageURLs[1]),
+                SeriesPresenter(id: 2, posterURL: imageURLs[2]),
+                SeriesPresenter(id: 3, posterURL: imageURLs[3])]
+    }
 }
 
 class MoviesPresenter {

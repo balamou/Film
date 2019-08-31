@@ -22,10 +22,13 @@ class MockSeriesAPI: SeriesMoviesAPI {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
             let error: String? = self.count == 2 || self.count == 3 ? "Could not load" : nil
+            let data = self.count == 4 ? SeriesPresenter.getMockData2() : SeriesPresenter.getMockData()
+            let isLast = (start >= 2 * 9)
+            print("Start: \(start) Count: \(self.count)")
             
-            result(SeriesPresenter.getMockData(), (start + quantity) >= 4 * 9  ? true : false, error)
+            result(data, isLast, error)
             
-            if (start + quantity) >= 4 * 9 {
+            if start == 2 * 9 + 4 {
                 self.count = 0
             } else {
                 self.count += 1
