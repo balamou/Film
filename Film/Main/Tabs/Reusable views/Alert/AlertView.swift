@@ -12,6 +12,8 @@ import UIKit
 class AlertView: UIView {
     
     var isAnimating = false
+    let animationUpDownDuration = 0.4
+    let messageDuration = 1.6
     
     lazy var backgroundView: UIView = {
         let view = UIView()
@@ -29,30 +31,11 @@ class AlertView: UIView {
         return label
     }()
     
-    lazy var warningImage: UIImageView = {
-        let imageView = UIImageView()
-//        imageView.image = Images.selectorOnImage
-        
-        return imageView
-    }()
-    
     class Constraints {
-        
-        static func setBackgroundView(_ roundView: UIView, _ view: UIView) {
-            roundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5).isActive = true
-            roundView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            roundView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-            roundView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        }
         
         static func setMessageLabel(_ label: UILabel, _ view: UIView) {
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        }
-        
-        static func setWarningImage(_ imageView: UIImageView, _ rightNeighbour: UIView, _ view: UIView) {
-            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            imageView.rightAnchor.constraint(equalTo: rightNeighbour.leftAnchor, constant: -10).isActive = true
         }
         
         // Animation
@@ -102,7 +85,7 @@ class AlertView: UIView {
         isAnimating = true
         pickNewConstraints(Constraints.bottomPosition(backgroundView, self))
     
-        UIView.animate(withDuration: 0.6, animations: {
+        UIView.animate(withDuration: animationUpDownDuration, animations: {
             self.layoutIfNeeded()
         }, completion: { finished in
             self.startAnimatingUp()
@@ -113,7 +96,7 @@ class AlertView: UIView {
         
         pickNewConstraints(Constraints.topPosition(backgroundView, self))
      
-        UIView.animate(withDuration: 0.6, delay: 2.0, options: [], animations: {
+        UIView.animate(withDuration: animationUpDownDuration, delay: messageDuration, options: [], animations: {
             self.layoutIfNeeded()
         }, completion: {  finished in
             self.isHidden = true

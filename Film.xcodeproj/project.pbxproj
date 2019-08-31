@@ -443,6 +443,16 @@
 			path = "Roboto Condensed";
 			sourceTree = "<group>";
 		};
+		EDB0CD39231AEA1900246CDF /* Reusable views */ = {
+			isa = PBXGroup;
+			children = (
+				ED1FEEB92318B71900DE69AB /* Alert */,
+				ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */,
+				EDACC49D231A0D8E005DC09C /* CustomMarginButton.swift */,
+			);
+			path = "Reusable views";
+			sourceTree = "<group>";
+		};
 		EDB57E8E231766890049504E /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,9 +487,7 @@
 		EDFDB054231495EF0045E8D6 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
-				ED1FEEB92318B71900DE69AB /* Alert */,
-				ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */,
-				EDACC49D231A0D8E005DC09C /* CustomMarginButton.swift */,
+				EDB0CD39231AEA1900246CDF /* Reusable views */,
 				ED5AC1062314DCF00098A161 /* Watching */,
 				ED5AC1072314DCF70098A161 /* Shows */,
 				ED5AC1082314DD0C0098A161 /* Movies */,
