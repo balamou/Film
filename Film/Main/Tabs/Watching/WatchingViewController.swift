@@ -40,6 +40,7 @@ class WatchingViewController: UIViewController {
         view = watchingView
         
         setupCollectionView()
+        initialLoadWatching()
         
         // TMP
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedTMP))
@@ -101,6 +102,24 @@ class WatchingViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
     }
     
+}
+
+
+//----------------------------------------------------------------------
+// MARK: API calls
+//----------------------------------------------------------------------
+extension WatchingViewController {
+    
+    func initialLoadWatching() {
+        apiManager?.getWatched {
+            [weak self] watched, error in
+            if let error = error {
+                // TODO: Set alert
+            } else {
+                self?.mode = .hasData(watched)
+            }
+        }
+    }
 }
 
 //----------------------------------------------------------------------

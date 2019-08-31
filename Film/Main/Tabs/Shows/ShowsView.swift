@@ -26,7 +26,7 @@ class ShowsView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
         collectionView.isHidden = true
-        let refreshControl =  UIRefreshControl()
+        let refreshControl = UIRefreshControl()
         collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
         
