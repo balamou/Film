@@ -11,6 +11,8 @@ import UIKit
 class ShowsCell: UICollectionViewCell {
     
     static let identifier: String = "ShowsCell"
+    static let cellSize = CGSize(width: 110, height: 160) 
+    
     var posterURL: String? = nil {
         didSet {
             if let url = posterURL {

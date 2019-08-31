@@ -172,6 +172,8 @@ extension ShowsViewController {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
+        guard offsetY > 0 else { return } // only when pulling up
+        
         if offsetY > contentHeight - (scrollView.frame.height + 100) , !isFetchingMore { // mutlipled by 2 so it start loading data earlier
             beginBatchFetch()
         }
@@ -182,7 +184,6 @@ extension ShowsViewController {
             return
         }
         
-        print("Get more shows")
         isFetchingMore = true
         showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
         
@@ -237,9 +238,9 @@ extension ShowsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
-            return CGSize(width: 110, height: 160) // size of a cell
+            return ShowsCell.cellSize // size of a cell
         } else if indexPath.section == 1 && isFetchingMore {
-            return CGSize(width: collectionView.frame.width, height: 50)
+            return CGSize(width: collectionView.frame.width, height: 50) // size of the cell
         }
         
         return .zero

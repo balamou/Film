@@ -24,7 +24,6 @@ class MockSeriesAPI: SeriesMoviesAPI {
             let error: String? = self.count == 2 || self.count == 3 ? "Could not load" : nil
             let data = self.count == 4 ? SeriesPresenter.getMockData2() : SeriesPresenter.getMockData()
             let isLast = (start >= 2 * 9)
-            print("Start: \(start) Count: \(self.count)")
             
             result(data, isLast, error)
             
