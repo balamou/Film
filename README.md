@@ -9,7 +9,7 @@
 ## Screenshots
 
   <p align="center">
-  <img src="images/shows.PNG" width="30%"/> <img src="images/settings.PNG" width="30%"/> <img src="images/screenshots/player.PNG" width="30%"/>
+  <img src="images/shows.PNG" width="30%"/> <img src="images/settings.PNG" width="30%"/> <img src="images/player.PNG" width="30%"/>
   </p>
 
 ## Languages
