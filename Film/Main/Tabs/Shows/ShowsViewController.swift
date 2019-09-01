@@ -157,6 +157,10 @@ extension ShowsViewController: UICollectionViewDelegate {
     
     // Show cell tapped
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let isRefreshing = collectionView.refreshControl?.isRefreshing, isRefreshing {
+            return // disable cell tapping when refreshing
+        }
+        
         delegate?.tappedOnSeriesPoster(series: data[indexPath.item])
     }
 }
