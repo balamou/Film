@@ -31,4 +31,8 @@ class MockData {
                     "https://images-na.ssl-images-amazon.com/images/I/81e36u8GzsL._SL1500_.jpg",
                     "https://m.media-amazon.com/images/M/MV5BNTEyYmIzMDUtNWMwNC00Y2Q1LWIyZTgtMGY1YzUxOTAwYTAwXkEyXkFqcGdeQXVyMjIyMTc0ODQ@._V1_.jpg",
                     "https://m.media-amazon.com/images/M/MV5BMjM3MjQ1MzkxNl5BMl5BanBnXkFtZTgwODk1ODgyMjI@._V1_.jpg"]
+    
+    static func randomPoster() -> String {
+        return MockData.posters[Int.random(in: 0 ..< MockData.posters.count)]
+    }
 }

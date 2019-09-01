@@ -22,13 +22,14 @@ extension Watched {
     
     static func getRandomMock() -> [Watched] {
        
-        return [Watched(id: 0, posterURL: MockData.posters[0], stoppedAt: Float.random(in: 0 ..< 1), label: "S1:E3", movieURL: MockData.videoURLs[0]),
-                Watched(id: 1, posterURL: MockData.posters[1], stoppedAt: Float.random(in: 0 ..< 1), label: "1h 30 min", movieURL: MockData.videoURLs[1]),
-                Watched(id: 2, posterURL: MockData.posters[2], stoppedAt: Float.random(in: 0 ..< 1), label: "S1:E7", movieURL: MockData.videoURLs[2]),
+        return [Watched(id: 0, posterURL: MockData.randomPoster(), stoppedAt: randomFloat(), label: "S1:E3", movieURL: MockData.videoURLs[0]),
+                Watched(id: 1, posterURL: MockData.randomPoster(), stoppedAt: randomFloat(), label: "1h 30 min", movieURL: MockData.videoURLs[1]),
+                Watched(id: 2, posterURL: MockData.randomPoster(), stoppedAt: randomFloat(), label: "S1:E7", movieURL: MockData.videoURLs[2]),
         ]
     }
     
-    fileprivate static func randomPoster() -> String {
-        return MockData.posters[0]
+    fileprivate static func randomFloat() -> Float {
+        return Float.random(in: 0 ..< 1)
     }
+    
 }
