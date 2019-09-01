@@ -75,7 +75,7 @@ class WatchingViewController: UIViewController {
         case .hasData(let freshData):
             watchingView.loadingView.isHidden = true
             watchingView.collectionView.isHidden = false
-                        
+            
             data = freshData
             watchingView.collectionView.reloadData()
         }

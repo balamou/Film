@@ -14,6 +14,8 @@ protocol Builder {
     func createShowViewController(delegate: ShowsDelegate?) -> ShowsViewController
     func createMoviesViewController() -> MoviewsViewController
     func createSettingsViewController() -> SettingsViewController
+    
+    func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter) -> ShowInfoViewController
 }
 
 
@@ -51,5 +53,13 @@ class StandardBuilder: Builder {
         settingsVC.tabBarItem = UITabBarItem(title: "Settings".localize(), image: ImageConstants.settingsImage, tag: 3)
         
         return settingsVC
+    }
+    
+    func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter) -> ShowInfoViewController {
+        let showInfoVC = ShowInfoViewController()
+        showInfoVC.delegate = delegate
+        // showInfoVC.series = SeriesPresenter
+        
+        return showInfoVC
     }
 }

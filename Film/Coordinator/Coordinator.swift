@@ -60,11 +60,25 @@ extension Coordinator: WatchingViewControllerDelegate {
 extension Coordinator: ShowsDelegate {
     
     func tappedOnSeriesPoster(series: SeriesPresenter) {
-        let ShowInfoVC = ShowInfoViewController()
+        let showInfoVC = builder.createShowInfoViewController(delegate: self, series: series)
         
-        // TODO: Pass 'series' to the VC
-        
-        navigationController.pushViewController(ShowInfoVC, animated: false)
+        navigationController.pushViewController(showInfoVC, animated: false)
+    }
+    
+}
+
+extension Coordinator: ShowInfoViewControllerDelegate {
+    
+    func exitButtonTapped() {
+        navigationController.popViewController(animated: false)
+    }
+    
+    func playButtonTapped() {
+        print("play last episode")
+    }
+    
+    func thumbnailTapped() {
+        print("play episode")
     }
     
 }

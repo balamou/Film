@@ -9,9 +9,17 @@
 import UIKit
 
 
+protocol ShowInfoViewControllerDelegate: AnyObject {
+    func exitButtonTapped()
+    func playButtonTapped()
+    func thumbnailTapped()
+}
+
+
 class ShowInfoViewController: UIViewController {
     
     var showView: ShowInfoView!
+    weak var delegate: ShowInfoViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +42,7 @@ class ShowInfoViewController: UIViewController {
     //----------------------------------------------------------------------
     
     var episodesCollectionView: UICollectionView!
-    var data: [String] = ["ep1", "ep2", "ep3"]
+    var data: [Series] = [Series()]
     
     func setupCollectionView() {
         episodesCollectionView = showView.episodesCollectionView
@@ -48,6 +56,41 @@ class ShowInfoViewController: UIViewController {
     }
 }
 
+//----------------------------------------------------------------------
+// MARK: Delegate action
+//----------------------------------------------------------------------
+
+extension ShowInfoViewController: HeaderViewDelegate {
+    
+    func exitButtonTapped() {
+        delegate?.exitButtonTapped()
+    }
+    
+    func playButtonTapped() {
+        // Play last watched episode
+        delegate?.playButtonTapped()
+    }
+    
+    func seasonButtonTapped() {
+        // Open ChangeSeasonVC
+        print("Change season")
+    }
+    
+}
+
+extension ShowInfoViewController: EpisodeCellDelegate {
+    
+    func thumbnailTapped() {
+        // Play episode
+        delegate?.thumbnailTapped()
+    }
+    
+}
+
+
+//----------------------------------------------------------------------
+// MARK: Data Source
+//----------------------------------------------------------------------
 extension ShowInfoViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -74,31 +117,10 @@ extension ShowInfoViewController: UICollectionViewDataSource {
     
 }
 
-extension ShowInfoViewController: HeaderViewDelegate, EpisodeCellDelegate {
-    
-    func exitButtonTapped() {
-        navigationController?.popViewController(animated: false)
-    }
-    
-    func playButtonTapped() {
-        print("Play episode")
-    }
-    
-    func seasonButtonTapped() {
-        print("Change season")
-    }
-    
-    func thumbnailTapped() {
-        print("Thumbnail tapped")
-    }
-}
-
-extension ShowInfoViewController: UICollectionViewDelegate {
-    
-}
-
-
-extension ShowInfoViewController: UICollectionViewDelegateFlowLayout {
+//----------------------------------------------------------------------
+// MARK: Flow layout
+//----------------------------------------------------------------------
+extension ShowInfoViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 176) // size of a cell
