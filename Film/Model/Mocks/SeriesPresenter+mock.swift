@@ -12,14 +12,14 @@ import Foundation
 extension SeriesPresenter {
     
     static func getMockData() -> [SeriesPresenter] {
-        return Array(0...8).map { SeriesPresenter(id: $0, posterURL: MockData.seriesPosters[$0]) }
+        return load(offset: 3, quantity: 9)
     }
     
     static func getMockData2() -> [SeriesPresenter] {
-       return Array(0...3).map { SeriesPresenter(id: $0 + 9, posterURL: MockData.seriesPosters[$0 + 9]) }
+        return load(offset: 3 + 9, quantity: 4)
     }
     
     static func load(offset: Int, quantity: Int) -> [SeriesPresenter]  {
-        return Array(0..<quantity).map { SeriesPresenter(id: $0 + offset, posterURL: MockData.seriesPosters[$0 + offset]) }
+        return Array(0..<quantity).map { SeriesPresenter(id: $0 + offset, posterURL: MockData.posters[$0 + offset]) }
     }
 }
