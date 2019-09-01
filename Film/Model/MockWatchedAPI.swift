@@ -19,8 +19,8 @@ class MockWatchedAPI: WatchedAPI {
     func getWatched(result: @escaping ([Watched], _ error: String?) -> ()) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
-            let error: String? = (self?.count == 1) ? "Bad internet connection" : nil
-            let data = Watched.getRandomMock()
+            let error: String? = (self?.count == 2) ? "Bad internet connection" : nil
+            let data = (self?.count == 0) ? [] : Watched.getRandomMock()
             
             result(data, error)
             

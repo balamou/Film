@@ -14,7 +14,18 @@ protocol WatchingViewControllerDelegate {
     func moreInfoTapped()
 }
 
-enum WatchingViewControllerMode {
+enum WatchingViewControllerMode: Equatable {
+    static func == (lhs: WatchingViewControllerMode, rhs: WatchingViewControllerMode) -> Bool {
+        switch (lhs, rhs) {
+        case (.idle, .idle), (.loading, .loading):
+            return true
+        case (.hasData(_), .hasData(_)):
+            return true
+        default:
+            return false
+        }
+    }
+    
     case idle
     case loading
     case hasData([Watched])
@@ -53,17 +64,26 @@ class WatchingViewController: UIViewController {
     func switchedMode(newMode: WatchingViewControllerMode) {
         switch mode {
         case .idle:
-            watchingView.idleView.isHidden = false
-            watchingView.loadingView.isHidden = true
-            watchingView.collectionView.isHidden = true
-        case .loading:
-            watchingView.idleView.isHidden = true
-            watchingView.loadingView.isHidden = false
-            watchingView.collectionView.isHidden = true
-        case .hasData(let freshData):
-            watchingView.idleView.isHidden = true
             watchingView.loadingView.isHidden = true
             watchingView.collectionView.isHidden = false
+            
+            watchingView.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // refresh the section with the idle image
+        case .loading:
+            watchingView.loadingView.isHidden = false
+            watchingView.collectionView.isHidden = true
+            
+        case .hasData(let freshData):
+            watchingView.loadingView.isHidden = true
+            watchingView.collectionView.isHidden = false
+            
+            if freshData.isEmpty {
+                mode = .idle
+                //self.data = []
+                
+                watchingView.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // refresh the section with the idle image
+                
+                return
+            }
             
             self.data = freshData
             watchingView.collectionView.reloadData()
@@ -88,6 +108,7 @@ class WatchingViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(WatchingCell.self, forCellWithReuseIdentifier: WatchingCell.identifier)
+        collectionView.register(IdleCell.self, forCellWithReuseIdentifier: IdleCell.identifier)
         collectionView.alwaysBounceVertical = true
     }
     
@@ -118,8 +139,7 @@ extension WatchingViewController {
             if let error = error {
                 self?.alert?.mode = .showMessage(error) // show alert
             } else {
-                self?.data = watched
-                self?.watchingView.collectionView.reloadData()
+               self?.mode = .hasData(watched)
             }
             
             completion()
@@ -158,20 +178,36 @@ extension WatchingViewController: WatchingCellDelegate {
 //----------------------------------------------------------------------
 extension WatchingViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2 // one section for watched & the other for idle
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        if section == 0 && !(mode == .idle) {
+            return data.count
+        } else if section == 1 && mode == .idle {
+            return 1
+        }
+        
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchingCell.identifier, for: indexPath) as! WatchingCell
-        
-        let data = self.data[indexPath.item]
-        cell.delegate = self
-        cell.viewedLabel.text = data.label
-        cell.progress = data.stoppedAt
-        cell.posterURL = data.posterURL
-        
-        return cell
+         if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchingCell.identifier, for: indexPath) as! WatchingCell
+            
+            let data = self.data[indexPath.item]
+            cell.delegate = self
+            cell.viewedLabel.text = data.label
+            cell.progress = data.stoppedAt
+            cell.posterURL = data.posterURL
+            
+            return cell
+         } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IdleCell.identifier, for: indexPath) as! IdleCell
+            
+            return cell
+        }
     }
 }
 
@@ -182,11 +218,23 @@ extension WatchingViewController: UICollectionViewDataSource, UICollectionViewDe
 extension WatchingViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 110, height: 197) // size of a cell
+        if indexPath.section == 0 {
+            return CGSize(width: 110, height: 197) // size of a cell
+        } else if indexPath.section == 1 && mode == .idle {
+            return CGSize(width: collectionView.frame.width, height: collectionView.frame.height) // size of the cell
+        }
+        
+        return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) // overall insets of the collection view
+        if section == 0 && !(mode == .idle) {
+            return UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) // overall insets of the collection view
+        } else if section == 1 && mode == .idle {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) // overall insets of the collection view section
+        }
+        
+        return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
