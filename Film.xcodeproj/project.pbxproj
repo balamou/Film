@@ -76,6 +76,9 @@
 		EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */; };
 		EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55423161B3E00041D29 /* ShowInfoView.swift */; };
 		EDC8AB422319970100400312 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AB412319970100400312 /* Builder.swift */; };
+		EDEF975A231C264600025483 /* Series+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF9759231C264600025483 /* Series+mock.swift */; };
+		EDEF975C231C268E00025483 /* Watched+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975B231C268E00025483 /* Watched+mock.swift */; };
+		EDEF975E231C26C900025483 /* SeriesPresenter+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */; };
 		EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB055231497C90045E8D6 /* WatchingViewController.swift */; };
 		EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB0572314985A0045E8D6 /* WatchingView.swift */; };
 /* End PBXBuildFile section */
@@ -188,6 +191,9 @@
 		EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoViewController.swift; sourceTree = "<group>"; };
 		EDBEC55423161B3E00041D29 /* ShowInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoView.swift; sourceTree = "<group>"; };
 		EDC8AB412319970100400312 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		EDEF9759231C264600025483 /* Series+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Series+mock.swift"; sourceTree = "<group>"; };
+		EDEF975B231C268E00025483 /* Watched+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Watched+mock.swift"; sourceTree = "<group>"; };
+		EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeriesPresenter+mock.swift"; sourceTree = "<group>"; };
 		EDFDB055231497C90045E8D6 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
 		EDFDB0572314985A0045E8D6 /* WatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -464,6 +470,7 @@
 				EDB57E8F231766980049504E /* Watched.swift */,
 				EDB57E91231769E20049504E /* Series.swift */,
 				ED8060A5231B76CD0032A128 /* SeriesPresenter.swift */,
+				EDEF9758231C263500025483 /* Mocks */,
 				EDEF9757231C244900025483 /* API */,
 				EDB0CD3A231B516000246CDF /* StandardSettings.swift */,
 			);
@@ -497,6 +504,16 @@
 				EDB57E95231885F10049504E /* MockSeriesAPI.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		EDEF9758231C263500025483 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				EDEF975B231C268E00025483 /* Watched+mock.swift */,
+				EDEF9759231C264600025483 /* Series+mock.swift */,
+				EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		EDFDB054231495EF0045E8D6 /* Tabs */ = {
@@ -718,6 +735,7 @@
 				ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */,
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
 				ED8060A6231B76CD0032A128 /* SeriesPresenter.swift in Sources */,
+				EDEF975C231C268E00025483 /* Watched+mock.swift in Sources */,
 				ED1CC3A7231620790061EE21 /* EpisodeCell.swift in Sources */,
 				ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */,
 				ED2DBB412315E356009250EC /* ShowsCell.swift in Sources */,
@@ -744,6 +762,8 @@
 				EDB0CD3B231B516000246CDF /* StandardSettings.swift in Sources */,
 				EDACC49E231A0D8E005DC09C /* CustomMarginButton.swift in Sources */,
 				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,
+				EDEF975A231C264600025483 /* Series+mock.swift in Sources */,
+				EDEF975E231C26C900025483 /* SeriesPresenter+mock.swift in Sources */,
 				ED5AC12A2315A65F0098A161 /* UIViewController+extensions.swift in Sources */,
 				ED5AC1102314DDD00098A161 /* MoviesViewController.swift in Sources */,
 			);
