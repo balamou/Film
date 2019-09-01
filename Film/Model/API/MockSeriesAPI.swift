@@ -9,12 +9,11 @@
 import Foundation
 
 
-protocol SeriesMoviesAPI {
+protocol SeriesAPI {
     func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ isLast: Bool, _ error: String?) -> ())
-    func getMovies(start: Int, quantity: Int, result: @escaping ([MoviesPresenter], _ isLast: Bool, _ error: String?) -> ())
 }
 
-class MockSeriesAPI: SeriesMoviesAPI {
+class MockSeriesAPI: SeriesAPI {
     
     var count = 0
     
@@ -33,9 +32,5 @@ class MockSeriesAPI: SeriesMoviesAPI {
                 self?.count += 1
             }
         })
-    }
-    
-    func getMovies(start: Int, quantity: Int, result: @escaping ([MoviesPresenter], _ isLast: Bool, _ error: String?) -> ()) {
-        
     }
 }

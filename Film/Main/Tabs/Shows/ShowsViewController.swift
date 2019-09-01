@@ -33,7 +33,7 @@ class ShowsViewController: UIViewController {
         }
     }
     // API
-    var apiManager: SeriesMoviesAPI?
+    var apiManager: SeriesAPI?
     let numberOfShowsToLoad = 9
     
     // Alert

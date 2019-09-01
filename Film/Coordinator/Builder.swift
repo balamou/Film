@@ -32,7 +32,7 @@ class StandardBuilder: Builder {
     
     func createShowViewController(delegate: ShowsDelegate?) -> ShowsViewController {
         let showsVC = ShowsViewController()
-        let apiManager: SeriesMoviesAPI = MockSeriesAPI()
+        let apiManager: SeriesAPI = MockSeriesAPI()
         
         showsVC.apiManager = apiManager
         showsVC.delegate = delegate

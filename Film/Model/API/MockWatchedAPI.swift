@@ -18,14 +18,7 @@ class MockWatchedAPI: WatchedAPI {
     
     func getWatched(result: @escaping ([Watched], _ error: String?) -> ()) {
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
-//            let error: String? = (self?.count == 0) ? "Bad internet connection" : nil
-//            let data = (self?.count == 0) ? [] : Watched.getRandomMock()
-//
-//            result(data, error)
-//
-//            self?.count += 1
-//        })
+
         test1(result: result)
     }
     
@@ -36,6 +29,17 @@ class MockWatchedAPI: WatchedAPI {
             
             result(data, error)
             
+            self?.count += 1
+        })
+    }
+    
+    func test2(result: @escaping ([Watched], _ error: String?) -> ())  {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
+            let error: String? = (self?.count == 0) ? "Bad internet connection" : nil
+            let data = (self?.count == 0) ? [] : Watched.getRandomMock()
+
+            result(data, error)
+
             self?.count += 1
         })
     }

@@ -464,8 +464,7 @@
 				EDB57E8F231766980049504E /* Watched.swift */,
 				EDB57E91231769E20049504E /* Series.swift */,
 				ED8060A5231B76CD0032A128 /* SeriesPresenter.swift */,
-				EDB57E95231885F10049504E /* MockSeriesAPI.swift */,
-				EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */,
+				EDEF9757231C244900025483 /* API */,
 				EDB0CD3A231B516000246CDF /* StandardSettings.swift */,
 			);
 			path = Model;
@@ -489,6 +488,15 @@
 				EDC8AB412319970100400312 /* Builder.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		EDEF9757231C244900025483 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */,
+				EDB57E95231885F10049504E /* MockSeriesAPI.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		EDFDB054231495EF0045E8D6 /* Tabs */ = {
