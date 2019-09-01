@@ -20,6 +20,20 @@ class ShowInfoViewController: UIViewController {
     
     var showView: ShowInfoView!
     weak var delegate: ShowInfoViewControllerDelegate?
+    var data: Series = Series.getMock()
+    var seriesPresenter: SeriesPresenter? = nil {
+        didSet {
+            if let seriesPresenter = seriesPresenter {
+                loadSeries(seriesPresenter: seriesPresenter)
+            } else {
+                delegate?.exitButtonTapped()
+                // TODO: SHOW ERROR
+            }
+        }
+    }
+    
+    // API
+    //var apiManager:
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +56,6 @@ class ShowInfoViewController: UIViewController {
     //----------------------------------------------------------------------
     
     var episodesCollectionView: UICollectionView!
-    var data: [Series] = [Series()]
     
     func setupCollectionView() {
         episodesCollectionView = showView.episodesCollectionView
@@ -55,6 +68,18 @@ class ShowInfoViewController: UIViewController {
         episodesCollectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.identifier)
     }
 }
+
+//----------------------------------------------------------------------
+// MARK: API calls
+//----------------------------------------------------------------------
+extension ShowInfoViewController {
+    
+    func loadSeries(seriesPresenter: SeriesPresenter) {
+        
+    }
+    
+}
+
 
 //----------------------------------------------------------------------
 // MARK: Delegate action
@@ -87,19 +112,21 @@ extension ShowInfoViewController: EpisodeCellDelegate {
     
 }
 
-
 //----------------------------------------------------------------------
 // MARK: Data Source
 //----------------------------------------------------------------------
 extension ShowInfoViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        return data.episodes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EpisodeCell.identifier, for: indexPath) as! EpisodeCell
         cell.delegate = self
+        let episode = data.episodes[indexPath.item]
+        
+        cell.episodeTitleLabel.text = episode.constructTitle()
         
         return cell
     }
@@ -107,6 +134,9 @@ extension ShowInfoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
         header.delegate = self
+        
+        header.titleLabel.text = data.title
+        header.descriptionLabel.text = data.description ?? ""
         
         return header
     }

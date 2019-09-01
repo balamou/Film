@@ -58,7 +58,7 @@ class StandardBuilder: Builder {
     func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter) -> ShowInfoViewController {
         let showInfoVC = ShowInfoViewController()
         showInfoVC.delegate = delegate
-        // showInfoVC.series = SeriesPresenter
+        showInfoVC.seriesPresenter = series
         
         return showInfoVC
     }
