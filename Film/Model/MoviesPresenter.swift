@@ -1,15 +1,15 @@
 //
-//  SeriesPresenter.swift
+//  MoviesPresenter.swift
 //  Film
 //
-//  Created by Michel Balamou on 2019-08-31.
+//  Created by Michel Balamou on 2019-09-01.
 //  Copyright © 2019 ElasticPanda. All rights reserved.
 //
 
 import Foundation
 
 
-class SeriesPresenter {
+class MoviesPresenter {
     
     var id: Int
     var posterURL: String?
@@ -20,4 +20,3 @@ class SeriesPresenter {
     }
     
 }
-

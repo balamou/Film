@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class Series {
     var title: String
     var episodes: [Episode]
