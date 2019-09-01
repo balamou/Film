@@ -12,22 +12,14 @@ import Foundation
 extension SeriesPresenter {
     
     static func getMockData() -> [SeriesPresenter] {
-        return [SeriesPresenter(id: 0, posterURL: MockData.seriesPosters[0]),
-                SeriesPresenter(id: 1, posterURL: MockData.seriesPosters[1]),
-                SeriesPresenter(id: 2, posterURL: MockData.seriesPosters[2]),
-                SeriesPresenter(id: 3, posterURL: MockData.seriesPosters[3]),
-                SeriesPresenter(id: 4, posterURL: MockData.seriesPosters[4]),
-                SeriesPresenter(id: 5, posterURL: MockData.seriesPosters[5]),
-                SeriesPresenter(id: 6, posterURL: MockData.seriesPosters[6]),
-                SeriesPresenter(id: 7, posterURL: MockData.seriesPosters[7]),
-                SeriesPresenter(id: 8, posterURL: MockData.seriesPosters[8])]
+        return Array(0...8).map { SeriesPresenter(id: $0, posterURL: MockData.seriesPosters[$0]) }
     }
     
-    
     static func getMockData2() -> [SeriesPresenter] {
-        return [SeriesPresenter(id: 0, posterURL: MockData.seriesPosters[9]),
-                SeriesPresenter(id: 1, posterURL: MockData.seriesPosters[10]),
-                SeriesPresenter(id: 2, posterURL: MockData.seriesPosters[11]),
-                SeriesPresenter(id: 3, posterURL: MockData.seriesPosters[12])]
+       return Array(0...3).map { SeriesPresenter(id: $0 + 9, posterURL: MockData.seriesPosters[$0 + 9]) }
+    }
+    
+    static func load(offset: Int, quantity: Int) -> [SeriesPresenter]  {
+        return Array(0..<quantity).map { SeriesPresenter(id: $0 + offset, posterURL: MockData.seriesPosters[$0 + offset]) }
     }
 }
