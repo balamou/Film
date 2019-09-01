@@ -67,7 +67,7 @@ class WatchingViewController: UIViewController {
             watchingView.loadingView.isHidden = true
             watchingView.collectionView.isHidden = false
             
-            watchingView.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // refresh the section with the idle image
+            watchingView.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // reload both sections
         case .loading:
             watchingView.loadingView.isHidden = false
             watchingView.collectionView.isHidden = true
@@ -75,17 +75,8 @@ class WatchingViewController: UIViewController {
         case .hasData(let freshData):
             watchingView.loadingView.isHidden = true
             watchingView.collectionView.isHidden = false
-            
-            if freshData.isEmpty {
-                mode = .idle
-                //self.data = []
-                
-                watchingView.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // refresh the section with the idle image
-                
-                return
-            }
-            
-            self.data = freshData
+                        
+            data = freshData
             watchingView.collectionView.reloadData()
         }
     }
@@ -124,12 +115,12 @@ extension WatchingViewController {
         apiManager?.getWatched {
             [weak self] watched, error in
             if let error = error {
-                // TODO: Show new cell type section with error
                 self?.alert?.mode = .showMessage(error)
-                self?.mode = .hasData([])
+                self?.mode = .idle
+            } else if watched.isEmpty {
+                self?.mode = .idle
             } else {
                 self?.mode = .hasData(watched)
-                // TODO: if data is empty, show idle cell
             }
         }
     }
@@ -138,6 +129,8 @@ extension WatchingViewController {
         apiManager?.getWatched { [weak self] watched, error in
             if let error = error {
                 self?.alert?.mode = .showMessage(error) // show alert
+            } else if watched.isEmpty {
+                self?.mode = .idle
             } else {
                self?.mode = .hasData(watched)
             }
