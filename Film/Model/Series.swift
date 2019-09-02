@@ -35,16 +35,29 @@ class Episode {
     var episodeNumber: Int
     var seasonNumber: Int
     var videoURL: String
+    var duration: Int
     
+    var thumbnailURL: String?
     var title: String?
     var plot: String?
     var stoppedAt: Float?
     
-    init(id: Int, episodeNumber: Int, seasonNumber: Int, videoURL: String, title: String? = nil, plot: String? = nil, stoppedAt: Float? = nil) {
+    init(id: Int,
+         episodeNumber: Int,
+         seasonNumber: Int,
+         videoURL: String,
+         duration: Int,
+         thumbnailURL: String? = nil,
+         title: String? = nil,
+         plot: String? = nil,
+         stoppedAt: Float? = nil) {
         self.id = id
         self.episodeNumber = episodeNumber
         self.seasonNumber = seasonNumber
         self.videoURL = videoURL
+        self.duration = duration
+        
+        self.thumbnailURL = thumbnailURL
         self.title = title
         self.plot = plot
         self.stoppedAt = stoppedAt
@@ -57,6 +70,23 @@ class Episode {
             return "Episode ".localize() + "\(episodeNumber)"
         }
     }
+    
+    func durationInMinutes() -> String {
+        return durationInMinutes(seconds: duration)
+    }
+    
+    fileprivate func durationInMinutes(seconds: Int) -> String {
+        let hours = seconds / 3600
+        let minutes = (seconds % 3600) / 60
+        
+        if hours == 0 {
+            return "\(minutes) " + "min".localize()
+        } else {
+            return "\(hours) " + "h".localize() + " \(minutes) " + "min".localize()
+        }
+    }
+    
+    
 }
 
 

@@ -61,6 +61,8 @@ class EpisodeCell: UICollectionViewCell {
         label.text = "Plot"
         label.textColor = .white
         label.font = FontStandard.helveticaNeue(size: 15.0)
+        label.numberOfLines = 0
+        label.textAlignment = .justified
         
         return label
     }()
@@ -144,6 +146,17 @@ class EpisodeCell: UICollectionViewCell {
         playEpisodeButton.addTarget(self, action: #selector(thumbnailTapped), for: .touchUpInside)
         
         reset()
+    }
+    
+    func populate(episode: Episode) {
+        
+        episodeTitleLabel.text = episode.constructTitle()
+        if let url = episode.thumbnailURL {
+            thumbnail.downloaded(from: url)
+        }
+        durationLabel.text = episode.durationInMinutes()
+        plotLabel.text = episode.plot
+        
     }
     
     @objc func thumbnailTapped() {

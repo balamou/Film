@@ -137,7 +137,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
         cell.delegate = self
         let episode = data.episodes[indexPath.item]
         
-        cell.episodeTitleLabel.text = episode.constructTitle()
+        cell.populate(episode: episode)
         
         return cell
     }
