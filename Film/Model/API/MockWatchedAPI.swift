@@ -17,8 +17,6 @@ class MockWatchedAPI: WatchedAPI {
     var count = 0
     
     func getWatched(result: @escaping ([Watched], _ error: String?) -> ()) {
-        
-
         test1(result: result)
     }
     
@@ -44,4 +42,23 @@ class MockWatchedAPI: WatchedAPI {
         })
     }
     
+    enum NetworkError: Error {
+        case badURL
+        case noInternet
+    }
+    
+    // Example using result type
+    // TODO: actually implement this
+    func test3(result: @escaping (Result<[Watched], Error>) -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
+            if self?.count == 2 || self?.count == 5 {
+                result(.failure(NetworkError.badURL))
+            } else {
+                let data = (self?.count == 0 || self?.count == 4) ? [] : Watched.getRandomMock()
+                result(.success(data))
+            }
+                
+            self?.count += 1
+        })
+    }
 }
