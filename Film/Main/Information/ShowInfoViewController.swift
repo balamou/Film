@@ -142,8 +142,9 @@ extension ShowInfoViewController: UICollectionViewDataSource {
         return cell
     }
     
+    // Size of the header
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 440)
+        return HeaderView.getEstimatedSize(description: data.description, collectionViewWidth: collectionView.frame.width)
     }
     
 }
