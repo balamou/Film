@@ -43,3 +43,6 @@
 "Save" = "Сохранить";
 "Refresh" = "Перезагрузить";
 "Logout" = "Выйти";
+
+// ShowInfoVC
+"Season" = "Сезон";

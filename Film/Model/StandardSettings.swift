@@ -13,4 +13,12 @@ class StandardSettings {
     var language = "english"
     var ipAddress = "192.168.72.46"
     var port = "9989"
+    
+    func loadFromUserDefaults() {
+        // TODO: load settings from user defaults
+    }
+    
+    func saveToUserDefaults() {
+        // TODO: Save new parameters to user defaults
+    }
 }

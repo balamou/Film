@@ -12,13 +12,17 @@ import Foundation
 class Series {
     var title: String
     var episodes: [Episode]
+    var seasonSelected: Int
+    var totalSeasons: Int
     var description: String?
     var posterURL: String?
     var lastWatchedEpisode: Episode?
     
-    init(title: String, episodes: [Episode], description: String? = nil, posterURL: String? = nil, lastWatchedEpisode: Episode? = nil) {
+    init(title: String, episodes: [Episode], seasonSelected: Int, totalSeasons: Int, description: String? = nil, posterURL: String? = nil, lastWatchedEpisode: Episode? = nil) {
         self.title = title
         self.episodes = episodes
+        self.seasonSelected = seasonSelected
+        self.totalSeasons = totalSeasons
         self.description = description
         self.posterURL = posterURL
         self.lastWatchedEpisode = lastWatchedEpisode

@@ -20,6 +20,15 @@ class HeaderView: UICollectionReusableView {
     
     static let identifier = "HeaderView"
     weak var delegate: HeaderViewDelegate?
+    var posterURL: String? = nil {
+        didSet {
+            if let url = posterURL {
+                posterPicture.downloaded(from: url)
+            }
+        }
+    }
+    
+    
     
     var posterPicture: UIImageView = {
         let imageView = UIImageView()
@@ -58,6 +67,8 @@ class HeaderView: UICollectionReusableView {
         let label = UILabel()
         label.text = "Description"
         label.textColor = .white
+        label.numberOfLines = 0
+        label.font = FontStandard.helveticaNeue(size: 14.0)
         
         return label
     }()
@@ -150,6 +161,16 @@ class HeaderView: UICollectionReusableView {
         exitButton.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         seasonButton.addTarget(self, action: #selector(seasonButtonTapped), for: .touchUpInside)
+    }
+    
+    func populateData(series: Series) {
+        
+        titleLabel.text = series.title
+        descriptionLabel.text = series.description ?? ""
+        posterURL = series.posterURL
+        let seasonSelected = "Season".localize() + " \(series.seasonSelected)"
+        seasonButton.setTitle(seasonSelected, for: .normal)
+        
     }
     
     @objc func exitButtonTapped() {

@@ -121,6 +121,17 @@ extension ShowInfoViewController: UICollectionViewDataSource {
         return data.episodes.count
     }
     
+    // Series Header
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
+        header.delegate = self
+        
+        header.populateData(series: data)
+        
+        return header
+    }
+    
+    // Episode Cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EpisodeCell.identifier, for: indexPath) as! EpisodeCell
         cell.delegate = self
@@ -129,16 +140,6 @@ extension ShowInfoViewController: UICollectionViewDataSource {
         cell.episodeTitleLabel.text = episode.constructTitle()
         
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
-        header.delegate = self
-        
-        header.titleLabel.text = data.title
-        header.descriptionLabel.text = data.description ?? ""
-        
-        return header
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
