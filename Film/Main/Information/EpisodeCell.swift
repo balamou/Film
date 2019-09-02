@@ -16,6 +16,7 @@ class EpisodeCell: UICollectionViewCell {
     
     static let identifier: String = "EpisodeCell"
     weak var delegate: EpisodeCellDelegate?
+    var stoppedAtConstraint: NSLayoutConstraint?
     
     
     var thumbnail: UIImageView = {
@@ -91,11 +92,10 @@ class EpisodeCell: UICollectionViewCell {
             view.heightAnchor.constraint(equalToConstant: 2.0).isActive = true
         }
         
-        static func setStoppedAtView(_ view: UIView, _ parent: UIView, progress: CGFloat) {
+        static func setStoppedAtView(_ view: UIView, _ parent: UIView) {
             view.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             view.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
             view.heightAnchor.constraint(equalTo: parent.heightAnchor).isActive = true
-            view.widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: progress).isActive = true
         }
         
         static func setEpisodeTitleLabel(_ label: UILabel, _ leftNeighbour: UIView) {
@@ -137,15 +137,14 @@ class EpisodeCell: UICollectionViewCell {
         
         Constraints.setThumbnailView(thumbnail, self)
         Constraints.setProgressView(progressView, thumbnail)
-        Constraints.setStoppedAtView(stoppedAtView, progressView, progress: 0.2)
+        Constraints.setStoppedAtView(stoppedAtView, progressView)
+        switchMultiplier(multiplier: 0.5)
         Constraints.setEpisodeTitleLabel(episodeTitleLabel, thumbnail)
         Constraints.setDurationLabel(durationLabel, episodeTitleLabel)
         Constraints.setPlotLabel(plotLabel, thumbnail, self)
         Constraints.setPlayEpisodeButton(playEpisodeButton, thumbnail)
         
         playEpisodeButton.addTarget(self, action: #selector(thumbnailTapped), for: .touchUpInside)
-        
-        reset()
     }
     
     func populate(episode: Episode) {
@@ -157,6 +156,17 @@ class EpisodeCell: UICollectionViewCell {
         durationLabel.text = episode.durationInMinutes()
         plotLabel.text = episode.plot
         
+        if let stoppedAt = episode.stoppedAt {
+            switchMultiplier(multiplier: stoppedAt)
+        } else {
+            progressView.isHidden = true
+        }
+    }
+    
+    func switchMultiplier(multiplier: Float) {
+        stoppedAtConstraint?.isActive = false
+        stoppedAtConstraint = stoppedAtView.widthAnchor.constraint(equalTo: progressView.widthAnchor, multiplier: CGFloat(multiplier))
+        stoppedAtConstraint?.isActive = true
     }
     
     @objc func thumbnailTapped() {
@@ -165,14 +175,6 @@ class EpisodeCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.reset()
-    }
-    
-    func reset() {
     }
     
 }
