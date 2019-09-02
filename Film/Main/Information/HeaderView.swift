@@ -186,20 +186,22 @@ class HeaderView: UICollectionReusableView {
     }
     
     static func getEstimatedSize(description: String?, collectionViewWidth: CGFloat) -> CGSize {
-        // Estimated size of the text
-        if let description = description {
-            
-            let approximateWidthOfDescription: CGFloat = collectionViewWidth - 2 * 10
-            let approximateHeightOfDescription: CGFloat = 1000.0 // arbitrary large value
-            let attributes = [NSAttributedString.Key.font : FontStandard.helveticaNeue(size: 15.0)]
-            
-            let size = CGSize(width: approximateWidthOfDescription, height: approximateHeightOfDescription)
-            let estimatedFrame = NSString(string: description).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-            
-            return CGSize(width: collectionViewWidth, height: estimatedFrame.height + 400 - 10)
+        guard let description = description else {
+            return CGSize(width: collectionViewWidth, height: 400 - 10)
         }
         
-        return CGSize(width: collectionViewWidth, height: 400 - 10)
+        let labelMargins: CGFloat = 2 * 10
+        let approximateWidthOfDescription: CGFloat = collectionViewWidth - labelMargins
+        let approximateHeightOfDescription: CGFloat = 1000.0 // arbitrary large value
+        let attributes = [NSAttributedString.Key.font : FontStandard.helveticaNeue(size: 15.0)]
+        
+        let size = CGSize(width: approximateWidthOfDescription, height: approximateHeightOfDescription)
+        let estimatedFrame = NSString(string: description).boundingRect(with: size,
+                                                                        options: .usesLineFragmentOrigin,
+                                                                        attributes: attributes,
+                                                                        context: nil)
+        
+        return CGSize(width: collectionViewWidth, height: estimatedFrame.height + 400 - 10)
     }
     
 }
