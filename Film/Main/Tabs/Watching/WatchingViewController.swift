@@ -197,11 +197,8 @@ extension WatchingViewController: UICollectionViewDataSource, UICollectionViewDe
          if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchingCell.identifier, for: indexPath) as! WatchingCell
             
-            let data = self.data[indexPath.item]
             cell.delegate = self
-            cell.viewedLabel.text = data.label
-            cell.progress = data.stoppedAt
-            cell.posterURL = data.posterURL
+            cell.populate(watched: data[indexPath.item])
             
             return cell
          } else {
