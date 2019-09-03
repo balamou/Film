@@ -112,27 +112,30 @@ class WatchingViewController: UIViewController {
 extension WatchingViewController {
     
     func initialLoadWatching() {
-        apiManager?.getWatched {
-            [weak self] watched, error in
+        apiManager?.getWatched { [weak self] watched, error in
+            guard let self = self else { return }
+            
             if let error = error {
-                self?.alert?.mode = .showMessage(error)
-                self?.mode = .idle
+                self.alert?.mode = .showMessage(error)
+                self.mode = .idle
             } else if watched.isEmpty {
-                self?.mode = .idle
+                self.mode = .idle
             } else {
-                self?.mode = .hasData(watched)
+                self.mode = .hasData(watched)
             }
         }
     }
     
     func refreshOnPull(completion: @escaping () -> ()) {
         apiManager?.getWatched { [weak self] watched, error in
+            guard let self = self else { return }
+            
             if let error = error {
-                self?.alert?.mode = .showMessage(error) // show alert
+                self.alert?.mode = .showMessage(error) // show alert
             } else if watched.isEmpty {
-                self?.mode = .idle
+                self.mode = .idle
             } else {
-               self?.mode = .hasData(watched)
+               self.mode = .hasData(watched)
             }
             
             completion()
