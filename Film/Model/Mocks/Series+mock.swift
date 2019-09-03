@@ -12,14 +12,18 @@ import Foundation
 extension Series {
     
     static func getMock() -> Series {
-        let episodes = Array(1...5).map { i in
-            Episode(id: i,
+        let episodes = Array(1...5).map { i -> Episode in
+            let test = Array.init(repeating: "", count: Int.random(in: 1...4))
+            let sentence = "An animated series on adult-swim about the infinite adventures of Rick, a genius alcoholic and careless scientist."
+            let plot = test.reduce("") { result, _ in result + sentence }
+            
+            return Episode(id: i,
                     episodeNumber: i,
                     seasonNumber: 1,
                     videoURL: MockData.videoURLs[Int.random(in: 0..<MockData.videoURLs.count)],
                     duration: Int.random(in: 1200 ... 5400),
                     thumbnailURL: MockData.randomPoster(),
-                    plot: "Some random plot", stoppedAt: i < 3 ? Float.random(in: 0...1) : nil)
+                    plot: plot, stoppedAt: i < 3 ? Float.random(in: 0...1) : nil)
         }
         
         let desc = "An animated series on adult-swim about the infinite adventures of Rick, a genius alcoholic and careless scientist, with his grandson Morty, a 14 year-old anxious boy who is not so smart, but always tries to lead his grandfather with his own morale compass. Together, they explore the infinite universes; causing mayhem and running into trouble."

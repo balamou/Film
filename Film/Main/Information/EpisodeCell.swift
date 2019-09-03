@@ -60,7 +60,7 @@ class EpisodeCell: UICollectionViewCell {
     var plotLabel: UILabel = {
         let label = UILabel()
         label.text = "Plot"
-        label.textColor = .white
+        label.textColor = #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1) // #999999
         label.font = FontStandard.helveticaNeue(size: 15.0)
         label.numberOfLines = 0
         label.textAlignment = .justified
@@ -89,7 +89,7 @@ class EpisodeCell: UICollectionViewCell {
             view.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor).isActive = true
             view.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
             view.widthAnchor.constraint(equalTo: topNeighbour.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: 2.0).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 3.0).isActive = true
         }
         
         static func setStoppedAtView(_ view: UIView, _ parent: UIView) {
