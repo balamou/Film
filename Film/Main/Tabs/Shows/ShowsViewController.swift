@@ -97,43 +97,46 @@ class ShowsViewController: UIViewController {
 extension ShowsViewController {
     
     func initialLoadSeries() {
-        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) {
-            [weak self] series, isLast, error in
+        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
+            guard let self = self else { return }
+            
             if let error = error {
                 // TODO: Show idle image/icon with error message (probably a new cell section)
-                self?.alert?.mode = .showMessage(error)
-                self?.mode = .hasShows([], isLast: true)
+                self.alert?.mode = .showMessage(error)
+                self.mode = .hasShows([], isLast: true)
             } else {
-                self?.mode = .hasShows(series, isLast: isLast)
+                self.mode = .hasShows(series, isLast: isLast)
             }
         }
     }
     
     func loadMoreOnDragDown() {
-        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) {
-            [weak self] series, isLast, error in
+        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
+            guard let self = self else { return }
+            
             if let error = error {
-                self?.alert?.mode = .showMessage(error) // show alert
-                self?.isFetchingMore = false // stop displaying loading indicator
-                self?.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
+                self.alert?.mode = .showMessage(error) // show alert
+                self.isFetchingMore = false // stop displaying loading indicator
+                self.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
             } else {
-                self?.data += series
-                self?.showsView.showListCollectionView.reloadData()
-                self?.isFetchingMore = false // stop displaying loading indicator
-                self?.isInfiniteScrollEnabled = !isLast
+                self.data += series
+                self.showsView.showListCollectionView.reloadData()
+                self.isFetchingMore = false // stop displaying loading indicator
+                self.isInfiniteScrollEnabled = !isLast
             }
         }
     }
     
     func refreshOnPull(completion: @escaping () -> ()) {
-        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) {
-            [weak self] series, isLast, error in
+        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
+            guard let self = self else { return }
+            
             if let error = error {
-                self?.alert?.mode = .showMessage(error) // show alert
+                self.alert?.mode = .showMessage(error) // show alert
             } else {
-                self?.data = series
-                self?.showsView.showListCollectionView.reloadData()
-                self?.isInfiniteScrollEnabled = !isLast
+                self.data = series
+                self.showsView.showListCollectionView.reloadData()
+                self.isInfiniteScrollEnabled = !isLast
             }
             
             completion()
