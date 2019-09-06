@@ -18,6 +18,7 @@ class EpisodeCell: UICollectionViewCell {
     weak var delegate: EpisodeCellDelegate?
     var stoppedAtConstraint: NSLayoutConstraint?
     
+    static let plotFont = FontStandard.helveticaNeue(size: 15.0)
     
     var thumbnail: UIImageView = {
         let imageView = UIImageView()
@@ -61,7 +62,7 @@ class EpisodeCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Plot"
         label.textColor = #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1) // #999999
-        label.font = FontStandard.helveticaNeue(size: 15.0)
+        label.font = EpisodeCell.plotFont
         label.numberOfLines = 0
         label.textAlignment = .justified
         
@@ -78,9 +79,11 @@ class EpisodeCell: UICollectionViewCell {
     
     class Constraints {
         
+        static let margins: CGFloat = 16
+        
         static func setThumbnailView(_ imageView: UIImageView, _ parent: UIView) {
             imageView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 10.0).isActive = true
-            imageView.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 10.0).isActive = true
+            imageView.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: margins).isActive = true
             imageView.widthAnchor.constraint(equalToConstant: 130.0).isActive = true
             imageView.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
         }
@@ -98,8 +101,9 @@ class EpisodeCell: UICollectionViewCell {
             view.heightAnchor.constraint(equalTo: parent.heightAnchor).isActive = true
         }
         
-        static func setEpisodeTitleLabel(_ label: UILabel, _ leftNeighbour: UIView) {
+        static func setEpisodeTitleLabel(_ label: UILabel, _ leftNeighbour: UIView, _ parent: UIView) {
             label.leadingAnchor.constraint(equalTo: leftNeighbour.trailingAnchor, constant: 10.0).isActive = true
+            label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -margins).isActive = true
             label.topAnchor.constraint(equalTo: leftNeighbour.topAnchor).isActive = true
         }
 
@@ -109,9 +113,9 @@ class EpisodeCell: UICollectionViewCell {
         }
         
         static func setPlotLabel(_ label: UILabel, _ topNeighbour: UIView, _ parent: UIView) {
-            label.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
+            label.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: margins).isActive = true
             label.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 10.0).isActive = true
-            label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -10.0).isActive = true
+            label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -margins).isActive = true
         }
         
         static func setPlayEpisodeButton(_ button: UIButton, _ thumnailView: UIView) {
@@ -139,7 +143,7 @@ class EpisodeCell: UICollectionViewCell {
         Constraints.setProgressView(progressView, thumbnail)
         Constraints.setStoppedAtView(stoppedAtView, progressView)
         switchMultiplier(multiplier: 0.5)
-        Constraints.setEpisodeTitleLabel(episodeTitleLabel, thumbnail)
+        Constraints.setEpisodeTitleLabel(episodeTitleLabel, thumbnail, self)
         Constraints.setDurationLabel(durationLabel, episodeTitleLabel)
         Constraints.setPlotLabel(plotLabel, thumbnail, self)
         Constraints.setPlayEpisodeButton(playEpisodeButton, thumbnail)
@@ -177,4 +181,22 @@ class EpisodeCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    static func getEstimatedSize(plot: String?, collectionViewWidth: CGFloat) -> CGSize {
+        guard let plot = plot, !plot.isEmpty else {
+            return CGSize(width: collectionViewWidth, height: 90)
+        }
+        
+        let labelMargins: CGFloat = 2 * Constraints.margins
+        let approximateWidthOfDescription: CGFloat = collectionViewWidth - labelMargins
+        let approximateHeightOfDescription: CGFloat = 1000.0 // arbitrary large value
+        let attributes = [NSAttributedString.Key.font : plotFont]
+        
+        let size = CGSize(width: approximateWidthOfDescription, height: approximateHeightOfDescription)
+        let estimatedFrame = NSString(string: plot).boundingRect(with: size,
+                                                                        options: .usesLineFragmentOrigin,
+                                                                        attributes: attributes,
+                                                                        context: nil)
+        
+        return CGSize(width: collectionViewWidth, height: estimatedFrame.height + 90 + 10)
+    }
 }

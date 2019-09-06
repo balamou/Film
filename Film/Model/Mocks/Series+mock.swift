@@ -13,9 +13,8 @@ extension Series {
     
     static func getMock() -> Series {
         let episodes = Array(1...5).map { i -> Episode in
-            let test = Array.init(repeating: "", count: Int.random(in: 1...4))
             let sentence = "An animated series on adult-swim about the infinite adventures of Rick, a genius alcoholic and careless scientist."
-            let plot = test.reduce("") { result, _ in result + sentence }
+            let plot = Array(repeating: sentence, count: Int.random(in: 0...4)).joined(separator: "")
             
             return Episode(id: i,
                     episodeNumber: i,
