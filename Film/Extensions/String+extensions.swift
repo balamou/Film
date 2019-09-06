@@ -13,4 +13,12 @@ extension String {
     func localize() -> String {
         return NSLocalizedString(self, comment: "")
     }
+    
+    func truncate(_ length: Int) -> String {
+        return truncate(length: length)
+    }
+    
+    private func truncate(length: Int, trailing: String = "…") -> String {
+        return (self.count > length) ? self.prefix(length) + trailing : self
+    }
 }

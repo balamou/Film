@@ -18,7 +18,7 @@ class EpisodeCell: UICollectionViewCell {
     weak var delegate: EpisodeCellDelegate?
     var stoppedAtConstraint: NSLayoutConstraint?
     
-    static let plotFont = FontStandard.helveticaNeue(size: 15.0)
+    static let plotFont = FontStandard.generateFont(font: "NunitoSans-SemiBold", size: 16.0)
     
     var thumbnail: UIImageView = {
         let imageView = UIImageView()
