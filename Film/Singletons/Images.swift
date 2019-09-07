@@ -29,4 +29,7 @@ class Images {
     static let nextEpisodeImage: UIImage = #imageLiteral(resourceName: "Next_episode")
     static let volumeImage: UIImage = #imageLiteral(resourceName: "Volume")
     static let closeImage: UIImage = #imageLiteral(resourceName: "Close")
+    
+    // Show Info
+    static let playEpisode: UIImage = #imageLiteral(resourceName: "play_episode")
 }

@@ -33,7 +33,7 @@ class HeaderView: UICollectionReusableView {
     var exitButton: CustomMarginButton = {
         let button = CustomMarginButton()
         button.margin = 40.0
-        button.backgroundColor = .red
+        button.setImage(Images.closeImage, for: .normal)
         
         return button
     }()
