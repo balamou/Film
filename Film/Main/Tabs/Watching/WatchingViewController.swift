@@ -220,7 +220,7 @@ extension WatchingViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
-            return CGSize(width: 110, height: 197) // size of a cell
+            return WatchingCell.calculateCellSize(collectionViewWidth: collectionView.frame.width) // size of a cell
         } else if indexPath.section == 1 && mode == .idle {
             return CGSize(width: collectionView.frame.width, height: collectionView.frame.height) // size of the cell
         }

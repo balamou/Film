@@ -111,7 +111,6 @@ class ShowsView: UIView {
         Constraints.setLoadingView(loadingView, self)
         Constraints.setSpinner(spinner, loadingView)
         Constraints.setLoadingLabel(loadingLabel, spinner)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

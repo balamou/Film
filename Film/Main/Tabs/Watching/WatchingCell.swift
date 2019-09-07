@@ -144,8 +144,6 @@ class WatchingCell: UICollectionViewCell {
         
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         informationButton.addTarget(self, action: #selector(informationButtonTapped), for: .touchUpInside)
-        
-        reset()
     }
     
     func populate(watched: Watched) {
@@ -176,11 +174,17 @@ class WatchingCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.reset()
-    }
-    
-    func reset() {
+    static func calculateCellSize(collectionViewWidth: CGFloat) -> CGSize {
+        // Default size: CGSize(width: 110, height: 197)
+        let distanceBetweenColumns: CGFloat = 10
+        let overallMargin: CGFloat = 10
+        let heightToWidthRatio: CGFloat = 1.8 // 197/110
+        let numberOfCellsPerRow: CGFloat = 3
+        
+        let emptySpace = 2 * overallMargin + (numberOfCellsPerRow - 1) * distanceBetweenColumns
+        let cellWidth = (collectionViewWidth - emptySpace)/numberOfCellsPerRow
+        let customWidth = cellWidth.rounded(.towardZero)
+        
+        return CGSize(width: customWidth, height: customWidth * heightToWidthRatio) // size of a cell
     }
 }
