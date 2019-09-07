@@ -21,7 +21,7 @@ class AlertView: UIView {
     
     lazy var backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.968627451, green: 0.3294117647, blue: 0.3803921569, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 1, green: 0.2813572288, blue: 0.3109254241, alpha: 1).withAlphaComponent(0.9) // #FF5F5F
         
         return view
     }()
@@ -30,7 +30,7 @@ class AlertView: UIView {
         let label = UILabel()
         label.text = "Warning message"
         label.textColor = UIColor.white
-        label.font = Fonts.helveticaNeue(size: 15.0)
+        label.font = Fonts.generateFont(font: "OpenSans-Bold", size: 15)
         label.textAlignment = .center
         
         return label
