@@ -20,6 +20,7 @@ class HeaderView: UICollectionReusableView {
     
     static let identifier = "HeaderView"
     weak var delegate: HeaderViewDelegate?
+    static let descriptionFont = FontStandard.generateFont(font: "NunitoSans-SemiBold", size: 16.0)
     
     
     var posterPicture: UIImageView = {
@@ -59,7 +60,7 @@ class HeaderView: UICollectionReusableView {
         let label = UILabel()
         label.text = "Description"
         label.textColor = .white
-        label.font = FontStandard.helveticaNeue(size: 14.0)
+        label.font = descriptionFont
         label.numberOfLines = 0
         label.textAlignment = .justified
         
@@ -193,7 +194,7 @@ class HeaderView: UICollectionReusableView {
         let labelMargins: CGFloat = 2 * 10
         let approximateWidthOfDescription: CGFloat = collectionViewWidth - labelMargins
         let approximateHeightOfDescription: CGFloat = 1000.0 // arbitrary large value
-        let attributes = [NSAttributedString.Key.font : FontStandard.helveticaNeue(size: 15.0)]
+        let attributes = [NSAttributedString.Key.font : descriptionFont]
         
         let size = CGSize(width: approximateWidthOfDescription, height: approximateHeightOfDescription)
         let estimatedFrame = NSString(string: description).boundingRect(with: size,
