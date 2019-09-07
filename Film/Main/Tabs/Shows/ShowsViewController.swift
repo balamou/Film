@@ -245,7 +245,17 @@ extension ShowsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
-            return ShowsCell.cellSize // size of a cell
+            // Default size: CGSize(width: 110, height: 160)
+            let distanceBetweenColumns: CGFloat = 10
+            let overallMargin: CGFloat = 10
+            let heightToWidthRatio: CGFloat = 1.45
+            let numberOfCellsPerRow: CGFloat = 3
+            
+            let emptySpace = 2 * overallMargin + (numberOfCellsPerRow-1) * distanceBetweenColumns
+            let cellWidth = (collectionView.frame.width - emptySpace)/numberOfCellsPerRow
+            let customWidth = cellWidth.rounded(.towardZero)
+            
+            return CGSize(width: customWidth, height: customWidth * heightToWidthRatio) // size of a cell
         } else if indexPath.section == 1 && isFetchingMore {
             return CGSize(width: collectionView.frame.width, height: 50) // size of the cell
         }
