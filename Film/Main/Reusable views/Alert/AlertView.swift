@@ -15,6 +15,10 @@ class AlertView: UIView {
     let animationUpDownDuration = 0.4
     let messageDuration = 1.6
     
+    var backgroundViewTopAnchor = NSLayoutConstraint()
+    var backgroundViewBottomAnchor = NSLayoutConstraint()
+    
+    
     lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0.968627451, green: 0.3294117647, blue: 0.3803921569, alpha: 1)
@@ -27,31 +31,23 @@ class AlertView: UIView {
         label.text = "Warning message"
         label.textColor = UIColor.white
         label.font = FontStandard.helveticaNeue(size: 15.0)
+        label.textAlignment = .center
         
         return label
     }()
     
     class Constraints {
         
+        static func setBackgroundView(_ roundView: UIView, _ view: UIView) {
+            roundView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            roundView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+            roundView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        }
+        
         static func setMessageLabel(_ label: UILabel, _ view: UIView) {
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        }
-        
-        // Animation
-        
-        static func topPosition(_ roundView: UIView, _ view: UIView) -> [NSLayoutConstraint] {
-            return [roundView.bottomAnchor.constraint(equalTo: view.topAnchor),
-            roundView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            roundView.widthAnchor.constraint(equalToConstant: 300),
-            roundView.heightAnchor.constraint(equalToConstant: 60)]
-        }
-        
-        static func bottomPosition(_ roundView: UIView, _ view: UIView) -> [NSLayoutConstraint] {
-            return [roundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
-            roundView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            roundView.widthAnchor.constraint(equalToConstant: 300),
-            roundView.heightAnchor.constraint(equalToConstant: 60)]
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         }
 
     }
@@ -65,8 +61,13 @@ class AlertView: UIView {
         addSubviewLayout(backgroundView)
         backgroundView.addSubviewLayout(messageLabel)
         
-        pickNewConstraints(Constraints.topPosition(backgroundView, self))
+        Constraints.setBackgroundView(backgroundView, self)
         Constraints.setMessageLabel(messageLabel, backgroundView)
+        
+        // Setup animation anchors
+        backgroundViewTopAnchor = backgroundView.bottomAnchor.constraint(equalTo: topAnchor)
+        backgroundViewBottomAnchor = backgroundView.topAnchor.constraint(equalTo: topAnchor)
+        backgroundViewTopAnchor.isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,7 +84,8 @@ class AlertView: UIView {
         }
         
         isAnimating = true
-        pickNewConstraints(Constraints.bottomPosition(backgroundView, self))
+        backgroundViewTopAnchor.isActive = false
+        backgroundViewBottomAnchor.isActive = true
     
         UIView.animate(withDuration: animationUpDownDuration, animations: {
             self.layoutIfNeeded()
@@ -94,8 +96,9 @@ class AlertView: UIView {
     
     func startAnimatingUp() {
         
-        pickNewConstraints(Constraints.topPosition(backgroundView, self))
-     
+        backgroundViewBottomAnchor.isActive = false
+        backgroundViewTopAnchor.isActive = true
+        
         UIView.animate(withDuration: animationUpDownDuration, delay: messageDuration, options: [], animations: {
             self.layoutIfNeeded()
         }, completion: {  finished in
@@ -103,15 +106,5 @@ class AlertView: UIView {
             self.isAnimating = false
         })
     
-    }
-    
-    func pickNewConstraints(_ constraints: [NSLayoutConstraint]) {
-        
-        if let currentPosition = currentPosition {
-            NSLayoutConstraint.deactivate(currentPosition)
-        }
-        
-        currentPosition = constraints
-        NSLayoutConstraint.activate(constraints)
     }
 }
