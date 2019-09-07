@@ -20,7 +20,7 @@ class HeaderView: UICollectionReusableView {
     
     static let identifier = "HeaderView"
     weak var delegate: HeaderViewDelegate?
-    static let descriptionFont = FontStandard.generateFont(font: "NunitoSans-SemiBold", size: 16.0)
+    static let descriptionFont = Fonts.generateFont(font: "NunitoSans-SemiBold", size: 16.0)
     
     
     var posterPicture: UIImageView = {
@@ -42,7 +42,7 @@ class HeaderView: UICollectionReusableView {
         let label = UILabel()
         label.text = "Title"
         label.textColor = .white
-        label.font = FontStandard.helveticaNeue(size: 20.0)
+        label.font = Fonts.helveticaNeue(size: 20.0)
         
         return label
     }()
@@ -51,7 +51,7 @@ class HeaderView: UICollectionReusableView {
         let button = UIButton()
         button.setTitle("Play", for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.8980392157, green: 0.03529411765, blue: 0.07843137255, alpha: 1) // #E50914
-        button.titleLabel?.font = FontStandard.RobotoBold(size: 15.0)
+        button.titleLabel?.font = Fonts.RobotoBold(size: 15.0)
         
         return button
     }()

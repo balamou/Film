@@ -18,7 +18,7 @@ class EpisodeCell: UICollectionViewCell {
     weak var delegate: EpisodeCellDelegate?
     var stoppedAtConstraint: NSLayoutConstraint?
     
-    static let plotFont = FontStandard.generateFont(font: "NunitoSans-SemiBold", size: 16.0)
+    static let plotFont = Fonts.generateFont(font: "NunitoSans-SemiBold", size: 16.0)
     
     var thumbnail: UIImageView = {
         let imageView = UIImageView()
@@ -53,7 +53,7 @@ class EpisodeCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "57 min"
         label.textColor = .gray
-        label.font = FontStandard.helveticaNeue(size: 12.0)
+        label.font = Fonts.helveticaNeue(size: 12.0)
         
         return label
     }()

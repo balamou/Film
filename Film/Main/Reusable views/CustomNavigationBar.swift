@@ -22,7 +22,7 @@ class CustomNavigationBar: UIView {
         let label = UILabel()
         label.text = "title"
         label.textColor = .white
-        label.font = FontStandard.RobotoCondensedBold(size: 21.0)
+        label.font = Fonts.RobotoCondensedBold(size: 21.0)
         
         return label
     }()

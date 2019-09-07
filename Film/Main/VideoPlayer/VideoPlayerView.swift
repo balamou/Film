@@ -54,7 +54,7 @@ class VideoPlayerView: UIView {
         let label = UILabel()
         label.text = "S1:E1 \"El Camino\""
         label.textColor = .white
-        label.font = FontStandard.helveticaNeue(size: 16.0)
+        label.font = Fonts.helveticaNeue(size: 16.0)
         
         return label
     }()
@@ -63,7 +63,7 @@ class VideoPlayerView: UIView {
         let label = UILabel()
         label.text = "56:00"
         label.textColor = .white
-        label.font = FontStandard.helveticaNeue(size: 15.0)
+        label.font = Fonts.helveticaNeue(size: 15.0)
         
         return label
     }()
@@ -123,7 +123,7 @@ class VideoPlayerView: UIView {
         let button = UIButton()
         button.setTitle("Next episode".localize(), for: .normal)
         button.setImage(ImageConstants.nextEpisodeImage, for: .normal)
-        button.titleLabel?.font = FontStandard.helveticaNeue(size: 15.0)
+        button.titleLabel?.font = Fonts.helveticaNeue(size: 15.0)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
         
         return button

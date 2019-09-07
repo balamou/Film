@@ -56,7 +56,7 @@ class WatchingView: UIView {
         let label = UILabel()
         label.text = "Loading...".localize()
         label.textColor = .white // NOTE: this is about to be deprecated
-        label.font = FontStandard.RobotoCondensedBold(size: 18.0)
+        label.font = Fonts.RobotoCondensedBold(size: 18.0)
         
         return label
     }()

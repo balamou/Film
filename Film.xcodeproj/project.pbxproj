@@ -44,7 +44,7 @@
 		ED5AC12823158FED0098A161 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */; };
 		ED5AC12A2315A65F0098A161 /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1292315A65F0098A161 /* UIViewController+extensions.swift */; };
 		ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12B2315A7600098A161 /* WatchingCell.swift */; };
-		ED5AC12E2315CE500098A161 /* FontStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12D2315CE500098A161 /* FontStandard.swift */; };
+		ED5AC12E2315CE500098A161 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12D2315CE500098A161 /* Fonts.swift */; };
 		ED70C09D231C302900380BE0 /* MoviesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED70C09C231C302900380BE0 /* MoviesPresenter.swift */; };
 		ED8060A6231B76CD0032A128 /* SeriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8060A5231B76CD0032A128 /* SeriesPresenter.swift */; };
 		ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBBF2314620F00FEC56A /* VolumeController.swift */; };
@@ -153,7 +153,7 @@
 		ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		ED5AC1292315A65F0098A161 /* UIViewController+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extensions.swift"; sourceTree = "<group>"; };
 		ED5AC12B2315A7600098A161 /* WatchingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingCell.swift; sourceTree = "<group>"; };
-		ED5AC12D2315CE500098A161 /* FontStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandard.swift; sourceTree = "<group>"; };
+		ED5AC12D2315CE500098A161 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		ED70C09C231C302900380BE0 /* MoviesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesPresenter.swift; sourceTree = "<group>"; };
 		ED8060A5231B76CD0032A128 /* SeriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesPresenter.swift; sourceTree = "<group>"; };
 		ED82DBBF2314620F00FEC56A /* VolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeController.swift; sourceTree = "<group>"; };
@@ -456,7 +456,7 @@
 				ED909B3D230F006600A67AC6 /* AppDelegate.swift */,
 				ED82DBC423146B0F00FEC56A /* Debugger.swift */,
 				ED5AC1042314C45A0098A161 /* ImageConstants.swift */,
-				ED5AC12D2315CE500098A161 /* FontStandard.swift */,
+				ED5AC12D2315CE500098A161 /* Fonts.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -794,7 +794,7 @@
 				EDACC49C2319FE6B005DC09C /* MockWatchedAPI.swift in Sources */,
 				ED909B6323123C8300A67AC6 /* header.m in Sources */,
 				ED1FEEBB2318B73900DE69AB /* AlertView.swift in Sources */,
-				ED5AC12E2315CE500098A161 /* FontStandard.swift in Sources */,
+				ED5AC12E2315CE500098A161 /* Fonts.swift in Sources */,
 				EDB57E92231769E20049504E /* Series.swift in Sources */,
 				EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */,
 				ED5AC1142314DE0C0098A161 /* SettingsViewController.swift in Sources */,

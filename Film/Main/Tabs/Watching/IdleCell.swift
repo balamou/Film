@@ -23,7 +23,7 @@ class IdleCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Nothing watched yet".localize()
         label.textColor = #colorLiteral(red: 0.2352941176, green: 0.231372549, blue: 0.231372549, alpha: 1)
-        label.font = FontStandard.RobotoCondensedBold(size: 25.0)
+        label.font = Fonts.RobotoCondensedBold(size: 25.0)
         
         return label
     }()

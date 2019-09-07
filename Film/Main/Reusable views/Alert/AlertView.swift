@@ -30,7 +30,7 @@ class AlertView: UIView {
         let label = UILabel()
         label.text = "Warning message"
         label.textColor = UIColor.white
-        label.font = FontStandard.helveticaNeue(size: 15.0)
+        label.font = Fonts.helveticaNeue(size: 15.0)
         label.textAlignment = .center
         
         return label

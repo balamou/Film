@@ -52,7 +52,7 @@ class WatchingCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Title"
         label.textColor = #colorLiteral(red: 0.6431372549, green: 0.6431372549, blue: 0.6431372549, alpha: 1)
-        label.font = FontStandard.RobotoBold(size: 15.0)
+        label.font = Fonts.RobotoBold(size: 15.0)
         
         return label
     }()

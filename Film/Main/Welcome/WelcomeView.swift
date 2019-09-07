@@ -11,13 +11,13 @@ import UIKit
 class WelcomeView: UIView {
     
     let labelTextColor = #colorLiteral(red: 0.2352941176, green: 0.231372549, blue: 0.231372549, alpha: 1) // #3C3B3B
-    let labelFont = FontStandard.helveticaBold(size: 18.0)
+    let labelFont = Fonts.helveticaBold(size: 18.0)
     
     let textFieldColor = #colorLiteral(red: 0.1411764706, green: 0.1411764706, blue: 0.1411764706, alpha: 1) // #242424
-    let textFieldFont = FontStandard.helveticaNeue(size: 16.0)
+    let textFieldFont = Fonts.helveticaNeue(size: 16.0)
     
     let buttonsColor =  #colorLiteral(red: 0.3254901961, green: 0.3254901961, blue: 0.3254901961, alpha: 1) // #5363BE
-    let buttonsFont = FontStandard.RobotoBold(size: 15.0)
+    let buttonsFont = Fonts.RobotoBold(size: 15.0)
     
     
     var topBar: UIView = {
@@ -38,7 +38,7 @@ class WelcomeView: UIView {
         let label = UILabel()
         label.text = "film"
         label.textColor = .white
-        label.font = FontStandard.RobotoCondensedBold(size: 21.0)
+        label.font = Fonts.RobotoCondensedBold(size: 21.0)
         
         return label
     }()
