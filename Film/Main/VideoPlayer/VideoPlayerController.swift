@@ -147,11 +147,11 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         if isPlaying {
             mediaPlayer.pause()
             isPlaying = false
-            sender.setImage(ImageConstants.playImage, for: .normal) // ▶
+            sender.setImage(Images.playImage, for: .normal) // ▶
         } else {
             mediaPlayer.play()
             isPlaying = true
-            sender.setImage(ImageConstants.pauseImage, for: .normal) // ▌▌
+            sender.setImage(Images.pauseImage, for: .normal) // ▌▌
         }
     }
     
@@ -281,7 +281,7 @@ extension VideoPlayerController {
         // Pause the player
         mediaPlayer.pause()
         isPlaying = false
-        videoPlayerView.pausePlayButton.setImage(ImageConstants.playImage, for: .normal) // ▶
+        videoPlayerView.pausePlayButton.setImage(Images.playImage, for: .normal) // ▶
         
         // SHOW CONTROLLS
         videoPlayerView.controlView.isHidden = false

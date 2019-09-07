@@ -25,7 +25,7 @@ class StandardBuilder: Builder {
         let watchingVC = WatchingViewController()
         watchingVC.delegate = delegate
         watchingVC.apiManager = MockWatchedAPI()
-        watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: ImageConstants.watchingImage, tag: 0)
+        watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: Images.watchingImage, tag: 0)
         
         return watchingVC
     }
@@ -36,21 +36,21 @@ class StandardBuilder: Builder {
         
         showsVC.apiManager = apiManager
         showsVC.delegate = delegate
-        showsVC.tabBarItem = UITabBarItem(title: "Shows".localize(), image: ImageConstants.showsImage, tag: 1)
+        showsVC.tabBarItem = UITabBarItem(title: "Shows".localize(), image: Images.showsImage, tag: 1)
         
         return showsVC
     }
     
     func createMoviesViewController() -> MoviewsViewController {
         let moviesVC = MoviewsViewController()
-        moviesVC.tabBarItem = UITabBarItem(title: "Movies".localize(), image: ImageConstants.moviesImage, tag: 2)
+        moviesVC.tabBarItem = UITabBarItem(title: "Movies".localize(), image: Images.moviesImage, tag: 2)
         
         return moviesVC
     }
     
     func createSettingsViewController() -> SettingsViewController {
         let settingsVC = SettingsViewController()
-        settingsVC.tabBarItem = UITabBarItem(title: "Settings".localize(), image: ImageConstants.settingsImage, tag: 3)
+        settingsVC.tabBarItem = UITabBarItem(title: "Settings".localize(), image: Images.settingsImage, tag: 3)
         
         return settingsVC
     }

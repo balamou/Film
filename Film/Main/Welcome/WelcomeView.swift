@@ -29,7 +29,7 @@ class WelcomeView: UIView {
     
     var logoImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageConstants.logoImage
+        imageView.image = Images.logoImage
         
         return imageView
     }()

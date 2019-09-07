@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ImageConstants {
+class Images {
     
     // Tab View Controller Icons
     static let watchingImage: UIImage = #imageLiteral(resourceName: "Watching")

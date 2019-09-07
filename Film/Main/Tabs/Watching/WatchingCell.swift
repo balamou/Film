@@ -59,7 +59,7 @@ class WatchingCell: UICollectionViewCell {
     
     var informationButton: UIButton = {
         let button = UIButton()
-        button.setImage(ImageConstants.informationImage, for: .normal)
+        button.setImage(Images.informationImage, for: .normal)
         
         return button
     }()

@@ -14,7 +14,7 @@ class IdleCell: UICollectionViewCell {
     
     var idleImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = ImageConstants.idleImage
+        imageView.image = Images.idleImage
         
         return imageView
     }()
