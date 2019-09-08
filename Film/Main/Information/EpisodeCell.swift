@@ -18,7 +18,7 @@ class EpisodeCell: UICollectionViewCell {
     weak var delegate: EpisodeCellDelegate?
     var stoppedAtConstraint: NSLayoutConstraint?
     
-    static let plotFont = Fonts.generateFont(font: "NunitoSans-SemiBold", size: 16.0)
+    static let plotFont = Fonts.generateFont(font: "OpenSans-Regular", size: 14)
     
     var thumbnail: UIImageView = {
         let imageView = UIImageView()
@@ -64,7 +64,6 @@ class EpisodeCell: UICollectionViewCell {
         label.textColor = #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1) // #999999
         label.font = EpisodeCell.plotFont
         label.numberOfLines = 0
-        label.textAlignment = .justified
         
         return label
     }()
