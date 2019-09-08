@@ -28,7 +28,7 @@ extension String {
             
             return prefixAndRemoveWhiteSpace + trailing
         }
-            
+        
         return self
     }
 }

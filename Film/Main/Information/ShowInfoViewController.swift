@@ -20,17 +20,10 @@ class ShowInfoViewController: UIViewController {
     
     var showView: ShowInfoView!
     weak var delegate: ShowInfoViewControllerDelegate?
+    var seriesPresenter: SeriesPresenter?
+    
     var data: Series = Series.getMock()
-    var seriesPresenter: SeriesPresenter? = nil {
-        didSet {
-            if let seriesPresenter = seriesPresenter {
-                loadSeries(seriesPresenter: seriesPresenter)
-            } else {
-                delegate?.exitButtonTapped()
-                // TODO: SHOW ERROR
-            }
-        }
-    }
+    var episodes: [Episode] = []
     
     // API
     //var apiManager:
@@ -42,6 +35,7 @@ class ShowInfoViewController: UIViewController {
         view = showView
         
         setupCollectionView()
+        loadSeries(seriesPresenter: seriesPresenter)
     }
     
     //----------------------------------------------------------------------
@@ -74,8 +68,13 @@ class ShowInfoViewController: UIViewController {
 //----------------------------------------------------------------------
 extension ShowInfoViewController {
     
-    func loadSeries(seriesPresenter: SeriesPresenter) {
+    func loadSeries(seriesPresenter: SeriesPresenter?) {
+        guard let seriesPresenter = seriesPresenter else {
+            return // TODO: Exit and show alert error
+        }
         
+        data.description = "LOLOLOLOLOL"
+        episodesCollectionView.reloadData()
     }
     
 }

@@ -9,18 +9,18 @@
 import Foundation
 
 protocol WatchedAPI {
-    func getWatched(result: @escaping ([Watched], _ error: String?) -> ())
+    func getWatched(result: @escaping ([Watched], _ error: String?) -> Void)
 }
 
 class MockWatchedAPI: WatchedAPI {
     
     var count = 0
     
-    func getWatched(result: @escaping ([Watched], _ error: String?) -> ()) {
+    func getWatched(result: @escaping ([Watched], _ error: String?) -> Void) {
         test1(result: result)
     }
     
-    func test1(result: @escaping ([Watched], _ error: String?) -> ()) {
+    func test1(result: @escaping ([Watched], _ error: String?) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
             let error: String? = (self?.count == 2 || self?.count == 5) ? "Bad internet connection" : nil
             let data = (self?.count == 0 || self?.count == 4) ? [] : Watched.getRandomMock()
@@ -31,7 +31,7 @@ class MockWatchedAPI: WatchedAPI {
         })
     }
     
-    func test2(result: @escaping ([Watched], _ error: String?) -> ())  {
+    func test2(result: @escaping ([Watched], _ error: String?) -> Void)  {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
             let error: String? = (self?.count == 0) ? "Bad internet connection" : nil
             let data = (self?.count == 0) ? [] : Watched.getRandomMock()
@@ -49,7 +49,7 @@ class MockWatchedAPI: WatchedAPI {
     
     // Example using result type
     // TODO: actually implement this
-    func test3(result: @escaping (Result<[Watched], Error>) -> ()) {
+    func test3(result: @escaping (Result<[Watched], Error>) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
             if self?.count == 2 || self?.count == 5 {
                 result(.failure(NetworkError.badURL))

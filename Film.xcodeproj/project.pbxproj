@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		74E7E0C53A3EEBF1995B28C8 /* Pods_FilmTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCFD42B2FB6B4EF121D0DDF /* Pods_FilmTests.framework */; };
 		A4845765411C5C49E0C935CB /* Pods_Film.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D06F59D32E4BE75B821F3E4 /* Pods_Film.framework */; };
+		ED09BD9D2324A3350023DF83 /* MockSeriesInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED09BD9C2324A3350023DF83 /* MockSeriesInfoAPI.swift */; };
 		ED19988323234E75005D48D3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */; };
 		ED19988423234E75005D48D3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */; };
 		ED19988523234E75005D48D3 /* OpenSans-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */; };
@@ -126,6 +127,7 @@
 		6FCFD42B2FB6B4EF121D0DDF /* Pods_FilmTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FilmTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50E764FFA0C92871421D32A /* Pods-FilmTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilmTests.debug.xcconfig"; path = "Target Support Files/Pods-FilmTests/Pods-FilmTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CD48029F391D4C6B1D9C650C /* Pods-Film.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Film.debug.xcconfig"; path = "Target Support Files/Pods-Film/Pods-Film.debug.xcconfig"; sourceTree = "<group>"; };
+		ED09BD9C2324A3350023DF83 /* MockSeriesInfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSeriesInfoAPI.swift; sourceTree = "<group>"; };
 		ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-RegularItalic.ttf"; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 			children = (
 				EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */,
 				EDB57E95231885F10049504E /* MockSeriesAPI.swift */,
+				ED09BD9C2324A3350023DF83 /* MockSeriesInfoAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -880,6 +883,7 @@
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
 				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
 				EDB0CD3B231B516000246CDF /* StandardSettings.swift in Sources */,
+				ED09BD9D2324A3350023DF83 /* MockSeriesInfoAPI.swift in Sources */,
 				EDACC49E231A0D8E005DC09C /* CustomMarginButton.swift in Sources */,
 				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,
 				EDEF975A231C264600025483 /* Series+mock.swift in Sources */,

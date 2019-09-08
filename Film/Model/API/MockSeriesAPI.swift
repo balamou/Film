@@ -10,14 +10,14 @@ import Foundation
 
 
 protocol SeriesAPI {
-    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ isLast: Bool, _ error: String?) -> ())
+    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ isLast: Bool, _ error: String?) -> Void)
 }
 
 class MockSeriesAPI: SeriesAPI {
     
     var count = 0
     
-    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ isLast: Bool, _ error: String?) -> ()) {
+    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ isLast: Bool, _ error: String?) -> Void) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
             let error: String? = self?.count == 2 || self?.count == 3 ? "Could not load" : nil
