@@ -19,6 +19,7 @@ class EpisodeCell: UICollectionViewCell {
     var stoppedAtConstraint: NSLayoutConstraint?
     
     static let plotFont = Fonts.generateFont(font: "OpenSans-Regular", size: 14)
+    static let maximumPlotCharacters = 180
     
     var thumbnail: UIImageView = {
         let imageView = UIImageView()
@@ -157,7 +158,7 @@ class EpisodeCell: UICollectionViewCell {
             thumbnail.downloaded(from: url)
         }
         durationLabel.text = episode.durationInMinutes()
-        plotLabel.text = episode.plot
+        plotLabel.text = episode.plot?.truncate(EpisodeCell.maximumPlotCharacters)
         
         if let stoppedAt = episode.stoppedAt {
             switchMultiplier(multiplier: stoppedAt)
@@ -181,9 +182,11 @@ class EpisodeCell: UICollectionViewCell {
     }
     
     static func getEstimatedSize(plot: String?, collectionViewWidth: CGFloat) -> CGSize {
-        guard let plot = plot, !plot.isEmpty else {
+        guard var plot = plot, !plot.isEmpty else {
             return CGSize(width: collectionViewWidth, height: 90)
         }
+        
+        plot = plot.truncate(maximumPlotCharacters)
         
         let labelMargins: CGFloat = 2 * Constraints.margins
         let approximateWidthOfDescription: CGFloat = collectionViewWidth - labelMargins

@@ -14,11 +14,21 @@ extension String {
         return NSLocalizedString(self, comment: "")
     }
     
-    func truncate(_ length: Int) -> String {
+    func truncate(_ length: Int?) -> String {
+        guard let length = length else {
+            return self
+        }
+        
         return truncate(length: length)
     }
     
     private func truncate(length: Int, trailing: String = "…") -> String {
-        return (self.count > length) ? self.prefix(length) + trailing : self
+        if self.count > length {
+            let prefixAndRemoveWhiteSpace = self.prefix(length).trimmingCharacters(in: .whitespaces)
+            
+            return prefixAndRemoveWhiteSpace + trailing
+        }
+            
+        return self
     }
 }

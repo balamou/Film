@@ -21,7 +21,7 @@ class HeaderView: UICollectionReusableView {
     static let identifier = "HeaderView"
     weak var delegate: HeaderViewDelegate?
     static let descriptionFont = Fonts.generateFont(font: "OpenSans-Regular", size: 14)
-    
+    static let maximumDescriptionCharacters = 180
     
     var posterPicture: UIImageView = {
         let imageView = UIImageView()
@@ -161,7 +161,7 @@ class HeaderView: UICollectionReusableView {
     func populateData(series: Series) {
         
         titleLabel.text = series.title
-        descriptionLabel.text = series.description ?? ""
+        descriptionLabel.text = series.description?.truncate(HeaderView.maximumDescriptionCharacters) ?? ""
         if let url = series.posterURL {
             posterPicture.downloaded(from: url)
         }
@@ -188,9 +188,11 @@ class HeaderView: UICollectionReusableView {
     }
     
     static func getEstimatedSize(description: String?, collectionViewWidth: CGFloat) -> CGSize {
-        guard let description = description else {
+        guard var description = description else {
             return CGSize(width: collectionViewWidth, height: 400 - 10)
         }
+        
+        description = description.truncate(maximumDescriptionCharacters)
         
         let labelMargins: CGFloat = 2 * 10
         let approximateWidthOfDescription: CGFloat = collectionViewWidth - labelMargins
