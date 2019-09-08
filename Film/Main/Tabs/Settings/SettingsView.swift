@@ -116,6 +116,7 @@ class SettingsView: UIView {
         button.setTitle("Save".localize(), for: .normal)
         button.backgroundColor = buttonsColor
         button.titleLabel?.font = buttonsFont
+        button.layer.cornerRadius = 4
         
         return button
     }()
@@ -125,6 +126,7 @@ class SettingsView: UIView {
         button.setTitle("Refresh".localize(), for: .normal)
         button.backgroundColor = buttonsColor
         button.titleLabel?.font = buttonsFont
+        button.layer.cornerRadius = 4
         
         return button
     }()
@@ -134,6 +136,7 @@ class SettingsView: UIView {
         button.setTitle("Logout".localize(), for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.8980392157, green: 0.03529411765, blue: 0.07843137255, alpha: 1) // #E50914
         button.titleLabel?.font = buttonsFont
+        button.layer.cornerRadius = 4
         
         return button
     }()
