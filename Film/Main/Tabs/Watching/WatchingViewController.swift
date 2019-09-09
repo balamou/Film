@@ -120,8 +120,9 @@ extension WatchingViewController {
                 self.mode = watched.isEmpty ? .idle : .hasData(watched)
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.localizedDescription)
                 self.mode = .idle
+                self.alert?.mode = .showMessage(error.getDescription())
+               
             }
         }
     }
@@ -135,12 +136,13 @@ extension WatchingViewController {
                 self.mode = watched.isEmpty ? .idle : .hasData(watched)
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.alert?.mode = .showMessage(error.getDescription())
             }
             
             completion()
         }
     }
+    
 }
 
 //----------------------------------------------------------------------
