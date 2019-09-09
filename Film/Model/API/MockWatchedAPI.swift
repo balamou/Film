@@ -8,9 +8,17 @@
 
 import Foundation
 
+protocol WatchedAPI {
+    func getWatched(result: @escaping (Result<[Watched], NetworkError>) -> Void)
+}
+
 enum NetworkError: Error {
     case badURL
     case noInternet
+    case noData
+    case invalidEndpoint
+    case jsonError
+    case dataTaskError(Error)
     
     func getDescription() -> String {
         switch self {
@@ -18,24 +26,29 @@ enum NetworkError: Error {
             return "The URL is wrong"
         case .noInternet:
             return "There is no internet connection"
+        case .noData:
+            return "There is no data"
+        case .invalidEndpoint:
+            return "Invalid endpoint"
+        case .jsonError:
+            return "JSON parsing error"
+        case .dataTaskError(_):
+            return "Data task error"
         }
     }
-}
-
-protocol WatchedAPI {
-    func getWatched(result: @escaping (Result<[Watched], NetworkError>) -> Void)
 }
 
 class MockWatchedAPI: WatchedAPI {
     
     var count = 0
+    let timeDelay = 1.5
     
     func getWatched(result: @escaping (Result<[Watched], NetworkError>) -> Void) {
         test3(result: result)
     }
     
     func test1(result: @escaping ([Watched], _ error: String?) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay, execute: { [weak self] in
             let error: String? = (self?.count == 2 || self?.count == 5) ? "Bad internet connection" : nil
             let data = (self?.count == 0 || self?.count == 4) ? [] : Watched.getRandomMock()
             
@@ -46,7 +59,7 @@ class MockWatchedAPI: WatchedAPI {
     }
     
     func test2(result: @escaping ([Watched], _ error: String?) -> Void)  {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay, execute: { [weak self] in
             let error: String? = (self?.count == 0) ? "Bad internet connection" : nil
             let data = (self?.count == 0) ? [] : Watched.getRandomMock()
 
@@ -56,42 +69,46 @@ class MockWatchedAPI: WatchedAPI {
         })
     }
     
-    // Example using result type
-    // TODO: actually implement this
     func test3(result: @escaping (Result<[Watched], NetworkError>) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay) { [weak self] in
             guard let self = self else { return }
             
             if self.count == 2 || self.count == 5 {
-                result(.failure(NetworkError.badURL))
+                result(.failure(.badURL))
             } else {
                 let data = (self.count == 0 || self.count == 4) ? [] : Watched.getRandomMock()
                 result(.success(data))
             }
-                
+            
             self.count += 1
         }
     }
+}
     
-    enum APIServiceError: Error {
-        case invalidEndpoint
-        case noData
+
+//----------------------------------------------------------------------
+// TODO: Implement and test Concrete API
+//----------------------------------------------------------------------
+class ConcreteWatchedAPI: WatchedAPI {
+    
+    let serverIP: String = "192.168.72.46"
+    let port: String = "9899"
+    
+    func getWatched(result: @escaping (Result<[Watched], NetworkError>) -> Void) {
+        networkCall(result: result)
     }
-    
-    //----------------------------------------------------------------------
-    // TMP: Template for actual API
-    //----------------------------------------------------------------------
-    func actualAPI(result: @escaping (Result<[Watched], Error>) -> Void) {
-        let urlString = "http://192.168.72.46:9899/path/to/rest"
+
+    func networkCall(result: @escaping (Result<[Watched], NetworkError>) -> Void) {
+        let urlString = "http://\(serverIP):\(port)/path/to/rest"
         
         guard let url = URL(string: urlString) else {
-            result(.failure(APIServiceError.invalidEndpoint))
+            result(.failure(.invalidEndpoint))
             return
         }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
-                result(.failure(error))
+                result(.failure(.dataTaskError(error)))
                 return
             }
             
@@ -101,16 +118,15 @@ class MockWatchedAPI: WatchedAPI {
             }
             
             guard let data = data else {
-                result(.failure(APIServiceError.noData))
+                result(.failure(.noData))
                 return
             }
             
             do {
-                // let watched = try JSONDecoder().decode([Watched].self, from: data) // TODO: decode
-                let watched: [Watched] = []
+                let watched = try JSONDecoder().decode([Watched].self, from: data)
                 result(.success(watched))
-            } catch let jsonError {
-                result(.failure(jsonError))
+            } catch {
+                result(.failure(.jsonError))
             }
         }.resume()
     }

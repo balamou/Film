@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Watched {
+struct Watched: Decodable {
     
     var id: Int // database id (for information button)
     var posterURL: String? // URL of the poster image
