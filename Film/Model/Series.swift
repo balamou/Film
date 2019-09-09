@@ -9,18 +9,22 @@
 import Foundation
 
 
-class Series {
+struct Series: Decodable {
     var title: String
-    var episodes: [Episode]
     var seasonSelected: Int
     var totalSeasons: Int
+    
     var description: String?
     var posterURL: String?
     var lastWatchedEpisode: Episode?
     
-    init(title: String, episodes: [Episode], seasonSelected: Int, totalSeasons: Int, description: String? = nil, posterURL: String? = nil, lastWatchedEpisode: Episode? = nil) {
+    init(title: String,
+         seasonSelected: Int,
+         totalSeasons: Int,
+         description: String? = nil,
+         posterURL: String? = nil,
+         lastWatchedEpisode: Episode? = nil) {
         self.title = title
-        self.episodes = episodes
         self.seasonSelected = seasonSelected
         self.totalSeasons = totalSeasons
         self.description = description
@@ -30,7 +34,7 @@ class Series {
     
 }
 
-class Episode {
+struct Episode: Decodable {
     var id: Int
     var episodeNumber: Int
     var seasonNumber: Int

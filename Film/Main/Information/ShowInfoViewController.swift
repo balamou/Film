@@ -18,15 +18,26 @@ protocol ShowInfoViewControllerDelegate: AnyObject {
 
 class ShowInfoViewController: UIViewController {
     
-    var showView: ShowInfoView!
     weak var delegate: ShowInfoViewControllerDelegate?
-    var seriesPresenter: SeriesPresenter?
+    private var showView: ShowInfoView!
     
-    var data: Series = Series.getMock()
-    var episodes: [Episode] = []
+    private var seriesId: Int
+    private var seriesInformation: Series
+    private var episodes: [Episode] = []
     
     // API
-    //var apiManager:
+    var apiManager: SeriesInfoAPI?
+    
+    init(seriesPresenter: SeriesPresenter) {
+        seriesId = seriesPresenter.id
+        seriesInformation = Series(title: "", seasonSelected: 0, totalSeasons: 0, posterURL: seriesPresenter.posterURL)
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +46,7 @@ class ShowInfoViewController: UIViewController {
         view = showView
         
         setupCollectionView()
-        loadSeries(seriesPresenter: seriesPresenter)
+        loadSeries(seriesId: seriesId)
     }
     
     //----------------------------------------------------------------------
@@ -68,13 +79,23 @@ class ShowInfoViewController: UIViewController {
 //----------------------------------------------------------------------
 extension ShowInfoViewController {
     
-    func loadSeries(seriesPresenter: SeriesPresenter?) {
-        guard let seriesPresenter = seriesPresenter else {
-            return // TODO: Exit and show alert error
+    func loadSeries(seriesId: Int) {
+        apiManager?.getSeriesInfo(seriesId: seriesId) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success((let seriesData, let episodes)):
+                self.seriesInformation = seriesData
+                self.episodes = episodes
+                
+                // TODO: Update sections
+                self.episodesCollectionView.reloadData()
+            case .failure(_):
+                // TODO: exit & report error to parent view
+                return
+            }
+            
         }
-        
-        data.description = "LOLOLOLOLOL"
-        episodesCollectionView.reloadData()
     }
     
 }
@@ -117,7 +138,7 @@ extension ShowInfoViewController: EpisodeCellDelegate {
 extension ShowInfoViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.episodes.count
+        return episodes.count
     }
     
     // Series Header
@@ -125,7 +146,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
         header.delegate = self
         
-        header.populateData(series: data)
+        header.populateData(series: seriesInformation)
         
         return header
     }
@@ -134,7 +155,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EpisodeCell.identifier, for: indexPath) as! EpisodeCell
         cell.delegate = self
-        let episode = data.episodes[indexPath.item]
+        let episode = episodes[indexPath.item]
         
         cell.populate(episode: episode)
         
@@ -143,7 +164,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
     
     // Size of the header
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return HeaderView.getEstimatedSize(description: data.description, collectionViewWidth: collectionView.frame.width)
+        return HeaderView.getEstimatedSize(description: seriesInformation.description, collectionViewWidth: collectionView.frame.width)
     }
     
 }
@@ -154,7 +175,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
 extension ShowInfoViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let episode = data.episodes[indexPath.item]
+        let episode = episodes[indexPath.item]
         return EpisodeCell.getEstimatedSize(plot: episode.plot, collectionViewWidth: collectionView.frame.width)
     }
     

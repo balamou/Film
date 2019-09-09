@@ -8,24 +8,35 @@
 
 import Foundation
 
+enum SeriesInfoError: Error {
+    case badURL
+    
+    func getDescription() -> String {
+        switch self {
+        case .badURL:
+            return "Bad url"
+        }
+    }
+}
+
+
 protocol SeriesInfoAPI {
-    func getSeriesInfo(result: @escaping (Result<Series, Error>) -> Void)
-    func getEpisodes(season: Int, result: @escaping (Result<[Episode], Error>) -> Void)
+    func getSeriesInfo(seriesId: Int, result: @escaping (Result<(Series, [Episode]), Error>) -> Void)
+    func getEpisodes(seriesId: Int, season: Int, result: @escaping (Result<[Episode], Error>) -> Void)
 }
 
 class MockSeriesInfoAPI: SeriesInfoAPI {
     
     let simulatedDelay = 1.5
-    static let abc = 10
     
-    func getSeriesInfo(result: @escaping (Result<Series, Error>) -> Void) {
+    func getSeriesInfo(seriesId: Int, result: @escaping (Result<(Series, [Episode]), Error>) -> Void) {
        
         DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) {
             
         }
     }
     
-    func getEpisodes(season: Int, result: @escaping (Result<[Episode], Error>) -> Void) {
+    func getEpisodes(seriesId: Int, season: Int, result: @escaping (Result<[Episode], Error>) -> Void) {
        
         DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) {
             
