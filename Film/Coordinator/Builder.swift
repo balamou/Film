@@ -56,8 +56,10 @@ class StandardBuilder: Builder {
     }
     
     func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter) -> ShowInfoViewController {
+        let apiManager = MockSeriesInfoAPI()
         let showInfoVC = ShowInfoViewController(seriesPresenter: series)
         showInfoVC.delegate = delegate
+        showInfoVC.apiManager = apiManager
         
         return showInfoVC
     }

@@ -32,7 +32,7 @@ class MockSeriesInfoAPI: SeriesInfoAPI {
     func getSeriesInfo(seriesId: Int, result: @escaping (Result<(Series, [Episode]), Error>) -> Void) {
        
         DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) {
-            
+            result(.success((Series.getMock(), Episode.getMockArray())))
         }
     }
     

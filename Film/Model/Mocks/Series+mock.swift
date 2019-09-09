@@ -24,7 +24,7 @@ extension Episode {
         return Episode(id: 1, episodeNumber: 1, seasonNumber: 2, videoURL: MockData.videoURLs[0], duration: 100)
     }
     
-    static func getMock2() -> [Episode] {
+    static func getMockArray() -> [Episode] {
         let episodes = Array(1...5).map { i -> Episode in
             let sentence = "An animated series on adult-swim about the infinite adventures of Rick, a genius alcoholic and careless scientist."
             let plot = Array(repeating: sentence, count: Int.random(in: 0...4)).joined(separator: " ")

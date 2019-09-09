@@ -30,7 +30,7 @@ class ShowInfoViewController: UIViewController {
     
     init(seriesPresenter: SeriesPresenter) {
         seriesId = seriesPresenter.id
-        seriesInformation = Series(title: "", seasonSelected: 0, totalSeasons: 0, posterURL: seriesPresenter.posterURL)
+        seriesInformation = Series(title: "", seasonSelected: 1, totalSeasons: 0, posterURL: seriesPresenter.posterURL)
         
         super.init(nibName: nil, bundle: nil)
     }
