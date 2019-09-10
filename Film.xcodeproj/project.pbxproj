@@ -102,6 +102,8 @@
 		EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */; };
 		EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55423161B3E00041D29 /* ShowInfoView.swift */; };
 		EDC8AB422319970100400312 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AB412319970100400312 /* Builder.swift */; };
+		EDCBAC5C2327245E0002FAE3 /* ChangeSeasonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */; };
+		EDCBAC5E232726A90002FAE3 /* ChangeSeasonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */; };
 		EDEF975A231C264600025483 /* Series+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF9759231C264600025483 /* Series+mock.swift */; };
 		EDEF975C231C268E00025483 /* Watched+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975B231C268E00025483 /* Watched+mock.swift */; };
 		EDEF975E231C26C900025483 /* SeriesPresenter+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */; };
@@ -244,6 +246,8 @@
 		EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoViewController.swift; sourceTree = "<group>"; };
 		EDBEC55423161B3E00041D29 /* ShowInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoView.swift; sourceTree = "<group>"; };
 		EDC8AB412319970100400312 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSeasonViewController.swift; sourceTree = "<group>"; };
+		EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSeasonView.swift; sourceTree = "<group>"; };
 		EDEF9759231C264600025483 /* Series+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Series+mock.swift"; sourceTree = "<group>"; };
 		EDEF975B231C268E00025483 /* Watched+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Watched+mock.swift"; sourceTree = "<group>"; };
 		EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeriesPresenter+mock.swift"; sourceTree = "<group>"; };
@@ -575,6 +579,7 @@
 		EDBEC5512316181A00041D29 /* Information */ = {
 			isa = PBXGroup;
 			children = (
+				EDCBAC59232724440002FAE3 /* Pick season */,
 				EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */,
 				EDBEC55423161B3E00041D29 /* ShowInfoView.swift */,
 				ED1CC3A8231624FC0061EE21 /* HeaderView.swift */,
@@ -590,6 +595,15 @@
 				EDC8AB412319970100400312 /* Builder.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		EDCBAC59232724440002FAE3 /* Pick season */ = {
+			isa = PBXGroup;
+			children = (
+				EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */,
+				EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */,
+			);
+			path = "Pick season";
 			sourceTree = "<group>";
 		};
 		EDEF9757231C244900025483 /* API */ = {
@@ -869,6 +883,7 @@
 				EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */,
 				ED1CC3A9231624FC0061EE21 /* HeaderView.swift in Sources */,
 				ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */,
+				EDCBAC5C2327245E0002FAE3 /* ChangeSeasonViewController.swift in Sources */,
 				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 				EDB0CD3D231B57EE00246CDF /* IdleCell.swift in Sources */,
 				EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */,
@@ -890,6 +905,7 @@
 				EDEF975E231C26C900025483 /* SeriesPresenter+mock.swift in Sources */,
 				ED5AC12A2315A65F0098A161 /* UIViewController+extensions.swift in Sources */,
 				ED5AC1102314DDD00098A161 /* MoviesViewController.swift in Sources */,
+				EDCBAC5E232726A90002FAE3 /* ChangeSeasonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

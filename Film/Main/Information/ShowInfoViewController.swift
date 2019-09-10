@@ -121,7 +121,9 @@ extension ShowInfoViewController: HeaderViewDelegate {
     
     func seasonButtonTapped() {
         // Open ChangeSeasonVC
-        print("Change season")
+        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: 5, selectedSeason: 2)
+        
+        navigationController?.pushViewController(changeSeasonsVC, animated: false)
     }
     
 }
