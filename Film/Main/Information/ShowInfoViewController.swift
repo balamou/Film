@@ -101,6 +101,10 @@ extension ShowInfoViewController {
         }
     }
     
+    func loadEpisodes(of season: Int) {
+        print("Load season \(season)")
+    }
+    
 }
 
 
@@ -122,6 +126,7 @@ extension ShowInfoViewController: HeaderViewDelegate {
     func seasonButtonTapped() {
         // Open ChangeSeasonVC
         let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: 5, selectedSeason: 2)
+        changeSeasonsVC.delegate = self
         
         navigationController?.pushViewController(changeSeasonsVC, animated: false)
     }
@@ -133,6 +138,16 @@ extension ShowInfoViewController: EpisodeCellDelegate {
     func thumbnailTapped() {
         // Play episode
         delegate?.thumbnailTapped()
+    }
+    
+}
+
+extension ShowInfoViewController: ChangeSeasonViewControllerDelegate {
+    
+    func seasonButtonTapped(season: Int) {
+        loadEpisodes(of: season)
+        seriesInformation.seasonSelected = season
+        episodesCollectionView.reloadData()
     }
     
 }

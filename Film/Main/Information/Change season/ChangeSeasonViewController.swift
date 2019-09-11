@@ -11,7 +11,6 @@ import UIKit
 
 protocol ChangeSeasonViewControllerDelegate: AnyObject {
     func seasonButtonTapped(season: Int)
-    func closedButtonTapped()
 }
 
 class ChangeSeasonViewController: UIViewController {
@@ -38,15 +37,18 @@ class ChangeSeasonViewController: UIViewController {
         changeSeasonView = ChangeSeasonView()
         view = changeSeasonView
         
-        changeSeasonView.seasonCollectionView.dataSource = self
-        changeSeasonView.seasonCollectionView.delegate = self
-        changeSeasonView.seasonCollectionView.register(SeasonCell.self, forCellWithReuseIdentifier: SeasonCell.identifier)
+        
+        let collectionView = changeSeasonView.seasonCollectionView
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(SeasonCell.self, forCellWithReuseIdentifier: SeasonCell.identifier)
+        collectionView.alwaysBounceVertical = true
         
         changeSeasonView.exitSeasonSelectorButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
     }
     
     @objc func closeButtonTapped() {
-        delegate?.closedButtonTapped()
+        navigationController?.popViewController(animated: false)
     }
 }
 
@@ -59,10 +61,10 @@ extension ChangeSeasonViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeasonCell.identifier, for: indexPath) as! SeasonCell
         
-        cell.seasonLabel.text = "\(indexPath.row + 1)"
+        cell.seasonLabel.text = "Season".localize() + "\(indexPath.row + 1)"
         
         if indexPath.row + 1  == selectedSeason {
-            cell.seasonLabel.font = Fonts.helveticaBold(size: 15.0)
+            cell.seasonLabel.font = Fonts.generateFont(font: "OpenSans-Bold", size: 16.0)
         }
         
         return cell
@@ -72,19 +74,20 @@ extension ChangeSeasonViewController: UICollectionViewDataSource {
 
 extension ChangeSeasonViewController: UICollectionViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.seasonButtonTapped(season: indexPath.row + 1)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.seasonButtonTapped(season: indexPath.item + 1)
+        navigationController?.popViewController(animated: false)
     }
 }
 
 extension ChangeSeasonViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 30) // cell size
+        return CGSize(width: collectionView.frame.width, height: 50) // cell size
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .zero // overall insets of the collection view
+        return UIEdgeInsets(top: 0, left: 0, bottom: ChangeSeasonView.Constraints.bottomOverlayHeight, right: 0) // overall insets of the collection view
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -94,6 +97,5 @@ extension ChangeSeasonViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0 // distance between rows
     }
-    
     
 }

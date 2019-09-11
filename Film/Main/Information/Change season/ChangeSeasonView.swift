@@ -27,12 +27,14 @@ class ChangeSeasonView: UIView {
     
     var exitSeasonSelectorButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .green
+        button.setImage(Images.closeImage, for: .normal)
         
         return button
     }()
     
     class Constraints {
+        
+        static let bottomOverlayHeight: CGFloat = 70.0
         
         static func setSeasonCollectionView(_ collectionView: UICollectionView, _ parent: UIView) {
             collectionView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
@@ -45,7 +47,7 @@ class ChangeSeasonView: UIView {
             view.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
             view.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
             view.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+            view.heightAnchor.constraint(equalToConstant: bottomOverlayHeight).isActive = true
         }
         
         static func setExitSeasonSelectorButton(_ button: UIButton, _ parent: UIView) {

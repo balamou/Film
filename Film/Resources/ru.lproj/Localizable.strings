@@ -44,5 +44,5 @@
 "Refresh" = "Перезагрузить";
 "Logout" = "Выйти";
 
-// ShowInfoVC
+// ShowInfoVC & ChangeSeasonVC
 "Season" = "Сезон";
