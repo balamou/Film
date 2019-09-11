@@ -10,6 +10,7 @@
 		74E7E0C53A3EEBF1995B28C8 /* Pods_FilmTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FCFD42B2FB6B4EF121D0DDF /* Pods_FilmTests.framework */; };
 		A4845765411C5C49E0C935CB /* Pods_Film.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D06F59D32E4BE75B821F3E4 /* Pods_Film.framework */; };
 		ED09BD9D2324A3350023DF83 /* MockSeriesInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED09BD9C2324A3350023DF83 /* MockSeriesInfoAPI.swift */; };
+		ED0D06322327D28D007D3F8B /* SeasonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D06312327D28D007D3F8B /* SeasonCell.swift */; };
 		ED19988323234E75005D48D3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */; };
 		ED19988423234E75005D48D3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */; };
 		ED19988523234E75005D48D3 /* OpenSans-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */; };
@@ -130,6 +131,7 @@
 		C50E764FFA0C92871421D32A /* Pods-FilmTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FilmTests.debug.xcconfig"; path = "Target Support Files/Pods-FilmTests/Pods-FilmTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CD48029F391D4C6B1D9C650C /* Pods-Film.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Film.debug.xcconfig"; path = "Target Support Files/Pods-Film/Pods-Film.debug.xcconfig"; sourceTree = "<group>"; };
 		ED09BD9C2324A3350023DF83 /* MockSeriesInfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSeriesInfoAPI.swift; sourceTree = "<group>"; };
+		ED0D06312327D28D007D3F8B /* SeasonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonCell.swift; sourceTree = "<group>"; };
 		ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-RegularItalic.ttf"; sourceTree = "<group>"; };
@@ -579,7 +581,7 @@
 		EDBEC5512316181A00041D29 /* Information */ = {
 			isa = PBXGroup;
 			children = (
-				EDCBAC59232724440002FAE3 /* Pick season */,
+				EDCBAC59232724440002FAE3 /* Change season */,
 				EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */,
 				EDBEC55423161B3E00041D29 /* ShowInfoView.swift */,
 				ED1CC3A8231624FC0061EE21 /* HeaderView.swift */,
@@ -597,13 +599,14 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		EDCBAC59232724440002FAE3 /* Pick season */ = {
+		EDCBAC59232724440002FAE3 /* Change season */ = {
 			isa = PBXGroup;
 			children = (
 				EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */,
 				EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */,
+				ED0D06312327D28D007D3F8B /* SeasonCell.swift */,
 			);
-			path = "Pick season";
+			path = "Change season";
 			sourceTree = "<group>";
 		};
 		EDEF9757231C244900025483 /* API */ = {
@@ -889,6 +892,7 @@
 				EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */,
 				EDB57E90231766980049504E /* Watched.swift in Sources */,
 				ED70C09D231C302900380BE0 /* MoviesPresenter.swift in Sources */,
+				ED0D06322327D28D007D3F8B /* SeasonCell.swift in Sources */,
 				ED57FCB3231383540001A9AB /* CGRect+extensions.swift in Sources */,
 				ED1FEEBD2318B74100DE69AB /* AlertViewController.swift in Sources */,
 				EDB57E9423176EC70049504E /* UIImageView+extensions.swift in Sources */,

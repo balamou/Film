@@ -11,10 +11,11 @@ import UIKit
 
 class ChangeSeasonView: UIView {
     
-    var seasonTableView: UITableView = {
-        let tableView = UITableView()
+    var seasonCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = .white
         
-        return tableView
+        return collectionView
     }()
     
     var bottomOverlayView: UIView = {
@@ -33,11 +34,11 @@ class ChangeSeasonView: UIView {
     
     class Constraints {
         
-        static func setTableView(_ tableView: UITableView, _ parent: UIView) {
-            tableView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-            tableView.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
-            tableView.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
-            tableView.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
+        static func setSeasonCollectionView(_ collectionView: UICollectionView, _ parent: UIView) {
+            collectionView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            collectionView.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+            collectionView.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
+            collectionView.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
         }
         
         static func setBottomOverlayView(_ view: UIView, _ parent: UIView) {
@@ -59,11 +60,11 @@ class ChangeSeasonView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubviewLayout(seasonTableView)
+        addSubviewLayout(seasonCollectionView)
         addSubviewLayout(bottomOverlayView)
         bottomOverlayView.addSubviewLayout(exitSeasonSelectorButton)
         
-        Constraints.setTableView(seasonTableView, self)
+        Constraints.setSeasonCollectionView(seasonCollectionView, self)
         Constraints.setBottomOverlayView(bottomOverlayView, self)
         Constraints.setExitSeasonSelectorButton(exitSeasonSelectorButton, bottomOverlayView)
     }
