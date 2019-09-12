@@ -93,8 +93,8 @@ extension ShowInfoViewController {
             case .success((let seriesData, let episodes)):
                 self.seriesInformation = seriesData
                 self.episodes = episodes
-                self.episodesCollectionView.reloadData()
                 self.isLoadingEpisodes = false
+                self.episodesCollectionView.reloadData()
             case .failure(_):
                 // TODO: exit & report error to parent view
                 return
@@ -104,7 +104,22 @@ extension ShowInfoViewController {
     }
     
     func loadEpisodes(of season: Int) {
-        print("Load season \(season)")
+        isLoadingEpisodes = true
+        episodesCollectionView.reloadData()
+        
+        apiManager?.getEpisodes(seriesId: seriesId, season: season) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let episodes):
+                self.episodes = episodes
+                self.isLoadingEpisodes = false
+                self.episodesCollectionView.reloadData()
+            case .failure(_):
+                // TODO: exit & report error to parent view
+                return
+            }
+        }
     }
     
 }
@@ -126,7 +141,7 @@ extension ShowInfoViewController: HeaderViewDelegate {
     }
     
     func seasonButtonTapped() {
-        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: 5, selectedSeason: seriesInformation.seasonSelected)
+        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: seriesInformation.totalSeasons, selectedSeason: seriesInformation.seasonSelected)
         self.changeSeasonsVC = changeSeasonsVC
         changeSeasonsVC.delegate = self
         

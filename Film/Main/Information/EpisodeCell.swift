@@ -161,6 +161,7 @@ class EpisodeCell: UICollectionViewCell {
         plotLabel.text = episode.plot?.truncate(EpisodeCell.maximumPlotCharacters)
         
         if let stoppedAt = episode.stoppedAt {
+            progressView.isHidden = false
             switchMultiplier(multiplier: stoppedAt)
         } else {
             progressView.isHidden = true

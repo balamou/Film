@@ -624,8 +624,8 @@
 			children = (
 				EDEF975F231C274500025483 /* MockData.swift */,
 				EDEF975B231C268E00025483 /* Watched+mock.swift */,
-				EDEF9759231C264600025483 /* Series+mock.swift */,
 				EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */,
+				EDEF9759231C264600025483 /* Series+mock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
