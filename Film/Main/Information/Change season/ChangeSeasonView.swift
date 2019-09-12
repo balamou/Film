@@ -13,16 +13,9 @@ class ChangeSeasonView: UIView {
     
     var seasonCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         
         return collectionView
-    }()
-    
-    var bottomOverlayView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        
-        return view
     }()
     
     var exitSeasonSelectorButton: UIButton = {
@@ -34,7 +27,8 @@ class ChangeSeasonView: UIView {
     
     class Constraints {
         
-        static let bottomOverlayHeight: CGFloat = 70.0
+        static let bottomButtonOffset: CGFloat = 20
+        static let exitButtonSize: CGFloat = 30
         
         static func setSeasonCollectionView(_ collectionView: UICollectionView, _ parent: UIView) {
             collectionView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
@@ -43,37 +37,42 @@ class ChangeSeasonView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
         }
         
-        static func setBottomOverlayView(_ view: UIView, _ parent: UIView) {
-            view.bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
-            view.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
-            view.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: bottomOverlayHeight).isActive = true
-        }
-        
         static func setExitSeasonSelectorButton(_ button: UIButton, _ parent: UIView) {
             button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            button.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
-            button.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
+            button.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -bottomButtonOffset).isActive = true
+            button.widthAnchor.constraint(equalToConstant: exitButtonSize).isActive = true
+            button.heightAnchor.constraint(equalToConstant: exitButtonSize).isActive = true
         }
     }
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        backgroundColor = .gray
+        setBlur()
         
         addSubviewLayout(seasonCollectionView)
-        addSubviewLayout(bottomOverlayView)
-        bottomOverlayView.addSubviewLayout(exitSeasonSelectorButton)
+        addSubviewLayout(exitSeasonSelectorButton)
         
         Constraints.setSeasonCollectionView(seasonCollectionView, self)
-        Constraints.setBottomOverlayView(bottomOverlayView, self)
-        Constraints.setExitSeasonSelectorButton(exitSeasonSelectorButton, bottomOverlayView)
+        Constraints.setExitSeasonSelectorButton(exitSeasonSelectorButton, self)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setBlur() {
+        guard !UIAccessibility.isReduceTransparencyEnabled else { return }
+        
+        backgroundColor = .clear
+        
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
+        addSubviewLayout(blurEffectView)
+        blurEffectView.fillConstraints(in: self)
+    }
 }
 

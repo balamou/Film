@@ -9,13 +9,14 @@
 import UIKit
 
 extension UIViewController {
-    func add(child: UIViewController) {
+    func addChildViewController(child: UIViewController) {
         addChild(child)
         view.addSubview(child.view)
         child.didMove(toParent: self)
+        child.view.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func remove() {
+    func removeSelfAsChildViewController() {
         guard parent != nil else { return }
         willMove(toParent: nil)
         removeFromParent()

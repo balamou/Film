@@ -27,6 +27,8 @@ class ShowInfoViewController: UIViewController {
     
     private var isLoadingEpisodes = true
     
+    private var changeSeasonsVC: ChangeSeasonViewController?
+    
     // API
     var apiManager: SeriesInfoAPI?
     
@@ -124,11 +126,12 @@ extension ShowInfoViewController: HeaderViewDelegate {
     }
     
     func seasonButtonTapped() {
-        // Open ChangeSeasonVC
-        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: 5, selectedSeason: 2)
+        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: 5, selectedSeason: seriesInformation.seasonSelected)
+        self.changeSeasonsVC = changeSeasonsVC
         changeSeasonsVC.delegate = self
         
-        navigationController?.pushViewController(changeSeasonsVC, animated: false)
+        addChildViewController(child: changeSeasonsVC)
+        changeSeasonsVC.view.fillConstraints(in: view)
     }
     
 }
@@ -144,10 +147,16 @@ extension ShowInfoViewController: EpisodeCellDelegate {
 
 extension ShowInfoViewController: ChangeSeasonViewControllerDelegate {
     
+    func closeButtonTapped() {
+        changeSeasonsVC?.removeSelfAsChildViewController()
+    }
+    
     func seasonButtonTapped(season: Int) {
         loadEpisodes(of: season)
         seriesInformation.seasonSelected = season
         episodesCollectionView.reloadData()
+        
+        changeSeasonsVC?.removeSelfAsChildViewController()
     }
     
 }

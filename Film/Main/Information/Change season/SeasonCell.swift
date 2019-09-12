@@ -16,6 +16,7 @@ class SeasonCell: UICollectionViewCell {
     var seasonLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.generateFont(font: "OpenSans-Regular", size: 16.0)
+        label.textColor = .gray
         
         return label
     }()

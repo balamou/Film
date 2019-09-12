@@ -11,6 +11,7 @@ import UIKit
 
 protocol ChangeSeasonViewControllerDelegate: AnyObject {
     func seasonButtonTapped(season: Int)
+    func closeButtonTapped()
 }
 
 class ChangeSeasonViewController: UIViewController {
@@ -48,7 +49,7 @@ class ChangeSeasonViewController: UIViewController {
     }
     
     @objc func closeButtonTapped() {
-        navigationController?.popViewController(animated: false)
+        delegate?.closeButtonTapped()
     }
 }
 
@@ -61,10 +62,11 @@ extension ChangeSeasonViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeasonCell.identifier, for: indexPath) as! SeasonCell
         
-        cell.seasonLabel.text = "Season".localize() + "\(indexPath.row + 1)"
+        cell.seasonLabel.text = "Season".localize() + " \(indexPath.row + 1)"
         
         if indexPath.row + 1  == selectedSeason {
-            cell.seasonLabel.font = Fonts.generateFont(font: "OpenSans-Bold", size: 16.0)
+            cell.seasonLabel.font = Fonts.generateFont(font: "OpenSans-Bold", size: 18.0)
+            cell.seasonLabel.textColor = .white
         }
         
         return cell
@@ -76,7 +78,6 @@ extension ChangeSeasonViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.seasonButtonTapped(season: indexPath.item + 1)
-        navigationController?.popViewController(animated: false)
     }
 }
 
@@ -87,7 +88,8 @@ extension ChangeSeasonViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: ChangeSeasonView.Constraints.bottomOverlayHeight, right: 0) // overall insets of the collection view
+        let bottomInset = 2 * ChangeSeasonView.Constraints.bottomButtonOffset + ChangeSeasonView.Constraints.exitButtonSize
+        return UIEdgeInsets(top: 100.0, left: 0, bottom: bottomInset, right: 0) // overall insets of the collection view
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
