@@ -19,7 +19,6 @@ enum SeriesInfoError: Error {
     }
 }
 
-
 protocol SeriesInfoAPI {
     func getSeriesInfo(seriesId: Int, result: @escaping (Result<(Series, [Episode]), Error>) -> Void)
     func getEpisodes(seriesId: Int, season: Int, result: @escaping (Result<[Episode], Error>) -> Void)
@@ -28,18 +27,32 @@ protocol SeriesInfoAPI {
 class MockSeriesInfoAPI: SeriesInfoAPI {
     
     let simulatedDelay = 1.5
+    static var count = 0
+    var count2 = 0
     
     func getSeriesInfo(seriesId: Int, result: @escaping (Result<(Series, [Episode]), Error>) -> Void) {
        
         DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) {
-            result(.success((Series.getMock(), Episode.getMockArray())))
+            if MockSeriesInfoAPI.count == 2 {
+                result(.failure(SeriesInfoError.badURL))
+            } else {
+                result(.success((Series.getMock(), Episode.getMockArray())))
+            }
+            
+            MockSeriesInfoAPI.count += 1
         }
     }
     
     func getEpisodes(seriesId: Int, season: Int, result: @escaping (Result<[Episode], Error>) -> Void) {
        
-        DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) {
-            result(.success(Episode.getMockArray()))
+        DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) { [weak self] in
+            if self?.count2 == 2 {
+                result(.failure(SeriesInfoError.badURL))
+            } else {
+                result(.success(Episode.getMockArray()))
+            }
+            
+            self?.count2 += 1
         }
     }
     

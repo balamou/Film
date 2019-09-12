@@ -11,6 +11,8 @@ import UIKit
 class Coordinator {
     
     let navigationController = UINavigationController()
+    let tabViewConroller = UITabBarController()
+    
     var playerVC: VideoPlayerController?
     let builder: Builder = StandardBuilder()
     
@@ -23,7 +25,6 @@ class Coordinator {
         let settingsVC = builder.createSettingsViewController()
         
         // Setup Navigation
-        let tabViewConroller = UITabBarController()
         tabViewConroller.viewControllers = [watchingVC, showsVC, moviesVC, settingsVC]
         tabViewConroller.tabBar.barTintColor = .black
         
@@ -79,6 +80,20 @@ extension Coordinator: ShowInfoViewControllerDelegate {
     
     func thumbnailTapped() {
         print("play episode")
+    }
+    
+    func exitWithError(error: Error) {
+        navigationController.popViewController(animated: false)
+        
+        guard let shownVC = tabViewConroller.selectedViewController else { return }
+        
+        if let watchingViewController = shownVC as? WatchingViewController {
+            watchingViewController.alert?.mode = .showMessage(error.localizedDescription)
+        }
+        
+        if let showViewController = shownVC as? ShowsViewController {
+            showViewController.alert?.mode = .showMessage(error.localizedDescription)
+        }
     }
     
 }

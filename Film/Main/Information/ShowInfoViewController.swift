@@ -13,6 +13,7 @@ protocol ShowInfoViewControllerDelegate: AnyObject {
     func exitButtonTapped()
     func playButtonTapped()
     func thumbnailTapped()
+    func exitWithError(error: Error)
 }
 
 
@@ -95,9 +96,8 @@ extension ShowInfoViewController {
                 self.episodes = episodes
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
-            case .failure(_):
-                // TODO: exit & report error to parent view
-                return
+            case .failure(let error):
+                self.delegate?.exitWithError(error: error)
             }
             
         }
@@ -115,9 +115,8 @@ extension ShowInfoViewController {
                 self.episodes = episodes
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
-            case .failure(_):
-                // TODO: exit & report error to parent view
-                return
+            case .failure(let error):
+                self.delegate?.exitWithError(error: error)
             }
         }
     }
