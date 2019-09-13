@@ -19,5 +19,10 @@ class SeriesPresenter {
         self.posterURL = posterURL
     }
     
+    init(_ watched: Watched) {
+        self.id = watched.id
+        self.posterURL = watched.posterURL
+    }
+    
 }
 

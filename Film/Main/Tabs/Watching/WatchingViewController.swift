@@ -11,7 +11,7 @@ import UIKit
 
 protocol WatchingViewControllerDelegate {
     func playTapped()
-    func moreInfoTapped()
+    func moreInfoTapped(watched: Watched)
 }
 
 enum WatchingViewControllerMode: Equatable {
@@ -169,12 +169,12 @@ extension WatchingViewController: WatchingCellDelegate {
         delegate?.playTapped()
     }
     
-    func informationButtonTapped() {
+    func informationButtonTapped(row: Int) {
         if let isRefreshing = collectionView.refreshControl?.isRefreshing, isRefreshing {
             return // disable information tapping when refreshing
         }
         
-        delegate?.moreInfoTapped()
+        delegate?.moreInfoTapped(watched: data[row])
     }
 }
 
@@ -203,6 +203,7 @@ extension WatchingViewController: UICollectionViewDataSource, UICollectionViewDe
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchingCell.identifier, for: indexPath) as! WatchingCell
             
             cell.delegate = self
+            cell.id = indexPath.item
             cell.populate(watched: data[indexPath.item])
             
             return cell

@@ -10,7 +10,7 @@ import UIKit
 
 protocol WatchingCellDelegate: AnyObject {
     func playButtonTapped()
-    func informationButtonTapped()
+    func informationButtonTapped(row: Int)
 }
 
 class WatchingCell: UICollectionViewCell {
@@ -18,6 +18,7 @@ class WatchingCell: UICollectionViewCell {
     static var identifier: String = "WatchingCell"
     weak var delegate: WatchingCellDelegate?
     var multiply: NSLayoutConstraint?
+    var id: Int = 0
    
     
     var posterImage: UIImageView = {
@@ -167,7 +168,7 @@ class WatchingCell: UICollectionViewCell {
     }
     
     @objc func informationButtonTapped() {
-        delegate?.informationButtonTapped()
+        delegate?.informationButtonTapped(row: id)
     }
     
     required init?(coder aDecoder: NSCoder) {

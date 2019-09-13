@@ -52,9 +52,15 @@ extension Coordinator: WatchingViewControllerDelegate {
         navigationController.pushViewController(playerVC, animated: false)
     }
     
-    func moreInfoTapped() {
-        // TODO: open ShowInfoVC or MovieInfoVC
-        print("## Open info")
+    func moreInfoTapped(watched: Watched) {
+        switch watched.type {
+        case .movie:
+             // TODO: open MovieInfoVC
+            break
+        case .show:
+            let showInfoVC = builder.createShowInfoViewController(delegate: self, series: SeriesPresenter(watched))
+            navigationController.pushViewController(showInfoVC, animated: false)
+        }
     }
 }
 
