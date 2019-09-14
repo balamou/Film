@@ -42,28 +42,41 @@ class MoviewsViewController: UIViewController {
         setupPullToRefresh()
     }
     
+    //----------------------------------------------------------------------
+    // MARK: Status bar
+    //----------------------------------------------------------------------
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    //----------------------------------------------------------------------
+    // MARK: Sections
+    //----------------------------------------------------------------------
     func initializeSections() {
-        let dataSectionStyle = CellStyle(insets: UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0),
-                                         columnDistance: 10.0,
-                                         rowDistance: 20.0) {
-            width, _ -> CGSize in
-            WatchingCell.calculateCellSize(collectionViewWidth: width)
-        }
-        
         idleSection = Section(cellType: IdleCell.self, identifier: IdleCell.identifier)
-        dataSection = Section(cellType: WatchingCell.self, identifier: WatchingCell.identifier, cellStyle: dataSectionStyle)
+        dataSection = Section(cellType: WatchingCell.self, identifier: WatchingCell.identifier)
         loadingSection = Section(cellType: LoadingWaitCell.self, identifier: LoadingWaitCell.identifier)
-       
+        loadingSection.show()
+        
         sections = [idleSection, dataSection, loadingSection]
     }
     
     func configureDataPopulation() {
+        dataSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0),
+                                          columnDistance: 10.0,
+                                          rowDistance: 20.0) {
+                                            width, _ -> CGSize in
+                                            WatchingCell.calculateCellSize(collectionViewWidth: width)
+        }
+        
         dataSection.populateCell = { [weak self] cell, row in
             guard let self = self else { return }
             guard self.data.count > row else { return }
             
             let watchedCell = cell as! WatchingCell
             watchedCell.populate(watched: self.data[row])
+            watchedCell.delegate = self
+            watchedCell.id = row
         }
     }
     
@@ -94,12 +107,6 @@ class MoviewsViewController: UIViewController {
         }
     }
     
-    //----------------------------------------------------------------------
-    // MARK: Status bar
-    //----------------------------------------------------------------------
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 }
 
 
@@ -109,9 +116,6 @@ class MoviewsViewController: UIViewController {
 extension MoviewsViewController{
     
     func initialLoadWatching() {
-        loadingSection.show()
-        collectionView.reloadData()
-        
         apiManager.getWatched { [weak self] result in
             guard let self = self else { return }
 
@@ -154,4 +158,20 @@ extension MoviewsViewController{
             completion()
         }
     }
+}
+
+
+//----------------------------------------------------------------------
+// MARK: Delegate
+//----------------------------------------------------------------------
+extension MoviewsViewController: WatchingCellDelegate {
+    
+    func playButtonTapped(row: Int) {
+        print("Play \(row)")
+    }
+    
+    func informationButtonTapped(row: Int) {
+         print("Show Info \(row)")
+    }
+    
 }

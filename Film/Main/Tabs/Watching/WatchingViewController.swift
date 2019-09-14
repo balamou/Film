@@ -161,7 +161,7 @@ extension WatchingViewController: WatchingViewDelegate {
 //----------------------------------------------------------------------
 extension WatchingViewController: WatchingCellDelegate {
     
-    func playButtonTapped() {
+    func playButtonTapped(row: Int) {
         if let isRefreshing = collectionView.refreshControl?.isRefreshing, isRefreshing {
             return // disable playing when refreshing
         }

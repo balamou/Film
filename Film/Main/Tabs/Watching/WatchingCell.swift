@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WatchingCellDelegate: AnyObject {
-    func playButtonTapped()
+    func playButtonTapped(row: Int)
     func informationButtonTapped(row: Int)
 }
 
@@ -164,7 +164,7 @@ class WatchingCell: UICollectionViewCell {
     }
     
     @objc func playButtonTapped() {
-        delegate?.playButtonTapped()
+        delegate?.playButtonTapped(row: id)
     }
     
     @objc func informationButtonTapped() {
