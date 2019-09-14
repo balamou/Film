@@ -8,20 +8,13 @@
 
 import UIKit
 
-protocol AbstractedCell {
-    associatedtype DataType
-    
-    static var identifier: String { get }
-    func populate(with dataItem: DataType)
-}
-
 class Section {
     var cellType: AnyClass
     var identifier: String
     var numberOfItems: Int
     var populateCell: ((UICollectionViewCell, Int) -> Void)?
     
-    var size: CGSize
+    var size: (CGFloat, CGFloat) -> CGSize
     var insets: UIEdgeInsets
     var columnDistance: CGFloat
     var rowDistance: CGFloat
@@ -30,13 +23,13 @@ class Section {
     
     init(cellType: AnyClass,
          identifier: String,
-         size: CGSize,
+         size: @escaping ((CGFloat, CGFloat) -> CGSize),
          insets: UIEdgeInsets,
          columnDistance: CGFloat,
          rowDistance: CGFloat,
          isShowing: @escaping (() -> Bool),
          numberOfItems: Int,
-         populateCell: ((UICollectionViewCell, Int) -> Void)?) {
+         populateCell: @escaping ((UICollectionViewCell, Int) -> Void)) {
         self.cellType = cellType
         self.identifier = identifier
         self.size = size
@@ -50,12 +43,12 @@ class Section {
 }
 
 
-class AbstractedCollectionViewController<DataType>: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class AbstractedCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     var sections: [Section] = []
     
     init(sections: [Section]) {
         self.sections = sections
-        super.init(nibName: nil, bundle: nil)
+        super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,6 +57,8 @@ class AbstractedCollectionViewController<DataType>: UICollectionViewController, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        collectionView.backgroundColor = .clear
         
         sections.forEach {
             collectionView.register($0.cellType, forCellWithReuseIdentifier: $0.identifier)
@@ -100,7 +95,7 @@ class AbstractedCollectionViewController<DataType>: UICollectionViewController, 
     //----------------------------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return sections[indexPath.section].size
+        return sections[indexPath.section].size(collectionView.frame.width, collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

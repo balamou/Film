@@ -11,7 +11,7 @@ import UIKit
 class MoviesView: UIView {
     
     lazy var navBar: CustomNavigationBar = {
-        return CustomNavigationBar(title: "movies".localize())
+        return CustomNavigationBar(title: "movies".localize(), showLogo: true)
     }()
     
     class Constraints {
