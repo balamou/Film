@@ -20,7 +20,7 @@ enum ShowsViewControllerMode {
 
 class ShowsViewController: UIViewController {
     
-    var moviewView: MoviesView = MoviesView()
+    var showsView: ShowsView = ShowsView()
     
     var data = [SeriesPresenter]()
     var apiManager: SeriesAPI?
@@ -32,7 +32,6 @@ class ShowsViewController: UIViewController {
     var isFetchingMore: Bool = false
     
     // Collection view
-    var collectionVC: AbstractedCollectionViewController!
     var collectionView: UICollectionView!
     
     // Sections
@@ -47,14 +46,13 @@ class ShowsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = moviewView
+        view = showsView
         
         alert = AlertViewController(parent: self)
         
         initializeSections()
         addCollectionView()
         initialLoadSeries()
-        setupPullToRefresh()
     }
     
     //----------------------------------------------------------------------
@@ -80,16 +78,11 @@ class ShowsViewController: UIViewController {
     }
     
     func configureDataPopulation() {
-        dataSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0),
-                                          columnDistance: 10.0,
-                                          rowDistance: 20.0) {
-                                            width, _ -> CGSize in
-                                            ShowsCell.calculateCellSize(collectionViewWidth: width)
-        }
+        dataSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), columnDistance: 10.0, rowDistance: 20.0)
+        loadingMoreSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0), columnDistance: 0, rowDistance: 0)
         
-        loadingMoreSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0), columnDistance: 0, rowDistance: 0, size: { (width, _) -> CGSize in
-            CGSize(width: width, height: 50)
-        })
+        dataSection.cellStyle.size = { width, _ -> CGSize in ShowsCell.calculateCellSize(collectionViewWidth: width) }
+        loadingMoreSection.cellStyle.size = { (width, _) -> CGSize in CGSize(width: width, height: 50) }
         
         loadingMoreSection.populateCell = { cell, row in
             let loadingMoreCell = cell as! LoadingCell
@@ -109,31 +102,22 @@ class ShowsViewController: UIViewController {
     // MARK: Collection View
     //----------------------------------------------------------------------
     func addCollectionView() {
-        collectionVC = AbstractedCollectionViewController(sections: sections)
+        let collectionVC = AbstractedCollectionViewController(sections: sections)
         collectionVC.scrollingDelegate = self
         addChildViewController(child: collectionVC)
         
+        collectionVC.addPullOnRefresh(for: { [weak self] in
+            self?.refreshOnPull()
+        })
+        
         // Setup collection view
         collectionView = collectionVC.collectionView
-        collectionView.alwaysBounceVertical = true
         
-        [collectionView.topAnchor.constraint(equalTo: moviewView.navBar.bottomAnchor),
+        [collectionView.topAnchor.constraint(equalTo: showsView.navBar.bottomAnchor),
          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
          collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ].activate()
-    }
-    
-    func setupPullToRefresh() {
-        let refreshControl = UIRefreshControl()
-        collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
-    }
-    
-    @objc func refreshTriggered(_ sender: UIRefreshControl) {
-        refreshOnPull {
-            sender.endRefreshing()
-        }
     }
     
 }
@@ -160,6 +144,8 @@ extension ShowsViewController: ScrollingDelegate {
 extension ShowsViewController {
     
     func initialLoadSeries() {
+        collectionView.alwaysBounceVertical = false // do not bounce when loading
+        
         apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
             guard let self = self else { return }
             self.sections.forEach { $0.hide() }
@@ -178,6 +164,7 @@ extension ShowsViewController {
                 self.collectionView.reloadData()
             }
             
+            self.collectionView.alwaysBounceVertical = true
         }
     }
     
@@ -202,7 +189,7 @@ extension ShowsViewController {
         }
     }
     
-    func refreshOnPull(completion: @escaping () -> ()) {
+    func refreshOnPull() {
         apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
             guard let self = self else { return }
             
@@ -215,7 +202,7 @@ extension ShowsViewController {
                 self.collectionView.reloadData()
             }
             
-            completion()
+            self.collectionView.refreshControl?.endRefreshing()
         }
     }
     

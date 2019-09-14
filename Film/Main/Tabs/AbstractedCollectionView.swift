@@ -14,6 +14,13 @@ struct CellStyle {
     var rowDistance: CGFloat
     var size: ((CGFloat, CGFloat) -> CGSize)
     
+    init(insets: UIEdgeInsets, columnDistance: CGFloat, rowDistance: CGFloat, size: @escaping ((CGFloat, CGFloat) -> CGSize) = {_,_ in .zero}) {
+        self.insets = insets
+        self.columnDistance = columnDistance
+        self.rowDistance = rowDistance
+        self.size = size
+    }
+    
     static var fill: CellStyle = {
         return CellStyle(insets: .zero,
                          columnDistance: 0,
@@ -144,6 +151,23 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
         if offsetY > contentHeight - (scrollView.frame.height + 100) { // mutlipled by 2 so it start loading data earlier
             scrollingDelegate?.batchFetch()
         }
+    }
+    
+    //----------------------------------------------------------------------
+    // Refresh on pull
+    //----------------------------------------------------------------------
+    var refreshOnPull: (() -> Void)?
+    
+    func addPullOnRefresh(for action: @escaping () -> Void) {
+        let refreshControl = UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
+        
+        self.refreshOnPull = action
+    }
+    
+    @objc func refreshTriggered(_ sender: UIRefreshControl) {
+        refreshOnPull?()
     }
 }
 
