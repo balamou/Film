@@ -16,6 +16,8 @@ struct CellStyle {
 }
 
 class Section {
+    typealias ConfigureCell = (UICollectionViewCell, Int) -> Void
+    
     var cellType: AnyClass
     var identifier: String
     var numberOfItems: Int
@@ -27,15 +29,23 @@ class Section {
     init(cellType: AnyClass,
          identifier: String,
          cellStyle: CellStyle,
-         numberOfItems: Int,
-         isShowing: Bool,
-         populateCell: @escaping ((UICollectionViewCell, Int) -> Void)) {
+         numberOfItems: Int = 1,
+         isShowing: Bool = false,
+         populateCell: @escaping ConfigureCell = {_, _ in }) {
         self.cellType = cellType
         self.identifier = identifier
         self.cellStyle = cellStyle
         self.isShowing = isShowing
         self.numberOfItems = numberOfItems
         self.populateCell = populateCell
+    }
+    
+    func hide() {
+        isShowing = false
+    }
+    
+    func show() {
+        isShowing = true
     }
 }
 

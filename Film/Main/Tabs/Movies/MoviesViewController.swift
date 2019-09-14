@@ -11,11 +11,14 @@ import UIKit
 
 class MoviewsViewController: UIViewController {
     
-    var moviewView: MoviesView!
-    var collectionVC: AbstractedCollectionViewController!
+    var moviewView: MoviesView = MoviesView()
     
     var data = [Watched]()
     let apiManager: WatchedAPI = MockWatchedAPI()
+    
+    // Collection view
+    var collectionVC: AbstractedCollectionViewController!
+    var collectionView: UICollectionView!
     
     // Sections
     var sections: [Section] = []
@@ -25,8 +28,6 @@ class MoviewsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        moviewView = MoviesView()
         view = moviewView
         
         initializeSections()
@@ -46,19 +47,9 @@ class MoviewsViewController: UIViewController {
             WatchingCell.calculateCellSize(collectionViewWidth: width)
         }
         
-        idleSection = Section(cellType: IdleCell.self,
-                                   identifier: "IdleCell",
-                                   cellStyle: idleCellStyle,
-                                   numberOfItems: 1,
-                                   isShowing: true,
-                                   populateCell: { _, _ in })
-        
-        dataSection = Section(cellType: WatchingCell.self,
-                               identifier: "WatchingCell",
-                               cellStyle: dataSectionStyle,
-                               numberOfItems: 0,
-                               isShowing: true)
-        { [weak self] cell, row in
+        idleSection = Section(cellType: IdleCell.self, identifier: "IdleCell",  cellStyle: idleCellStyle)
+        dataSection = Section(cellType: WatchingCell.self, identifier: "WatchingCell", cellStyle: dataSectionStyle) {
+            [weak self] cell, row in
             guard let self = self else { return }
             
             let watchedCell = cell as! WatchingCell
@@ -73,10 +64,11 @@ class MoviewsViewController: UIViewController {
     
     func addCollectionView() {
         collectionVC = AbstractedCollectionViewController(sections: sections)
-        collectionVC.collectionView.alwaysBounceVertical = true
-        
         addChildViewController(child: collectionVC)
-        guard let collectionView = collectionVC.view else { return }
+        
+        // Setup collection view
+        collectionView = collectionVC.collectionView
+        collectionView.alwaysBounceVertical = true
         
         [collectionView.topAnchor.constraint(equalTo: moviewView.navBar.bottomAnchor),
          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -85,7 +77,14 @@ class MoviewsViewController: UIViewController {
             ].activate()
     }
     
+    //----------------------------------------------------------------------
+    // MARK: API calls
+    //----------------------------------------------------------------------
+    
     func initialLoadWatching() {
+        idleSection.show()
+        collectionView.reloadData()
+        
         apiManager.getWatched { [weak self] result in
             guard let self = self else { return }
             
@@ -94,10 +93,10 @@ class MoviewsViewController: UIViewController {
                 self.data = watched
                 
                 self.dataSection.numberOfItems = watched.count
-                self.dataSection.isShowing = true
-                self.idleSection.isShowing = false
+                self.dataSection.show()
+                self.idleSection.hide()
                 
-                self.collectionVC.collectionView.reloadData()
+                self.collectionView.reloadData()
             case .failure(_):
                 return
             }
