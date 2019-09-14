@@ -46,7 +46,7 @@ class Coordinator {
 
 extension Coordinator: WatchingViewControllerDelegate {
     
-    func playTapped() {
+    func playTapped(watched: Watched) {
         let playerVC = VideoPlayerController()
         self.playerVC = playerVC
         navigationController.pushViewController(playerVC, animated: false)

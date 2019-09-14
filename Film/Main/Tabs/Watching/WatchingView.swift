@@ -8,87 +8,11 @@
 
 import UIKit
 
-protocol WatchingViewDelegate: AnyObject {
-    func refreshCollectionView(completion: @escaping () -> ())
-}
-
 class WatchingView: UIView {
-    
-    weak var delegate: WatchingViewDelegate?
     
     lazy var navBar: CustomNavigationBar = {
         return CustomNavigationBar(title: "watching".localize(), showLogo: true)
     }()
-    
-    lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.backgroundColor = .clear
-        collectionView.isHidden = true
-        let refreshControl = UIRefreshControl()
-        collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
-        
-        return collectionView
-    }()
-    
-    @objc func refreshTriggered(_ sender: UIRefreshControl) {
-        delegate?.refreshCollectionView {
-            sender.endRefreshing()
-        }
-    }
-    
-    // Loading view
-    var loadingView: UIView = {
-        let view = UIView()
-        
-        return view
-    }()
-    
-    var spinner: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.startAnimating()
-        activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge
-        
-        return activityIndicator
-    }()
-    
-    var loadingLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Loading...".localize()
-        label.textColor = .white // NOTE: this is about to be deprecated
-        label.font = Fonts.RobotoCondensedBold(size: 18.0)
-        
-        return label
-    }()
-    
-    class Constraints {
-        
-        static func setCollectionView(_ collectionView: UICollectionView, _ navBar: UIView, _ parent: UIView) {
-            collectionView.topAnchor.constraint(equalTo: navBar.bottomAnchor).isActive = true
-            collectionView.bottomAnchor.constraint(equalTo: parent.safeAreaLayoutGuide.bottomAnchor).isActive = true
-            collectionView.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
-            collectionView.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
-        }
-        
-        // Loading View
-        static func setLoadingView(_ view: UIView, _ parent: UIView) {
-            view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-            view.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
-            view.widthAnchor.constraint(equalTo: parent.widthAnchor).isActive = true
-            view.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
-        }
-        
-        static func setSpinner(_ activityIndicator: UIActivityIndicatorView, _ parent: UIView) {
-            activityIndicator.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-            activityIndicator.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-        }
-        
-        static func setLoadingLabel(_ label: UILabel, _ topNeihgbour: UIView) {
-            label.topAnchor.constraint(equalTo: topNeihgbour.bottomAnchor, constant: 10.0).isActive = true
-            label.centerXAnchor.constraint(equalTo: topNeihgbour.centerXAnchor).isActive = true
-        }
-        
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -97,17 +21,6 @@ class WatchingView: UIView {
         
         addSubviewLayout(navBar)
         navBar.setConstraints(parent: self)
-       
-        addSubviewLayout(collectionView)
-        Constraints.setCollectionView(collectionView, navBar, self)
-        
-        addSubviewLayout(loadingView)
-        loadingView.addSubviewLayout(spinner)
-        loadingView.addSubviewLayout(loadingLabel)
-        
-        Constraints.setLoadingView(loadingView, self)
-        Constraints.setSpinner(spinner, loadingView)
-        Constraints.setLoadingLabel(loadingLabel, spinner)
     }
     
     required init?(coder aDecoder: NSCoder) {
