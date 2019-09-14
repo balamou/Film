@@ -62,31 +62,6 @@ class ShowsViewController: UIViewController {
     }
     
     //----------------------------------------------------------------------
-    // MARK: State machine
-    //----------------------------------------------------------------------
-    func switchState(_ newState: ShowsViewControllerState) {
-        collectionView.alwaysBounceVertical = true
-        sections.forEach { $0.hide() }
-        isInfiniteScrollEnabled = false
-        
-        switch newState {
-        case .loading:
-            loadingSection.show()
-            collectionView.alwaysBounceVertical = false // do not bounce when loading
-        case .idle:
-            idleSection.show()
-        case .hasData(let series, isLast: let isLast):
-            dataSection.show()
-            
-            data = series
-            dataSection.numberOfItems = data.count
-            isInfiniteScrollEnabled = !isLast // maybe
-        }
-        
-        collectionView.reloadData()
-    }
-    
-    //----------------------------------------------------------------------
     // MARK: Status bar
     //----------------------------------------------------------------------
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -155,6 +130,36 @@ class ShowsViewController: UIViewController {
          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
          collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ].activate()
+    }
+    
+}
+
+//----------------------------------------------------------------------
+// MARK: State machine
+//----------------------------------------------------------------------
+extension ShowsViewController {
+    
+    func switchState(_ newState: ShowsViewControllerState) {
+        collectionView.alwaysBounceVertical = true
+        sections.forEach { $0.hide() }
+        isInfiniteScrollEnabled = false
+        data = []
+        
+        switch newState {
+        case .loading:
+            loadingSection.show()
+            collectionView.alwaysBounceVertical = false // do not bounce when loading
+        case .idle:
+            idleSection.show()
+        case .hasData(let series, isLast: let isLast):
+            dataSection.show()
+            
+            data = series
+            dataSection.numberOfItems = data.count
+            isInfiniteScrollEnabled = !isLast // maybe
+        }
+        
+        collectionView.reloadData()
     }
     
 }

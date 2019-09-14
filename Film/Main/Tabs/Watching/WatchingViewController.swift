@@ -14,19 +14,7 @@ protocol WatchingViewControllerDelegate: AnyObject {
     func moreInfoTapped(watched: Watched)
 }
 
-// TODO: Remove??
-enum WatchingViewControllerMode: Equatable {
-    static func == (lhs: WatchingViewControllerMode, rhs: WatchingViewControllerMode) -> Bool {
-        switch (lhs, rhs) {
-        case (.idle, .idle), (.loading, .loading):
-            return true
-        case (.hasData(_), .hasData(_)):
-            return true
-        default:
-            return false
-        }
-    }
-    
+enum WatchingViewControllerMode {
     case idle
     case loading
     case hasData([Watched])

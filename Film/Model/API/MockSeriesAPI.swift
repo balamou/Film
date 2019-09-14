@@ -24,13 +24,21 @@ class MockSeriesAPI: SeriesAPI {
         DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay, execute: { [weak self] in
             guard let self = self else { return }
             
-            if self.count == 2 || self.count == 3 {
+            if self.count == 2 {
                 result(.failure(NSError(domain: "Error", code: 0, userInfo: nil)))
                 self.count += 1
                 return
             }
             
-            let data = self.count == 4 ? SeriesPresenter.getMockData2() : SeriesPresenter.getMockData()
+            let data: [SeriesPresenter]
+            if self.count == 4 {
+                data = SeriesPresenter.getMockData2()
+            } else if self.count == 3 {
+                data = []
+            } else {
+                data = SeriesPresenter.getMockData()
+            }
+            
             let isLast = (start >= 2 * 9)
             
             result(.success((data, isLast)))
