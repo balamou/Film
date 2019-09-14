@@ -13,8 +13,13 @@ class MoviewsViewController: UIViewController {
     
     var moviewView: MoviesView = MoviesView()
     
-    var data = [Watched]()
-    let apiManager: WatchedAPI = MockWatchedAPI()
+    var data = [SeriesPresenter]()
+    let apiManager: SeriesAPI? = MockSeriesAPI()
+    
+    // Params
+    let numberOfShowsToLoad = 9
+    var isInfiniteScrollEnabled: Bool = true
+    var isFetchingMore: Bool = false
     
     // Collection view
     var collectionVC: AbstractedCollectionViewController!
@@ -25,6 +30,7 @@ class MoviewsViewController: UIViewController {
     var dataSection: Section!
     var idleSection: Section!
     var loadingSection: Section!
+    var loadingMoreSection: Section!
     
     // Alert
     var alert: AlertViewController?
@@ -36,9 +42,8 @@ class MoviewsViewController: UIViewController {
         alert = AlertViewController(parent: self)
         
         initializeSections()
-        configureDataPopulation()
         addCollectionView()
-        initialLoadWatching()
+        initialLoadSeries()
         setupPullToRefresh()
     }
     
@@ -54,11 +59,14 @@ class MoviewsViewController: UIViewController {
     //----------------------------------------------------------------------
     func initializeSections() {
         idleSection = Section(cellType: IdleCell.self, identifier: IdleCell.identifier)
-        dataSection = Section(cellType: WatchingCell.self, identifier: WatchingCell.identifier)
+        dataSection = Section(cellType: ShowsCell.self, identifier: ShowsCell.identifier)
         loadingSection = Section(cellType: LoadingWaitCell.self, identifier: LoadingWaitCell.identifier)
+        loadingMoreSection = Section(cellType: LoadingCell.self, identifier: LoadingCell.identifier)
         loadingSection.show()
         
-        sections = [idleSection, dataSection, loadingSection]
+        sections = [idleSection, dataSection, loadingSection, loadingMoreSection]
+        
+        configureDataPopulation()
     }
     
     func configureDataPopulation() {
@@ -66,22 +74,33 @@ class MoviewsViewController: UIViewController {
                                           columnDistance: 10.0,
                                           rowDistance: 20.0) {
                                             width, _ -> CGSize in
-                                            WatchingCell.calculateCellSize(collectionViewWidth: width)
+                                            ShowsCell.calculateCellSize(collectionViewWidth: width)
+        }
+        
+        loadingMoreSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0), columnDistance: 0, rowDistance: 0, size: { (width, _) -> CGSize in
+            CGSize(width: width, height: 50)
+        })
+        
+        loadingMoreSection.populateCell = { cell, row in
+            let loadingMoreCell = cell as! LoadingCell
+            loadingMoreCell.spinner.startAnimating()
         }
         
         dataSection.populateCell = { [weak self] cell, row in
             guard let self = self else { return }
             guard self.data.count > row else { return }
             
-            let watchedCell = cell as! WatchingCell
-            watchedCell.populate(watched: self.data[row])
-            watchedCell.delegate = self
-            watchedCell.id = row
+            let showCell = cell as! ShowsCell
+            showCell.posterURL = self.data[row].posterURL
         }
     }
     
+    //----------------------------------------------------------------------
+    // MARK: Collection View
+    //----------------------------------------------------------------------
     func addCollectionView() {
         collectionVC = AbstractedCollectionViewController(sections: sections)
+        collectionVC.scrollingDelegate = self
         addChildViewController(child: collectionVC)
         
         // Setup collection view
@@ -109,69 +128,85 @@ class MoviewsViewController: UIViewController {
     
 }
 
-
 //----------------------------------------------------------------------
-// MARK: API calls
+// Scrolling: "Infinite Scroll"
 //----------------------------------------------------------------------
-extension MoviewsViewController{
+extension MoviewsViewController: ScrollingDelegate {
     
-    func initialLoadWatching() {
-        apiManager.getWatched { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let watched):
-                self.data = watched
-
-                self.dataSection.numberOfItems = watched.count
-                self.dataSection.show()
-                self.loadingSection.hide()
-
-                self.collectionView.reloadData()
-            case .failure(_):
-                return
-            }
-        }
-    }
-    
-    func refreshOnPull(completion: @escaping () -> ()) {
-        apiManager.getWatched { [weak self] result in
-            guard let self = self else { return }
+    func batchFetch() {
+        if !isFetchingMore && isInfiniteScrollEnabled {
+            loadingMoreSection.show()
+            collectionView.reloadSections(IndexSet(integer: 3))
+            isFetchingMore = true
             
-            switch result {
-            case .success(let watched):
-                self.sections.forEach { $0.hide() }
-                
-                if watched.isEmpty {
-                    self.idleSection.show()
-                    self.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // reload both sections
-                } else {
-                    self.dataSection.show()
-                    self.dataSection.numberOfItems = watched.count
-                    self.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // reload both sections
-                }
-                
-            case .failure(let error):
-                self.alert?.mode = .showMessage(error.getDescription())
-            }
-            
-            completion()
+            loadMoreOnDragDown()
         }
     }
 }
 
-
 //----------------------------------------------------------------------
-// MARK: Delegate
+// MARK: API Calls
 //----------------------------------------------------------------------
-extension MoviewsViewController: WatchingCellDelegate {
+extension MoviewsViewController {
     
-    func playButtonTapped(row: Int) {
-        print("Play \(row)")
+    func initialLoadSeries() {
+        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
+            guard let self = self else { return }
+            self.sections.forEach { $0.hide() }
+            
+            if let error = error {
+                // TODO: Show idle image/icon with error message (probably a new cell section)
+                self.alert?.mode = .showMessage(error)
+                self.idleSection.show()
+                self.collectionView.reloadData()
+            } else {
+                self.data = series
+                self.dataSection.numberOfItems = self.data.count
+                self.dataSection.show()
+                self.isInfiniteScrollEnabled = !isLast
+                
+                self.collectionView.reloadData()
+            }
+            
+        }
     }
     
-    func informationButtonTapped(row: Int) {
-         print("Show Info \(row)")
+    func loadMoreOnDragDown() {
+        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                self.alert?.mode = .showMessage(error) // show alert
+                self.loadingMoreSection.hide()
+                self.collectionView.reloadSections(IndexSet(integer: 3)) // refresh the section with the spinner
+            } else {
+                self.data += series
+                self.dataSection.numberOfItems = self.data.count
+                self.loadingMoreSection.hide()
+                self.isInfiniteScrollEnabled = !isLast
+                
+                self.collectionView.reloadData()
+            }
+            
+            self.isFetchingMore = false
+        }
+    }
+    
+    func refreshOnPull(completion: @escaping () -> ()) {
+        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                self.alert?.mode = .showMessage(error) // show alert
+            } else {
+                self.data = series
+                self.dataSection.numberOfItems = series.count
+                self.isInfiniteScrollEnabled = !isLast
+                self.collectionView.reloadData()
+            }
+            
+            completion()
+        }
     }
     
 }

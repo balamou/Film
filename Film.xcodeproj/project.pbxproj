@@ -385,7 +385,6 @@
 				EDFDB055231497C90045E8D6 /* WatchingViewController.swift */,
 				EDFDB0572314985A0045E8D6 /* WatchingView.swift */,
 				ED5AC12B2315A7600098A161 /* WatchingCell.swift */,
-				EDB0CD3C231B57EE00246CDF /* IdleCell.swift */,
 			);
 			path = Watching;
 			sourceTree = "<group>";
@@ -396,7 +395,6 @@
 				ED5AC10B2314DD4D0098A161 /* ShowsViewController.swift */,
 				ED5AC10D2314DDA30098A161 /* ShowsView.swift */,
 				ED2DBB402315E356009250EC /* ShowsCell.swift */,
-				EDB57E9E23188B450049504E /* LoadingCell.swift */,
 			);
 			path = Shows;
 			sourceTree = "<group>";
@@ -406,7 +404,6 @@
 			children = (
 				ED5AC10F2314DDD00098A161 /* MoviesViewController.swift */,
 				ED5AC1112314DDEF0098A161 /* MoviesView.swift */,
-				EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */,
 			);
 			path = Movies;
 			sourceTree = "<group>";
@@ -642,6 +639,9 @@
 			isa = PBXGroup;
 			children = (
 				EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */,
+				EDB0CD3C231B57EE00246CDF /* IdleCell.swift */,
+				EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */,
+				EDB57E9E23188B450049504E /* LoadingCell.swift */,
 				ED5AC1062314DCF00098A161 /* Watching */,
 				ED5AC1072314DCF70098A161 /* Shows */,
 				ED5AC1082314DD0C0098A161 /* Movies */,

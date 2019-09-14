@@ -56,9 +56,13 @@ class Section {
     }
 }
 
+protocol ScrollingDelegate: AnyObject {
+    func batchFetch()
+}
 
 class AbstractedCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     var sections: [Section] = []
+    weak var scrollingDelegate: ScrollingDelegate?
     
     init(sections: [Section]) {
         self.sections = sections
@@ -126,6 +130,20 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sections[section].cellStyle.rowDistance // distance between rows
+    }
+    
+    //----------------------------------------------------------------------
+    // Scrolling
+    //----------------------------------------------------------------------
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        guard offsetY > 0 else { return } // only when pulling up
+        
+        if offsetY > contentHeight - (scrollView.frame.height + 100) { // mutlipled by 2 so it start loading data earlier
+            scrollingDelegate?.batchFetch()
+        }
     }
 }
 
