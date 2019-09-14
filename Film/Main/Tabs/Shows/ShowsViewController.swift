@@ -13,9 +13,10 @@ protocol ShowsDelegate: AnyObject {
     func tappedOnSeriesPoster(series: SeriesPresenter) // tapped on poster to get more information
 }
 
-enum ShowsViewControllerMode {
+enum ShowsViewControllerState {
     case loading
-    case hasShows([SeriesPresenter], isLast: Bool)
+    case idle
+    case hasData([SeriesPresenter], isLast: Bool)
 }
 
 class ShowsViewController: UIViewController {
@@ -25,6 +26,9 @@ class ShowsViewController: UIViewController {
     var data = [SeriesPresenter]()
     var apiManager: SeriesAPI?
     weak var delegate: ShowsDelegate?
+    var state: ShowsViewControllerState = .loading {
+        didSet { switchState(state) }
+    }
     
     // Params
     let numberOfShowsToLoad = 9
@@ -53,6 +57,33 @@ class ShowsViewController: UIViewController {
         initializeSections()
         addCollectionView()
         initialLoadSeries()
+        
+        state = .loading
+    }
+    
+    //----------------------------------------------------------------------
+    // MARK: State machine
+    //----------------------------------------------------------------------
+    func switchState(_ newState: ShowsViewControllerState) {
+        collectionView.alwaysBounceVertical = true
+        sections.forEach { $0.hide() }
+        isInfiniteScrollEnabled = false
+        
+        switch newState {
+        case .loading:
+            loadingSection.show()
+            collectionView.alwaysBounceVertical = false // do not bounce when loading
+        case .idle:
+            idleSection.show()
+        case .hasData(let series, isLast: let isLast):
+            dataSection.show()
+            
+            data = series
+            dataSection.numberOfItems = data.count
+            isInfiniteScrollEnabled = !isLast // maybe
+        }
+        
+        collectionView.reloadData()
     }
     
     //----------------------------------------------------------------------
@@ -144,28 +175,16 @@ extension ShowsViewController: ScrollingDelegate {
 extension ShowsViewController {
     
     func initialLoadSeries() {
-        collectionView.alwaysBounceVertical = false // do not bounce when loading
-        
         apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] result in
             guard let self = self else { return }
-            self.sections.forEach { $0.hide() }
-            
             switch result {
             case .success((let series, let isLast)):
-                self.data = series
-                self.dataSection.numberOfItems = self.data.count
-                self.dataSection.show()
-                self.isInfiniteScrollEnabled = !isLast
+                self.state = series.isEmpty ? .idle : .hasData(series, isLast: isLast)
                 
-                self.collectionView.reloadData()
             case .failure(let error):
-                // TODO: Show idle image/icon with error message (probably a new cell section)
                 self.alert?.mode = .showMessage(error.localizedDescription)
-                self.idleSection.show()
-                self.collectionView.reloadData()
+                self.state = .idle
             }
-            
-            self.collectionView.alwaysBounceVertical = true
         }
     }
     
@@ -175,12 +194,9 @@ extension ShowsViewController {
             
             switch result {
             case .success((let series, let isLast)):
-                self.data += series
-                self.dataSection.numberOfItems = self.data.count
-                self.loadingMoreSection.hide()
-                self.isInfiniteScrollEnabled = !isLast
+                let appendNewData = self.data + series
+                self.state = appendNewData.isEmpty ? .idle : .hasData(appendNewData, isLast: isLast)
                 
-                self.collectionView.reloadData()
             case .failure(let error):
                 self.alert?.mode = .showMessage(error.localizedDescription)
                 self.loadingMoreSection.hide()
@@ -197,12 +213,10 @@ extension ShowsViewController {
             
             switch result {
             case .success((let series, let isLast)):
-                self.data = series
-                self.dataSection.numberOfItems = series.count
-                self.isInfiniteScrollEnabled = !isLast
-                self.collectionView.reloadData()
+                self.state = series.isEmpty ? .idle : .hasData(series, isLast: isLast)
+                
             case .failure(let error):
-                 self.alert?.mode = .showMessage(error.localizedDescription)
+                self.alert?.mode = .showMessage(error.localizedDescription)
             }
             
             self.collectionView.refreshControl?.endRefreshing()
