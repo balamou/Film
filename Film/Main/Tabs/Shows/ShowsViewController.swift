@@ -105,10 +105,10 @@ class ShowsViewController: UIViewController {
         
         sections = [idleSection, dataSection, loadingSection, loadingMoreSection]
         
-        configureDataPopulation()
+        configureSections()
     }
     
-    func configureDataPopulation() {
+    func configureSections() {
         dataSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), columnDistance: 10.0, rowDistance: 20.0)
         loadingMoreSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0), columnDistance: 0, rowDistance: 0)
         
@@ -126,6 +126,12 @@ class ShowsViewController: UIViewController {
             
             let showCell = cell as! ShowsCell
             showCell.posterURL = self.data[row].posterURL
+        }
+        
+        dataSection.selectedCell = { [weak self] row in
+            guard let self = self else { return }
+            
+            self.delegate?.tappedOnSeriesPoster(series: self.data[row])
         }
     }
     

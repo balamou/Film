@@ -36,7 +36,8 @@ class Section {
     var identifier: String
     var numberOfItems: Int
     var isShowing: Bool
-    var populateCell: ((UICollectionViewCell, Int) -> Void)?
+    var selectedCell: (Int) -> Void
+    var populateCell: ConfigureCell?
     
     var cellStyle: CellStyle
    
@@ -45,12 +46,16 @@ class Section {
          cellStyle: CellStyle = CellStyle.fill,
          numberOfItems: Int = 1,
          isShowing: Bool = false,
+         selectedCell: @escaping (Int) -> Void = {_ in },
          populateCell: @escaping ConfigureCell = {_, _ in }) {
         self.cellType = cellType
         self.identifier = identifier
         self.cellStyle = cellStyle
+        
         self.isShowing = isShowing
         self.numberOfItems = numberOfItems
+        
+        self.selectedCell = selectedCell
         self.populateCell = populateCell
     }
     
@@ -114,6 +119,10 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = sections[indexPath.section]
+        section.selectedCell(indexPath.item)
+    }
     
     //----------------------------------------------------------------------
     // Scrolling: Flow layout
