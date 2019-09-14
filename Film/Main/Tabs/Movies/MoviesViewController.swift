@@ -13,7 +13,15 @@ class MoviewsViewController: UIViewController {
     
     var moviewView: MoviesView!
     var collectionVC: AbstractedCollectionViewController!
-    var testBool = true
+    
+    var data = [Watched]()
+    let apiManager: WatchedAPI = MockWatchedAPI()
+    
+    // Sections
+    var sections: [Section] = []
+    var dataSection: Section!
+    var idleSection: Section!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,47 +29,52 @@ class MoviewsViewController: UIViewController {
         moviewView = MoviesView()
         view = moviewView
         
-        let sections: [Section] = [
-            Section(cellType: IdleCell.self,
-                    identifier: "IdleCell",
-                    size: { width, height in CGSize(width: width, height: height) },
-                    insets: .zero,
-                    columnDistance: 10.0,
-                    rowDistance: 20.0,
-                    isShowing: { self.testBool },
-                    numberOfItems: 1,
-                    populateCell: { cell, row in
-            }),
-            Section(cellType: WatchingCell.self,
-                    identifier: "WatchingCell",
-                    size: { _, _ in CGSize(width: 100, height: 200)},
-                    insets: .zero,
-                    columnDistance: 10.0,
-                    rowDistance: 20.0,
-                    isShowing: { !self.testBool },
-                    numberOfItems: 4,
-                    populateCell: { cell, row in
-                        
-            })
-        ]
-        
-        collectionVC = AbstractedCollectionViewController(sections: sections)
-        
+        initializeSections()
         addCollectionView()
-        
-        // TEST
-        let logoImage = moviewView.navBar.logoImage
-        logoImage.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(testFunc))
-        logoImage.addGestureRecognizer(tapGesture)
+        initialLoadWatching()
     }
     
-    @objc func testFunc() {
-        testBool.toggle()
-        collectionVC.collectionView.reloadData()
+    func initializeSections() {
+        
+        let idleCellStyle = CellStyle(insets: .zero,
+                                      columnDistance: 0,
+                                      rowDistance: 0,
+                                      size: { width, height in CGSize(width: width, height: height) })
+        
+        let dataSectionStyle = CellStyle(insets: UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), columnDistance: 10.0, rowDistance: 20.0) {
+            width, _ -> CGSize in
+            WatchingCell.calculateCellSize(collectionViewWidth: width)
+        }
+        
+        idleSection = Section(cellType: IdleCell.self,
+                                   identifier: "IdleCell",
+                                   cellStyle: idleCellStyle,
+                                   numberOfItems: 1,
+                                   isShowing: true,
+                                   populateCell: { _, _ in })
+        
+        dataSection = Section(cellType: WatchingCell.self,
+                               identifier: "WatchingCell",
+                               cellStyle: dataSectionStyle,
+                               numberOfItems: 0,
+                               isShowing: true)
+        { [weak self] cell, row in
+            guard let self = self else { return }
+            
+            let watchedCell = cell as! WatchingCell
+            
+            guard self.data.count > row else { return }
+            
+            watchedCell.populate(watched: self.data[row])
+        }
+        
+        sections = [idleSection, dataSection]
     }
     
     func addCollectionView() {
+        collectionVC = AbstractedCollectionViewController(sections: sections)
+        collectionVC.collectionView.alwaysBounceVertical = true
+        
         addChildViewController(child: collectionVC)
         guard let collectionView = collectionVC.view else { return }
         
@@ -70,6 +83,25 @@ class MoviewsViewController: UIViewController {
          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
          collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ].activate()
+    }
+    
+    func initialLoadWatching() {
+        apiManager.getWatched { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let watched):
+                self.data = watched
+                
+                self.dataSection.numberOfItems = watched.count
+                self.dataSection.isShowing = true
+                self.idleSection.isShowing = false
+                
+                self.collectionVC.collectionView.reloadData()
+            case .failure(_):
+                return
+            }
+        }
     }
     
     //----------------------------------------------------------------------

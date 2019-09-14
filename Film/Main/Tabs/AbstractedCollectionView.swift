@@ -8,34 +8,31 @@
 
 import UIKit
 
+struct CellStyle {
+    var insets: UIEdgeInsets
+    var columnDistance: CGFloat
+    var rowDistance: CGFloat
+    var size: ((CGFloat, CGFloat) -> CGSize)
+}
+
 class Section {
     var cellType: AnyClass
     var identifier: String
     var numberOfItems: Int
+    var isShowing: Bool
     var populateCell: ((UICollectionViewCell, Int) -> Void)?
     
-    var size: (CGFloat, CGFloat) -> CGSize
-    var insets: UIEdgeInsets
-    var columnDistance: CGFloat
-    var rowDistance: CGFloat
-    
-    var isShowing: () -> Bool
-    
+    var cellStyle: CellStyle
+   
     init(cellType: AnyClass,
          identifier: String,
-         size: @escaping ((CGFloat, CGFloat) -> CGSize),
-         insets: UIEdgeInsets,
-         columnDistance: CGFloat,
-         rowDistance: CGFloat,
-         isShowing: @escaping (() -> Bool),
+         cellStyle: CellStyle,
          numberOfItems: Int,
+         isShowing: Bool,
          populateCell: @escaping ((UICollectionViewCell, Int) -> Void)) {
         self.cellType = cellType
         self.identifier = identifier
-        self.size = size
-        self.insets = insets
-        self.columnDistance = columnDistance
-        self.rowDistance = rowDistance
+        self.cellStyle = cellStyle
         self.isShowing = isShowing
         self.numberOfItems = numberOfItems
         self.populateCell = populateCell
@@ -74,7 +71,7 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if sections[section].isShowing() {
+        if sections[section].isShowing {
             return sections[section].numberOfItems
         }
         
@@ -95,19 +92,19 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
     //----------------------------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return sections[indexPath.section].size(collectionView.frame.width, collectionView.frame.height)
+        return sections[indexPath.section].cellStyle.size(collectionView.frame.width, collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sections[section].insets
+        return sections[section].cellStyle.insets
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return sections[section].columnDistance // distance between columns
+        return sections[section].cellStyle.columnDistance // distance between columns
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sections[section].rowDistance // distance between rows
+        return sections[section].cellStyle.rowDistance // distance between rows
     }
 }
 

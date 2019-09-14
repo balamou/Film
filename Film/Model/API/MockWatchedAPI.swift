@@ -76,7 +76,7 @@ class MockWatchedAPI: WatchedAPI {
             if self.count == 2 || self.count == 5 {
                 result(.failure(.badURL))
             } else {
-                let data = (self.count == 0 || self.count == 4) ? [] : Watched.getRandomMock()
+                let data = (self.count == 1 || self.count == 4) ? [] : Watched.getRandomMock()
                 result(.success(data))
             }
             
