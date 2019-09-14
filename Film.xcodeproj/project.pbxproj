@@ -106,6 +106,8 @@
 		EDCBAC5C2327245E0002FAE3 /* ChangeSeasonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */; };
 		EDCBAC5E232726A90002FAE3 /* ChangeSeasonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */; };
 		EDE494EB232BC81200547830 /* AbstractedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */; };
+		EDE494ED232D4E8800547830 /* LoadingWaitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */; };
+		EDE494EF232D4FCF00547830 /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EE232D4FCF00547830 /* Array+extensions.swift */; };
 		EDEF975A231C264600025483 /* Series+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF9759231C264600025483 /* Series+mock.swift */; };
 		EDEF975C231C268E00025483 /* Watched+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975B231C268E00025483 /* Watched+mock.swift */; };
 		EDEF975E231C26C900025483 /* SeriesPresenter+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */; };
@@ -252,6 +254,8 @@
 		EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSeasonViewController.swift; sourceTree = "<group>"; };
 		EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSeasonView.swift; sourceTree = "<group>"; };
 		EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractedCollectionView.swift; sourceTree = "<group>"; };
+		EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingWaitCell.swift; sourceTree = "<group>"; };
+		EDE494EE232D4FCF00547830 /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		EDEF9759231C264600025483 /* Series+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Series+mock.swift"; sourceTree = "<group>"; };
 		EDEF975B231C268E00025483 /* Watched+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Watched+mock.swift"; sourceTree = "<group>"; };
 		EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeriesPresenter+mock.swift"; sourceTree = "<group>"; };
@@ -402,6 +406,7 @@
 			children = (
 				ED5AC10F2314DDD00098A161 /* MoviesViewController.swift */,
 				ED5AC1112314DDEF0098A161 /* MoviesView.swift */,
+				EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */,
 			);
 			path = Movies;
 			sourceTree = "<group>";
@@ -518,6 +523,7 @@
 				ED5AC1232314E6A40098A161 /* String+extensions.swift */,
 				ED5AC1292315A65F0098A161 /* UIViewController+extensions.swift */,
 				EDB57E9323176EC70049504E /* UIImageView+extensions.swift */,
+				EDE494EE232D4FCF00547830 /* Array+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -873,9 +879,11 @@
 				EDB57E96231885F10049504E /* MockSeriesAPI.swift in Sources */,
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
 				ED5AC1122314DDEF0098A161 /* MoviesView.swift in Sources */,
+				EDE494EF232D4FCF00547830 /* Array+extensions.swift in Sources */,
 				ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */,
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
 				ED8060A6231B76CD0032A128 /* SeriesPresenter.swift in Sources */,
+				EDE494ED232D4E8800547830 /* LoadingWaitCell.swift in Sources */,
 				EDEF975C231C268E00025483 /* Watched+mock.swift in Sources */,
 				ED1CC3A7231620790061EE21 /* EpisodeCell.swift in Sources */,
 				ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */,

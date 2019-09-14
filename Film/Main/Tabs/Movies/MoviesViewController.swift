@@ -24,6 +24,7 @@ class MoviewsViewController: UIViewController {
     var sections: [Section] = []
     var dataSection: Section!
     var idleSection: Section!
+    var loadingSection: Section!
     
     
     override func viewDidLoad() {
@@ -31,35 +32,32 @@ class MoviewsViewController: UIViewController {
         view = moviewView
         
         initializeSections()
+        configureDataPopulation()
         addCollectionView()
         initialLoadWatching()
     }
     
     func initializeSections() {
-        
-        let idleCellStyle = CellStyle(insets: .zero,
-                                      columnDistance: 0,
-                                      rowDistance: 0,
-                                      size: { width, height in CGSize(width: width, height: height) })
-        
         let dataSectionStyle = CellStyle(insets: UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), columnDistance: 10.0, rowDistance: 20.0) {
             width, _ -> CGSize in
             WatchingCell.calculateCellSize(collectionViewWidth: width)
         }
         
-        idleSection = Section(cellType: IdleCell.self, identifier: "IdleCell",  cellStyle: idleCellStyle)
-        dataSection = Section(cellType: WatchingCell.self, identifier: "WatchingCell", cellStyle: dataSectionStyle) {
-            [weak self] cell, row in
+        idleSection = Section(cellType: IdleCell.self, identifier: IdleCell.identifier, cellStyle: CellStyle.fill)
+        dataSection = Section(cellType: WatchingCell.self, identifier: WatchingCell.identifier, cellStyle: dataSectionStyle)
+        loadingSection = Section(cellType: LoadingWaitCell.self, identifier: LoadingWaitCell.identifier, cellStyle: CellStyle.fill)
+       
+        sections = [idleSection, dataSection, loadingSection]
+    }
+    
+    func configureDataPopulation() {
+        dataSection.populateCell = { [weak self] cell, row in
             guard let self = self else { return }
-            
-            let watchedCell = cell as! WatchingCell
-            
             guard self.data.count > row else { return }
             
+            let watchedCell = cell as! WatchingCell
             watchedCell.populate(watched: self.data[row])
         }
-        
-        sections = [idleSection, dataSection]
     }
     
     func addCollectionView() {
@@ -82,20 +80,20 @@ class MoviewsViewController: UIViewController {
     //----------------------------------------------------------------------
     
     func initialLoadWatching() {
-        idleSection.show()
+        loadingSection.show()
         collectionView.reloadData()
         
         apiManager.getWatched { [weak self] result in
             guard let self = self else { return }
-            
+
             switch result {
             case .success(let watched):
                 self.data = watched
-                
+
                 self.dataSection.numberOfItems = watched.count
                 self.dataSection.show()
-                self.idleSection.hide()
-                
+                self.loadingSection.hide()
+
                 self.collectionView.reloadData()
             case .failure(_):
                 return
@@ -109,12 +107,4 @@ class MoviewsViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-}
-
-extension Array where Element: NSLayoutConstraint {
-    
-    func activate() {
-        NSLayoutConstraint.activate(self)
-    }
-    
 }

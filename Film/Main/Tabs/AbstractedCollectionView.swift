@@ -13,6 +13,13 @@ struct CellStyle {
     var columnDistance: CGFloat
     var rowDistance: CGFloat
     var size: ((CGFloat, CGFloat) -> CGSize)
+    
+    static var fill: CellStyle = {
+        return CellStyle(insets: .zero,
+                         columnDistance: 0,
+                         rowDistance: 0,
+                         size: { width, height in CGSize(width: width, height: height)})
+    }()
 }
 
 class Section {
@@ -106,7 +113,11 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sections[section].cellStyle.insets
+        if sections[section].isShowing {
+            return sections[section].cellStyle.insets
+        }
+        
+        return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
