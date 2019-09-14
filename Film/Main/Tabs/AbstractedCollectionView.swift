@@ -35,7 +35,7 @@ class Section {
    
     init(cellType: AnyClass,
          identifier: String,
-         cellStyle: CellStyle,
+         cellStyle: CellStyle = CellStyle.fill,
          numberOfItems: Int = 1,
          isShowing: Bool = false,
          populateCell: @escaping ConfigureCell = {_, _ in }) {
