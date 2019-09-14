@@ -20,54 +20,41 @@ enum ShowsViewControllerMode {
 
 class ShowsViewController: UIViewController {
     
-    var showsView: ShowsView!
-    weak var showsCollectionView: UICollectionView!
+    var moviewView: MoviesView = MoviesView()
+    
+    var data = [SeriesPresenter]()
+    var apiManager: SeriesAPI?
     weak var delegate: ShowsDelegate?
     
-    var isFetchingMore = false
-    var isInfiniteScrollEnabled = true
-    var data: [SeriesPresenter] = []
-    var mode: ShowsViewControllerMode = .loading {
-        didSet {
-            switchedMode(mode: mode)
-        }
-    }
-    // API
-    var apiManager: SeriesAPI?
+    // Params
     let numberOfShowsToLoad = 9
+    var isInfiniteScrollEnabled: Bool = true
+    var isFetchingMore: Bool = false
+    
+    // Collection view
+    var collectionVC: AbstractedCollectionViewController!
+    var collectionView: UICollectionView!
+    
+    // Sections
+    var sections: [Section] = []
+    var dataSection: Section!
+    var idleSection: Section!
+    var loadingSection: Section!
+    var loadingMoreSection: Section!
     
     // Alert
     var alert: AlertViewController?
     
-    //----------------------------------------------------------------------
-    // MARK: Methods
-    //----------------------------------------------------------------------
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view = moviewView
         
-        showsView = ShowsView()
-        view = showsView
-        showsView.delegate = self
         alert = AlertViewController(parent: self)
         
-        setupCollectionView()
+        initializeSections()
+        addCollectionView()
         initialLoadSeries()
-    }
-    
-    func switchedMode(mode: ShowsViewControllerMode) {
-        switch mode {
-        case .loading:
-            showsView.loadingView.isHidden = false
-            showsView.showListCollectionView.isHidden = true
-        case .hasShows(let freshData, let isLast):
-            showsView.loadingView.isHidden = true
-            showsView.showListCollectionView.isHidden = false
-            
-            self.isInfiniteScrollEnabled = !isLast
-            self.data = freshData
-            showsView.showListCollectionView.reloadData()
-        }
+        setupPullToRefresh()
     }
     
     //----------------------------------------------------------------------
@@ -78,16 +65,92 @@ class ShowsViewController: UIViewController {
     }
     
     //----------------------------------------------------------------------
+    // MARK: Sections
+    //----------------------------------------------------------------------
+    func initializeSections() {
+        idleSection = Section(cellType: IdleCell.self, identifier: IdleCell.identifier)
+        dataSection = Section(cellType: ShowsCell.self, identifier: ShowsCell.identifier)
+        loadingSection = Section(cellType: LoadingWaitCell.self, identifier: LoadingWaitCell.identifier)
+        loadingMoreSection = Section(cellType: LoadingCell.self, identifier: LoadingCell.identifier)
+        loadingSection.show()
+        
+        sections = [idleSection, dataSection, loadingSection, loadingMoreSection]
+        
+        configureDataPopulation()
+    }
+    
+    func configureDataPopulation() {
+        dataSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0),
+                                          columnDistance: 10.0,
+                                          rowDistance: 20.0) {
+                                            width, _ -> CGSize in
+                                            ShowsCell.calculateCellSize(collectionViewWidth: width)
+        }
+        
+        loadingMoreSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0), columnDistance: 0, rowDistance: 0, size: { (width, _) -> CGSize in
+            CGSize(width: width, height: 50)
+        })
+        
+        loadingMoreSection.populateCell = { cell, row in
+            let loadingMoreCell = cell as! LoadingCell
+            loadingMoreCell.spinner.startAnimating()
+        }
+        
+        dataSection.populateCell = { [weak self] cell, row in
+            guard let self = self else { return }
+            guard self.data.count > row else { return }
+            
+            let showCell = cell as! ShowsCell
+            showCell.posterURL = self.data[row].posterURL
+        }
+    }
+    
+    //----------------------------------------------------------------------
     // MARK: Collection View
     //----------------------------------------------------------------------
-    func setupCollectionView() {
-        showsCollectionView = showsView.showListCollectionView
+    func addCollectionView() {
+        collectionVC = AbstractedCollectionViewController(sections: sections)
+        collectionVC.scrollingDelegate = self
+        addChildViewController(child: collectionVC)
         
-        showsCollectionView.dataSource = self
-        showsCollectionView.delegate = self
-        showsCollectionView.register(ShowsCell.self, forCellWithReuseIdentifier: ShowsCell.identifier)
-        showsCollectionView.register(LoadingCell.self, forCellWithReuseIdentifier: LoadingCell.identifier)
-        showsCollectionView.alwaysBounceVertical = true
+        // Setup collection view
+        collectionView = collectionVC.collectionView
+        collectionView.alwaysBounceVertical = true
+        
+        [collectionView.topAnchor.constraint(equalTo: moviewView.navBar.bottomAnchor),
+         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+         collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ].activate()
+    }
+    
+    func setupPullToRefresh() {
+        let refreshControl = UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
+    }
+    
+    @objc func refreshTriggered(_ sender: UIRefreshControl) {
+        refreshOnPull {
+            sender.endRefreshing()
+        }
+    }
+    
+}
+
+//----------------------------------------------------------------------
+// Scrolling: "Infinite Scroll"
+//----------------------------------------------------------------------
+extension ShowsViewController: ScrollingDelegate {
+    
+    func batchFetch() {
+        if !isFetchingMore && isInfiniteScrollEnabled {
+            loadingMoreSection.show()
+            collectionView.reloadSections(IndexSet(integer: 3))
+            isFetchingMore = true
+            
+            loadMoreOnDragDown()
+        }
     }
 }
 
@@ -99,14 +162,22 @@ extension ShowsViewController {
     func initialLoadSeries() {
         apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
             guard let self = self else { return }
+            self.sections.forEach { $0.hide() }
             
             if let error = error {
                 // TODO: Show idle image/icon with error message (probably a new cell section)
                 self.alert?.mode = .showMessage(error)
-                self.mode = .hasShows([], isLast: true)
+                self.idleSection.show()
+                self.collectionView.reloadData()
             } else {
-                self.mode = .hasShows(series, isLast: isLast)
+                self.data = series
+                self.dataSection.numberOfItems = self.data.count
+                self.dataSection.show()
+                self.isInfiniteScrollEnabled = !isLast
+                
+                self.collectionView.reloadData()
             }
+            
         }
     }
     
@@ -116,14 +187,18 @@ extension ShowsViewController {
             
             if let error = error {
                 self.alert?.mode = .showMessage(error) // show alert
-                self.isFetchingMore = false // stop displaying loading indicator
-                self.showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
+                self.loadingMoreSection.hide()
+                self.collectionView.reloadSections(IndexSet(integer: 3)) // refresh the section with the spinner
             } else {
                 self.data += series
-                self.showsView.showListCollectionView.reloadData()
-                self.isFetchingMore = false // stop displaying loading indicator
+                self.dataSection.numberOfItems = self.data.count
+                self.loadingMoreSection.hide()
                 self.isInfiniteScrollEnabled = !isLast
+                
+                self.collectionView.reloadData()
             }
+            
+            self.isFetchingMore = false
         }
     }
     
@@ -135,8 +210,9 @@ extension ShowsViewController {
                 self.alert?.mode = .showMessage(error) // show alert
             } else {
                 self.data = series
-                self.showsView.showListCollectionView.reloadData()
+                self.dataSection.numberOfItems = series.count
                 self.isInfiniteScrollEnabled = !isLast
+                self.collectionView.reloadData()
             }
             
             completion()
@@ -144,132 +220,4 @@ extension ShowsViewController {
     }
     
 }
-
-//----------------------------------------------------------------------
-// Refresh on pull
-//----------------------------------------------------------------------
-extension ShowsViewController: ShowsViewDelegate {
-    
-    func refreshCollectionView(completion: @escaping () -> ()) {
-        refreshOnPull(completion: completion)
-    }
-    
-}
-
-extension ShowsViewController: UICollectionViewDelegate {
-    
-    // Show cell tapped
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let isRefreshing = collectionView.refreshControl?.isRefreshing, isRefreshing {
-            return // disable cell tapping when refreshing
-        }
-        
-        delegate?.tappedOnSeriesPoster(series: data[indexPath.item])
-    }
-}
-
-
-//----------------------------------------------------------------------
-// Scrolling: "Infinite Scroll"
-//----------------------------------------------------------------------
-
-extension ShowsViewController {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        
-        guard offsetY > 0 else { return } // only when pulling up
-        
-        if offsetY > contentHeight - (scrollView.frame.height + 100) , !isFetchingMore { // mutlipled by 2 so it start loading data earlier
-            beginBatchFetch()
-        }
-    }
-    
-    func beginBatchFetch() {
-        guard isInfiniteScrollEnabled else {
-            return
-        }
-        
-        isFetchingMore = true
-        showsView.showListCollectionView.reloadSections(IndexSet(integer: 1)) // refresh the section with the spinner
-        
-        loadMoreOnDragDown()
-    }
-}
-
-
-//----------------------------------------------------------------------
-// MARK: Data source
-//----------------------------------------------------------------------
-
-extension ShowsViewController: UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2 // one section for shows & the other for the spinner
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
-            return data.count
-        } else if section == 1 && isFetchingMore {
-            return 1
-        }
-        
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShowsCell.identifier, for: indexPath) as! ShowsCell
-            let data = self.data[indexPath.item]
-            
-            cell.posterURL = data.posterURL
-            
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.identifier, for: indexPath) as! LoadingCell
-            cell.spinner.startAnimating()
-            
-            return cell
-        }
-    }
-    
-}
-
-//----------------------------------------------------------------------
-// Scrolling: Flow layout
-//----------------------------------------------------------------------
-
-extension ShowsViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.section == 0 {
-            return ShowsCell.calculateCellSize(collectionViewWidth: collectionView.frame.width) // size of the cell
-        } else if indexPath.section == 1 && isFetchingMore {
-            return CGSize(width: collectionView.frame.width, height: 50) // size of the cell
-        }
-        
-        return .zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 0 {
-           return UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0) // overall insets of the collection view section
-        } else if section == 1 && isFetchingMore {
-            return UIEdgeInsets(top: 0, left: 0, bottom: 10.0, right: 0) // overall insets of the collection view section
-        }
-        
-        return .zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0 // distance between columns
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20.0 // distance between rows
-    }
-}
-
 
