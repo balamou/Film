@@ -8,18 +8,44 @@
 
 import Foundation
 
+typealias SeriesRequest = (Result<([SeriesPresenter], Bool), Error>) -> Void
 
 protocol SeriesAPI {
-    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ isLast: Bool, _ error: String?) -> Void)
+    func getSeries(start: Int, quantity: Int, result: @escaping SeriesRequest)
 }
 
 class MockSeriesAPI: SeriesAPI {
     
     var count = 0
+    let timeDelay = 1.5
     
-    func getSeries(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ isLast: Bool, _ error: String?) -> Void) {
+    func getSeries(start: Int, quantity: Int, result: @escaping SeriesRequest) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay, execute: { [weak self] in
+            guard let self = self else { return }
+            
+            if self.count == 2 || self.count == 3 {
+                result(.failure(NSError(domain: "Error", code: 0, userInfo: nil)))
+                self.count += 1
+                return
+            }
+            
+            let data = self.count == 4 ? SeriesPresenter.getMockData2() : SeriesPresenter.getMockData()
+            let isLast = (start >= 2 * 9)
+            
+            result(.success((data, isLast)))
+            
+            if start == 2 * 9 + 4 {
+                self.count = 0
+            } else {
+                self.count += 1
+            }
+        })
+    }
+    
+    func getSeriesDeprecated(start: Int, quantity: Int, result: @escaping ([SeriesPresenter], _ isLast: Bool, _ error: String?) -> Void) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay, execute: { [weak self] in
             let error: String? = self?.count == 2 || self?.count == 3 ? "Could not load" : nil
             let data = self?.count == 4 ? SeriesPresenter.getMockData2() : SeriesPresenter.getMockData()
             let isLast = (start >= 2 * 9)

@@ -44,32 +44,6 @@ class MockWatchedAPI: WatchedAPI {
     let timeDelay = 1.5
     
     func getWatched(result: @escaping (Result<[Watched], NetworkError>) -> Void) {
-        test3(result: result)
-    }
-    
-    func test1(result: @escaping ([Watched], _ error: String?) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay, execute: { [weak self] in
-            let error: String? = (self?.count == 2 || self?.count == 5) ? "Bad internet connection" : nil
-            let data = (self?.count == 0 || self?.count == 4) ? [] : Watched.getRandomMock()
-            
-            result(data, error)
-            
-            self?.count += 1
-        })
-    }
-    
-    func test2(result: @escaping ([Watched], _ error: String?) -> Void)  {
-        DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay, execute: { [weak self] in
-            let error: String? = (self?.count == 0) ? "Bad internet connection" : nil
-            let data = (self?.count == 0) ? [] : Watched.getRandomMock()
-
-            result(data, error)
-
-            self?.count += 1
-        })
-    }
-    
-    func test3(result: @escaping (Result<[Watched], NetworkError>) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay) { [weak self] in
             guard let self = self else { return }
             

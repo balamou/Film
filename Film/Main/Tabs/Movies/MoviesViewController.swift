@@ -44,7 +44,6 @@ class MoviewsViewController: UIViewController {
         initializeSections()
         addCollectionView()
         initialLoadSeries()
-        setupPullToRefresh()
     }
     
     //----------------------------------------------------------------------
@@ -114,18 +113,6 @@ class MoviewsViewController: UIViewController {
         ].activate()
     }
     
-    func setupPullToRefresh() {
-        let refreshControl = UIRefreshControl()
-        collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
-    }
-    
-    @objc func refreshTriggered(_ sender: UIRefreshControl) {
-        refreshOnPull {
-            sender.endRefreshing()
-        }
-    }
-    
 }
 
 //----------------------------------------------------------------------
@@ -150,62 +137,68 @@ extension MoviewsViewController: ScrollingDelegate {
 extension MoviewsViewController {
     
     func initialLoadSeries() {
-        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
+        collectionView.alwaysBounceVertical = false // do not bounce when loading
+        
+        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] result in
             guard let self = self else { return }
             self.sections.forEach { $0.hide() }
             
-            if let error = error {
-                // TODO: Show idle image/icon with error message (probably a new cell section)
-                self.alert?.mode = .showMessage(error)
-                self.idleSection.show()
-                self.collectionView.reloadData()
-            } else {
+            switch result {
+            case .success((let series, let isLast)):
                 self.data = series
                 self.dataSection.numberOfItems = self.data.count
                 self.dataSection.show()
                 self.isInfiniteScrollEnabled = !isLast
                 
                 self.collectionView.reloadData()
+            case .failure(let error):
+                // TODO: Show idle image/icon with error message (probably a new cell section)
+                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.idleSection.show()
+                self.collectionView.reloadData()
             }
             
+            self.collectionView.alwaysBounceVertical = true
         }
     }
     
     func loadMoreOnDragDown() {
-        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
+        apiManager?.getSeries(start: data.count, quantity: numberOfShowsToLoad) { [weak self] result in
             guard let self = self else { return }
             
-            if let error = error {
-                self.alert?.mode = .showMessage(error) // show alert
-                self.loadingMoreSection.hide()
-                self.collectionView.reloadSections(IndexSet(integer: 3)) // refresh the section with the spinner
-            } else {
+            switch result {
+            case .success((let series, let isLast)):
                 self.data += series
                 self.dataSection.numberOfItems = self.data.count
                 self.loadingMoreSection.hide()
                 self.isInfiniteScrollEnabled = !isLast
                 
                 self.collectionView.reloadData()
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.loadingMoreSection.hide()
+                self.collectionView.reloadSections(IndexSet(integer: 3)) // refresh the section with the spinner
             }
             
             self.isFetchingMore = false
         }
     }
     
-    func refreshOnPull(completion: @escaping () -> ()) {
-        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] series, isLast, error in
+    func refreshOnPull() {
+        apiManager?.getSeries(start: 0, quantity: numberOfShowsToLoad) { [weak self] result in
             guard let self = self else { return }
             
-            if let error = error {
-                self.alert?.mode = .showMessage(error) // show alert
-            } else {
+            switch result {
+            case .success((let series, let isLast)):
                 self.data = series
                 self.dataSection.numberOfItems = series.count
                 self.isInfiniteScrollEnabled = !isLast
                 self.collectionView.reloadData()
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.localizedDescription)
             }
             
-            completion()
+            self.collectionView.refreshControl?.endRefreshing()
         }
     }
     
