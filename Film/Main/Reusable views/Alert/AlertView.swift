@@ -18,10 +18,13 @@ class AlertView: UIView {
     var backgroundViewTopAnchor = NSLayoutConstraint()
     var backgroundViewBottomAnchor = NSLayoutConstraint()
     
+    let errorColor = #colorLiteral(red: 1, green: 0.2813572288, blue: 0.3109254241, alpha: 1).withAlphaComponent(0.9) // #FF5F5F
+    let successColor = #colorLiteral(red: 0, green: 0.8392156863, blue: 0, alpha: 1).withAlphaComponent(0.9) // #00D600
+    let neutralColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).withAlphaComponent(0.9) // #999999
     
     lazy var backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 1, green: 0.2813572288, blue: 0.3109254241, alpha: 1).withAlphaComponent(0.9) // #FF5F5F
+        view.backgroundColor = errorColor
         
         return view
     }()

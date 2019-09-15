@@ -12,6 +12,8 @@ import UIKit
 enum AlertMode {
     case hidden
     case showMessage(String)
+    case success(String)
+    case neutral(String)
 }
 
 class AlertViewController: UIViewController {
@@ -24,6 +26,19 @@ class AlertViewController: UIViewController {
             case .showMessage(let error):
                 alertView.isHidden = false
                 alertView.messageLabel.text = error
+                alertView.backgroundView.backgroundColor = alertView.errorColor
+                
+                alertView.startAnimatingDown()
+            case .success(let message):
+                alertView.isHidden = false
+                alertView.messageLabel.text = message
+                alertView.backgroundView.backgroundColor = alertView.successColor
+            
+                alertView.startAnimatingDown()
+            case .neutral(let message):
+                alertView.isHidden = false
+                alertView.messageLabel.text = message
+                alertView.backgroundView.backgroundColor = alertView.neutralColor
                 
                 alertView.startAnimatingDown()
             }

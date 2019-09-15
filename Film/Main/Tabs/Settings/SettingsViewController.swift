@@ -11,15 +11,19 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    var settingsView: SettingsView!
+    var settingsView: SettingsView = SettingsView()
     var languages = ["english".localize(), "russian".localize()]
     let pickerRowHeight: CGFloat = 30
+    
+    // Alert
+    var alert: AlertViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        settingsView = SettingsView()
         view = settingsView
+        alert = AlertViewController(parent: self)
+        
         
         settingsView.saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         settingsView.refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
