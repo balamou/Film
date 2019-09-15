@@ -15,8 +15,10 @@ protocol MovieInfoViewControllerDelegate: AnyObject {
 class MovieInfoViewController: UIViewController {
     weak var delegate: MovieInfoViewControllerDelegate?
     var movieInfoView = MovieInfoView()
+    
     var movie: Movie?
     var apiManager: MovieInfoAPI?
+    
     let maximumDescriptionCharacters = 180
     
     override func viewDidLoad() {
@@ -26,22 +28,6 @@ class MovieInfoViewController: UIViewController {
         movieInfoView.delegate = self
         
         initialMovieInfoLoading()
-    }
-    
-    func initialMovieInfoLoading() {
-        apiManager?.getMovieInfo(movieId: 0) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let movie):
-                self.movie = movie
-                self.populateData(movie: movie)
-            case .failure(_):
-                self.navigationController?.popViewController(animated: false)
-                // TODO: Show error in previous VC
-            }
-            
-        }
     }
     
     func populateData(movie: Movie) {
@@ -63,7 +49,32 @@ class MovieInfoViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
 }
+
+
+//----------------------------------------------------------------------
+// MARK: API call
+//----------------------------------------------------------------------
+extension MovieInfoViewController {
+    
+    func initialMovieInfoLoading() {
+        apiManager?.getMovieInfo(movieId: 0) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let movie):
+                self.movie = movie
+                self.populateData(movie: movie)
+            case .failure(_):
+                self.navigationController?.popViewController(animated: false)
+                // TODO: Show error in previous VC
+            }
+            
+        }
+    }
+}
+
 
 extension MovieInfoViewController: MovieViewDelegate {
     
