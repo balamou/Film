@@ -8,11 +8,16 @@
 
 import UIKit
 
+struct Language {
+    let localized: String
+    let serverValue: String
+}
 
 class SettingsViewController: UIViewController {
     
     var settingsView: SettingsView = SettingsView()
-    var languages = ["english".localize(), "russian".localize()]
+    var languages = [Language(localized: "english".localize(), serverValue: "english"),
+                    Language(localized: "russian".localize(), serverValue: "russian")]
     let pickerRowHeight: CGFloat = 30
     
     // Alert
@@ -77,7 +82,7 @@ extension SettingsViewController {
         view.endEditing(true)
         
         let row = settingsView.pickerView.selectedRow(inComponent: 0)
-        settingsView.languageField.text = languages[row]
+        settingsView.languageField.text = languages[row].localized
         settingsView.hidePickerView()
     }
 }
@@ -86,7 +91,7 @@ extension SettingsViewController {
 extension SettingsViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        settingsView.languageField.text = languages[row]
+        settingsView.languageField.text = languages[row].localized
     }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
@@ -94,11 +99,11 @@ extension SettingsViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return languages[row]
+        return languages[row].localized
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let language = languages[row]
+        let language = languages[row].localized
         let component = NSAttributedString(string: language, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         
         return component

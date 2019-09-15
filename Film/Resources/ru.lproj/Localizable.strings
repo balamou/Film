@@ -44,6 +44,9 @@
 "Refresh" = "Перезагрузить";
 "Logout" = "Выйти";
 
+"english" = "английский";
+"russian" = "русский";
+
 // ShowInfoVC & ChangeSeasonVC
 "Season" = "Сезон";
 

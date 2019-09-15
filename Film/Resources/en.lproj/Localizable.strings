@@ -44,6 +44,9 @@
 "Refresh" = "Refresh";
 "Logout" = "Logout";
 
+"english" = "english";
+"russian" = "russian";
+
 // ShowInfoVC & ChangeSeasonVC
 "Season" = "Season";
 
