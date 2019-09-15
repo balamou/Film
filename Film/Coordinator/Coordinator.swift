@@ -77,7 +77,9 @@ extension Coordinator: ShowsDelegate {
 extension Coordinator: MoviesDelegate {
     
     func tappedOnMoviesPoster(movie: MoviesPresenter) {
-        // TODO: Open MoviesInfoVC
+        let movieInfoVS = builder.createMovieInfoViewController(delegate: self, movie: movie)
+        
+        navigationController.pushViewController(movieInfoVS, animated: false)
     }
     
 }
@@ -110,4 +112,11 @@ extension Coordinator: ShowInfoViewControllerDelegate {
         }
     }
     
+}
+
+extension Coordinator: MovieInfoViewControllerDelegate {
+    
+    func playMovie() {
+        // TODO: launch player
+    }
 }

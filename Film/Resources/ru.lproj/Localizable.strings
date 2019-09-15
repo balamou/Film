@@ -46,3 +46,9 @@
 
 // ShowInfoVC & ChangeSeasonVC
 "Season" = "Сезон";
+
+// MovieInfoVC
+"Title" = "Название";
+"Play" = "Смотреть";
+"Description" = "Описание";
+"Resume" = "Продолжить";

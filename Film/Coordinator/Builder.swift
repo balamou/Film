@@ -16,6 +16,7 @@ protocol Builder {
     func createSettingsViewController() -> SettingsViewController
     
     func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter) -> ShowInfoViewController
+    func createMovieInfoViewController(delegate: MovieInfoViewControllerDelegate?, movie: MoviesPresenter) -> MovieInfoViewController
 }
 
 
@@ -66,5 +67,15 @@ class StandardBuilder: Builder {
         showInfoVC.apiManager = apiManager
         
         return showInfoVC
+    }
+    
+    func createMovieInfoViewController(delegate: MovieInfoViewControllerDelegate?, movie: MoviesPresenter) -> MovieInfoViewController {
+        // TODO: pass movie to MovieInfo
+        let apiManager = MockMovieInfoAPI()
+        let movieInfoVC = MovieInfoViewController()
+        movieInfoVC.delegate = delegate
+        movieInfoVC.apiManager = apiManager
+        
+        return movieInfoVC
     }
 }

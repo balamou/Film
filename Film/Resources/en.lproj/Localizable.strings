@@ -46,3 +46,9 @@
 
 // ShowInfoVC & ChangeSeasonVC
 "Season" = "Season";
+
+// MovieInfoVC
+"Title" = "Title";
+"Play" = "Play";
+"Description" = "Description";
+"Resume" = "Resume";
