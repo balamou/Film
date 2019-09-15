@@ -14,41 +14,21 @@ class MockData {
     static let videoURLs = ["http://192.168.72.46:9989/EN/series/rick_and_morty/S1/E01.mp4",
                      "http://192.168.72.46:9989/EN/movies/get_out/movie.mp4",
                      "http://192.168.72.46:9989/EN/series/westworld/S1/E07.mp4"]
-    
-    static let posters = ["https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_39_-_COVER_A_FNL_WEB_1024x.jpg?v=1530034748",
-                          "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_V9_TPB_-_COVER_B_FNL_WEB_1024x.jpg?v=1561666332",
-                          "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_53_-_COVER_A_SOLICIT_WEB_1024x.jpg?v=1566330470",
-                          "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_PRESENTS_V1_-_COVER_B_FNL_WEB_1024x.jpg?v=1559159173",
-                          "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_PRESENTS_V1_-_COVER_A_FNL_WEB_1024x.jpg?v=1559158092",
-                          "https://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_45_-_COVER_A_SOLICIT_WEB_1024x.jpg?v=1546446607",
-                          "https://mir-s3-cdn-cf.behance.net/project_modules/disp/2cd7d911377377.560f6bdfb0dab.jpg",
-                    "https://m.media-amazon.com/images/M/MV5BNWNmYzQ1ZWUtYTQ3ZS00Y2UwLTlkMDctZThlOTJkMGJiNzBiXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_.jpg",
-                    "https://m.media-amazon.com/images/M/MV5BN2UwNDc5NmEtNjVjZS00OTI5LWE5YjctMWM3ZjBiZGYwMGI2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
-                    "https://cdn.flickeringmyth.com/wp-content/uploads/2019/02/vice.jpg",
-                    "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
-                    "https://honeydoze.com/wp-content/uploads/2017/03/the-social-network.jpg",
-                    "https://images-na.ssl-images-amazon.com/images/I/71dXHCpZAXL._SL1051_.jpg",
-                    "https://images-na.ssl-images-amazon.com/images/I/81e36u8GzsL._SL1500_.jpg",
-                    "https://m.media-amazon.com/images/M/MV5BNTEyYmIzMDUtNWMwNC00Y2Q1LWIyZTgtMGY1YzUxOTAwYTAwXkEyXkFqcGdeQXVyMjIyMTc0ODQ@._V1_.jpg",
-                    "https://m.media-amazon.com/images/M/MV5BMjM3MjQ1MzkxNl5BMl5BanBnXkFtZTgwODk1ODgyMjI@._V1_.jpg"]
-    
-    static let moviePosters = ["https://media.services.cinergy.ch/media/box1600/a3378998b6e42c1f2712229459b1ac78b4a24776.jpg",
-    "https://i.pinimg.com/originals/a8/82/fd/a882fd372eeb44e44ecfb7c8bbe7d605.jpg",
-    "https://www.bucketlistmusicreviews.com/wp-content/uploads/2018/02/BL-1.png",
-    "https://images-na.ssl-images-amazon.com/images/M/MV5BMjA5NTUzMjQ1MV5BMl5BanBnXkFtZTcwMzc1MzQ4Nw@@._V1_UY1200_CR91,0,630,1200_AL_.jpg",
-    "https://m.media-amazon.com/images/M/MV5BOGFjYWNkMTMtMTg1ZC00Y2I4LTg0ZTYtN2ZlMzI4MGQwNzg4XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg",
-    "https://static.tvtropes.org/pmwiki/pub/images/joker2019_6.jpg",
-    "https://m.media-amazon.com/images/M/MV5BMTg5NWJjYjAtZWEwZC00N2YxLTkyMTktMDgxNzlkYTI3ZDdlXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg",
-    "https://m.media-amazon.com/images/M/MV5BZDA0MmM4YzUtMzYwZC00OGI2LWE0ODctNzNhNTkwN2FmNTVhXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg",
-    "https://m.media-amazon.com/images/M/MV5BNzIwZTdjMmQtNWFiMi00NGFjLWI1NTEtN2FlNmM2YTE1NTQxXkEyXkFqcGdeQXVyODAzMDY0MTY@._V1_SY1000_SX675_AL_.jpg",
-    
-    "https://vignette.wikia.nocookie.net/simpsons/images/4/4e/Big_American_Dad_Poster.jpg/revision/latest?cb=20180726234410",
-    "https://akns-images.eonline.com/eol_images/Entire_Site/2019221/rs_634x940-190321113004-634-game-of-thrones-poster-ch-032119.jpg?fit=inside|900:auto&output-quality=90",
-    "https://m.media-amazon.com/images/M/MV5BMTYyMTcxNzc5M15BMl5BanBnXkFtZTgwOTg2ODE2MTI@._V1_.jpg",
-    "https://fanart.tv/api/download.php?type=download&image=49689&section=1"
-    ]
+    static let posters: [String] = loadFromAsset(assetName: "Posters")
+    static let moviePosters: [String] = loadFromAsset(assetName: "MoviePosters")
     
     static func randomPoster() -> String {
         return MockData.posters[Int.random(in: 0 ..< MockData.posters.count)]
+    }
+    
+    static private func loadFromAsset(assetName: String) -> [String] {
+        guard let asset = NSDataAsset(name: assetName) else {
+            fatalError("Missing data asset: \(assetName)")
+        }
+        
+        let decoder = JSONDecoder()
+        let data = try! decoder.decode([String].self, from: asset.data)
+        
+        return data
     }
 }
