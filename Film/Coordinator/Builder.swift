@@ -12,7 +12,7 @@ import UIKit
 protocol Builder {
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController
     func createShowViewController(delegate: ShowsDelegate?) -> ShowsViewController
-    func createMoviesViewController() -> MoviewsViewController
+    func createMoviesViewController(delegate: MoviesDelegate?) -> MoviesViewController
     func createSettingsViewController() -> SettingsViewController
     
     func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter) -> ShowInfoViewController
@@ -41,10 +41,14 @@ class StandardBuilder: Builder {
         return showsVC
     }
     
-    func createMoviesViewController() -> MoviewsViewController {
-        let moviesVC = MoviewsViewController()
-        moviesVC.tabBarItem = UITabBarItem(title: "Movies".localize(), image: Images.moviesImage, tag: 2)
+    func createMoviesViewController(delegate: MoviesDelegate?) -> MoviesViewController {
+        let moviesVC = MoviesViewController()
+        let apiManager: MoviesAPI = MockMoviesAPI()
         
+        moviesVC.apiManager = apiManager
+        moviesVC.delegate = delegate
+        moviesVC.tabBarItem = UITabBarItem(title: "Movies".localize(), image: Images.moviesImage, tag: 2)
+       
         return moviesVC
     }
     

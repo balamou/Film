@@ -108,6 +108,9 @@
 		EDE494EB232BC81200547830 /* AbstractedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */; };
 		EDE494ED232D4E8800547830 /* LoadingWaitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */; };
 		EDE494EF232D4FCF00547830 /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EE232D4FCF00547830 /* Array+extensions.swift */; };
+		EDE494F3232DC37600547830 /* MockMoviesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494F2232DC37600547830 /* MockMoviesAPI.swift */; };
+		EDE494F5232DC3D800547830 /* MoviesPresenter+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494F4232DC3D800547830 /* MoviesPresenter+mock.swift */; };
+		EDE494F7232DC46900547830 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494F6232DC46900547830 /* MovieCell.swift */; };
 		EDEF975A231C264600025483 /* Series+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF9759231C264600025483 /* Series+mock.swift */; };
 		EDEF975C231C268E00025483 /* Watched+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975B231C268E00025483 /* Watched+mock.swift */; };
 		EDEF975E231C26C900025483 /* SeriesPresenter+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */; };
@@ -256,6 +259,9 @@
 		EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractedCollectionView.swift; sourceTree = "<group>"; };
 		EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingWaitCell.swift; sourceTree = "<group>"; };
 		EDE494EE232D4FCF00547830 /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
+		EDE494F2232DC37600547830 /* MockMoviesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoviesAPI.swift; sourceTree = "<group>"; };
+		EDE494F4232DC3D800547830 /* MoviesPresenter+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoviesPresenter+mock.swift"; sourceTree = "<group>"; };
+		EDE494F6232DC46900547830 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		EDEF9759231C264600025483 /* Series+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Series+mock.swift"; sourceTree = "<group>"; };
 		EDEF975B231C268E00025483 /* Watched+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Watched+mock.swift"; sourceTree = "<group>"; };
 		EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeriesPresenter+mock.swift"; sourceTree = "<group>"; };
@@ -404,6 +410,7 @@
 			children = (
 				ED5AC10F2314DDD00098A161 /* MoviesViewController.swift */,
 				ED5AC1112314DDEF0098A161 /* MoviesView.swift */,
+				EDE494F6232DC46900547830 /* MovieCell.swift */,
 			);
 			path = Movies;
 			sourceTree = "<group>";
@@ -619,6 +626,7 @@
 			children = (
 				EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */,
 				EDB57E95231885F10049504E /* MockSeriesAPI.swift */,
+				EDE494F2232DC37600547830 /* MockMoviesAPI.swift */,
 				ED09BD9C2324A3350023DF83 /* MockSeriesInfoAPI.swift */,
 			);
 			path = API;
@@ -630,6 +638,7 @@
 				EDEF975F231C274500025483 /* MockData.swift */,
 				EDEF975B231C268E00025483 /* Watched+mock.swift */,
 				EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */,
+				EDE494F4232DC3D800547830 /* MoviesPresenter+mock.swift */,
 				EDEF9759231C264600025483 /* Series+mock.swift */,
 			);
 			path = Mocks;
@@ -867,6 +876,7 @@
 				ED5AC1162314DE140098A161 /* SettingsView.swift in Sources */,
 				ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */,
 				ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */,
+				EDE494F3232DC37600547830 /* MockMoviesAPI.swift in Sources */,
 				EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */,
 				EDACC49C2319FE6B005DC09C /* MockWatchedAPI.swift in Sources */,
 				ED909B6323123C8300A67AC6 /* header.m in Sources */,
@@ -889,6 +899,7 @@
 				ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */,
 				ED2DBB412315E356009250EC /* ShowsCell.swift in Sources */,
 				ED5AC10C2314DD4D0098A161 /* ShowsViewController.swift in Sources */,
+				EDE494F7232DC46900547830 /* MovieCell.swift in Sources */,
 				ED5AC1052314C45A0098A161 /* Images.swift in Sources */,
 				ED5AC10E2314DDA30098A161 /* ShowsView.swift in Sources */,
 				EDC8AB422319970100400312 /* Builder.swift in Sources */,
@@ -900,6 +911,7 @@
 				EDCBAC5C2327245E0002FAE3 /* ChangeSeasonViewController.swift in Sources */,
 				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 				EDB0CD3D231B57EE00246CDF /* IdleCell.swift in Sources */,
+				EDE494F5232DC3D800547830 /* MoviesPresenter+mock.swift in Sources */,
 				EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */,
 				EDB57E90231766980049504E /* Watched.swift in Sources */,
 				ED70C09D231C302900380BE0 /* MoviesPresenter.swift in Sources */,

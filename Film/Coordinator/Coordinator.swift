@@ -21,7 +21,7 @@ class Coordinator {
         // Setup ViewController
         let watchingVC = builder.createWatchingViewController(delegate: self)
         let showsVC = builder.createShowViewController(delegate: self)
-        let moviesVC = builder.createMoviesViewController()
+        let moviesVC = builder.createMoviesViewController(delegate: self)
         let settingsVC = builder.createSettingsViewController()
         
         // Setup Navigation
@@ -70,6 +70,14 @@ extension Coordinator: ShowsDelegate {
         let showInfoVC = builder.createShowInfoViewController(delegate: self, series: series)
         
         navigationController.pushViewController(showInfoVC, animated: false)
+    }
+    
+}
+
+extension Coordinator: MoviesDelegate {
+    
+    func tappedOnMoviesPoster(movie: MoviesPresenter) {
+        // TODO: Open MoviesInfoVC
     }
     
 }
