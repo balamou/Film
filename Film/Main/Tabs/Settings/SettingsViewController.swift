@@ -12,6 +12,8 @@ import UIKit
 class SettingsViewController: UIViewController {
     
     var settingsView: SettingsView!
+    var languages = ["english".localize(), "russian".localize()]
+    let pickerRowHeight: CGFloat = 30
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,11 +26,21 @@ class SettingsViewController: UIViewController {
         settingsView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         
         dismissKey()
+        
+        settingsView.pickerView.dataSource = self
+        settingsView.pickerView.delegate = self
+        
+        let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(switchLanguages))
+        settingsView.languageField.addGestureRecognizer(languageTapGesture)
     }
     
     //----------------------------------------------------------------------
     // MARK: Action
     //----------------------------------------------------------------------
+    @objc func switchLanguages() {
+        settingsView.togglePickerView()
+    }
+    
     @objc func saveButtonTapped() {
         print("Save")
     }
@@ -52,13 +64,50 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController {
     
     func dismissKey() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboard))
+        let tap = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+        
+        let row = settingsView.pickerView.selectedRow(inComponent: 0)
+        settingsView.languageField.text = languages[row]
+        settingsView.hidePickerView()
     }
 }
 
+
+extension SettingsViewController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        settingsView.languageField.text = languages[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return pickerRowHeight
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return languages[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let language = languages[row]
+        let component = NSAttributedString(string: language, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+        
+        return component
+    }
+}
+
+extension SettingsViewController: UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return languages.count
+    }
+}

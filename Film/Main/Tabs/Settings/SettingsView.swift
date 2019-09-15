@@ -22,6 +22,8 @@ class SettingsView: UIView {
     let textFieldRadius: CGFloat = 5
     let buttonRadius: CGFloat = 4
     
+    var pickerHeightAnchor = NSLayoutConstraint()
+    
     lazy var navBar: CustomNavigationBar = {
         return CustomNavigationBar(title: "settings".localize())
     }()
@@ -69,7 +71,7 @@ class SettingsView: UIView {
     lazy var usernameField: CustomTextField = {
         let textField = CustomTextField()
         textField.backgroundColor = textFieldColor
-        textField.textColor = .white
+        textField.textColor = .gray
         textField.font = textFieldFont
         textField.text = "michelbalamou"
         textField.isEnabled = false
@@ -84,7 +86,7 @@ class SettingsView: UIView {
         textField.backgroundColor = textFieldColor
         textField.textColor = .white
         textField.font = textFieldFont
-        textField.text = "english"
+        textField.text = "english".localize()
         textField.keyboardAppearance = .dark
         textField.layer.cornerRadius = textFieldRadius
         
@@ -147,6 +149,15 @@ class SettingsView: UIView {
         return button
     }()
     
+    // Picker View
+    var pickerView: UIPickerView = {
+        let pickerView = UIPickerView()
+        pickerView.backgroundColor = Colors.backgroundColor
+        pickerView.tintColor = .white
+        
+        return pickerView
+    }()
+    
     class Constraints {
         
         static let textFieldHeight: CGFloat = 30.0
@@ -175,6 +186,7 @@ class SettingsView: UIView {
         }
         
         // Fields
+        
         static func setUsernameTextField(_ textfield: UITextField, _ topNeighbour: UIView) {
             textfield.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: distanceBetweenFields).isActive = true
             textfield.leadingAnchor.constraint(equalTo: topNeighbour.centerXAnchor, constant: -50.0).isActive = true
@@ -189,17 +201,17 @@ class SettingsView: UIView {
             textfield.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         }
         
-        static func setIPAddressTextField(_ textfield: UITextField, _ topNeighbour: UIView) {
+        static func setIPAddressTextField(_ textfield: UITextField, _ upperTextField: UIView, _ topNeighbour: UIView) {
             textfield.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: distanceBetweenFields).isActive = true
-            textfield.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
-            textfield.trailingAnchor.constraint(equalTo: topNeighbour.trailingAnchor).isActive = true
+            textfield.leadingAnchor.constraint(equalTo: upperTextField.leadingAnchor).isActive = true
+            textfield.trailingAnchor.constraint(equalTo: upperTextField.trailingAnchor).isActive = true
             textfield.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         }
         
-        static func setPortTextField(_ textfield: UITextField, _ topNeighbour: UIView) {
+        static func setPortTextField(_ textfield: UITextField,  _ upperTextField: UIView, _ topNeighbour: UIView) {
             textfield.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: distanceBetweenFields).isActive = true
-            textfield.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
-            textfield.trailingAnchor.constraint(equalTo: topNeighbour.trailingAnchor).isActive = true
+            textfield.leadingAnchor.constraint(equalTo: upperTextField.leadingAnchor).isActive = true
+            textfield.trailingAnchor.constraint(equalTo: upperTextField.trailingAnchor).isActive = true
             textfield.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         }
         
@@ -225,12 +237,20 @@ class SettingsView: UIView {
             button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin).isActive = true
             button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -buttonsMargin).isActive = true
         }
+        
+        // Picker View
+        
+        static func setPickerView(_ pickerView: UIPickerView, _ topNeighbour: UIView, _ parent: UIView) {
+            pickerView.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor).isActive = true
+            pickerView.leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
+            pickerView.trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
+        }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1)
+        backgroundColor = Colors.backgroundColor
         
         addSubviewLayout(navBar)
         addSubviewLayout(usernameLabel)
@@ -247,6 +267,8 @@ class SettingsView: UIView {
         addSubviewLayout(refreshButton)
         addSubviewLayout(logoutButton)
         
+        addSubviewLayout(pickerView)
+        
         navBar.setConstraints(parent: self)
         Constraints.setUsernameLabel(usernameLabel, self, usernameField)
         Constraints.setLanguageLabel(languageLabel, self, languageField)
@@ -255,12 +277,47 @@ class SettingsView: UIView {
         
         Constraints.setUsernameTextField(usernameField, navBar)
         Constraints.setLanguageTextField(languageField, usernameField)
-        Constraints.setIPAddressTextField(ipAddressField, languageField)
-        Constraints.setPortTextField(portField, ipAddressField)
+        Constraints.setIPAddressTextField(ipAddressField, languageField, pickerView)
+        Constraints.setPortTextField(portField, languageField, ipAddressField)
         
         Constraints.setSaveButton(saveButton, portField, self)
         Constraints.setLogoutButton(logoutButton, self)
         Constraints.setRefreshButton(refreshButton, logoutButton, self)
+        
+        Constraints.setPickerView(pickerView, languageField, self)
+        
+        pickerHeightAnchor = pickerView.heightAnchor.constraint(equalToConstant: 0)
+        pickerHeightAnchor.isActive = true
+    }
+    
+    var isPickerViewShown = false
+    
+    func showPickerView() {
+        pickerHeightAnchor.constant = 100.0
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.layoutIfNeeded()
+        }, completion: { _ in
+            self.isPickerViewShown = true
+        })
+    }
+    
+    func hidePickerView() {
+        pickerHeightAnchor.constant = 0.0
+        
+        UIView.animate(withDuration: 0.2, animations: {
+             self.layoutIfNeeded()
+        }, completion: { _ in
+             self.isPickerViewShown = false
+        })
+    }
+    
+    func togglePickerView() {
+        if isPickerViewShown {
+            hidePickerView()
+        } else {
+            showPickerView()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
