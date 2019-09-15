@@ -8,6 +8,9 @@
 
 import Foundation
 
+typealias Handler<T> = (Result<T, Error>) -> Void
+
+
 protocol WatchedAPI {
     func getWatched(result: @escaping (Result<[Watched], NetworkError>) -> Void)
 }

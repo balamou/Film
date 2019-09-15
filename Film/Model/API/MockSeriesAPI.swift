@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias SeriesRequest = (Result<([SeriesPresenter], Bool), Error>) -> Void
+typealias SeriesRequest = Handler< ([SeriesPresenter], Bool) >
 
 protocol SeriesAPI {
     func getSeries(start: Int, quantity: Int, result: @escaping SeriesRequest)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias MoviesRequest = (Result<([MoviesPresenter], Bool), Error>) -> Void
+typealias MoviesRequest = Handler<([MoviesPresenter], Bool)>
 
 protocol MoviesAPI {
     func getMovies(start: Int, quantity: Int, result: @escaping MoviesRequest)

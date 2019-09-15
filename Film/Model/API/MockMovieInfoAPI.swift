@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias Handler<T> = (Result<T, Error>) -> Void
-
 protocol MovieInfoAPI {
     func getMovieInfo(movieId: Int, result: @escaping Handler<Movie>)
     

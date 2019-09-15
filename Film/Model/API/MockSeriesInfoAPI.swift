@@ -20,8 +20,8 @@ enum SeriesInfoError: Error {
 }
 
 protocol SeriesInfoAPI {
-    func getSeriesInfo(seriesId: Int, result: @escaping (Result<(Series, [Episode]), Error>) -> Void)
-    func getEpisodes(seriesId: Int, season: Int, result: @escaping (Result<[Episode], Error>) -> Void)
+    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode])>)
+    func getEpisodes(seriesId: Int, season: Int, result: @escaping Handler<[Episode]>)
 }
 
 class MockSeriesInfoAPI: SeriesInfoAPI {
@@ -30,7 +30,7 @@ class MockSeriesInfoAPI: SeriesInfoAPI {
     static var count = 0
     var count2 = 0
     
-    func getSeriesInfo(seriesId: Int, result: @escaping (Result<(Series, [Episode]), Error>) -> Void) {
+    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode])>) {
        
         DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) {
             if MockSeriesInfoAPI.count == 2 {
@@ -43,7 +43,7 @@ class MockSeriesInfoAPI: SeriesInfoAPI {
         }
     }
     
-    func getEpisodes(seriesId: Int, season: Int, result: @escaping (Result<[Episode], Error>) -> Void) {
+    func getEpisodes(seriesId: Int, season: Int, result: @escaping Handler<[Episode]>) {
        
         DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) { [weak self] in
             if self?.count2 == 2 {
