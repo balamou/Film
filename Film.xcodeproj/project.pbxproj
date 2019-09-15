@@ -58,6 +58,7 @@
 		ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12B2315A7600098A161 /* WatchingCell.swift */; };
 		ED5AC12E2315CE500098A161 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12D2315CE500098A161 /* Fonts.swift */; };
 		ED70C09D231C302900380BE0 /* MoviesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED70C09C231C302900380BE0 /* MoviesPresenter.swift */; };
+		ED725116232ED83A0040C279 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED725115232ED83A0040C279 /* CustomTextField.swift */; };
 		ED8060A6231B76CD0032A128 /* SeriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8060A5231B76CD0032A128 /* SeriesPresenter.swift */; };
 		ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBBF2314620F00FEC56A /* VolumeController.swift */; };
 		ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */; };
@@ -191,6 +192,7 @@
 		ED5AC12B2315A7600098A161 /* WatchingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingCell.swift; sourceTree = "<group>"; };
 		ED5AC12D2315CE500098A161 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		ED70C09C231C302900380BE0 /* MoviesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesPresenter.swift; sourceTree = "<group>"; };
+		ED725115232ED83A0040C279 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ED8060A5231B76CD0032A128 /* SeriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesPresenter.swift; sourceTree = "<group>"; };
 		ED82DBBF2314620F00FEC56A /* VolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeController.swift; sourceTree = "<group>"; };
 		ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerController+Volume.swift"; sourceTree = "<group>"; };
@@ -581,6 +583,7 @@
 				ED1FEEB92318B71900DE69AB /* Alert */,
 				ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */,
 				EDACC49D231A0D8E005DC09C /* CustomMarginButton.swift */,
+				ED725115232ED83A0040C279 /* CustomTextField.swift */,
 			);
 			path = "Reusable views";
 			sourceTree = "<group>";
@@ -949,6 +952,7 @@
 				EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */,
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
 				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
+				ED725116232ED83A0040C279 /* CustomTextField.swift in Sources */,
 				EDB0CD3B231B516000246CDF /* StandardSettings.swift in Sources */,
 				ED09BD9D2324A3350023DF83 /* MockSeriesInfoAPI.swift in Sources */,
 				EDACC49E231A0D8E005DC09C /* CustomMarginButton.swift in Sources */,
