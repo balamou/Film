@@ -8,16 +8,8 @@
 
 import UIKit
 
-
-protocol ShowsViewDelegate: AnyObject {
-    func refreshCollectionView(completion: @escaping () -> ())
-}
-
-
 class ShowsView: UIView {
 
-    weak var delegate: ShowsViewDelegate?
-    
     lazy var navBar: CustomNavigationBar = {
         return CustomNavigationBar(title: "shows".localize(), showLogo: true)
     }()

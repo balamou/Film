@@ -20,7 +20,6 @@ class ShowsCell: UICollectionViewCell {
         }
     }
     
-    
     var posterImageView: UIImageView = {
         let imageView = UIImageView()
         

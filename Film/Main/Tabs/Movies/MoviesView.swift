@@ -13,11 +13,7 @@ class MoviesView: UIView {
     lazy var navBar: CustomNavigationBar = {
         return CustomNavigationBar(title: "movies".localize(), showLogo: true)
     }()
-    
-    class Constraints {
         
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
