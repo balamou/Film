@@ -8,17 +8,47 @@
 
 import Foundation
 
+
 class StandardSettings {
+    private var defaults: UserDefaults
+    
+    var isLogged = false
     var username: String?
     var language = "english"
     var ipAddress = "192.168.72.46"
     var port = "9989"
     
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        
+        loadFromUserDefaults()
+    }
+    
     func loadFromUserDefaults() {
-        // TODO: load settings from user defaults
+        isLogged = defaults.bool(forKey: "isLogged")
+        username = defaults.string(forKey: "username")
+        language = defaults.string(forKey: "language") ?? language
+        ipAddress = defaults.string(forKey: "ipAddress") ?? ipAddress
+        port = defaults.string(forKey: "port") ?? port
     }
     
     func saveToUserDefaults() {
-        // TODO: Save new parameters to user defaults
+        defaults.set(isLogged, forKey: "isLogged")
+        defaults.set(username, forKey: "username")
+        defaults.set(language, forKey: "language")
+        defaults.set(ipAddress, forKey: "ipAddress")
+        defaults.set(port, forKey: "port")
+    }
+    
+    func description() -> String {
+        var desc = "isLogged: \(isLogged)\n"
+        desc += "username: \(String(describing: username))\n"
+        desc += "language: \(language)\n"
+        desc += "ipAddress: \(ipAddress)\n"
+        desc += "port: \(port)"
+        
+        return desc
     }
 }
+
+

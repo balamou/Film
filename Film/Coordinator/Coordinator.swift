@@ -15,9 +15,27 @@ class Coordinator {
     
     var playerVC: VideoPlayerController?
     let builder: Builder = StandardBuilder()
+    let settings: StandardSettings = StandardSettings()
     
     func start() -> UIViewController {
         
+        if settings.isLogged == false {
+            let navigationController = UINavigationController()
+            navigationController.isNavigationBarHidden = true
+            
+            let welcomeVC = builder.createWelcomeViewController()
+            
+            navigationController.viewControllers = [welcomeVC]
+            
+            settings.saveToUserDefaults()
+            print(settings.description())
+            return navigationController
+        } else {
+            return mainFlow()
+        }
+    }
+        
+    func mainFlow() -> UIViewController {
         // Setup ViewController
         let watchingVC = builder.createWatchingViewController(delegate: self)
         let showsVC = builder.createShowViewController(delegate: self)
