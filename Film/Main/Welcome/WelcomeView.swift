@@ -19,6 +19,8 @@ class WelcomeView: UIView {
     let buttonsColor =  #colorLiteral(red: 0.3254901961, green: 0.3254901961, blue: 0.3254901961, alpha: 1) // #5363BE
     let buttonsFont = Fonts.RobotoBold(size: 15.0)
     
+    let textFieldRadius: CGFloat = 5
+    
     
     var topBar: UIView = {
         let view = UIView()
@@ -83,46 +85,50 @@ class WelcomeView: UIView {
     
     // Textfields
     
-    lazy var usernameField: UITextField = {
-        let textField = UITextField()
+    lazy var usernameField: CustomTextField = {
+        let textField = CustomTextField()
         textField.backgroundColor = textFieldColor
         textField.textColor = .white
         textField.font = textFieldFont
         textField.text = "michelbalamou"
         textField.keyboardAppearance = .dark
+        textField.layer.cornerRadius = textFieldRadius
         
         return textField
     }()
     
-    lazy var languageField: UITextField = {
-        let textField = UITextField()
+    lazy var languageField: CustomTextField = {
+        let textField = CustomTextField()
         textField.backgroundColor = textFieldColor
         textField.textColor = .white
         textField.font = textFieldFont
         textField.text = "english"
         textField.keyboardAppearance = .dark
+        textField.layer.cornerRadius = textFieldRadius
         
         return textField
     }()
     
-    lazy var ipAddressField: UITextField = {
-        let textField = UITextField()
+    lazy var ipAddressField: CustomTextField = {
+        let textField = CustomTextField()
         textField.backgroundColor = textFieldColor
         textField.textColor = .white
         textField.font = textFieldFont
         textField.text = "192.168.72.46"
         textField.keyboardAppearance = .dark
+        textField.layer.cornerRadius = textFieldRadius
         
         return textField
     }()
     
-    lazy var portField: UITextField = {
-        let textField = UITextField()
+    lazy var portField: CustomTextField = {
+        let textField = CustomTextField()
         textField.backgroundColor = textFieldColor
         textField.textColor = .white
         textField.font = textFieldFont
         textField.text = "9989"
         textField.keyboardAppearance = .dark
+        textField.layer.cornerRadius = textFieldRadius
         
         return textField
     }()
@@ -134,6 +140,7 @@ class WelcomeView: UIView {
         button.setTitle("Start".localize(), for: .normal)
         button.backgroundColor = .black
         button.titleLabel?.font = buttonsFont
+        button.layer.cornerRadius = 4
         
         return button
     }()

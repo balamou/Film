@@ -10,20 +10,20 @@ import UIKit
 
 
 class WelcomeViewController: UIViewController {
-    
-    var welcomeView: WelcomeView!
+
+    var welcomeView: WelcomeView = WelcomeView()
+    var alert: AlertViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        welcomeView = WelcomeView()
         view = welcomeView
+        alert = AlertViewController(parent: self)
         
         dismissKey()
         
         welcomeView.startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
     }
-    
     
     @objc func startButtonTapped() {
         print("Start tapped")
