@@ -65,7 +65,7 @@ class Coordinator {
 
 extension Coordinator: WelcomeViewControllerDelegate {
     
-    func startButtonTapped() {
+    func onSuccessfullLogin() {
         window.rootViewController = mainFlow()
     }
     

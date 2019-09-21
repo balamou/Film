@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol WelcomeViewControllerDelegate: AnyObject {
-    func startButtonTapped()
+    func onSuccessfullLogin()
 }
 
 
@@ -37,7 +37,7 @@ class WelcomeViewController: UIViewController {
         view = welcomeView
         alert = AlertViewController(parent: self)
         
-        welcomeView.startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+        welcomeView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         
         dismissKey()
         configureWithSettings()
@@ -50,7 +50,7 @@ class WelcomeViewController: UIViewController {
     }
     
     // TODO: rename to login
-    @objc func startButtonTapped() {
+    @objc func loginButtonTapped() {
         guard let username = welcomeView.usernameField.text, !username.isEmpty else {
             alert?.mode = .showMessage("Please enter a username".localize())
             return
@@ -77,7 +77,7 @@ class WelcomeViewController: UIViewController {
 extension WelcomeViewController {
     
     func login(username: String) {
-        welcomeView.startButton.isEnabled = (apiManager == nil)
+        welcomeView.loginButton.isEnabled = (apiManager == nil)
         
         apiManager?.login(username: username) { [weak self] result in
             guard let self = self else { return }
@@ -88,7 +88,7 @@ extension WelcomeViewController {
                     self.settings.username = username
                     self.settings.isLogged = true
                     
-                    self.delegate?.startButtonTapped()
+                    self.delegate?.onSuccessfullLogin()
                 } else {
                     self.alert?.mode = .showMessage("Username does not exist")
                 }
@@ -99,7 +99,7 @@ extension WelcomeViewController {
                 break
             }
             
-            self.welcomeView.startButton.isEnabled = true
+            self.welcomeView.loginButton.isEnabled = true
         }
     }
     

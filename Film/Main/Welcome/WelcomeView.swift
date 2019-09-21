@@ -135,7 +135,7 @@ class WelcomeView: UIView {
     
     // Buttons
     
-    lazy var startButton: UIButton = {
+    lazy var loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("Login".localize(), for: .normal)
         button.setTitle("Logging in...", for: .disabled)
@@ -223,7 +223,7 @@ class WelcomeView: UIView {
         
         // Buttons
         
-        static func setStartButton(_ button: UIButton, _ topNeighbour: UIView, _ parent: UIView) {
+        static func setLoginButton(_ button: UIButton, _ topNeighbour: UIView, _ parent: UIView) {
             button.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 60.0).isActive = true
             button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
             button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin).isActive = true
@@ -250,7 +250,7 @@ class WelcomeView: UIView {
         addSubviewLayout(ipAddressField)
         addSubviewLayout(portField)
         
-        addSubviewLayout(startButton)
+        addSubviewLayout(loginButton)
         
         Constraints.setTopBar(topBar, self)
         Constraints.setLogoImageView(logoImage, topBar)
@@ -265,7 +265,7 @@ class WelcomeView: UIView {
         Constraints.setIPAddressTextField(ipAddressField, languageField)
         Constraints.setPortTextField(portField, ipAddressField)
         
-        Constraints.setStartButton(startButton, portField, self)
+        Constraints.setLoginButton(loginButton, portField, self)
     }
     
     required init?(coder aDecoder: NSCoder) {
