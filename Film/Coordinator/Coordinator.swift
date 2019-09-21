@@ -10,39 +10,46 @@ import UIKit
 
 class Coordinator {
     
+    let window: UIWindow
+    
     let navigationController = UINavigationController()
     let tabViewConroller = UITabBarController()
     
     var playerVC: VideoPlayerController?
     let builder: Builder = StandardBuilder()
-    let settings: StandardSettings = StandardSettings()
+    let settings: Settings = Settings()
+    
+    init(window: UIWindow) {
+        self.window = window
+    }
     
     func start() -> UIViewController {
-        
-        if settings.isLogged == false {
-            let navigationController = UINavigationController()
-            navigationController.isNavigationBarHidden = true
-            
-            let welcomeVC = builder.createWelcomeViewController()
-            
-            navigationController.viewControllers = [welcomeVC]
-            
-            settings.saveToUserDefaults()
-            print(settings.description())
-            return navigationController
-        } else {
-            return mainFlow()
+        guard settings.isLogged else {
+            return loginFlow()
         }
-    }
         
+        return mainFlow()
+    }
+    
+    func loginFlow() -> UIViewController {
+        let navigationController = UINavigationController()
+        navigationController.isNavigationBarHidden = true
+        
+        let welcomeVC = builder.createWelcomeViewController(delegate: self, settings: settings)
+        
+        navigationController.viewControllers = [welcomeVC]
+        
+        settings.saveToUserDefaults()
+        print(settings.description())
+        return navigationController
+    }
+    
     func mainFlow() -> UIViewController {
-        // Setup ViewController
         let watchingVC = builder.createWatchingViewController(delegate: self)
         let showsVC = builder.createShowViewController(delegate: self)
         let moviesVC = builder.createMoviesViewController(delegate: self)
         let settingsVC = builder.createSettingsViewController()
         
-        // Setup Navigation
         tabViewConroller.viewControllers = [watchingVC, showsVC, moviesVC, settingsVC]
         tabViewConroller.tabBar.barTintColor = .black
         
@@ -60,6 +67,14 @@ class Coordinator {
     func applicationWillResignActive() {
         playerVC?.applicationWillResignActive()
     }
+}
+
+extension Coordinator: WelcomeViewControllerDelegate {
+    
+    func startButtonTapped() {
+        window.rootViewController = mainFlow()
+    }
+    
 }
 
 extension Coordinator: WatchingViewControllerDelegate {

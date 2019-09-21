@@ -9,8 +9,14 @@
 import UIKit
 
 
-class WelcomeViewController: UIViewController {
+protocol WelcomeViewControllerDelegate: AnyObject {
+    func startButtonTapped()
+}
 
+
+class WelcomeViewController: UIViewController {
+    weak var delegate: WelcomeViewControllerDelegate?
+    
     var welcomeView: WelcomeView = WelcomeView()
     var alert: AlertViewController?
     
@@ -26,7 +32,8 @@ class WelcomeViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
-        print("Start tapped")
+        // TODO: check credentials/server availability
+        delegate?.startButtonTapped()
     }
     
     //----------------------------------------------------------------------

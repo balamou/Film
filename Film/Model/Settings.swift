@@ -1,5 +1,5 @@
 //
-//  StandardSettings.swift
+//  Settings.swift
 //  Film
 //
 //  Created by Michel Balamou on 2019-08-31.
@@ -9,7 +9,7 @@
 import Foundation
 
 
-class StandardSettings {
+class Settings {
     private var defaults: UserDefaults
     
     var isLogged = false

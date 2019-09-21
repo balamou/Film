@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol Builder {
-    func createWelcomeViewController() -> WelcomeViewController
+    func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController
     
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController
     func createShowViewController(delegate: ShowsDelegate?) -> ShowsViewController
@@ -24,8 +24,9 @@ protocol Builder {
 
 class StandardBuilder: Builder {
     
-    func createWelcomeViewController() -> WelcomeViewController {
+    func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController {
         let welcomeVC = WelcomeViewController()
+        welcomeVC.delegate = delegate
         
         return welcomeVC
     }
