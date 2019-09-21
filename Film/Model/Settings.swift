@@ -49,6 +49,33 @@ class Settings {
         
         return desc
     }
+    
+    func logout() {
+        copy(self, Settings.default)
+        saveToUserDefaults()
+    }
+}
+
+extension Settings {
+    
+    static var `default`: Settings {
+        let settings = Settings()
+        settings.isLogged = false
+        settings.username = nil
+        settings.language = "english"
+        settings.ipAddress = "192.168.72.46"
+        settings.port = "9989"
+        
+        return settings
+    }
+    
+    func copy(_ lhs: Settings, _ rhs: Settings) {
+        lhs.isLogged = rhs.isLogged
+        lhs.language = rhs.language
+        lhs.ipAddress = rhs.ipAddress
+        lhs.port = rhs.port
+    }
+    
 }
 
 

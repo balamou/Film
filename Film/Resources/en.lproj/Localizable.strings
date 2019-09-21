@@ -47,6 +47,10 @@
 "english" = "english";
 "russian" = "russian";
 
+"Please select language" = "Please select language";
+"Please enter IP Address" = "Please enter IP Address";
+"Please enter Port number" = "Please enter Port number";
+
 // ShowInfoVC & ChangeSeasonVC
 "Season" = "Season";
 

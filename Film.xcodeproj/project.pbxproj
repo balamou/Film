@@ -21,6 +21,7 @@
 		ED19988A23234E75005D48D3 /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19988023234E75005D48D3 /* OpenSans-BoldItalic.ttf */; };
 		ED19988B23234E75005D48D3 /* OpenSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19988123234E75005D48D3 /* OpenSans-LightItalic.ttf */; };
 		ED19988C23234E75005D48D3 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19988223234E75005D48D3 /* OpenSans-Light.ttf */; };
+		ED1B58CD23367F5A00307EDC /* Optional+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1B58CC23367F5A00307EDC /* Optional+extensions.swift */; };
 		ED1CC3A7231620790061EE21 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1CC3A6231620790061EE21 /* EpisodeCell.swift */; };
 		ED1CC3A9231624FC0061EE21 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1CC3A8231624FC0061EE21 /* HeaderView.swift */; };
 		ED1FEEBB2318B73900DE69AB /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1FEEBA2318B73900DE69AB /* AlertView.swift */; };
@@ -154,6 +155,7 @@
 		ED19988023234E75005D48D3 /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		ED19988123234E75005D48D3 /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
 		ED19988223234E75005D48D3 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		ED1B58CC23367F5A00307EDC /* Optional+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+extensions.swift"; sourceTree = "<group>"; };
 		ED1CC3A6231620790061EE21 /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 		ED1CC3A8231624FC0061EE21 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		ED1FEEBA2318B73900DE69AB /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				ED5AC1292315A65F0098A161 /* UIViewController+extensions.swift */,
 				EDB57E9323176EC70049504E /* UIImageView+extensions.swift */,
 				EDE494EE232D4FCF00547830 /* Array+extensions.swift */,
+				ED1B58CC23367F5A00307EDC /* Optional+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -904,6 +907,7 @@
 				ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */,
 				EDE494F3232DC37600547830 /* MockMoviesAPI.swift in Sources */,
 				EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */,
+				ED1B58CD23367F5A00307EDC /* Optional+extensions.swift in Sources */,
 				EDACC49C2319FE6B005DC09C /* MockWatchedAPI.swift in Sources */,
 				ED909B6323123C8300A67AC6 /* header.m in Sources */,
 				ED1FEEBB2318B73900DE69AB /* AlertView.swift in Sources */,

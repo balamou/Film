@@ -15,7 +15,7 @@ protocol Builder {
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController
     func createShowViewController(delegate: ShowsDelegate?) -> ShowsViewController
     func createMoviesViewController(delegate: MoviesDelegate?) -> MoviesViewController
-    func createSettingsViewController() -> SettingsViewController
+    func createSettingsViewController(delegate: SettingsViewControllerDelegate?, settings: Settings) -> SettingsViewController
     
     func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter) -> ShowInfoViewController
     func createMovieInfoViewController(delegate: MovieInfoViewControllerDelegate?, movie: MoviesPresenter) -> MovieInfoViewController
@@ -25,7 +25,7 @@ protocol Builder {
 class StandardBuilder: Builder {
     
     func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController {
-        let welcomeVC = WelcomeViewController()
+        let welcomeVC = WelcomeViewController(settings: settings)
         welcomeVC.delegate = delegate
         
         return welcomeVC
@@ -63,9 +63,10 @@ class StandardBuilder: Builder {
         return moviesVC
     }
     
-    func createSettingsViewController() -> SettingsViewController {
-        let settingsVC = SettingsViewController()
+    func createSettingsViewController(delegate: SettingsViewControllerDelegate?, settings: Settings) -> SettingsViewController {
+        let settingsVC = SettingsViewController(settings: settings)
         settingsVC.tabBarItem = UITabBarItem(title: "Settings".localize(), image: Images.settingsImage, tag: 3)
+        settingsVC.delegate = delegate
         
         return settingsVC
     }

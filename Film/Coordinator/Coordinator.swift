@@ -32,23 +32,17 @@ class Coordinator {
     }
     
     func loginFlow() -> UIViewController {
-        let navigationController = UINavigationController()
-        navigationController.isNavigationBarHidden = true
-        
         let welcomeVC = builder.createWelcomeViewController(delegate: self, settings: settings)
         
-        navigationController.viewControllers = [welcomeVC]
-        
-        settings.saveToUserDefaults()
         print(settings.description())
-        return navigationController
+        return welcomeVC
     }
     
     func mainFlow() -> UIViewController {
         let watchingVC = builder.createWatchingViewController(delegate: self)
         let showsVC = builder.createShowViewController(delegate: self)
         let moviesVC = builder.createMoviesViewController(delegate: self)
-        let settingsVC = builder.createSettingsViewController()
+        let settingsVC = builder.createSettingsViewController(delegate: self, settings: settings)
         
         tabViewConroller.viewControllers = [watchingVC, showsVC, moviesVC, settingsVC]
         tabViewConroller.tabBar.barTintColor = .black
@@ -75,6 +69,13 @@ extension Coordinator: WelcomeViewControllerDelegate {
         window.rootViewController = mainFlow()
     }
     
+}
+
+extension Coordinator: SettingsViewControllerDelegate {
+    
+    func logOutPerformed() {
+        window.rootViewController = loginFlow()
+    }
 }
 
 extension Coordinator: WatchingViewControllerDelegate {

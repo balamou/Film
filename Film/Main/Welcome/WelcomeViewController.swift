@@ -17,8 +17,18 @@ protocol WelcomeViewControllerDelegate: AnyObject {
 class WelcomeViewController: UIViewController {
     weak var delegate: WelcomeViewControllerDelegate?
     
-    var welcomeView: WelcomeView = WelcomeView()
+    let settings: Settings
+    let welcomeView: WelcomeView = WelcomeView()
     var alert: AlertViewController?
+    
+    init(settings: Settings) {
+        self.settings = settings
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +39,10 @@ class WelcomeViewController: UIViewController {
         dismissKey()
         
         welcomeView.startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+        
+        welcomeView.languageField.text = settings.language
+        welcomeView.ipAddressField.text = settings.ipAddress
+        welcomeView.portField.text = settings.port
     }
     
     @objc func startButtonTapped() {

@@ -11,17 +11,36 @@ import UIKit
 struct Language {
     let localized: String
     let serverValue: String
+    
+    static var `default`: [Language] {
+        return [Language(localized: "english".localize(), serverValue: "english"),
+                Language(localized: "russian".localize(), serverValue: "russian")]
+    }
+}
+
+protocol SettingsViewControllerDelegate: class {
+    func logOutPerformed()
 }
 
 class SettingsViewController: UIViewController {
+    weak var delegate: SettingsViewControllerDelegate?
     
-    var settingsView: SettingsView = SettingsView()
-    var languages = [Language(localized: "english".localize(), serverValue: "english"),
-                    Language(localized: "russian".localize(), serverValue: "russian")]
+    let settings: Settings
+    let settingsView: SettingsView = SettingsView()
+    let languages = Language.default
     let pickerRowHeight: CGFloat = 30
     
     // Alert
     var alert: AlertViewController?
+
+    init(settings: Settings) {
+        self.settings = settings
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +60,10 @@ class SettingsViewController: UIViewController {
         
         let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(switchLanguages))
         settingsView.languageField.addGestureRecognizer(languageTapGesture)
+        
+        settingsView.languageField.text = settings.language
+        settingsView.ipAddressField.text = settings.ipAddress
+        settingsView.portField.text = settings.port
     }
     
     //----------------------------------------------------------------------
@@ -51,7 +74,26 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func saveButtonTapped() {
-        print("Save")
+        let language = settingsView.languageField.text
+        let ipAddress = settingsView.ipAddressField.text
+        let port = settingsView.portField.text
+        
+        let errorMessages = [(language.isNilOrEmpty, message: "Please select language".localize()),
+                            (ipAddress.isNilOrEmpty, message: "Please enter IP Address".localize()),
+                            (port.isNilOrEmpty, message: "Please enter Port number".localize())]
+
+        if let errorMessage = errorMessages.first(where: { $0.0 == true })?.message {
+            alert?.mode = .showMessage(errorMessage)
+            return
+        }
+        
+        settings.language = language!
+        settings.ipAddress = ipAddress!
+        settings.port = port!
+        
+        settings.saveToUserDefaults()
+        
+        alert?.mode = .success("Successfully saved")
     }
     
     @objc func refreshButtonTapped() {
@@ -59,7 +101,8 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func logoutButtonTapped() {
-        print("Logout")
+        settings.logout()
+        delegate?.logOutPerformed()
     }
     
     //----------------------------------------------------------------------
