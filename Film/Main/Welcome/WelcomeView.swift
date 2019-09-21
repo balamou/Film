@@ -137,7 +137,8 @@ class WelcomeView: UIView {
     
     lazy var startButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Start".localize(), for: .normal)
+        button.setTitle("Login".localize(), for: .normal)
+        button.setTitle("Logging in...", for: .disabled)
         button.backgroundColor = .black
         button.titleLabel?.font = buttonsFont
         button.layer.cornerRadius = 4

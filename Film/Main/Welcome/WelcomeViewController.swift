@@ -19,6 +19,7 @@ class WelcomeViewController: UIViewController {
     
     let settings: Settings
     let welcomeView: WelcomeView = WelcomeView()
+    var apiManager: WelcomeAPI?
     var alert: AlertViewController?
     
     init(settings: Settings) {
@@ -48,9 +49,18 @@ class WelcomeViewController: UIViewController {
         welcomeView.portField.text = settings.port
     }
     
+    // TODO: rename to login
     @objc func startButtonTapped() {
-        // TODO: check credentials/server availability
-        delegate?.startButtonTapped()
+        guard let username = welcomeView.usernameField.text, !username.isEmpty else {
+            alert?.mode = .showMessage("Please enter a username".localize())
+            return
+        }
+        
+        login(username: username)
+    }
+    
+    @objc func signupButtonTapped() {
+        
     }
     
     //----------------------------------------------------------------------
@@ -59,6 +69,40 @@ class WelcomeViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+}
+
+//----------------------------------------------------------------------
+// Mark: API calls
+//----------------------------------------------------------------------
+extension WelcomeViewController {
+    
+    func login(username: String) {
+        welcomeView.startButton.isEnabled = (apiManager == nil)
+        
+        apiManager?.login(username: username) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let doesUserExist):
+                if doesUserExist {
+                    self.settings.username = username
+                    self.settings.isLogged = true
+                    
+                    self.delegate?.startButtonTapped()
+                } else {
+                    self.alert?.mode = .showMessage("Username does not exist")
+                }
+                break
+            case .failure(_):
+                // TODO: show specific error
+                self.alert?.mode = .showMessage("An error occured")
+                break
+            }
+            
+            self.welcomeView.startButton.isEnabled = true
+        }
+    }
+    
 }
 
 extension WelcomeViewController {

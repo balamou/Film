@@ -27,6 +27,7 @@ class StandardBuilder: Builder {
     func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController {
         let welcomeVC = WelcomeViewController(settings: settings)
         welcomeVC.delegate = delegate
+        welcomeVC.apiManager = MockWelcomeAPI()
         
         return welcomeVC
     }
