@@ -18,6 +18,14 @@ class Settings {
     var ipAddress = "192.168.72.46"
     var port = "9989"
     
+    enum Keys {
+        static let isLogged = "isLogged"
+        static let username = "username"
+        static let language = "language"
+        static let ipAddress = "ipAddress"
+        static let port = "port"
+    }
+    
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         
@@ -25,19 +33,19 @@ class Settings {
     }
     
     func loadFromUserDefaults() {
-        isLogged = defaults.bool(forKey: "isLogged")
-        username = defaults.string(forKey: "username")
-        language = defaults.string(forKey: "language") ?? language
-        ipAddress = defaults.string(forKey: "ipAddress") ?? ipAddress
-        port = defaults.string(forKey: "port") ?? port
+        isLogged = defaults.bool(forKey: Keys.isLogged)
+        username = defaults.string(forKey: Keys.username)
+        language = defaults.string(forKey: Keys.language) ?? language
+        ipAddress = defaults.string(forKey: Keys.ipAddress) ?? ipAddress
+        port = defaults.string(forKey: Keys.port) ?? port
     }
     
     func saveToUserDefaults() {
-        defaults.set(isLogged, forKey: "isLogged")
-        defaults.set(username, forKey: "username")
-        defaults.set(language, forKey: "language")
-        defaults.set(ipAddress, forKey: "ipAddress")
-        defaults.set(port, forKey: "port")
+        defaults.set(isLogged, forKey: Keys.isLogged)
+        defaults.set(username, forKey: Keys.username)
+        defaults.set(language, forKey: Keys.language)
+        defaults.set(ipAddress, forKey: Keys.ipAddress)
+        defaults.set(port, forKey: Keys.port)
     }
     
     func description() -> String {

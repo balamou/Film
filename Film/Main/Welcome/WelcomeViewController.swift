@@ -36,10 +36,13 @@ class WelcomeViewController: UIViewController {
         view = welcomeView
         alert = AlertViewController(parent: self)
         
-        dismissKey()
-        
         welcomeView.startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         
+        dismissKey()
+        configureWithSettings()
+    }
+    
+    func configureWithSettings() {
         welcomeView.languageField.text = settings.language
         welcomeView.ipAddressField.text = settings.ipAddress
         welcomeView.portField.text = settings.port
