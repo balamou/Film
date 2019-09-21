@@ -13,8 +13,7 @@ struct Language {
     let serverValue: String
     
     static var `default`: [Language] {
-        return [Language(localized: "english".localize(), serverValue: "english"),
-                Language(localized: "russian".localize(), serverValue: "russian")]
+        return  ["english", "russian"].map { Language(localized: $0.localize(), serverValue: $0) }
     }
 }
 
@@ -47,23 +46,31 @@ class SettingsViewController: UIViewController {
         
         view = settingsView
         alert = AlertViewController(parent: self)
-        
-        
-        settingsView.saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        settingsView.refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
-        settingsView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        
         dismissKey()
         
         settingsView.pickerView.dataSource = self
         settingsView.pickerView.delegate = self
         
+        setupActions()
+        setupDataFromSettings()
+    }
+    
+    func setupActions() {
+        settingsView.saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        settingsView.refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
+        settingsView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        
         let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(switchLanguages))
         settingsView.languageField.addGestureRecognizer(languageTapGesture)
-        
+    }
+    
+    func setupDataFromSettings() {
         settingsView.languageField.text = settings.language
         settingsView.ipAddressField.text = settings.ipAddress
         settingsView.portField.text = settings.port
+        
+        let indexOfLanguageSelected = languages.firstIndex { $0.serverValue == settings.language } ?? 0
+        settingsView.pickerView.selectRow(indexOfLanguageSelected, inComponent: 0, animated: false)
     }
     
     //----------------------------------------------------------------------
