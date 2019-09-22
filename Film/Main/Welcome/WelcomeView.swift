@@ -215,7 +215,13 @@ class WelcomeView: UIView {
         var counter = 0
         elements.forEach {
             if counter == 2 {
-                collapsableView.backgroundColor = .yellow
+                let pickerView = CustomPickerView()
+                collapsableView.addSubviewLayout(pickerView)
+                pickerView.topAnchor.constraint(equalTo: collapsableView.topAnchor).isActive = true
+                pickerView.bottomAnchor.constraint(equalTo: collapsableView.bottomAnchor).isActive = true
+                pickerView.leadingAnchor.constraint(equalTo: collapsableView.leadingAnchor).isActive = true
+                pickerView.trailingAnchor.constraint(equalTo: collapsableView.trailingAnchor).isActive = true
+                
                 collapsableConstraint = collapsableView.heightAnchor.constraint(equalToConstant: 100.0)
                 collapsableConstraint.isActive = true
                 verticalStackView.addArrangedSubview(collapsableView)
