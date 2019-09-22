@@ -41,6 +41,17 @@ class WelcomeViewController: UIViewController {
         
         dismissKey()
         configureWithSettings()
+        
+        let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(languagesTapped))
+        welcomeView.languageField.addGestureRecognizer(languageTapGesture)
+    }
+    
+    @objc func languagesTapped() {
+        UIView.animate(withDuration: 0.3) {
+            let hiddenValue = self.welcomeView.collapsableView.isHidden
+            self.welcomeView.collapsableView.isHidden.toggle()
+            self.welcomeView.collapsableView.layer.opacity = hiddenValue ? 1.0 : 0.0
+        }
     }
     
     func configureWithSettings() {

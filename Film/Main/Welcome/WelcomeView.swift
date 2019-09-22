@@ -21,6 +21,8 @@ class WelcomeView: UIView {
     
     let textFieldRadius: CGFloat = 5
     
+    var collapsableView: UIView = UIView()
+    var collapsableConstraint = NSLayoutConstraint()
     
     var topBar: UIView = {
         let view = UIView()
@@ -150,8 +152,6 @@ class WelcomeView: UIView {
     
     class Constraints {
         
-        static let textFieldHeight: CGFloat = 30.0
-        static var distanceBetweenFields: CGFloat = 15.0
         static let buttonsMargin: CGFloat = 20.0
         
         static func setTopBar(_ view: UIView, _ parent: UIView) {
@@ -171,56 +171,6 @@ class WelcomeView: UIView {
         static func setTopLabel(_ label: UILabel, _ parent: UIView) {
             label.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -10.0).isActive = true
             label.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-        }
-        
-        // Labels
-        
-        static func setUsernameLabel(_ label: UILabel, _ parent: UIView, _ leftNeighbour: UIView) {
-            label.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 15.0).isActive = true
-            label.centerYAnchor.constraint(equalTo: leftNeighbour.centerYAnchor).isActive = true
-        }
-        
-        static func setLanguageLabel(_ label: UILabel, _ parent: UIView, _ leftNeighbour: UIView) {
-            label.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 15.0).isActive = true
-            label.centerYAnchor.constraint(equalTo: leftNeighbour.centerYAnchor).isActive = true
-        }
-        
-        static func setIPAddressLabel(_ label: UILabel, _ parent: UIView, _ leftNeighbour: UIView) {
-            label.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 15.0).isActive = true
-            label.centerYAnchor.constraint(equalTo: leftNeighbour.centerYAnchor).isActive = true
-        }
-        static func setPortLabel(_ label: UILabel, _ parent: UIView, _ leftNeighbour: UIView) {
-            label.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 15.0).isActive = true
-            label.centerYAnchor.constraint(equalTo: leftNeighbour.centerYAnchor).isActive = true
-        }
-        
-        // Fields
-        static func setUsernameTextField(_ textfield: UITextField, _ topNeighbour: UIView) {
-            textfield.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: distanceBetweenFields).isActive = true
-            textfield.leadingAnchor.constraint(equalTo: topNeighbour.centerXAnchor, constant: -50.0).isActive = true
-            textfield.trailingAnchor.constraint(equalTo: topNeighbour.trailingAnchor, constant: -20.0).isActive = true
-            textfield.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
-        }
-        
-        static func setLanguageTextField(_ textfield: UITextField, _ topNeighbour: UIView) {
-            textfield.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: distanceBetweenFields).isActive = true
-            textfield.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
-            textfield.trailingAnchor.constraint(equalTo: topNeighbour.trailingAnchor).isActive = true
-            textfield.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
-        }
-        
-        static func setIPAddressTextField(_ textfield: UITextField, _ topNeighbour: UIView) {
-            textfield.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: distanceBetweenFields).isActive = true
-            textfield.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
-            textfield.trailingAnchor.constraint(equalTo: topNeighbour.trailingAnchor).isActive = true
-            textfield.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
-        }
-        
-        static func setPortTextField(_ textfield: UITextField, _ topNeighbour: UIView) {
-            textfield.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: distanceBetweenFields).isActive = true
-            textfield.leadingAnchor.constraint(equalTo: topNeighbour.leadingAnchor).isActive = true
-            textfield.trailingAnchor.constraint(equalTo: topNeighbour.trailingAnchor).isActive = true
-            textfield.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         }
         
         // Buttons
@@ -262,7 +212,15 @@ class WelcomeView: UIView {
                         (ipAddressLabel, ipAddressField),
                         (portLabel, portField)]
         
+        var counter = 0
         elements.forEach {
+            if counter == 2 {
+                collapsableView.backgroundColor = .yellow
+                collapsableConstraint = collapsableView.heightAnchor.constraint(equalToConstant: 100.0)
+                collapsableConstraint.isActive = true
+                verticalStackView.addArrangedSubview(collapsableView)
+            }
+            
             let horizontalStackView = UIStackView()
             
             horizontalStackView.addArrangedSubview($0.0)
@@ -275,6 +233,7 @@ class WelcomeView: UIView {
             horizontalStackView.layoutMargins = UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15)
             
             verticalStackView.addArrangedSubview(horizontalStackView)
+            counter += 1
         }
         
         verticalStackView.topAnchor.constraint(equalTo: topBar.bottomAnchor).isActive = true
