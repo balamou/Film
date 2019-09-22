@@ -45,6 +45,8 @@ class WelcomeView: UIView {
         return label
     }()
     
+    let verticalStackView = UIStackView()
+    
     // Labels
     
     lazy var usernameLabel: UILabel = {
@@ -240,33 +242,46 @@ class WelcomeView: UIView {
         addSubviewLayout(topBar)
         topBar.addSubviewLayout(logoImage)
         topBar.addSubviewLayout(topLabel)
-        addSubviewLayout(usernameLabel)
-        addSubviewLayout(languageLabel)
-        addSubviewLayout(ipAddressLabel)
-        addSubviewLayout(portLabel)
-        
-        addSubviewLayout(usernameField)
-        addSubviewLayout(languageField)
-        addSubviewLayout(ipAddressField)
-        addSubviewLayout(portField)
-        
         addSubviewLayout(loginButton)
         
         Constraints.setTopBar(topBar, self)
         Constraints.setLogoImageView(logoImage, topBar)
         Constraints.setTopLabel(topLabel, topBar)
-        Constraints.setUsernameLabel(usernameLabel, self, usernameField)
-        Constraints.setLanguageLabel(languageLabel, self, languageField)
-        Constraints.setIPAddressLabel(ipAddressLabel, self, ipAddressField)
-        Constraints.setPortLabel(portLabel, self, portField)
         
-        Constraints.setUsernameTextField(usernameField, topBar)
-        Constraints.setLanguageTextField(languageField, usernameField)
-        Constraints.setIPAddressTextField(ipAddressField, languageField)
-        Constraints.setPortTextField(portField, ipAddressField)
+        setupStackViews()
         
-        Constraints.setLoginButton(loginButton, portField, self)
+        Constraints.setLoginButton(loginButton, verticalStackView, self)
     }
+    
+    func setupStackViews() {
+        verticalStackView.axis = .vertical
+        addSubviewLayout(verticalStackView)
+        
+        let elements = [(usernameLabel, usernameField),
+                        (languageLabel, languageField),
+                        (ipAddressLabel, ipAddressField),
+                        (portLabel, portField)]
+        
+        elements.forEach {
+            let horizontalStackView = UIStackView()
+            
+            horizontalStackView.addArrangedSubview($0.0)
+            horizontalStackView.addArrangedSubview($0.1)
+            
+            $0.0.widthAnchor.constraint(equalTo: $0.1.widthAnchor, multiplier: 0.5).isActive = true
+            
+            horizontalStackView.distribution = .fillProportionally
+            horizontalStackView.isLayoutMarginsRelativeArrangement = true
+            horizontalStackView.layoutMargins = UIEdgeInsets(top: 15, left: 15, bottom: 0, right: 15)
+            
+            verticalStackView.addArrangedSubview(horizontalStackView)
+        }
+        
+        verticalStackView.topAnchor.constraint(equalTo: topBar.bottomAnchor).isActive = true
+        verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    }
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

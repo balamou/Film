@@ -14,4 +14,9 @@ extension CGRect {
     func addToWidth(_ value: CGFloat) -> CGRect {
         return CGRect(x: self.origin.x, y: self.origin.y, width: self.size.width + value, height: self.size.height)
     }
+    
+    func setWidth(_ value: CGFloat) -> CGRect {
+        return CGRect(x: origin.x, y: origin.y, width: value, height: size.height)
+    }
+    
 }
