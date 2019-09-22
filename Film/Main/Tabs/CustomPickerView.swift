@@ -12,10 +12,10 @@ class CustomPickerView: UIPickerView {
     
     let languages = Language.default
     let pickerRowHeight: CGFloat = 30
-    var languageSelected: (String) -> Void
+    var onSelectLanguage: (String) -> Void
     
-    init(languageSelected: @escaping (String) -> Void) {
-        self.languageSelected = languageSelected
+    init(onSelectLanguage: @escaping (String) -> Void) {
+        self.onSelectLanguage = onSelectLanguage
         super.init(frame: .zero)
         
         backgroundColor = Colors.backgroundColor
@@ -33,12 +33,18 @@ class CustomPickerView: UIPickerView {
         let indexOfLanguageSelected = languages.firstIndex { $0.serverValue == language } ?? 0
         selectRow(indexOfLanguageSelected, inComponent: 0, animated: false)
     }
+    
+    func languageSelected() -> String {
+        let row = selectedRow(inComponent: 0)
+        
+        return languages[row].localized
+    }
 }
 
 extension CustomPickerView: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        languageSelected(languages[row].localized)
+        onSelectLanguage(languages[row].localized)
     }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {

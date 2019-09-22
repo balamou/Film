@@ -150,10 +150,10 @@ class SettingsView: UIView {
     }()
     
     // Picker View
-    var pickerView: UIPickerView = {
-        let pickerView = UIPickerView()
-        pickerView.backgroundColor = Colors.backgroundColor
-        pickerView.tintColor = .white
+    lazy var pickerView: CustomPickerView = {
+        let pickerView = CustomPickerView { [weak self] language in
+            self?.languageField.text = language
+        }
         
         return pickerView
     }()

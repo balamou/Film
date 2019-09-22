@@ -48,9 +48,6 @@ class SettingsViewController: UIViewController {
         alert = AlertViewController(parent: self)
         dismissKey()
         
-        settingsView.pickerView.dataSource = self
-        settingsView.pickerView.delegate = self
-        
         setupActions()
         setupDataFromSettings()
     }
@@ -68,9 +65,7 @@ class SettingsViewController: UIViewController {
         settingsView.languageField.text = settings.language
         settingsView.ipAddressField.text = settings.ipAddress
         settingsView.portField.text = settings.port
-        
-        let indexOfLanguageSelected = languages.firstIndex { $0.serverValue == settings.language } ?? 0
-        settingsView.pickerView.selectRow(indexOfLanguageSelected, inComponent: 0, animated: false)
+        settingsView.pickerView.selectLanguage(settings.language)
     }
     
     //----------------------------------------------------------------------
@@ -133,42 +128,7 @@ extension SettingsViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
         
-        let row = settingsView.pickerView.selectedRow(inComponent: 0)
-        settingsView.languageField.text = languages[row].localized
+        settingsView.languageField.text = settingsView.pickerView.languageSelected()
         settingsView.hidePickerView()
-    }
-}
-
-
-extension SettingsViewController: UIPickerViewDelegate {
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        settingsView.languageField.text = languages[row].localized
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return pickerRowHeight
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return languages[row].localized
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let language = languages[row].localized
-        let component = NSAttributedString(string: language, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
-        
-        return component
-    }
-}
-
-extension SettingsViewController: UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return languages.count
     }
 }
