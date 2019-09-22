@@ -22,7 +22,7 @@ class WelcomeView: UIView {
     let textFieldRadius: CGFloat = 5
     
     var collapsableView = UIView()
-    var pickerView: CustomPickerView!
+    var pickerView: LanguagePickerView!
     
     var topBar: UIView = {
         let view = UIView()
@@ -215,7 +215,7 @@ class WelcomeView: UIView {
         var counter = 0
         elements.forEach {
             if counter == 2 {
-                pickerView = CustomPickerView { [weak self] language in
+                pickerView = LanguagePickerView { [weak self] language in
                     self?.languageField.text = language
                 }
                 collapsableView.addSubviewLayout(pickerView)

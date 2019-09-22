@@ -1,5 +1,5 @@
 //
-//  CustomPickerView.swift
+//  LanguagePickerView.swift
 //  Film
 //
 //  Created by Michel Balamou on 2019-09-21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomPickerView: UIPickerView {
+class LanguagePickerView: UIPickerView {
     
     let languages = Language.default
     let pickerRowHeight: CGFloat = 30
@@ -41,7 +41,7 @@ class CustomPickerView: UIPickerView {
     }
 }
 
-extension CustomPickerView: UIPickerViewDelegate {
+extension LanguagePickerView: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         onSelectLanguage(languages[row].localized)
@@ -63,7 +63,7 @@ extension CustomPickerView: UIPickerViewDelegate {
     }
 }
 
-extension CustomPickerView: UIPickerViewDataSource {
+extension LanguagePickerView: UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

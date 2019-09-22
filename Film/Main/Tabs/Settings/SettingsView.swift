@@ -150,8 +150,8 @@ class SettingsView: UIView {
     }()
     
     // Picker View
-    lazy var pickerView: CustomPickerView = {
-        let pickerView = CustomPickerView { [weak self] language in
+    lazy var pickerView: LanguagePickerView = {
+        let pickerView = LanguagePickerView { [weak self] language in
             self?.languageField.text = language
         }
         
