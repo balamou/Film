@@ -21,8 +21,8 @@ class WelcomeView: UIView {
     
     let textFieldRadius: CGFloat = 5
     
-    var collapsableView: UIView = UIView()
-    var collapsableConstraint = NSLayoutConstraint()
+    var collapsableView = UIView()
+    var pickerView: CustomPickerView!
     
     var topBar: UIView = {
         let view = UIView()
@@ -215,15 +215,13 @@ class WelcomeView: UIView {
         var counter = 0
         elements.forEach {
             if counter == 2 {
-                let pickerView = CustomPickerView()
+                pickerView = CustomPickerView { [weak self] language in
+                    self?.languageField.text = language
+                }
                 collapsableView.addSubviewLayout(pickerView)
-                pickerView.topAnchor.constraint(equalTo: collapsableView.topAnchor).isActive = true
-                pickerView.bottomAnchor.constraint(equalTo: collapsableView.bottomAnchor).isActive = true
-                pickerView.leadingAnchor.constraint(equalTo: collapsableView.leadingAnchor).isActive = true
-                pickerView.trailingAnchor.constraint(equalTo: collapsableView.trailingAnchor).isActive = true
+                pickerView.fillConstraints(in: collapsableView)
                 
-                collapsableConstraint = collapsableView.heightAnchor.constraint(equalToConstant: 100.0)
-                collapsableConstraint.isActive = true
+                collapsableView.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
                 verticalStackView.addArrangedSubview(collapsableView)
             }
             
