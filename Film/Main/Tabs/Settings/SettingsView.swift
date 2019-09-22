@@ -220,21 +220,31 @@ class SettingsView: UIView {
         static func setSaveButton(_ button: UIButton, _ topNeighbour: UIView, _ parent: UIView) {
             button.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 10.0).isActive = true
             button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-            button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin).isActive = true
+            [button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin)].forEach {
+                // for some reason this is the only way to avoid constraints ¯\_(ツ)_/¯
+                $0.priority = .defaultHigh
+                $0.isActive = true
+            }
             button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -buttonsMargin).isActive = true
         }
         
         static func setLogoutButton(_ button: UIButton, _ parent: UIView) {
             button.bottomAnchor.constraint(equalTo: parent.safeAreaLayoutGuide.bottomAnchor, constant: -20.0).isActive = true
             button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-            button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin).isActive = true
+            [button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin)].forEach {
+                $0.priority = .defaultHigh
+                $0.isActive = true
+            }
             button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -buttonsMargin).isActive = true
         }
         
         static func setRefreshButton(_ button: UIButton, _ bottomNeighbour: UIView, _ parent: UIView) {
             button.bottomAnchor.constraint(equalTo: bottomNeighbour.topAnchor, constant: -10.0).isActive = true
             button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-            button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin).isActive = true
+            [button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin)].forEach {
+                $0.priority = .defaultHigh
+                $0.isActive = true
+            }
             button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -buttonsMargin).isActive = true
         }
         
