@@ -1,0 +1,61 @@
+/* 
+  Localizable.strings
+  Film
+
+  Created by Michel Balamou on 2019-08-27.
+  Copyright © 2019 ElasticPanda. All rights reserved.
+*/
+
+//Welcome
+"Start" = "Start";
+
+// Tabs
+"Watching" = "Watching";
+"Shows" = "Shows";
+"Movies" = "Movies";
+"Settings" = "Settings";
+
+// Watching VC
+"Nothing watched yet" = "Nothing watched yet";
+"watching" = "watching";
+"h" = "h";
+"min" = "min";
+"S" = "S"; // Season
+"E" = "E"; // Episode
+"Loading..." = "Loading...";
+
+// Shows
+"shows" = "shows";
+
+// Movies
+"movies" = "movies";
+
+// Player VC
+"Next episode" = "Next episode";
+
+// Settings
+"settings" = "settings";
+"Username" = "Username";
+"Language" = "Language";
+"IP Address" = "IP Address";
+"Port" = "Port";
+
+"Save" = "Save";
+"Refresh" = "Refresh";
+"Logout" = "Logout";
+
+"english" = "english";
+"russian" = "russian";
+
+"Please select language" = "Please select language";
+"Please enter IP Address" = "Please enter IP Address";
+"Please enter Port number" = "Please enter Port number";
+
+// ShowInfoVC & ChangeSeasonVC
+"Season" = "Season";
+
+// MovieInfoVC
+"Title" = "Title";
+"Play" = "Play";
+"Description" = "Description";
+"Resume" = "Resume";

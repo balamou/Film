@@ -54,11 +54,7 @@ class VideoPlayerView: UIView {
         let label = UILabel()
         label.text = "S1:E1 \"El Camino\""
         label.textColor = .white
-//        print( UIFont.familyNames.reduce("") { $0 + "\n" + $1 })
-//        print( UIFont.fontNames(forFamilyName: "Helvetica Neue").reduce("") { $0 + "\n" + $1 })
-        
-        let customFont = UIFont(name: "HelveticaNeue", size: 16.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
-        label.font = customFont
+        label.font = Fonts.helveticaNeue(size: 16.0)
         
         return label
     }()
@@ -67,16 +63,14 @@ class VideoPlayerView: UIView {
         let label = UILabel()
         label.text = "56:00"
         label.textColor = .white
-        
-        let customFont = UIFont(name: "HelveticaNeue", size: 15.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
-        label.font = customFont
+        label.font = Fonts.helveticaNeue(size: 15.0)
         
         return label
     }()
     
-    var closeButton: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
+    var closeButton: CustomMarginButton = {
+        let button = CustomMarginButton()
+        button.setImage(Images.closeImage, for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -88,7 +82,7 @@ class VideoPlayerView: UIView {
     
     var pausePlayButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Pause"), for: .normal)
+        button.setImage(Images.pauseImage, for: .normal) // ▌▌
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -98,7 +92,7 @@ class VideoPlayerView: UIView {
     
     var forward10sButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "forward"), for: .normal)
+        button.setImage(Images.forwardImage, for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -108,7 +102,7 @@ class VideoPlayerView: UIView {
     
     var backward10sButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "backward"), for: .normal)
+        button.setImage(Images.backwardImage, for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -127,12 +121,9 @@ class VideoPlayerView: UIView {
     
     var nextEpisodeButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Next episode", for: .normal)
-        let img = #imageLiteral(resourceName: "Next_episode")
-        button.setImage(img, for: .normal)
-        
-        let customFont = UIFont(name: "HelveticaNeue", size: 15.0) ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
-        button.titleLabel?.font = customFont
+        button.setTitle("Next episode".localize(), for: .normal)
+        button.setImage(Images.nextEpisodeImage, for: .normal)
+        button.titleLabel?.font = Fonts.helveticaNeue(size: 15.0)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
         
         return button
@@ -151,7 +142,7 @@ class VideoPlayerView: UIView {
     }()
     
     var volumeImage: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "Volume"))
+        let imageView = UIImageView(image: Images.volumeImage)
         imageView.isHidden = true
         
         return imageView
@@ -312,8 +303,11 @@ class VideoPlayerView: UIView {
         applyGradient()
     }
     
+    var gradientLayer: CAGradientLayer?
+    
     func applyGradient() {
-        controlView.setGradient(colors: [UIColor.black.setAlpha(0.8), UIColor.black.setAlpha(0), UIColor.black.setAlpha(0.8)])
+        gradientLayer?.removeFromSuperlayer()
+        gradientLayer = controlView.setGradient(colors: [UIColor.black.setAlpha(0.8), UIColor.black.setAlpha(0), UIColor.black.setAlpha(0.8)])
     }
     
     required init?(coder aDecoder: NSCoder) {

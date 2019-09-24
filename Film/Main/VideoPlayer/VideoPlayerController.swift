@@ -16,14 +16,16 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     var mediaPlayer = VLCMediaPlayer()
     var timer: Timer?
     var film: Film = Film.provideMock()
-    var vol: VolumeController?
+    
+    // Volume
+    var volumeController: VolumeController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         forceLandscapeOrientation()
         
         videoPlayerView = VideoPlayerView(frame: self.view.frame)
-        self.view = videoPlayerView
+        view = videoPlayerView
        
         setUpPlayer(url: film.URL)
         setActions()
@@ -31,9 +33,24 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         overrideVolumeBar()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidLayoutSubviews() {
         videoPlayerView.didAppear()
     }
+    
+    func setUpPlayer(url: String) {
+        let streamURL = URL(string: url)!
+        let vlcMedia = VLCMedia(url: streamURL)
+        
+        mediaPlayer.media = vlcMedia
+        mediaPlayer.delegate = self
+        mediaPlayer.drawable = videoPlayerView.mediaView
+        
+        mediaPlayer.play()
+    }
+    
+    //----------------------------------------------------------------------
+    // MARK: Actions
+    //----------------------------------------------------------------------
     
     func setActions() {
         videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
@@ -59,23 +76,12 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         videoPlayerView.slider.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
     }
     
-    func setUpPlayer(url: String) {
-        let streamURL = URL(string: url)!
-        let vlcMedia = VLCMedia(url: streamURL)
-        
-        mediaPlayer.media = vlcMedia
-        mediaPlayer.drawable = videoPlayerView.mediaView
-        mediaPlayer.delegate = self
-        
-        mediaPlayer.play()
-    }
-    
     //----------------------------------------------------------------------
-    // Orientation
+    // Orientation: Landscape
     //----------------------------------------------------------------------
     func forceLandscapeOrientation() {
-        let value = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
+        let landscapeRight = UIInterfaceOrientation.landscapeRight.rawValue
+        UIDevice.current.setValue(landscapeRight, forKey: "orientation")
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -83,7 +89,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     //----------------------------------------------------------------------
@@ -104,7 +110,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     //----------------------------------------------------------------------
-    // Actions
+    // Actions: Controlls
     //----------------------------------------------------------------------
     func setTimerForControlHide() {
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] timer in
@@ -141,13 +147,11 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         if isPlaying {
             mediaPlayer.pause()
             isPlaying = false
-            //sender.setTitle("▶", for: .normal)
-            sender.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
+            sender.setImage(Images.playImage, for: .normal) // ▶
         } else {
             mediaPlayer.play()
             isPlaying = true
-            //sender.setTitle("▌▌", for: .normal)
-            sender.setImage(#imageLiteral(resourceName: "Pause"), for: .normal)
+            sender.setImage(Images.pauseImage, for: .normal) // ▌▌
         }
     }
     
@@ -161,6 +165,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     
     @objc func closeVideo() {
         print("Close video")
+        navigationController?.popViewController(animated: false)
     }
     
     @objc func playNextEpisode() {
@@ -241,4 +246,52 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         return CGPoint(x: sliderFrm.origin.x + slider.frame.origin.x + sliderFrm.size.width/2 - label.frame.size.width/2, y: videoPlayerView.bottomBar.frame.origin.y)
     }
 
+    //----------------------------------------------------------------------
+    // MARK: Removing observers/pointers
+    //----------------------------------------------------------------------
+    deinit {
+        print("Remove Observers: Deinit")
+        mediaPlayer.removeObserver(self, forKeyPath: "time")
+        mediaPlayer.stop()
+        timer?.invalidate()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        mediaPlayer.stop()
+        timer?.invalidate()
+        
+        // RESET ORIENTATION
+        if (self.isMovingFromParent) {
+            let portrait = UIInterfaceOrientation.portrait.rawValue
+            UIDevice.current.setValue(portrait, forKey: "orientation")
+        }
+    }
+}
+
+
+//----------------------------------------------------------------------
+// MARK: Application Life Cycle
+//----------------------------------------------------------------------
+
+extension VideoPlayerController {
+    
+    // When leaving the app
+    func applicationWillResignActive() {
+        // Pause the player
+        mediaPlayer.pause()
+        isPlaying = false
+        videoPlayerView.pausePlayButton.setImage(Images.playImage, for: .normal) // ▶
+        
+        // SHOW CONTROLLS
+        videoPlayerView.controlView.isHidden = false
+        isStatusBarHidden = false
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    func applicationDidBecomeActive() {
+        if let _ = navigationController { // re-rotate only if on the navigation stack
+            forceLandscapeOrientation()
+        }
+    }
 }

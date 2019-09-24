@@ -8,32 +8,28 @@
 
 import UIKit
 
-extension VideoPlayerController {
+extension VideoPlayerController: VolumeControllerDelegate {
     
     func overrideVolumeBar() {
-        if !Debuger.allowVolumeOverride {
-            return
-        }
+        guard Debuger.allowVolumeOverride else { return }
         
-        vol = VolumeController(view: view, onHide: { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.videoPlayerView.volumeBar.isHidden = true
-            strongSelf.videoPlayerView.volumeImage.isHidden = true
-        }) { [weak self] volumeLevel in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.videoPlayerView.volumeImage.isHidden = false
-            strongSelf.videoPlayerView.volumeBar.isHidden = false
-            strongSelf.videoPlayerView.volumeBar.progress = volumeLevel
-            
-            // Hide status bar
-            strongSelf.isStatusBarHidden = true
-            strongSelf.setNeedsStatusBarAppearanceUpdate()
-        }
+        volumeController = VolumeController(view: view)
+        volumeController?.delegate = self
     }
+    
+    func showVolumeIndicator(volumeLevel: Float) {
+        videoPlayerView.volumeImage.isHidden = false
+        videoPlayerView.volumeBar.isHidden = false
+        videoPlayerView.volumeBar.progress = volumeLevel
+        
+        // Hide status bar
+        isStatusBarHidden = true
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    func hideVolumeIndicator() {
+        videoPlayerView.volumeBar.isHidden = true
+        videoPlayerView.volumeImage.isHidden = true
+    }
+    
 }

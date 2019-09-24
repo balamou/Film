@@ -1,0 +1,32 @@
+//
+//  MockMovieAPI.swift
+//  Film
+//
+//  Created by Michel Balamou on 2019-09-15.
+//  Copyright © 2019 ElasticPanda. All rights reserved.
+//
+
+import Foundation
+
+protocol MovieInfoAPI {
+    func getMovieInfo(movieId: Int, result: @escaping Handler<Movie>)
+    
+}
+
+class MockMovieInfoAPI: MovieInfoAPI {
+    
+    let simulatedDelay = 1.5
+    
+    func getMovieInfo(movieId: Int, result: @escaping Handler<Movie>) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) {
+            
+            let data: Movie = .init(id: 2, title: "El Camino", duration: 340, description: "Dopest movie ever made! Breaking bad typa stuff. Coming out October 11th, 2019.", poster: MockData.moviePosters[6], stoppedAt: 50)
+            
+            result(.success(data))
+        }
+        
+    }
+    
+    
+}

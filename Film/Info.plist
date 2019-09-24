@@ -53,6 +53,39 @@
 		<string>Roboto-ThinItalic.ttf</string>
 		<string>Roboto-Light.ttf</string>
 		<string>Roboto-RegularItalic.ttf</string>
+        
+        <string>RobotoCondensed-Bold.ttf</string>
+        <string>RobotoCondensed-BoldItalic.ttf</string>
+        <string>RobotoCondensed-Light.ttf</string>
+        <string>RobotoCondensed-LightItalic.ttf</string>
+        <string>RobotoCondensed-RegularItalic.ttf</string>
+        <string>RobotoCondensed-Regular.ttf</string>
+        
+        <string>NunitoSans-Black.ttf</string>
+        <string>NunitoSans-BlackItalic.ttf</string>
+        <string>NunitoSans-Bold.ttf</string>
+        <string>NunitoSans-BoldItalic.ttf</string>
+        <string>NunitoSans-ExtraBold.ttf</string>
+        <string>NunitoSans-ExtraBoldItalic.ttf</string>
+        <string>NunitoSans-ExtraLight.ttf</string>
+        <string>NunitoSans-ExtraLightItalic.ttf</string>
+        <string>NunitoSans-Light.ttf</string>
+        <string>NunitoSans-LightItalic.ttf</string>
+        <string>NunitoSans-Regular.ttf</string>
+        <string>NunitoSans-RegularItalic.ttf</string>
+        <string>NunitoSans-SemiBold.ttf</string>
+        <string>NunitoSans-SemiBoldItalic.ttf</string>
+        
+        <string>OpenSans-Bold.ttf</string>
+        <string>OpenSans-BoldItalic.ttf</string>
+        <string>OpenSans-ExtraBold.ttf</string>
+        <string>OpenSans-ExtraBoldItalic.ttf</string>
+        <string>OpenSans-Light.ttf</string>
+        <string>OpenSans-LightItalic.ttf</string>
+        <string>OpenSans-Regular.ttf</string>
+        <string>OpenSans-RegularItalic.ttf</string>
+        <string>OpenSans-SemiBold.ttf</string>
+        <string>OpenSans-SemiBoldItalic.ttf</string>
 	</array>
 </dict>
 </plist>

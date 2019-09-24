@@ -1,0 +1,239 @@
+//
+//  MoviesViewController.swift
+//  Film
+//
+//  Created by Michel Balamou on 2019-08-26.
+//  Copyright © 2019 ElasticPanda. All rights reserved.
+//
+
+import UIKit
+
+
+protocol MoviesDelegate: AnyObject {
+    func tappedOnMoviesPoster(movie: MoviesPresenter)
+}
+
+enum MoviesViewControllerState {
+    case loading
+    case idle
+    case hasData([MoviesPresenter], isLast: Bool)
+}
+
+class MoviesViewController: UIViewController {
+    
+    var moviesView: MoviesView = MoviesView()
+    
+    var data = [MoviesPresenter]()
+    var apiManager: MoviesAPI?
+    weak var delegate: MoviesDelegate?
+    var state: MoviesViewControllerState = .loading {
+        didSet { switchState(state) }
+    }
+    
+    // Params
+    let numberOfMoviesToLoad = 9
+    var isInfiniteScrollEnabled: Bool = true
+    var isFetchingMore: Bool = false
+    
+    // Collection view
+    var collectionView: UICollectionView!
+    
+    // Sections
+    var sections: [Section] = []
+    var dataSection: Section!
+    var idleSection: Section!
+    var loadingSection: Section!
+    var loadingMoreSection: Section!
+    
+    // Alert
+    var alert: AlertViewController?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view = moviesView
+        
+        alert = AlertViewController(parent: self)
+        
+        initializeSections()
+        addCollectionView()
+        initialLoadMovies()
+        
+        state = .loading
+    }
+    
+    //----------------------------------------------------------------------
+    // MARK: Status bar
+    //----------------------------------------------------------------------
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    //----------------------------------------------------------------------
+    // MARK: Sections
+    //----------------------------------------------------------------------
+    func initializeSections() {
+        idleSection = Section(cellType: IdleCell.self, identifier: IdleCell.identifier)
+        dataSection = Section(cellType: MovieCell.self, identifier: MovieCell.identifier)
+        loadingSection = Section(cellType: LoadingWaitCell.self, identifier: LoadingWaitCell.identifier)
+        loadingMoreSection = Section(cellType: LoadingCell.self, identifier: LoadingCell.identifier)
+        loadingSection.show()
+        
+        sections = [idleSection, dataSection, loadingSection, loadingMoreSection]
+        
+        configureSections()
+    }
+    
+    func configureSections() {
+        dataSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), columnDistance: 10.0, rowDistance: 20.0)
+        loadingMoreSection.cellStyle = CellStyle(insets: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0), columnDistance: 0, rowDistance: 0)
+        
+        dataSection.cellStyle.size = { width, _ -> CGSize in MovieCell.calculateCellSize(collectionViewWidth: width) }
+        loadingMoreSection.cellStyle.size = { (width, _) -> CGSize in CGSize(width: width, height: 50) }
+        
+        loadingMoreSection.populateCell = { cell, row in
+            let loadingMoreCell = cell as! LoadingCell
+            loadingMoreCell.spinner.startAnimating()
+        }
+        
+        dataSection.populateCell = { [weak self] cell, row in
+            guard let self = self else { return }
+            guard self.data.count > row else { return }
+            
+            let movieCell = cell as! MovieCell
+            movieCell.posterURL = self.data[row].posterURL
+        }
+        
+        dataSection.selectedCell = { [weak self] row in
+            guard let self = self else { return }
+            
+            self.delegate?.tappedOnMoviesPoster(movie: self.data[row])
+        }
+    }
+    
+    //----------------------------------------------------------------------
+    // MARK: Collection View
+    //----------------------------------------------------------------------
+    func addCollectionView() {
+        let collectionVC = AbstractedCollectionViewController(sections: sections)
+        collectionVC.scrollingDelegate = self
+        addChildViewController(child: collectionVC)
+        
+        collectionVC.addPullOnRefresh(for: { [weak self] in
+            self?.refreshOnPull()
+        })
+        
+        // Setup collection view
+        collectionView = collectionVC.collectionView
+        
+        [collectionView.topAnchor.constraint(equalTo: moviesView.navBar.bottomAnchor),
+         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+         collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ].activate()
+    }
+    
+}
+
+//----------------------------------------------------------------------
+// MARK: State machine
+//----------------------------------------------------------------------
+extension MoviesViewController {
+    
+    func switchState(_ newState: MoviesViewControllerState) {
+        collectionView.alwaysBounceVertical = true
+        sections.forEach { $0.hide() }
+        isInfiniteScrollEnabled = false
+        data = []
+        
+        switch newState {
+        case .loading:
+            loadingSection.show()
+            collectionView.alwaysBounceVertical = false // do not bounce when loading
+        case .idle:
+            idleSection.show()
+        case .hasData(let movies, isLast: let isLast):
+            dataSection.show()
+            
+            data = movies
+            dataSection.numberOfItems = data.count
+            isInfiniteScrollEnabled = !isLast // maybe
+        }
+        
+        collectionView.reloadData()
+    }
+    
+}
+
+//----------------------------------------------------------------------
+// Scrolling: "Infinite Scroll"
+//----------------------------------------------------------------------
+extension MoviesViewController: ScrollingDelegate {
+    
+    func batchFetch() {
+        if !isFetchingMore && isInfiniteScrollEnabled {
+            loadingMoreSection.show()
+            collectionView.reloadSections(IndexSet(integer: 3))
+            isFetchingMore = true
+            
+            loadMoreOnDragDown()
+        }
+    }
+}
+
+//----------------------------------------------------------------------
+// MARK: API Calls
+//----------------------------------------------------------------------
+extension MoviesViewController {
+    
+    func initialLoadMovies() {
+        apiManager?.getMovies(start: 0, quantity: numberOfMoviesToLoad) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success((let movies, let isLast)):
+                self.state = movies.isEmpty ? .idle : .hasData(movies, isLast: isLast)
+                
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.state = .idle
+            }
+        }
+    }
+    
+    func loadMoreOnDragDown() {
+        apiManager?.getMovies(start: data.count, quantity: numberOfMoviesToLoad) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success((let movies, let isLast)):
+                let appendNewData = self.data + movies
+                self.state = appendNewData.isEmpty ? .idle : .hasData(appendNewData, isLast: isLast)
+                
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.loadingMoreSection.hide()
+                self.collectionView.reloadSections(IndexSet(integer: 3)) // refresh the section with the spinner
+            }
+            
+            self.isFetchingMore = false
+        }
+    }
+    
+    func refreshOnPull() {
+        apiManager?.getMovies(start: 0, quantity: numberOfMoviesToLoad) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success((let movies, let isLast)):
+                self.state = movies.isEmpty ? .idle : .hasData(movies, isLast: isLast)
+                
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.localizedDescription)
+            }
+            
+            self.collectionView.refreshControl?.endRefreshing()
+        }
+    }
+    
+}
+
+

@@ -12,22 +12,26 @@ import Foundation
 import MediaPlayer
 import AVFoundation
 
+protocol VolumeControllerDelegate: AnyObject {
+    func showVolumeIndicator(volumeLevel: Float)
+    func hideVolumeIndicator()
+}
+
 class VolumeController {
     
+    weak var delegate: VolumeControllerDelegate?
     let notificationCenter = NotificationCenter.default
     let volumeIndicatorTimeout = 2.0
+    let observerName = NSNotification.Name(rawValue: "AVSystemController_SystemVolumeDidChangeNotification")
     
     var previousVolumeLevel: Float?
-    var action: ((Float) -> ())?
-    var onHide: (() -> ())?
     var timer: Timer?
     
-    init(view: UIView, onHide: @escaping () -> (), onChange: @escaping (Float) -> ()) {
+    
+    init(view: UIView) {
         hideVolumeHUD(targetView: view)
-        self.action = onChange
-        self.onHide = onHide
         
-        notificationCenter.addObserver(self, selector: #selector(systemVolumeDidChange), name: NSNotification.Name(rawValue: "AVSystemController_SystemVolumeDidChangeNotification"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(systemVolumeDidChange), name: observerName, object: nil)
     }
     
     func hideVolumeHUD(targetView: UIView) {
@@ -46,16 +50,20 @@ class VolumeController {
         print(volumeLevel)
         
         if let prevVolumeLevel = previousVolumeLevel, volumeLevel != prevVolumeLevel {
-            action?(volumeLevel)
+            delegate?.showVolumeIndicator(volumeLevel: volumeLevel)
             
             timer?.invalidate()
             // Execute "Hide" after 3 seconds
-            timer = Timer.scheduledTimer(withTimeInterval: volumeIndicatorTimeout, repeats: false) { [weak self] timer in
-                self?.onHide?()
+            timer = Timer.scheduledTimer(withTimeInterval: volumeIndicatorTimeout, repeats: false) {
+                [weak self] timer in
+                self?.delegate?.hideVolumeIndicator()
             }
         }
         
         previousVolumeLevel = volumeLevel
     }
     
+    deinit {
+        notificationCenter.removeObserver(self, name:  observerName, object: nil)
+    }
 }

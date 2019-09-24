@@ -15,12 +15,21 @@ extension UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    func setGradient(colors: [UIColor]) {
+    func setGradient(colors: [UIColor]) -> CAGradientLayer {
         let gradient = CAGradientLayer()
         
         gradient.frame = self.bounds
         gradient.colors = colors.map { $0.cgColor }
         
         self.layer.insertSublayer(gradient, at: 0)
+        
+        return gradient
+    }
+    
+    func fillConstraints(in parent: UIView) {
+        topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+        bottomAnchor.constraint(equalTo: parent.bottomAnchor).isActive = true
+        leadingAnchor.constraint(equalTo: parent.leadingAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: parent.trailingAnchor).isActive = true
     }
 }
