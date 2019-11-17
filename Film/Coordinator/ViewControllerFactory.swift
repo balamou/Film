@@ -1,5 +1,5 @@
 //
-//  Builder.swift
+//  ViewControllerFactory.swift
 //  Film
 //
 //  Created by Michel Balamou on 2019-08-30.
@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol Builder {
+protocol ViewControllerFactory {
     func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController
     
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController
@@ -22,7 +22,7 @@ protocol Builder {
 }
 
 
-class StandardBuilder: Builder {
+class StandardFactory: ViewControllerFactory {
     
     func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController {
         let welcomeVC = WelcomeViewController(settings: settings)

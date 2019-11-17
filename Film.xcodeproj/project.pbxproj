@@ -107,7 +107,7 @@
 		EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E9E23188B450049504E /* LoadingCell.swift */; };
 		EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */; };
 		EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55423161B3E00041D29 /* ShowInfoView.swift */; };
-		EDC8AB422319970100400312 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AB412319970100400312 /* Builder.swift */; };
+		EDC8AB422319970100400312 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AB412319970100400312 /* ViewControllerFactory.swift */; };
 		EDCBAC5C2327245E0002FAE3 /* ChangeSeasonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */; };
 		EDCBAC5E232726A90002FAE3 /* ChangeSeasonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */; };
 		EDE494EB232BC81200547830 /* AbstractedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */; };
@@ -267,7 +267,7 @@
 		EDB57E9E23188B450049504E /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoViewController.swift; sourceTree = "<group>"; };
 		EDBEC55423161B3E00041D29 /* ShowInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoView.swift; sourceTree = "<group>"; };
-		EDC8AB412319970100400312 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		EDC8AB412319970100400312 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSeasonViewController.swift; sourceTree = "<group>"; };
 		EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSeasonView.swift; sourceTree = "<group>"; };
 		EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractedCollectionView.swift; sourceTree = "<group>"; };
@@ -629,7 +629,7 @@
 			isa = PBXGroup;
 			children = (
 				ED5AC12523157A260098A161 /* Coordinator.swift */,
-				EDC8AB412319970100400312 /* Builder.swift */,
+				EDC8AB412319970100400312 /* ViewControllerFactory.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -940,7 +940,7 @@
 				ED5AC1052314C45A0098A161 /* Images.swift in Sources */,
 				ED5AC10E2314DDA30098A161 /* ShowsView.swift in Sources */,
 				ED40BB76233725E2002FD07E /* LanguagePickerView.swift in Sources */,
-				EDC8AB422319970100400312 /* Builder.swift in Sources */,
+				EDC8AB422319970100400312 /* ViewControllerFactory.swift in Sources */,
 				ED5AC1182314DE590098A161 /* WelcomeViewController.swift in Sources */,
 				ED5AC12823158FED0098A161 /* CustomNavigationBar.swift in Sources */,
 				EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */,

@@ -16,7 +16,7 @@ class Coordinator {
     let tabViewConroller = UITabBarController()
     
     var playerVC: VideoPlayerController?
-    let builder: Builder = StandardBuilder()
+    let factory: ViewControllerFactory = StandardFactory()
     let settings: Settings = Settings()
     
     init(window: UIWindow) {
@@ -32,17 +32,17 @@ class Coordinator {
     }
     
     func loginFlow() -> UIViewController {
-        let welcomeVC = builder.createWelcomeViewController(delegate: self, settings: settings)
+        let welcomeVC = factory.createWelcomeViewController(delegate: self, settings: settings)
         
         print(settings.description())
         return welcomeVC
     }
     
     func mainFlow() -> UIViewController {
-        let watchingVC = builder.createWatchingViewController(delegate: self)
-        let showsVC = builder.createShowViewController(delegate: self)
-        let moviesVC = builder.createMoviesViewController(delegate: self)
-        let settingsVC = builder.createSettingsViewController(delegate: self, settings: settings)
+        let watchingVC = factory.createWatchingViewController(delegate: self)
+        let showsVC = factory.createShowViewController(delegate: self)
+        let moviesVC = factory.createMoviesViewController(delegate: self)
+        let settingsVC = factory.createSettingsViewController(delegate: self, settings: settings)
         
         tabViewConroller.viewControllers = [watchingVC, showsVC, moviesVC, settingsVC]
         tabViewConroller.tabBar.barTintColor = .black
@@ -92,7 +92,7 @@ extension Coordinator: WatchingViewControllerDelegate {
              // TODO: open MovieInfoVC
             break
         case .show:
-            let showInfoVC = builder.createShowInfoViewController(delegate: self, series: SeriesPresenter(watched))
+            let showInfoVC = factory.createShowInfoViewController(delegate: self, series: SeriesPresenter(watched))
             navigationController.pushViewController(showInfoVC, animated: false)
         }
     }
@@ -101,7 +101,7 @@ extension Coordinator: WatchingViewControllerDelegate {
 extension Coordinator: ShowsDelegate {
     
     func tappedOnSeriesPoster(series: SeriesPresenter) {
-        let showInfoVC = builder.createShowInfoViewController(delegate: self, series: series)
+        let showInfoVC = factory.createShowInfoViewController(delegate: self, series: series)
         
         navigationController.pushViewController(showInfoVC, animated: false)
     }
@@ -111,7 +111,7 @@ extension Coordinator: ShowsDelegate {
 extension Coordinator: MoviesDelegate {
     
     func tappedOnMoviesPoster(movie: MoviesPresenter) {
-        let movieInfoVS = builder.createMovieInfoViewController(delegate: self, movie: movie)
+        let movieInfoVS = factory.createMovieInfoViewController(delegate: self, movie: movie)
         
         navigationController.pushViewController(movieInfoVS, animated: false)
     }
