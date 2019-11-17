@@ -9,14 +9,7 @@
 import Foundation
 
 
-class MoviesPresenter {
-    
+struct MoviesPresenter {
     var id: Int
     var posterURL: String?
-    
-    init(id: Int, posterURL: String? = nil) {
-        self.id = id
-        self.posterURL = posterURL
-    }
-    
 }

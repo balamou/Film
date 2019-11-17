@@ -10,7 +10,6 @@ import Foundation
 
 
 struct Watched: Decodable {
-    
     enum WatchedType: String, Decodable {
         case movie
         case show
@@ -22,14 +21,4 @@ struct Watched: Decodable {
     var label: String // Either Season # and Episode # or duration
     var movieURL: String // for player
     var type: WatchedType
-    
-    init(id: Int, posterURL: String? = nil, stoppedAt: Float, label: String, movieURL: String, type: WatchedType) {
-        self.id = id
-        self.posterURL = posterURL
-        self.stoppedAt = stoppedAt
-        self.label = label
-        self.movieURL = movieURL
-        self.type = type
-    }
-    
 }
