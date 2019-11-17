@@ -168,6 +168,7 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
     
     func addPullOnRefresh(for action: @escaping () -> Void) {
         let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
         collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
         

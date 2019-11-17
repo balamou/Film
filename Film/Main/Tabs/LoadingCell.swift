@@ -14,6 +14,7 @@ class LoadingCell: UICollectionViewCell {
     
     var spinner: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = UIActivityIndicatorView.Style.white
         activityIndicator.startAnimating()
         
         return activityIndicator
