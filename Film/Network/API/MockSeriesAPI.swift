@@ -14,6 +14,37 @@ protocol SeriesAPI {
     func getSeries(start: Int, quantity: Int, result: @escaping SeriesRequest)
 }
 
+//----------------------------------------------------------------------
+// TODO: Test Concrete API
+//----------------------------------------------------------------------
+final class ConcreteSeriesAPI: SeriesAPI {
+    
+    private let settings: Settings
+    
+    /// Wrapper used to separate two values from the JSON data.
+    /// Both are used independently of each other, but are encoded together (see code below)
+    private struct SeriesWrapper: Decodable {
+        let showsData: [SeriesPresenter]
+        let isLast: Bool
+    }
+    
+    init(settings: Settings) {
+        self.settings = settings
+    }
+    
+    func getSeries(start: Int, quantity: Int, result: @escaping SeriesRequest) {
+        let requestData = RequestData(baseURL: settings.basePath, endPoint: .shows(start: start, quantity: quantity, language: settings.language), method: .get)
+        let request = RequestType<SeriesWrapper>(data: requestData)
+        
+        request.execute(onSuccess: { data in
+            result(.success((data.showsData, data.isLast)))
+        }, onError: { error in
+            result(.failure(error))
+        })
+    }
+}
+
+
 class MockSeriesAPI: SeriesAPI {
     var count = 0
     let timeDelay = 1.5
@@ -50,30 +81,3 @@ class MockSeriesAPI: SeriesAPI {
     }
 }
 
-//----------------------------------------------------------------------
-// TODO: Implement and test Concrete API
-//----------------------------------------------------------------------
-final class ConcreteSeriesAPI: SeriesAPI {
-    
-    private let settings: Settings
-    
-    struct SeriesWrapper: Decodable {
-        let showsData: [SeriesPresenter]
-        let isLast: Bool
-    }
-    
-    init(settings: Settings) {
-        self.settings = settings
-    }
-    
-    func getSeries(start: Int, quantity: Int, result: @escaping SeriesRequest) {
-        let requestData = RequestData(baseURL: settings.basePath, endPoint: .shows(start: start, quantity: quantity, language: settings.language), method: .get)
-        let request = RequestType<SeriesWrapper>(data: requestData)
-        
-        request.execute(onSuccess: { data in
-            result(.success((data.showsData, data.isLast)))
-        }, onError: { error in
-            result(.failure(error))
-        })
-    }
-}

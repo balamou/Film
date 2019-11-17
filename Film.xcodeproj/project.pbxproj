@@ -459,6 +459,19 @@
 			path = Welcome;
 			sourceTree = "<group>";
 		};
+		ED658C7B23820478004B871D /* API */ = {
+			isa = PBXGroup;
+			children = (
+				ED1B58CE2336A65500307EDC /* MockWelcomeAPI.swift */,
+				EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */,
+				EDB57E95231885F10049504E /* MockSeriesAPI.swift */,
+				EDE494F2232DC37600547830 /* MockMoviesAPI.swift */,
+				ED09BD9C2324A3350023DF83 /* MockSeriesInfoAPI.swift */,
+				EDE494FF232EA78B00547830 /* MockMovieInfoAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		ED82DBC3231464F900FEC56A /* Volume Module */ = {
 			isa = PBXGroup;
 			children = (
@@ -667,12 +680,7 @@
 				ED658C752381F055004B871D /* EndPoint.swift */,
 				ED658C772381F3F3004B871D /* NetworkDispatcher.swift */,
 				ED658C792381F8B6004B871D /* RequestType.swift */,
-				ED1B58CE2336A65500307EDC /* MockWelcomeAPI.swift */,
-				EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */,
-				EDB57E95231885F10049504E /* MockSeriesAPI.swift */,
-				EDE494F2232DC37600547830 /* MockMoviesAPI.swift */,
-				ED09BD9C2324A3350023DF83 /* MockSeriesInfoAPI.swift */,
-				EDE494FF232EA78B00547830 /* MockMovieInfoAPI.swift */,
+				ED658C7B23820478004B871D /* API */,
 			);
 			path = Network;
 			sourceTree = "<group>";
