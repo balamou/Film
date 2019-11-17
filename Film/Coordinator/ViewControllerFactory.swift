@@ -13,7 +13,7 @@ protocol ViewControllerFactory {
     func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController
     
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController
-    func createShowViewController(delegate: ShowsDelegate?) -> ShowsViewController
+    func createShowViewController(delegate: ShowsDelegate?, settings: Settings) -> ShowsViewController
     func createMoviesViewController(delegate: MoviesDelegate?) -> MoviesViewController
     func createSettingsViewController(delegate: SettingsViewControllerDelegate?, settings: Settings) -> SettingsViewController
     
@@ -41,9 +41,9 @@ class StandardFactory: ViewControllerFactory {
         return watchingVC
     }
     
-    func createShowViewController(delegate: ShowsDelegate?) -> ShowsViewController {
+    func createShowViewController(delegate: ShowsDelegate?, settings: Settings) -> ShowsViewController {
         let showsVC = ShowsViewController()
-        let apiManager: SeriesAPI = MockSeriesAPI()
+        let apiManager: SeriesAPI = ConcreteSeriesAPI(settings: settings)
         
         showsVC.apiManager = apiManager
         showsVC.delegate = delegate

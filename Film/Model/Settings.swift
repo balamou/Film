@@ -18,6 +18,10 @@ class Settings {
     var ipAddress = "192.168.72.46"
     var port = "9989"
     
+    var basePath: String {
+        return "http://\(ipAddress):\(port)"
+    }
+    
     enum Keys {
         static let isLogged = "film.isLogged"
         static let username = "film.username"

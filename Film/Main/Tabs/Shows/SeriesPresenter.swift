@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SeriesPresenter {
+struct SeriesPresenter: Decodable {
     var id: Int
     var posterURL: String?
     

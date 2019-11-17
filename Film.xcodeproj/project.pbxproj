@@ -492,6 +492,7 @@
 				ED909B5E230F00A100A67AC6 /* Resources */,
 				ED909B5D230F009400A67AC6 /* Supporting Files */,
 				EDB57E8E231766890049504E /* Model */,
+				EDEF9757231C244900025483 /* Network */,
 				ED57FCAE2313669A0001A9AB /* Main */,
 			);
 			path = Film;
@@ -609,7 +610,6 @@
 				EDE494FD232EA4D100547830 /* Movie.swift */,
 				ED70C09C231C302900380BE0 /* MoviesPresenter.swift */,
 				EDEF9758231C263500025483 /* Mocks */,
-				EDEF9757231C244900025483 /* API */,
 				EDB0CD3A231B516000246CDF /* Settings.swift */,
 			);
 			path = Model;
@@ -655,7 +655,7 @@
 			path = "Movie Info";
 			sourceTree = "<group>";
 		};
-		EDEF9757231C244900025483 /* API */ = {
+		EDEF9757231C244900025483 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				ED1B58CE2336A65500307EDC /* MockWelcomeAPI.swift */,
@@ -665,7 +665,7 @@
 				ED09BD9C2324A3350023DF83 /* MockSeriesInfoAPI.swift */,
 				EDE494FF232EA78B00547830 /* MockMovieInfoAPI.swift */,
 			);
-			path = API;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		EDEF9758231C263500025483 /* Mocks */ = {
