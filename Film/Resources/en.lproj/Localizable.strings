@@ -8,6 +8,10 @@
 
 //Welcome
 "Start" = "Start";
+"Login" = "Login";
+"Logging in..." = "Logging in...";
+"Sign up" = "Sign up";
+"Signing in..." = "Signing in...";
 
 // Tabs
 "Watching" = "Watching";

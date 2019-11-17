@@ -38,6 +38,7 @@ class WelcomeViewController: UIViewController {
         alert = AlertViewController(parent: self)
         
         welcomeView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        welcomeView.signUpButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
         
         dismissKey()
         configureWithSettings()
@@ -60,7 +61,12 @@ class WelcomeViewController: UIViewController {
     }
     
     @objc func signupButtonTapped() {
+        guard let username = welcomeView.usernameField.text, !username.isEmpty else {
+            alert?.mode = .showMessage("Please enter a username".localize())
+            return
+        }
         
+        signup(username: username)
     }
     
     //----------------------------------------------------------------------
@@ -91,14 +97,33 @@ extension WelcomeViewController {
                 } else {
                     self.alert?.mode = .showMessage("Username does not exist")
                 }
-                break
             case .failure(_):
                 // TODO: show specific error
                 self.alert?.mode = .showMessage("An error occured")
-                break
             }
             
             self.welcomeView.loginButton.isEnabled = true
+        }
+    }
+    
+    func signup(username: String) {
+        welcomeView.signUpButton.isEnabled = false
+        
+        apiManager?.signUp(username: username) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let didSignUp):
+                if didSignUp {
+                    self.delegate?.onSuccessfullLogin()
+                } else {
+                    self.alert?.mode = .showMessage("Unable to sign up")
+                }
+            case .failure(_):
+                self.alert?.mode = .showMessage("An error occured")
+            }
+            
+            self.welcomeView.signUpButton.isEnabled = true
         }
     }
     

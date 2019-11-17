@@ -1,9 +1,5 @@
 # <img src="images/logo.png" width="30px" height="30px"/> FILM
 
-- [x] Hard drive
-- [ ] Apple dev subscription
-- [ ] Apple tv
-
 ## Player:
 - [x] top status bar animation
 - [ ] fade in/fade out animation
@@ -68,12 +64,10 @@ Efficiency/blocks:
 - [ ] Do not use a picker for languages. Make a custom radio selection 
 
 ## To do:
-- [x] Back up pictures
-- [ ] Check hard drives
-- [ ] Connect hard drive to pi
-- [x] Add remaining image assets to showinfo
-- [x] Add loading state to show info
-- [x] Add change seasons VC
+- [x] Hard drive
+- [ ] Apple dev subscription
+- [ ] Apple tv support
+- [ ] Chrome cast support
 
 ## STAGES:
 - [x] Make watched open info

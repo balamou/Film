@@ -142,13 +142,24 @@ class WelcomeView: UIView {
     lazy var loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("Login".localize(), for: .normal)
-        button.setTitle("Logging in...", for: .disabled)
+        button.setTitle("Logging in...".localize(), for: .disabled)
         button.backgroundColor = .black
         button.titleLabel?.font = buttonsFont
         button.layer.cornerRadius = 4
         
         return button
     }()
+    
+    lazy var signUpButton: UIButton = {
+          let button = UIButton()
+          button.setTitle("Sign up".localize(), for: .normal)
+          button.setTitle("Signing in...".localize(), for: .disabled)
+          button.backgroundColor = .black
+          button.titleLabel?.font = buttonsFont
+          button.layer.cornerRadius = 4
+          
+          return button
+      }()
     
     class Constraints {
         
@@ -181,6 +192,13 @@ class WelcomeView: UIView {
             button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin).isActive = true
             button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -buttonsMargin).isActive = true
         }
+        
+        static func setSignUpButton(_ button: UIButton, _ topNeighbour: UIView, _ parent: UIView) {
+            button.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 10.0).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+            button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: buttonsMargin).isActive = true
+            button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -buttonsMargin).isActive = true
+        }
        
     }
     
@@ -193,6 +211,7 @@ class WelcomeView: UIView {
         topBar.addSubviewLayout(logoImage)
         topBar.addSubviewLayout(topLabel)
         addSubviewLayout(loginButton)
+        addSubviewLayout(signUpButton)
         
         Constraints.setTopBar(topBar, self)
         Constraints.setLogoImageView(logoImage, topBar)
@@ -201,6 +220,7 @@ class WelcomeView: UIView {
         setupStackViews()
         
         Constraints.setLoginButton(loginButton, verticalStackView, self)
+        Constraints.setSignUpButton(signUpButton, loginButton, self)
         
         collapsableView.isHidden = true
         let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(languagesTapped))
