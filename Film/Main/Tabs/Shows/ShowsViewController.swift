@@ -193,7 +193,7 @@ extension ShowsViewController {
                 self.state = series.isEmpty ? .idle : .hasData(series, isLast: isLast)
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.alert?.mode = .showMessage(error.toString)
                 self.state = .idle
             }
         }
@@ -209,7 +209,7 @@ extension ShowsViewController {
                 self.state = appendNewData.isEmpty ? .idle : .hasData(appendNewData, isLast: isLast)
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.alert?.mode = .showMessage(error.toString)
                 self.loadingMoreSection.hide()
                 self.collectionView.reloadSections(IndexSet(integer: 3)) // refresh the section with the spinner
             }
@@ -227,7 +227,7 @@ extension ShowsViewController {
                 self.state = series.isEmpty ? .idle : .hasData(series, isLast: isLast)
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.alert?.mode = .showMessage(error.toString)
             }
             
             self.collectionView.refreshControl?.endRefreshing()

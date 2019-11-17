@@ -60,6 +60,9 @@
 		ED5AC12A2315A65F0098A161 /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC1292315A65F0098A161 /* UIViewController+extensions.swift */; };
 		ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12B2315A7600098A161 /* WatchingCell.swift */; };
 		ED5AC12E2315CE500098A161 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5AC12D2315CE500098A161 /* Fonts.swift */; };
+		ED658C762381F055004B871D /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED658C752381F055004B871D /* EndPoint.swift */; };
+		ED658C782381F3F3004B871D /* NetworkDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED658C772381F3F3004B871D /* NetworkDispatcher.swift */; };
+		ED658C7A2381F8B6004B871D /* RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED658C792381F8B6004B871D /* RequestType.swift */; };
 		ED70C09D231C302900380BE0 /* MoviesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED70C09C231C302900380BE0 /* MoviesPresenter.swift */; };
 		ED725116232ED83A0040C279 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED725115232ED83A0040C279 /* CustomTextField.swift */; };
 		ED725118232EE8680040C279 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED725117232EE8680040C279 /* Colors.swift */; };
@@ -198,6 +201,9 @@
 		ED5AC1292315A65F0098A161 /* UIViewController+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extensions.swift"; sourceTree = "<group>"; };
 		ED5AC12B2315A7600098A161 /* WatchingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingCell.swift; sourceTree = "<group>"; };
 		ED5AC12D2315CE500098A161 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		ED658C752381F055004B871D /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		ED658C772381F3F3004B871D /* NetworkDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDispatcher.swift; sourceTree = "<group>"; };
+		ED658C792381F8B6004B871D /* RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType.swift; sourceTree = "<group>"; };
 		ED70C09C231C302900380BE0 /* MoviesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesPresenter.swift; sourceTree = "<group>"; };
 		ED725115232ED83A0040C279 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ED725117232EE8680040C279 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -658,6 +664,9 @@
 		EDEF9757231C244900025483 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				ED658C752381F055004B871D /* EndPoint.swift */,
+				ED658C772381F3F3004B871D /* NetworkDispatcher.swift */,
+				ED658C792381F8B6004B871D /* RequestType.swift */,
 				ED1B58CE2336A65500307EDC /* MockWelcomeAPI.swift */,
 				EDACC49B2319FE6B005DC09C /* MockWatchedAPI.swift */,
 				EDB57E95231885F10049504E /* MockSeriesAPI.swift */,
@@ -953,12 +962,14 @@
 				EDE49500232EA78B00547830 /* MockMovieInfoAPI.swift in Sources */,
 				EDB0CD3D231B57EE00246CDF /* IdleCell.swift in Sources */,
 				EDE494F5232DC3D800547830 /* MoviesPresenter+mock.swift in Sources */,
+				ED658C7A2381F8B6004B871D /* RequestType.swift in Sources */,
 				EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */,
 				EDB57E90231766980049504E /* Watched.swift in Sources */,
 				ED70C09D231C302900380BE0 /* MoviesPresenter.swift in Sources */,
 				EDE494EB232BC81200547830 /* AbstractedCollectionView.swift in Sources */,
 				ED0D06322327D28D007D3F8B /* SeasonCell.swift in Sources */,
 				ED57FCB3231383540001A9AB /* CGRect+extensions.swift in Sources */,
+				ED658C782381F3F3004B871D /* NetworkDispatcher.swift in Sources */,
 				EDE494FA232E9E8900547830 /* MovieInfoViewController.swift in Sources */,
 				ED1FEEBD2318B74100DE69AB /* AlertViewController.swift in Sources */,
 				EDB57E9423176EC70049504E /* UIImageView+extensions.swift in Sources */,
@@ -968,6 +979,7 @@
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
 				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
 				ED725116232ED83A0040C279 /* CustomTextField.swift in Sources */,
+				ED658C762381F055004B871D /* EndPoint.swift in Sources */,
 				ED725118232EE8680040C279 /* Colors.swift in Sources */,
 				EDB0CD3B231B516000246CDF /* Settings.swift in Sources */,
 				ED09BD9D2324A3350023DF83 /* MockSeriesInfoAPI.swift in Sources */,
