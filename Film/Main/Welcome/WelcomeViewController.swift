@@ -116,12 +116,13 @@ extension WelcomeViewController {
 extension WelcomeViewController {
     
     func dismissKey() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboard))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+        welcomeView.hideLanguagePicker()
     }
 }

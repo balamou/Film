@@ -44,6 +44,7 @@ class LanguagePickerView: UIPickerView {
 extension LanguagePickerView: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        superview?.endEditing(true) // dismiss keyboard of the superview
         onSelectLanguage(languages[row].localized)
     }
     

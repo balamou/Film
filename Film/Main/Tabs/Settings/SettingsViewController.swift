@@ -122,7 +122,7 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController {
     
     func dismissKey() {
-        let tap = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboard))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }

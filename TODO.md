@@ -59,6 +59,14 @@ Efficiency/blocks:
 ## ShowInfoVC:
 - [ ] tap to expand plot
 
+## WelcomeVC:
+- [ ] Add `sign up` button
+- [ ] Move `login` button up when keyboard shows up
+
+- [ ] Redesign the view: use a UIScrollView with paging for login/sign up
+- [ ] Change the style of the text fields
+- [ ] Do not use a picker for languages. Make a custom radio selection 
+
 ## To do:
 - [x] Back up pictures
 - [ ] Check hard drives
