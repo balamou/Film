@@ -1,8 +1,10 @@
-Film:
+# <img src="images/logo.png" width="30px" height="30px"/> FILM
+
 - [x] Hard drive
 - [ ] Apple dev subscription
 - [ ] Apple tv
-Player:
+
+## Player:
 - [x] top status bar animation
 - [ ] fade in/fade out animation
 - [x] timer to hide control panel
@@ -20,44 +22,52 @@ Player:
 - [ ] Enable video buffering
 - [ ] Save position of the video playing when leaving the app (or during a timer interval)
 - [ ] Add double tap gesture (for backwards and forward)
-Code:
+
+## Code:
 - [x] Move fonts out
 - [x] Move images out
 - [ ] Move colors out
 - [x] remove observers on disappear or deinit
 - [ ] Cut down the size of the VLC library?? (if possible)
 - [x] Move Cell setup into the cell
-Other:
+
+## Other:
 - [ ] App expiring soon notification
 - [x] Increase button touch size
 Efficiency/blocks:
 - [ ] Should make hierarchy elements weak var??
-Nitpick:
+
+## Nitpick:
 - [ ] Change tab color (white when selected/dark gray otherwise)
 - [ ] Change Font size of the tab bar
 - [ ] Decrease tab bar icon sizes
 - [ ] Make ShowInfoViewController as a CollectionViewController not just a ViewController
-Future features (optimistic):
+
+## Future features (optimistic):
 - [ ] Tv OS (air play)
 - [ ] Download (offline use)
 - [ ] Use outside of local network (encryption, security/opening ports/port forwarding, tracking?)
-ShowsVC:
+
+## ShowsVC:
 - [x] Pull to refresh
 - [ ] Idle image for error (probably cell)
 - [ ] Idle image for no data (probably cell)
 - [ ] Fix alert style
 - [ ] Add alert queue
 - [x] Add noMoreData left
-ShowInfoVC:
+
+## ShowInfoVC:
 - [ ] tap to expand plot
-To do:
+
+## To do:
 - [x] Back up pictures
 - [ ] Check hard drives
 - [ ] Connect hard drive to pi
 - [x] Add remaining image assets to showinfo
 - [x] Add loading state to show info
 - [x] Add change seasons VC
-STAGES:
+
+## STAGES:
 - [x] Make watched open info
 - [x] Abstract out ShowVC
 - [x] Make MoviesVC
@@ -69,7 +79,8 @@ STAGES:
 - [ ] Make Backend in GO
 - [ ] Test JSON decoding
 - [ ] Add tests
-BRANCHES:
+
+## BRANCHES:
 - [x] master (player works)
 - [x] player (player works)
 - [x] ui_structure (created most screens)
