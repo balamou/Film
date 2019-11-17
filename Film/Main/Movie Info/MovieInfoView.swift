@@ -8,11 +8,10 @@
 
 import UIKit
 
-protocol MovieViewDelegate: AnyObject {
+protocol MovieViewDelegate: class {
     func playButtonTapped()
     func exitButtonTapped()
 }
-
 
 class MovieInfoView: UIView {
     weak var delegate: MovieViewDelegate?

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MovieInfoViewControllerDelegate: AnyObject {
+protocol MovieInfoViewControllerDelegate: class {
     func playMovie()
 }
 

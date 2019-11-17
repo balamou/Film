@@ -68,7 +68,7 @@ class Section {
     }
 }
 
-protocol ScrollingDelegate: AnyObject {
+protocol ScrollingDelegate: class {
     func batchFetch()
 }
 

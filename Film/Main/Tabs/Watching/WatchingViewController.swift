@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol WatchingViewControllerDelegate: AnyObject {
+protocol WatchingViewControllerDelegate: class {
     func playTapped(watched: Watched)
     func moreInfoTapped(watched: Watched)
 }

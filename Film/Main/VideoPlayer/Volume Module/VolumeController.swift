@@ -12,7 +12,7 @@ import Foundation
 import MediaPlayer
 import AVFoundation
 
-protocol VolumeControllerDelegate: AnyObject {
+protocol VolumeControllerDelegate: class {
     func showVolumeIndicator(volumeLevel: Float)
     func hideVolumeIndicator()
 }

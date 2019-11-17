@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol ShowInfoViewControllerDelegate: AnyObject {
+protocol ShowInfoViewControllerDelegate: class {
     func exitButtonTapped()
     func playButtonTapped()
     func thumbnailTapped()

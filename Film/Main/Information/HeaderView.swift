@@ -9,12 +9,11 @@
 import UIKit
 
 
-protocol HeaderViewDelegate: AnyObject {
+protocol HeaderViewDelegate: class {
     func exitButtonTapped()
     func playButtonTapped()
     func seasonButtonTapped()
 }
-
 
 class HeaderView: UICollectionReusableView {
     

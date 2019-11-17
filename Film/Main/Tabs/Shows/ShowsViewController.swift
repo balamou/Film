@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol ShowsDelegate: AnyObject {
+protocol ShowsDelegate: class {
     func tappedOnSeriesPoster(series: SeriesPresenter) // tapped on poster to get more information
 }
 

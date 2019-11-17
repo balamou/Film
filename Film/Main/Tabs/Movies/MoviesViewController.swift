@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol MoviesDelegate: AnyObject {
+protocol MoviesDelegate: class {
     func tappedOnMoviesPoster(movie: MoviesPresenter)
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol WatchingCellDelegate: AnyObject {
+protocol WatchingCellDelegate: class {
     func playButtonTapped(row: Int)
     func informationButtonTapped(row: Int)
 }

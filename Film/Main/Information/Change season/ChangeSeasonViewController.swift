@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol ChangeSeasonViewControllerDelegate: AnyObject {
+protocol ChangeSeasonViewControllerDelegate: class {
     func seasonButtonTapped(season: Int)
     func closeButtonTapped()
 }
