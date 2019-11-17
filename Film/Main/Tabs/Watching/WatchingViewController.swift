@@ -50,7 +50,6 @@ class WatchingViewController: UIViewController {
         initializeSections()
         addCollectionView()
         initialLoadWatching()
-        setupPullToRefresh()
     }
     
     //----------------------------------------------------------------------
@@ -94,6 +93,9 @@ class WatchingViewController: UIViewController {
     
     func addCollectionView() {
         collectionVC = AbstractedCollectionViewController(sections: sections)
+        collectionVC.addPullOnRefresh { [weak self] in
+            self?.refreshOnPull()
+        }
         addChildViewController(child: collectionVC)
         
         // Setup collection view
@@ -105,18 +107,6 @@ class WatchingViewController: UIViewController {
          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
          collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ].activate()
-    }
-    
-    func setupPullToRefresh() {
-        let refreshControl = UIRefreshControl()
-        collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
-    }
-    
-    @objc func refreshTriggered(_ sender: UIRefreshControl) {
-        refreshOnPull {
-            sender.endRefreshing()
-        }
     }
     
 }
@@ -146,7 +136,7 @@ extension WatchingViewController {
         }
     }
     
-    func refreshOnPull(completion: @escaping () -> ()) {
+    func refreshOnPull() {
         apiManager?.getWatched { [weak self] result in
             guard let self = self else { return }
             
@@ -167,7 +157,7 @@ extension WatchingViewController {
                 self.alert?.mode = .showMessage(error.getDescription())
             }
             
-            completion()
+            self.collectionVC.endRefreshing()
         }
     }
 }

@@ -102,7 +102,6 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
         return sections.count
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if sections[section].isShowing {
             return sections[section].numberOfItems
@@ -165,7 +164,7 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
     //----------------------------------------------------------------------
     // Refresh on pull
     //----------------------------------------------------------------------
-    var refreshOnPull: (() -> Void)?
+    private var refreshOnPull: (() -> Void)?
     
     func addPullOnRefresh(for action: @escaping () -> Void) {
         let refreshControl = UIRefreshControl()
@@ -175,8 +174,12 @@ class AbstractedCollectionViewController: UICollectionViewController, UICollecti
         self.refreshOnPull = action
     }
     
-    @objc func refreshTriggered(_ sender: UIRefreshControl) {
+    @objc private func refreshTriggered(_ sender: UIRefreshControl) {
         refreshOnPull?()
+    }
+    
+    func endRefreshing() {
+        collectionView.refreshControl?.endRefreshing()
     }
 }
 
