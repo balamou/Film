@@ -185,5 +185,4 @@ extension WatchingViewController: WatchingCellDelegate {
     func informationButtonTapped(row: Int) {
         delegate?.moreInfoTapped(watched: data[row])
     }
-    
 }

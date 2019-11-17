@@ -83,8 +83,10 @@ class SettingsViewController: UIViewController {
         let errorMessages = [(language.isNilOrEmpty, message: "Please select language".localize()),
                             (ipAddress.isNilOrEmpty, message: "Please enter IP Address".localize()),
                             (port.isNilOrEmpty, message: "Please enter Port number".localize())]
-
-        if let errorMessage = errorMessages.first(where: { $0.0 == true })?.message {
+        
+        let firstFieldThatsNilOrEmpty = errorMessages.first(where: { $0.0 == true })
+        
+        if let errorMessage = firstFieldThatsNilOrEmpty?.message {
             alert?.mode = .showMessage(errorMessage)
             return
         }

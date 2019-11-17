@@ -41,17 +41,6 @@ class WelcomeViewController: UIViewController {
         
         dismissKey()
         configureWithSettings()
-        
-        let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(languagesTapped))
-        welcomeView.languageField.addGestureRecognizer(languageTapGesture)
-    }
-    
-    @objc func languagesTapped() {
-        UIView.animate(withDuration: 0.3) {
-            let hiddenValue = self.welcomeView.collapsableView.isHidden
-            self.welcomeView.collapsableView.isHidden.toggle()
-            self.welcomeView.collapsableView.layer.opacity = hiddenValue ? 1.0 : 0.0
-        }
     }
     
     func configureWithSettings() {
@@ -96,8 +85,7 @@ extension WelcomeViewController {
             switch result {
             case .success(let doesUserExist):
                 if doesUserExist {
-                    self.settings.username = username
-                    self.settings.isLogged = true
+                    self.updateSettings(with: username, isLogged: true)
                     
                     self.delegate?.onSuccessfullLogin()
                 } else {
@@ -112,6 +100,15 @@ extension WelcomeViewController {
             
             self.welcomeView.loginButton.isEnabled = true
         }
+    }
+    
+    func updateSettings(with username: String, isLogged: Bool) {
+        settings.isLogged = isLogged
+        settings.username = username
+        settings.language = welcomeView.languageField.text!
+        settings.ipAddress = welcomeView.ipAddressField.text!
+        settings.port = welcomeView.portField.text!
+        settings.saveToUserDefaults()
     }
     
 }

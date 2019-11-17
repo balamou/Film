@@ -201,7 +201,18 @@ class WelcomeView: UIView {
         setupStackViews()
         
         Constraints.setLoginButton(loginButton, verticalStackView, self)
+        
+        let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(languagesTapped))
+        languageField.addGestureRecognizer(languageTapGesture)
     }
+    
+    @objc func languagesTapped() {
+         UIView.animate(withDuration: 0.3) {
+             let hiddenValue = self.collapsableView.isHidden
+             self.collapsableView.isHidden.toggle()
+             self.collapsableView.layer.opacity = hiddenValue ? 1.0 : 0.0
+         }
+     }
     
     func setupStackViews() {
         verticalStackView.axis = .vertical

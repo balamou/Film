@@ -19,11 +19,11 @@ class Settings {
     var port = "9989"
     
     enum Keys {
-        static let isLogged = "isLogged"
-        static let username = "username"
-        static let language = "language"
-        static let ipAddress = "ipAddress"
-        static let port = "port"
+        static let isLogged = "film.isLogged"
+        static let username = "film.username"
+        static let language = "film.language"
+        static let ipAddress = "film.ipAddress"
+        static let port = "film.port"
     }
     
     init(defaults: UserDefaults = .standard) {

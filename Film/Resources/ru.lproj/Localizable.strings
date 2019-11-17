@@ -51,6 +51,8 @@
 "Please enter IP Address" = "Пожалуйста напишите IP Address";
 "Please enter Port number" = "Пожалуйста напишите номер порта";
 
+"Successfully saved" = "Успешно сохранено";
+
 // ShowInfoVC & ChangeSeasonVC
 "Season" = "Сезон";
 
