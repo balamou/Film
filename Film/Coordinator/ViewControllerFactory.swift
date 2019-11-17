@@ -32,7 +32,6 @@ class StandardFactory: ViewControllerFactory {
         return welcomeVC
     }
     
-    
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController {
         let watchingVC = WatchingViewController()
         watchingVC.delegate = delegate

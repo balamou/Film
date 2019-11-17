@@ -89,7 +89,7 @@ class ConcreteWatchedAPI: WatchedAPI {
                 return
             }
             
-            guard let response = response else {
+            guard let _ = response else {
                 // TODO: handle empty response
                 return
             }

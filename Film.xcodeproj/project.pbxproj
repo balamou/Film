@@ -417,6 +417,7 @@
 		ED5AC1072314DCF70098A161 /* Shows */ = {
 			isa = PBXGroup;
 			children = (
+				ED8060A5231B76CD0032A128 /* SeriesPresenter.swift */,
 				ED5AC10B2314DD4D0098A161 /* ShowsViewController.swift */,
 				ED5AC10D2314DDA30098A161 /* ShowsView.swift */,
 				ED2DBB402315E356009250EC /* ShowsCell.swift */,
@@ -606,7 +607,6 @@
 				EDB57E8F231766980049504E /* Watched.swift */,
 				EDB57E91231769E20049504E /* Series.swift */,
 				EDE494FD232EA4D100547830 /* Movie.swift */,
-				ED8060A5231B76CD0032A128 /* SeriesPresenter.swift */,
 				ED70C09C231C302900380BE0 /* MoviesPresenter.swift */,
 				EDEF9758231C263500025483 /* Mocks */,
 				EDEF9757231C244900025483 /* API */,

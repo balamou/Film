@@ -8,9 +8,7 @@
 
 import Foundation
 
-
-class SeriesPresenter {
-    
+struct SeriesPresenter {
     var id: Int
     var posterURL: String?
     
@@ -23,6 +21,5 @@ class SeriesPresenter {
         self.id = watched.id
         self.posterURL = watched.posterURL
     }
-    
 }
 
