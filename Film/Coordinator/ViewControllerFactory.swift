@@ -27,7 +27,7 @@ class StandardFactory: ViewControllerFactory {
     func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController {
         let welcomeVC = WelcomeViewController(settings: settings)
         welcomeVC.delegate = delegate
-        welcomeVC.apiManager = MockWelcomeAPI()
+        welcomeVC.apiManager = ConcreteWelcomeAPI(settings: settings)
         
         return welcomeVC
     }

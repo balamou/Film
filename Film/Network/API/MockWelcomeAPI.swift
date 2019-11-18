@@ -18,27 +18,31 @@ protocol WelcomeAPI {
 class ConcreteWelcomeAPI: WelcomeAPI {
     private let settings: Settings
     
+    private struct WelcomeWrapper: Decodable {
+        let userId: Int
+    }
+    
     init(settings: Settings) {
         self.settings = settings
     }
     
     func signUp(username: String, result: @escaping LoginHandler) {
-        let requestData = RequestData(baseURL: settings.basePath, endPoint: .login(username: username), method: .get)
-        let requestType = RequestType<Int>(data: requestData)
+        let requestData = RequestData(baseURL: settings.basePath, endPoint: .signup(username: username), method: .get)
+        let requestType = RequestType<WelcomeWrapper>(data: requestData)
         
-        requestType.execute(onSuccess: { userId in
-            result(.success(userId))
+        requestType.execute(onSuccess: { data in
+            result(.success(data.userId))
         }, onError: { error in
             result(.failure(error))
         })
     }
     
     func login(username: String, result: @escaping LoginHandler) {
-        let requestData = RequestData(baseURL: settings.basePath, endPoint: .signup(username: username), method: .get)
-        let requestType = RequestType<Int>(data: requestData)
+        let requestData = RequestData(baseURL: settings.basePath, endPoint: .login(username: username), method: .get)
+        let requestType = RequestType<WelcomeWrapper>(data: requestData)
         
-        requestType.execute(onSuccess: { userId in
-            result(.success(userId))
+        requestType.execute(onSuccess: { data in
+            result(.success(data.userId))
         }, onError: { error in
             result(.failure(error))
         })

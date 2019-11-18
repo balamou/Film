@@ -8,11 +8,9 @@
 
 import UIKit
 
-
 protocol WelcomeViewControllerDelegate: class {
     func onSuccessfullLogin()
 }
-
 
 class WelcomeViewController: UIViewController {
     weak var delegate: WelcomeViewControllerDelegate?
@@ -85,6 +83,8 @@ extension WelcomeViewController {
     func login(username: String) {
         welcomeView.loginButton.isEnabled = (apiManager == nil)
         
+        captureServerInfoFromFields()
+        
         apiManager?.login(username: username) { [weak self] result in
             guard let self = self else { return }
             
@@ -108,6 +108,8 @@ extension WelcomeViewController {
     func signup(username: String) {
         welcomeView.signUpButton.isEnabled = false
         
+        captureServerInfoFromFields()
+        
         apiManager?.signUp(username: username) { [weak self] result in
             guard let self = self else { return }
             
@@ -126,6 +128,11 @@ extension WelcomeViewController {
             
             self.welcomeView.signUpButton.isEnabled = true
         }
+    }
+    
+    func captureServerInfoFromFields() {
+        settings.ipAddress = welcomeView.ipAddressField.text!
+        settings.port = welcomeView.portField.text!
     }
     
     func updateSettings(with userId: Int, isLogged: Bool) {

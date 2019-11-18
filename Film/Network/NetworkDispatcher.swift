@@ -42,7 +42,7 @@ extension Error {
             return "Decoding error"
         }
         
-        return "Unknown Error"
+        return self.localizedDescription // Unknown error
     }
 }
 

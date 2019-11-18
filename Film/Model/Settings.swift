@@ -25,12 +25,12 @@ class Settings: CustomStringConvertible {
     
     var description: String {
         return """
-        isLogged: \(isLogged)
-        userId: \(userId.description)
-        username: \(username.description)
-        language: \(language)
+        isLogged:  \(isLogged)
+        userId:    \(userId.description)
+        username:  \(username.description)
+        language:  \(language)
         ipAddress: \(ipAddress)
-        port: \(port)
+        port:      \(port)
         """
     }
     
