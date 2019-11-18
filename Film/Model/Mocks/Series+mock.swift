@@ -29,13 +29,15 @@ extension Episode {
             let sentence = "An animated series on adult-swim about the infinite adventures of Rick, a genius alcoholic and careless scientist."
             let plot = Array(repeating: sentence, count: Int.random(in: 0...4)).joined(separator: " ")
             
+            let duration = Int.random(in: 1200 ... 5400)
+            
             return Episode(id: i,
                            episodeNumber: i,
                            seasonNumber: 1,
                            videoURL: MockData.videoURLs[Int.random(in: 0..<MockData.videoURLs.count)],
-                           duration: Int.random(in: 1200 ... 5400),
+                           duration: duration,
                            thumbnailURL: MockData.randomPoster(),
-                           plot: plot, stoppedAt: i < 3 ? Float.random(in: 0...1) : nil)
+                           plot: plot, stoppedAt: i < 3 ? Int(Float.random(in: 0...1) * Float(duration)) : nil)
         }
         
         return episodes

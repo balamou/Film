@@ -162,7 +162,7 @@ class EpisodeCell: UICollectionViewCell {
         
         if let stoppedAt = episode.stoppedAt {
             progressView.isHidden = false
-            switchMultiplier(multiplier: stoppedAt)
+            switchMultiplier(multiplier: Float(stoppedAt)/Float(episode.duration))
         } else {
             progressView.isHidden = true
         }

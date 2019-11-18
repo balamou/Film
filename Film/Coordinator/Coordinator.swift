@@ -92,7 +92,7 @@ extension Coordinator: WatchingViewControllerDelegate {
              // TODO: open MovieInfoVC
             break
         case .show:
-            let showInfoVC = factory.createShowInfoViewController(delegate: self, series: SeriesPresenter(watched))
+            let showInfoVC = factory.createShowInfoViewController(delegate: self, series: SeriesPresenter(watched), settings: settings)
             navigationController.pushViewController(showInfoVC, animated: false)
         }
     }
@@ -101,7 +101,7 @@ extension Coordinator: WatchingViewControllerDelegate {
 extension Coordinator: ShowsDelegate {
     
     func tappedOnSeriesPoster(series: SeriesPresenter) {
-        let showInfoVC = factory.createShowInfoViewController(delegate: self, series: series)
+        let showInfoVC = factory.createShowInfoViewController(delegate: self, series: series, settings: settings)
         
         navigationController.pushViewController(showInfoVC, animated: false)
     }

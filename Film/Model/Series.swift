@@ -29,7 +29,7 @@ struct Episode: Decodable {
     var thumbnailURL: String?
     var title: String?
     var plot: String?
-    var stoppedAt: Float?
+    var stoppedAt: Int?
     
     func constructTitle() -> String {
         if let title = title {

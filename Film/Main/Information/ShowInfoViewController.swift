@@ -8,14 +8,12 @@
 
 import UIKit
 
-
 protocol ShowInfoViewControllerDelegate: class {
     func exitButtonTapped()
     func playButtonTapped()
     func thumbnailTapped()
     func exitWithError(error: Error)
 }
-
 
 class ShowInfoViewController: UIViewController {
     
