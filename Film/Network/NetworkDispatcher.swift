@@ -17,6 +17,7 @@ public enum ConnectionError: Swift.Error {
     case noData
     case emptyResponse
     case invalidJSON
+    case custom(String)
     
     var description: String {
         switch self {
@@ -28,6 +29,8 @@ public enum ConnectionError: Swift.Error {
             return "Empty Response"
         case .invalidJSON:
             return "Returned invalid json"
+        case .custom(let description):
+            return description
         }
     }
 }

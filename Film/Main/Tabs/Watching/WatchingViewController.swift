@@ -148,13 +148,14 @@ extension WatchingViewController {
                     self.idleSection.show()
                     self.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // reload both sections
                 } else {
+                    self.data = watched
                     self.dataSection.show()
                     self.dataSection.numberOfItems = watched.count
                     self.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // reload both sections
                 }
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.getDescription())
+                self.alert?.mode = .showMessage(error.toString)
             }
             
             self.collectionVC.endRefreshing()

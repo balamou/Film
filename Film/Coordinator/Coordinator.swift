@@ -39,7 +39,7 @@ class Coordinator {
     }
     
     func mainFlow() -> UIViewController {
-        let watchingVC = factory.createWatchingViewController(delegate: self)
+        let watchingVC = factory.createWatchingViewController(delegate: self, settings: settings)
         let showsVC = factory.createShowViewController(delegate: self, settings: settings)
         let moviesVC = factory.createMoviesViewController(delegate: self)
         let settingsVC = factory.createSettingsViewController(delegate: self, settings: settings)

@@ -12,7 +12,7 @@ import UIKit
 protocol ViewControllerFactory {
     func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController
     
-    func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController
+    func createWatchingViewController(delegate: WatchingViewControllerDelegate?, settings: Settings) -> WatchingViewController
     func createShowViewController(delegate: ShowsDelegate?, settings: Settings) -> ShowsViewController
     func createMoviesViewController(delegate: MoviesDelegate?) -> MoviesViewController
     func createSettingsViewController(delegate: SettingsViewControllerDelegate?, settings: Settings) -> SettingsViewController
@@ -32,10 +32,10 @@ class StandardFactory: ViewControllerFactory {
         return welcomeVC
     }
     
-    func createWatchingViewController(delegate: WatchingViewControllerDelegate?) -> WatchingViewController {
+    func createWatchingViewController(delegate: WatchingViewControllerDelegate?, settings: Settings) -> WatchingViewController {
         let watchingVC = WatchingViewController()
         watchingVC.delegate = delegate
-        watchingVC.apiManager = MockWatchedAPI()
+        watchingVC.apiManager = ConcreteWatchedAPI(settings: settings)
         watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: Images.watchingImage, tag: 0)
         
         return watchingVC
