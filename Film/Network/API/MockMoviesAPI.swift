@@ -8,18 +8,41 @@
 
 import Foundation
 
-typealias MoviesRequest = Handler<([MoviesPresenter], Bool)>
+typealias MoviesHandler = (Result<([MoviesPresenter], Bool), Error>) -> Void
 
 protocol MoviesAPI {
-    func getMovies(start: Int, quantity: Int, result: @escaping MoviesRequest)
+    func getMovies(start: Int, quantity: Int, result: @escaping MoviesHandler)
+}
+
+class ConcreteMoviesAPI: MoviesAPI {
+    private let settings: Settings
+    
+    private struct MoviesWrapper: Decodable {
+        let movies: [MoviesPresenter]
+        let isLast: Bool
+    }
+    
+    init(settings: Settings) {
+        self.settings = settings
+    }
+    
+    func getMovies(start: Int, quantity: Int, result: @escaping MoviesHandler) {
+        let requestData = RequestData(baseURL: settings.basePath, endPoint: .movies(start: start, quantity: quantity, language: settings.language), method: .get)
+        let requestType = RequestType<MoviesWrapper>(data: requestData)
+        
+        requestType.execute(onSuccess: { data in
+            result(.success((data.movies, data.isLast)))
+        }, onError: { error in
+            result(.failure(error))
+        })
+    }
 }
 
 class MockMoviesAPI: MoviesAPI {
-    
     var count = 0
     let timeDelay = 1.5
     
-    func getMovies(start: Int, quantity: Int, result: @escaping MoviesRequest) {
+    func getMovies(start: Int, quantity: Int, result: @escaping MoviesHandler) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay, execute: { [weak self] in
             guard let self = self else { return }

@@ -130,8 +130,12 @@ extension WatchingViewController {
                 self.loadingSection.hide()
                 
                 self.collectionView.reloadData()
-            case .failure(_):
-                return
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.toString)
+                
+                self.idleSection.show()
+                self.loadingSection.hide()
+                self.collectionView.reloadData()
             }
         }
     }
