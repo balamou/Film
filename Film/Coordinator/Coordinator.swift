@@ -34,7 +34,7 @@ class Coordinator {
     func loginFlow() -> UIViewController {
         let welcomeVC = factory.createWelcomeViewController(delegate: self, settings: settings)
         
-        print(settings.description())
+        print(settings)
         return welcomeVC
     }
     

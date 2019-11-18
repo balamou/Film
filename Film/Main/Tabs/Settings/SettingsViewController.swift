@@ -97,7 +97,7 @@ class SettingsViewController: UIViewController {
         
         settings.saveToUserDefaults()
         
-        print(settings.description())
+        print(settings)
         
         alert?.mode = .success("Successfully saved")
     }

@@ -89,17 +89,16 @@ extension WelcomeViewController {
             guard let self = self else { return }
             
             switch result {
-            case .success(let doesUserExist):
-                if doesUserExist {
-                    self.updateSettings(with: username, isLogged: true)
+            case .success(let userId):
+                if userId > 0 {
+                    self.updateSettings(with: userId, isLogged: true)
                     
                     self.delegate?.onSuccessfullLogin()
                 } else {
                     self.alert?.mode = .showMessage("Username does not exist")
                 }
-            case .failure(_):
-                // TODO: show specific error
-                self.alert?.mode = .showMessage("An error occured")
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.toString)
             }
             
             self.welcomeView.loginButton.isEnabled = true
@@ -113,23 +112,26 @@ extension WelcomeViewController {
             guard let self = self else { return }
             
             switch result {
-            case .success(let didSignUp):
-                if didSignUp {
+            case .success(let userId):
+                if userId > 0 {
+                    self.updateSettings(with: userId, isLogged: true)
+                    
                     self.delegate?.onSuccessfullLogin()
                 } else {
-                    self.alert?.mode = .showMessage("Unable to sign up")
+                    self.alert?.mode = .showMessage("Username does not exist")
                 }
-            case .failure(_):
-                self.alert?.mode = .showMessage("An error occured")
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.toString)
             }
             
             self.welcomeView.signUpButton.isEnabled = true
         }
     }
     
-    func updateSettings(with username: String, isLogged: Bool) {
+    func updateSettings(with userId: Int, isLogged: Bool) {
         settings.isLogged = isLogged
-        settings.username = username
+        settings.userId = userId
+        settings.username = welcomeView.usernameField.text!
         settings.language = welcomeView.languageField.text!
         settings.ipAddress = welcomeView.ipAddressField.text!
         settings.port = welcomeView.portField.text!
