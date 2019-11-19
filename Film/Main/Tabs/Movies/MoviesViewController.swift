@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol MoviesDelegate: class {
-    func tappedOnMoviesPoster(movie: MoviesPresenter)
+    func moviesViewController(_ moviesViewController: MoviesViewController, selected movie: MoviesPresenter)
 }
 
 enum MoviesViewControllerState {
@@ -106,7 +106,7 @@ class MoviesViewController: UIViewController {
         dataSection.selectedCell = { [weak self] row in
             guard let self = self else { return }
             
-            self.delegate?.tappedOnMoviesPoster(movie: self.data[row])
+            self.delegate?.moviesViewController(self, selected: self.data[row])
         }
     }
     

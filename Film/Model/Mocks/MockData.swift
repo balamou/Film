@@ -8,9 +8,7 @@
 
 import Foundation
 
-
-class MockData {
-    
+struct MockData {
     static let videoURLs = ["http://192.168.72.59:3000/E03.mkv",
                      "http://192.168.72.59:3000/E03.mkv",
                      "http://192.168.72.59:3000/E03.mkv"]

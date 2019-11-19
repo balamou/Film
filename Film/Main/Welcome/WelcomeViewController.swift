@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WelcomeViewControllerDelegate: class {
-    func onSuccessfullLogin()
+    func welcomeViewControllerSuccessfullLogin(_ welcomeViewController: WelcomeViewController)
 }
 
 class WelcomeViewController: UIViewController {
@@ -93,7 +93,7 @@ extension WelcomeViewController {
                 if userId > 0 {
                     self.updateSettings(with: userId, isLogged: true)
                     
-                    self.delegate?.onSuccessfullLogin()
+                    self.delegate?.welcomeViewControllerSuccessfullLogin(self)
                 } else {
                     self.alert?.mode = .showMessage("Username does not exist")
                 }
@@ -118,7 +118,7 @@ extension WelcomeViewController {
                 if userId > 0 {
                     self.updateSettings(with: userId, isLogged: true)
                     
-                    self.delegate?.onSuccessfullLogin()
+                    self.delegate?.welcomeViewControllerSuccessfullLogin(self)
                 } else {
                     self.alert?.mode = .showMessage("Username does not exist")
                 }

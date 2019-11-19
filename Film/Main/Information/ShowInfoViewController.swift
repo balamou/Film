@@ -9,10 +9,10 @@
 import UIKit
 
 protocol ShowInfoViewControllerDelegate: class {
-    func exitButtonTapped()
-    func playButtonTapped()
-    func thumbnailTapped()
-    func exitWithError(error: Error)
+    func showInfoViewControllerExit(_ showInfoViewController: ShowInfoViewController)
+    func showInfoViewControllerPlayShow(_ showInfoViewController: ShowInfoViewController)
+    func showInfoViewControllerPlayEpisode(_ showInfoViewController: ShowInfoViewController)
+    func showInfoViewController(_ showInfoViewController: ShowInfoViewController, exitWith error: Error)
 }
 
 class ShowInfoViewController: UIViewController {
@@ -95,7 +95,7 @@ extension ShowInfoViewController {
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
             case .failure(let error):
-                self.delegate?.exitWithError(error: error)
+                self.delegate?.showInfoViewController(self, exitWith: error)
             }
             
         }
@@ -114,7 +114,7 @@ extension ShowInfoViewController {
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
             case .failure(let error):
-                self.delegate?.exitWithError(error: error)
+                self.delegate?.showInfoViewController(self, exitWith: error)
             }
         }
     }
@@ -129,12 +129,12 @@ extension ShowInfoViewController {
 extension ShowInfoViewController: HeaderViewDelegate {
     
     func exitButtonTapped() {
-        delegate?.exitButtonTapped()
+        delegate?.showInfoViewControllerExit(self)
     }
     
     func playButtonTapped() {
         // Play last watched episode
-        delegate?.playButtonTapped()
+        delegate?.showInfoViewControllerPlayShow(self)
     }
     
     func seasonButtonTapped() {
@@ -152,7 +152,7 @@ extension ShowInfoViewController: EpisodeCellDelegate {
     
     func thumbnailTapped() {
         // Play episode
-        delegate?.thumbnailTapped()
+        delegate?.showInfoViewControllerPlayEpisode(self)
     }
     
 }

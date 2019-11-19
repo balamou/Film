@@ -8,10 +8,9 @@
 
 import UIKit
 
-
 protocol WatchingViewControllerDelegate: class {
-    func playTapped(watched: Watched)
-    func moreInfoTapped(watched: Watched)
+    func watchingViewController(_ watchingViewController: WatchingViewController, play watched: Watched)
+    func watchingViewController(_ watchingViewController: WatchingViewController, selectMoreInfo watched: Watched)
 }
 
 enum WatchingViewControllerMode {
@@ -174,10 +173,10 @@ extension WatchingViewController {
 extension WatchingViewController: WatchingCellDelegate {
     
     func playButtonTapped(row: Int) {
-        delegate?.playTapped(watched: data[row])
+        delegate?.watchingViewController(self, play: data[row])
     }
     
     func informationButtonTapped(row: Int) {
-        delegate?.moreInfoTapped(watched: data[row])
+        delegate?.watchingViewController(self, selectMoreInfo: data[row])
     }
 }

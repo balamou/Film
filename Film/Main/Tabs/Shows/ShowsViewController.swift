@@ -8,9 +8,8 @@
 
 import UIKit
 
-
 protocol ShowsDelegate: class {
-    func tappedOnSeriesPoster(series: SeriesPresenter) // tapped on poster to get more information
+    func showsViewController(_ showsViewController: ShowsViewController, selected series: SeriesPresenter)
 }
 
 enum ShowsViewControllerState {
@@ -106,7 +105,7 @@ class ShowsViewController: UIViewController {
         dataSection.selectedCell = { [weak self] row in
             guard let self = self else { return }
             
-            self.delegate?.tappedOnSeriesPoster(series: self.data[row])
+            self.delegate?.showsViewController(self, selected: self.data[row])
         }
     }
     

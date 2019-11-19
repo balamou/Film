@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MovieInfoViewControllerDelegate: class {
-    func playMovie()
+    func movieInfoViewControllerPlay(_ movieInfoViewController: MovieInfoViewController)
 }
 
 class MovieInfoViewController: UIViewController {
@@ -79,7 +79,7 @@ extension MovieInfoViewController {
 extension MovieInfoViewController: MovieViewDelegate {
     
     func playButtonTapped() {
-        delegate?.playMovie()
+        delegate?.movieInfoViewControllerPlay(self)
     }
     
     func exitButtonTapped() {

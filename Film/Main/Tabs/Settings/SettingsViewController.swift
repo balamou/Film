@@ -18,7 +18,7 @@ struct Language {
 }
 
 protocol SettingsViewControllerDelegate: class {
-    func logOutPerformed()
+    func settingsViewControllerLogout(_ settingsViewController: SettingsViewController)
 }
 
 class SettingsViewController: UIViewController {
@@ -108,7 +108,7 @@ class SettingsViewController: UIViewController {
     
     @objc func logoutButtonTapped() {
         settings.logout()
-        delegate?.logOutPerformed()
+        delegate?.settingsViewControllerLogout(self)
     }
     
     //----------------------------------------------------------------------
