@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 protocol ChangeSeasonViewControllerDelegate: class {
     func changeSeasonViewController(_ changeSeasonViewController: ChangeSeasonViewController, selected season: Int)
     func changeSeasonViewControllerExit(_ changeSeasonViewController: ChangeSeasonViewController)
@@ -20,7 +19,6 @@ class ChangeSeasonViewController: UIViewController {
     var changeSeasonView: ChangeSeasonView!
     var totalSeasons: Int
     var selectedSeason: Int
-    
     
     init(totalSeasons: Int, selectedSeason: Int) {
         self.totalSeasons = totalSeasons
@@ -62,7 +60,8 @@ extension ChangeSeasonViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeasonCell.identifier, for: indexPath) as! SeasonCell
         
-        cell.seasonLabel.text = "Season".localize() + " \(indexPath.row + 1)"
+        let seasonNumber = indexPath.row + 1
+        cell.seasonLabel.text = "Season".localize() + " \(seasonNumber)"
         
         if indexPath.row + 1  == selectedSeason {
             cell.seasonLabel.font = Fonts.generateFont(font: "OpenSans-Bold", size: 18.0)

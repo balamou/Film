@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class SeasonCell: UICollectionViewCell {
     
     static let identifier: String = "SeasonCell"
@@ -30,7 +29,6 @@ class SeasonCell: UICollectionViewCell {
         
     }
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -42,5 +40,4 @@ class SeasonCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
