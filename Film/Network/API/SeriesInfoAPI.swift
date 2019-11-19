@@ -42,6 +42,18 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
     }
     
     func getEpisodes(seriesId: Int, season: Int, result: @escaping Handler<[Episode]>) {
+        guard let userId = settings.userId else {
+            result(.failure(ConnectionError.custom("UserId is nil")))
+            return
+        }
         
+        let requestData = RequestData(baseURL: settings.basePath, endPoint: .episodes(showId: seriesId, userId: userId, season: season), method: .get)
+        let requestType = RequestType<[Episode]>(data: requestData)
+        
+        requestType.execute(onSuccess: { episodes in
+            result(.success(episodes))
+        }, onError: { error in
+            result(.failure(error))
+        })
     }
 }

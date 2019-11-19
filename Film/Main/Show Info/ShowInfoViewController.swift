@@ -49,7 +49,7 @@ class ShowInfoViewController: UIViewController {
         view = showView
         
         setupCollectionView()
-        loadSeries(seriesId: seriesId)
+        fetchSeries(by: seriesId)
     }
     
     //----------------------------------------------------------------------
@@ -84,7 +84,7 @@ class ShowInfoViewController: UIViewController {
 //----------------------------------------------------------------------
 extension ShowInfoViewController {
     
-    func loadSeries(seriesId: Int) {
+    func fetchSeries(by seriesId: Int) {
         apiManager?.getSeriesInfo(seriesId: seriesId) { [weak self] result in
             guard let self = self else { return }
             
@@ -101,7 +101,7 @@ extension ShowInfoViewController {
         }
     }
     
-    func loadEpisodes(of season: Int) {
+    func fetchEpisodes(from season: Int) {
         isLoadingEpisodes = true
         episodesCollectionView.reloadData()
         
@@ -138,7 +138,8 @@ extension ShowInfoViewController: HeaderViewDelegate {
     }
     
     func seasonButtonTapped() {
-        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: seriesInformation.totalSeasons, selectedSeason: seriesInformation.seasonSelected)
+        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: seriesInformation.totalSeasons,
+                                                         selectedSeason: seriesInformation.seasonSelected)
         self.changeSeasonsVC = changeSeasonsVC
         changeSeasonsVC.delegate = self
         
@@ -159,12 +160,12 @@ extension ShowInfoViewController: EpisodeCellDelegate {
 
 extension ShowInfoViewController: ChangeSeasonViewControllerDelegate {
     
-    func closeButtonTapped() {
+    func changeSeasonViewControllerExit(_ changeSeasonViewController: ChangeSeasonViewController) {
         changeSeasonsVC?.removeSelfAsChildViewController()
     }
     
-    func seasonButtonTapped(season: Int) {
-        loadEpisodes(of: season)
+    func changeSeasonViewController(_ changeSeasonViewController: ChangeSeasonViewController, selected season: Int) {
+        fetchEpisodes(from: season)
         seriesInformation.seasonSelected = season
         episodesCollectionView.reloadData()
         

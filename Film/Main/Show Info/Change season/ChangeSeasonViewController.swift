@@ -10,8 +10,8 @@ import UIKit
 
 
 protocol ChangeSeasonViewControllerDelegate: class {
-    func seasonButtonTapped(season: Int)
-    func closeButtonTapped()
+    func changeSeasonViewController(_ changeSeasonViewController: ChangeSeasonViewController, selected season: Int)
+    func changeSeasonViewControllerExit(_ changeSeasonViewController: ChangeSeasonViewController)
 }
 
 class ChangeSeasonViewController: UIViewController {
@@ -49,7 +49,7 @@ class ChangeSeasonViewController: UIViewController {
     }
     
     @objc func closeButtonTapped() {
-        delegate?.closeButtonTapped()
+        delegate?.changeSeasonViewControllerExit(self)
     }
 }
 
@@ -77,7 +77,8 @@ extension ChangeSeasonViewController: UICollectionViewDataSource {
 extension ChangeSeasonViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.seasonButtonTapped(season: indexPath.item + 1)
+        let seasonNumber = indexPath.item + 1
+        delegate?.changeSeasonViewController(self, selected: seasonNumber)
     }
 }
 

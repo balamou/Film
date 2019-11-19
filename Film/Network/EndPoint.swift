@@ -29,6 +29,7 @@ enum EndPoint {
     case movies(start: Int, quantity: Int, language: String)
     
     case show(showId: Int, userId: Int)
+    case episodes(showId: Int, userId: Int, season: Int)
     
     var path: String {
         switch self {
@@ -46,6 +47,8 @@ enum EndPoint {
             
         case let .show(showId, userId):
             return "/show/\(showId)/\(userId)"
+        case let .episodes(showId, userId, season):
+            return "/episodes/\(showId)/\(userId)/\(season)"
         }
     }
 }
