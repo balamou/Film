@@ -48,21 +48,3 @@ class ConcreteWelcomeAPI: WelcomeAPI {
         })
     }
 }
-
-class MockWelcomeAPI: WelcomeAPI {
-    let timeDelay = 1.5
-    var count = 0
-    
-    func signUp(username: String, result: @escaping LoginHandler) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay) {
-            result(.success(1))
-        }
-    }
-    
-    func login(username: String, result: @escaping LoginHandler) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + timeDelay) {
-            let didLoginSuccessfully = username == "michelbalamou" ? 1 : -1
-            result(.success(didLoginSuccessfully))
-        }
-    }
-}
