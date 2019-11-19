@@ -23,15 +23,13 @@ protocol SettingsViewControllerDelegate: class {
 
 class SettingsViewController: UIViewController {
     weak var delegate: SettingsViewControllerDelegate?
-    
-    let settings: Settings
-    let settingsView: SettingsView = SettingsView()
-    let languages = Language.default
-    let pickerRowHeight: CGFloat = 30
-    
-    // Alert
     var alert: AlertViewController?
 
+    private let settings: Settings
+    private let settingsView: SettingsView = SettingsView()
+    private let languages = Language.default
+    private let pickerRowHeight: CGFloat = 30
+    
     init(settings: Settings) {
         self.settings = settings
         super.init(nibName: nil, bundle: nil)

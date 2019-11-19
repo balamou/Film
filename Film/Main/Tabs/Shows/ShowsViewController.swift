@@ -20,32 +20,33 @@ enum ShowsViewControllerState {
 
 class ShowsViewController: UIViewController {
     
-    var showsView: ShowsView = ShowsView()
-    
-    var data = [SeriesPresenter]()
-    var apiManager: SeriesAPI?
     weak var delegate: ShowsDelegate?
-    var state: ShowsViewControllerState = .loading {
+    var apiManager: SeriesAPI?
+    var alert: AlertViewController?
+    
+    private var showsView: ShowsView = ShowsView()
+    private var data = [SeriesPresenter]()
+    
+    private var state: ShowsViewControllerState = .loading {
         didSet { switchState(state) }
     }
     
     // Params
-    let numberOfShowsToLoad = 9
-    var isInfiniteScrollEnabled: Bool = true
-    var isFetchingMore: Bool = false
+    private let numberOfShowsToLoad = 9
+    private var isInfiniteScrollEnabled: Bool = true
+    private var isFetchingMore: Bool = false
     
     // Collection view
-    var collectionView: UICollectionView!
+    private var collectionView: UICollectionView!
     
     // Sections
-    var sections: [Section] = []
-    var dataSection: Section!
-    var idleSection: Section!
-    var loadingSection: Section!
-    var loadingMoreSection: Section!
+    private var sections: [Section] = []
+    private var dataSection: Section!
+    private var idleSection: Section!
+    private var loadingSection: Section!
+    private var loadingMoreSection: Section!
     
-    // Alert
-    var alert: AlertViewController?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

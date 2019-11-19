@@ -13,12 +13,13 @@ protocol WelcomeViewControllerDelegate: class {
 }
 
 class WelcomeViewController: UIViewController {
-    weak var delegate: WelcomeViewControllerDelegate?
     
-    let settings: Settings
-    let welcomeView: WelcomeView = WelcomeView()
-    var apiManager: WelcomeAPI?
+    weak var delegate: WelcomeViewControllerDelegate?
     var alert: AlertViewController?
+    var apiManager: WelcomeAPI?
+    
+    private let settings: Settings
+    private let welcomeView: WelcomeView = WelcomeView()
     
     init(settings: Settings) {
         self.settings = settings

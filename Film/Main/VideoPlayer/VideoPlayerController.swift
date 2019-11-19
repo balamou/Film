@@ -11,14 +11,13 @@ import UIKit
 
 class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
 
-    var isPlaying: Bool = true
     var videoPlayerView: VideoPlayerView!
-    var mediaPlayer = VLCMediaPlayer()
-    var timer: Timer?
-    var film: Film = Film.provideMock()
-    
-    // Volume
     var volumeController: VolumeController?
+    
+    private var isPlaying: Bool = true
+    private var mediaPlayer = VLCMediaPlayer()
+    private var timer: Timer?
+    private var film: Film = Film.provideMock()
     
     override func viewDidLoad() {
         super.viewDidLoad()

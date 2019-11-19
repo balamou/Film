@@ -22,20 +22,20 @@ enum WatchingViewControllerMode {
 class WatchingViewController: UIViewController {
     
     weak var delegate: WatchingViewControllerDelegate?
-    
-    var watchingView: WatchingView = WatchingView()
-    var data = [Watched]()
     var apiManager: WatchedAPI?
     
+    private var watchingView: WatchingView = WatchingView()
+    private var data = [Watched]()
+    
     // Collection view
-    var collectionVC: AbstractedCollectionViewController!
-    var collectionView: UICollectionView!
+    private var collectionVC: AbstractedCollectionViewController!
+    private var collectionView: UICollectionView!
     
     // Sections
-    var sections: [Section] = []
-    var dataSection: Section!
-    var idleSection: Section!
-    var loadingSection: Section!
+    private var sections: [Section] = []
+    private var dataSection: Section!
+    private var idleSection: Section!
+    private var loadingSection: Section!
     
     // Alert
     var alert: AlertViewController?

@@ -14,12 +14,12 @@ protocol MovieInfoViewControllerDelegate: class {
 
 class MovieInfoViewController: UIViewController {
     weak var delegate: MovieInfoViewControllerDelegate?
-    var movieInfoView = MovieInfoView()
+    private var movieInfoView = MovieInfoView()
     
-    var movie: Movie?
+    private var movie: Movie?
     var apiManager: MovieInfoAPI?
     
-    let maximumDescriptionCharacters = 180
+    private let maximumDescriptionCharacters = 180
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -405,7 +405,7 @@
 				ED5AC10A2314DD330098A161 /* Welcome */,
 				EDFDB054231495EF0045E8D6 /* Tabs */,
 				ED57FCAF231366A80001A9AB /* VideoPlayer */,
-				EDBEC5512316181A00041D29 /* Information */,
+				EDBEC5512316181A00041D29 /* Show Info */,
 				EDE494F8232E9E5900547830 /* Movie Info */,
 			);
 			path = Main;
@@ -660,7 +660,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		EDBEC5512316181A00041D29 /* Information */ = {
+		EDBEC5512316181A00041D29 /* Show Info */ = {
 			isa = PBXGroup;
 			children = (
 				EDCBAC59232724440002FAE3 /* Change season */,
@@ -669,7 +669,7 @@
 				ED1CC3A8231624FC0061EE21 /* HeaderView.swift */,
 				ED1CC3A6231620790061EE21 /* EpisodeCell.swift */,
 			);
-			path = Information;
+			path = "Show Info";
 			sourceTree = "<group>";
 		};
 		EDC8AB432319971900400312 /* Coordinator */ = {

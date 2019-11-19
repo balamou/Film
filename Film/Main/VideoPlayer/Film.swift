@@ -59,9 +59,9 @@ extension Film {
                              "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
                              "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4" ]
     
-    static let serverVideos = ["Get out" : "http://192.168.72.59:3000/E03.mkv",
-                               "Rick and morty S1E1" : "http://192.168.72.59:3000/E03.mkv",
-                               "Westworld" : "http://192.168.72.59:3000/E03.mkv"]
+    static let serverVideos = ["Get out" : "http://192.168.72.59:3000/en/shows/E03.mkv",
+                               "Rick and morty S1E1" : "http://192.168.72.59:3000/en/shows/E03.mkv",
+                               "Westworld" : "http://192.168.72.59:3000/en/shows/E03.mkv"]
     
     static func provideMock() -> Film {
         return Film(id: 0, URL: serverVideos["Rick and morty S1E1"] ?? testVideos[0], duration: 15)
