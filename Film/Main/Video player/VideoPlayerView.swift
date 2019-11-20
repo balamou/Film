@@ -82,7 +82,7 @@ class VideoPlayerView: UIView {
     
     var pausePlayButton: UIButton = {
         let button = UIButton()
-        button.setImage(Images.pauseImage, for: .normal) // ▌▌
+        button.setImage(Images.Player.pauseImage, for: .normal) // ▌▌
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -92,7 +92,7 @@ class VideoPlayerView: UIView {
     
     var forward10sButton: UIButton = {
         let button = UIButton()
-        button.setImage(Images.forwardImage, for: .normal)
+        button.setImage(Images.Player.forwardImage, for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -102,7 +102,7 @@ class VideoPlayerView: UIView {
     
     var backward10sButton: UIButton = {
         let button = UIButton()
-        button.setImage(Images.backwardImage, for: .normal)
+        button.setImage(Images.Player.backwardImage, for: .normal)
         button.imageView?.contentMode = ContentMode.scaleAspectFit
         button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
         button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
@@ -122,7 +122,7 @@ class VideoPlayerView: UIView {
     var nextEpisodeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Next episode".localize(), for: .normal)
-        button.setImage(Images.nextEpisodeImage, for: .normal)
+        button.setImage(Images.Player.nextEpisodeImage, for: .normal)
         button.titleLabel?.font = Fonts.helveticaNeue(size: 15.0)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
         
@@ -142,7 +142,7 @@ class VideoPlayerView: UIView {
     }()
     
     var volumeImage: UIImageView = {
-        let imageView = UIImageView(image: Images.volumeImage)
+        let imageView = UIImageView(image: Images.Player.volumeImage)
         imageView.isHidden = true
         
         return imageView

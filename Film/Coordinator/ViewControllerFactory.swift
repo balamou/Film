@@ -36,7 +36,7 @@ class StandardFactory: ViewControllerFactory {
         let watchingVC = WatchingViewController()
         watchingVC.delegate = delegate
         watchingVC.apiManager = ConcreteWatchedAPI(settings: settings)
-        watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: Images.watchingImage, tag: 0)
+        watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: Images.Tabs.watchingImage, tag: 0)
         
         return watchingVC
     }
@@ -47,7 +47,7 @@ class StandardFactory: ViewControllerFactory {
         
         showsVC.apiManager = apiManager
         showsVC.delegate = delegate
-        showsVC.tabBarItem = UITabBarItem(title: "Shows".localize(), image: Images.showsImage, tag: 1)
+        showsVC.tabBarItem = UITabBarItem(title: "Shows".localize(), image: Images.Tabs.showsImage, tag: 1)
         
         return showsVC
     }
@@ -58,14 +58,14 @@ class StandardFactory: ViewControllerFactory {
         
         moviesVC.apiManager = apiManager
         moviesVC.delegate = delegate
-        moviesVC.tabBarItem = UITabBarItem(title: "Movies".localize(), image: Images.moviesImage, tag: 2)
+        moviesVC.tabBarItem = UITabBarItem(title: "Movies".localize(), image: Images.Tabs.moviesImage, tag: 2)
        
         return moviesVC
     }
     
     func createSettingsViewController(delegate: SettingsViewControllerDelegate?, settings: Settings) -> SettingsViewController {
         let settingsVC = SettingsViewController(settings: settings)
-        settingsVC.tabBarItem = UITabBarItem(title: "Settings".localize(), image: Images.settingsImage, tag: 3)
+        settingsVC.tabBarItem = UITabBarItem(title: "Settings".localize(), image: Images.Tabs.settingsImage, tag: 3)
         settingsVC.delegate = delegate
         
         return settingsVC

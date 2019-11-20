@@ -71,7 +71,7 @@ class EpisodeCell: UICollectionViewCell {
     
     var playEpisodeButton: UIButton = {
         let button = UIButton()
-        button.setImage(Images.playEpisode, for: .normal)
+        button.setImage(Images.ShowInfo.playEpisode, for: .normal)
         
         return button
     }()
