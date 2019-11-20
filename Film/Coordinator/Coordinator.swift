@@ -111,7 +111,7 @@ extension Coordinator: ShowsDelegate {
 extension Coordinator: MoviesDelegate {
     
     func moviesViewController(_ moviesViewController: MoviesViewController, selected movie: MoviesPresenter) {
-        let movieInfoVS = factory.createMovieInfoViewController(delegate: self, movie: movie)
+        let movieInfoVS = factory.createMovieInfoViewController(delegate: self, movie: movie, settings: settings)
         
         navigationController.pushViewController(movieInfoVS, animated: false)
     }
