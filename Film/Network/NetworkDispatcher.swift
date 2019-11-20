@@ -12,43 +12,6 @@ protocol NetworkDispatcher {
     func dispatch(request: RequestData, onSuccess: @escaping (Data) -> Void, onError: @escaping (Error) -> Void)
 }
 
-public enum ConnectionError: Swift.Error {
-    case invalidURL
-    case noData
-    case emptyResponse
-    case invalidJSON
-    case custom(String)
-    
-    var description: String {
-        switch self {
-        case .invalidURL:
-            return "Invalid URL"
-        case .noData:
-            return "No Data"
-        case .emptyResponse:
-            return "Empty Response"
-        case .invalidJSON:
-            return "Returned invalid json"
-        case .custom(let description):
-            return description
-        }
-    }
-}
-
-extension Error {
-    var toString: String {
-        if let error = self as? ConnectionError {
-            return error.description
-        }
-        
-        if let _ = self as? DecodingError {
-            return "Decoding error"
-        }
-        
-        return self.localizedDescription // Unknown error
-    }
-}
-
 /// The sole purpose of **URLSessionNetworkDispatcher** is to take your request data and execute it.
 ///
 /// The **RequestData** contains all the information to reach a REST end point, which is the base URL,

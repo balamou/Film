@@ -19,30 +19,15 @@
 - [ ] Save position of the video playing when leaving the app (or during a timer interval)
 - [ ] Add double tap gesture (for backwards and forward)
 
-## Code:
-- [x] Move fonts out
-- [x] Move images out
-- [ ] Move colors out
-- [x] remove observers on disappear or deinit
-- [ ] Cut down the size of the VLC library?? (if possible)
-- [x] Move Cell setup into the cell
-
-## Other:
-- [ ] App expiring soon notification
-- [x] Increase button touch size
-Efficiency/blocks:
-- [ ] Should make hierarchy elements weak var??
-
-## Nitpick:
+## Tabs:
 - [ ] Change tab color (white when selected/dark gray otherwise)
 - [ ] Change Font size of the tab bar
 - [ ] Decrease tab bar icon sizes
-- [ ] Make ShowInfoViewController as a CollectionViewController not just a ViewController
+- [ ] ~Make ShowInfoViewController as a CollectionViewController not just a ViewController~
 
-## Future features (optimistic):
-- [ ] Tv OS (air play)
-- [ ] Download (offline use)
-- [ ] Use outside of local network (encryption, security/opening ports/port forwarding, tracking?)
+
+## Watched:
+- [ ] slow down pull to refresh even if the connection is fast, or else it feels like a bug, even though nothing is wrong
 
 ## ShowsVC:
 - [x] Pull to refresh
@@ -68,6 +53,27 @@ Efficiency/blocks:
 - [ ] Apple dev subscription
 - [ ] Apple tv support
 - [ ] Chrome cast support
+
+## Future features (optimistic):
+- [ ] Tv OS (air play)
+- [ ] Download (offline use)
+- [ ] Use outside of local network (encryption, security/opening ports/port forwarding, tracking?)
+
+## Code:
+- [x] Move fonts out
+- [x] Move images out
+- [ ] Move colors out
+- [ ] Move strings out
+- [ ] Move VC state closer to it
+- [x] remove observers on disappear or deinit
+- [ ] Cut down the size of the VLC library?? (if possible)
+- [x] Move Cell setup into the cell
+
+## Other:
+- [ ] App expiring soon notification
+- [x] Increase button touch size
+Efficiency/blocks:
+- [ ] Should make hierarchy elements weak var??
 
 ## STAGES:
 - [x] Make watched open info

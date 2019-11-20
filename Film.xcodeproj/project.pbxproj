@@ -108,6 +108,7 @@
 		EDB1C87623838471009D909F /* MockMoviesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1C87523838471009D909F /* MockMoviesAPI.swift */; };
 		EDB1C878238384A8009D909F /* MockSeriesInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1C877238384A8009D909F /* MockSeriesInfoAPI.swift */; };
 		EDB1C87A238384C2009D909F /* MockMovieInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1C879238384C2009D909F /* MockMovieInfoAPI.swift */; };
+		EDB305B92384C9AC00724E97 /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB305B82384C9AC00724E97 /* ConnectionError.swift */; };
 		EDB57E90231766980049504E /* Watched.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E8F231766980049504E /* Watched.swift */; };
 		EDB57E92231769E20049504E /* Series.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E91231769E20049504E /* Series.swift */; };
 		EDB57E9423176EC70049504E /* UIImageView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E9323176EC70049504E /* UIImageView+extensions.swift */; };
@@ -275,6 +276,7 @@
 		EDB1C87523838471009D909F /* MockMoviesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoviesAPI.swift; sourceTree = "<group>"; };
 		EDB1C877238384A8009D909F /* MockSeriesInfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSeriesInfoAPI.swift; sourceTree = "<group>"; };
 		EDB1C879238384C2009D909F /* MockMovieInfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMovieInfoAPI.swift; sourceTree = "<group>"; };
+		EDB305B82384C9AC00724E97 /* ConnectionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionError.swift; sourceTree = "<group>"; };
 		EDB57E8F231766980049504E /* Watched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Watched.swift; sourceTree = "<group>"; };
 		EDB57E91231769E20049504E /* Series.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Series.swift; sourceTree = "<group>"; };
 		EDB57E9323176EC70049504E /* UIImageView+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+extensions.swift"; sourceTree = "<group>"; };
@@ -655,7 +657,6 @@
 				EDE494FD232EA4D100547830 /* Movie.swift */,
 				ED70C09C231C302900380BE0 /* MoviesPresenter.swift */,
 				EDEF9758231C263500025483 /* Mocks */,
-				EDB0CD3A231B516000246CDF /* Settings.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -677,6 +678,7 @@
 			children = (
 				ED5AC12523157A260098A161 /* Coordinator.swift */,
 				EDC8AB412319970100400312 /* ViewControllerFactory.swift */,
+				EDB0CD3A231B516000246CDF /* Settings.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -704,6 +706,7 @@
 			isa = PBXGroup;
 			children = (
 				ED658C752381F055004B871D /* EndPoint.swift */,
+				EDB305B82384C9AC00724E97 /* ConnectionError.swift */,
 				ED658C772381F3F3004B871D /* NetworkDispatcher.swift */,
 				ED658C792381F8B6004B871D /* RequestType.swift */,
 				ED658C7B23820478004B871D /* API */,
@@ -1009,6 +1012,7 @@
 				EDB1C87123838422009D909F /* MockWatchedAPI.swift in Sources */,
 				ED658C782381F3F3004B871D /* NetworkDispatcher.swift in Sources */,
 				EDE494FA232E9E8900547830 /* MovieInfoViewController.swift in Sources */,
+				EDB305B92384C9AC00724E97 /* ConnectionError.swift in Sources */,
 				ED1FEEBD2318B74100DE69AB /* AlertViewController.swift in Sources */,
 				EDB57E9423176EC70049504E /* UIImageView+extensions.swift in Sources */,
 				ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */,
