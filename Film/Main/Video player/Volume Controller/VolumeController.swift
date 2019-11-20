@@ -20,13 +20,16 @@ protocol VolumeControllerDelegate: class {
 class VolumeController {
     weak var delegate: VolumeControllerDelegate?
     
+    private let volumeIndicatorTimeout: Double
+    
     private let notificationCenter = NotificationCenter.default
-    private let volumeIndicatorTimeout = 2.0
     private let observerName = NSNotification.Name(rawValue: "AVSystemController_SystemVolumeDidChangeNotification")
     
-    var previousVolumeLevel: Float?
+    private var previousVolumeLevel: Float?
+    private var timer: Timer?
     
-    init(view: UIView) {
+    init(view: UIView, hideAfter seconds: Double = 2.0) {
+        volumeIndicatorTimeout = seconds
         hideVolumeHUD(targetView: view)
         
         notificationCenter.addObserver(self, selector: #selector(systemVolumeDidChange), name: observerName, object: nil)
@@ -50,8 +53,11 @@ class VolumeController {
         if let prevVolumeLevel = previousVolumeLevel, volumeLevel != prevVolumeLevel {
             delegate?.showVolumeIndicator(volumeLevel: volumeLevel)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + volumeIndicatorTimeout) {
-                self.delegate?.hideVolumeIndicator()
+            timer?.invalidate()
+            // Execute "Hide" after 2.0 seconds
+            timer = Timer.scheduledTimer(withTimeInterval: volumeIndicatorTimeout, repeats: false) {
+                [weak self] timer in
+                self?.delegate?.hideVolumeIndicator()
             }
         }
         
