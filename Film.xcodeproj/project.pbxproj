@@ -406,22 +406,22 @@
 				EDB0CD39231AEA1900246CDF /* Reusable views */,
 				ED5AC10A2314DD330098A161 /* Welcome */,
 				EDFDB054231495EF0045E8D6 /* Tabs */,
-				ED57FCAF231366A80001A9AB /* VideoPlayer */,
+				ED57FCAF231366A80001A9AB /* Video player */,
 				EDBEC5512316181A00041D29 /* Show Info */,
 				EDE494F8232E9E5900547830 /* Movie Info */,
 			);
 			path = Main;
 			sourceTree = "<group>";
 		};
-		ED57FCAF231366A80001A9AB /* VideoPlayer */ = {
+		ED57FCAF231366A80001A9AB /* Video player */ = {
 			isa = PBXGroup;
 			children = (
-				ED82DBC3231464F900FEC56A /* Volume Module */,
+				ED82DBC3231464F900FEC56A /* Volume Controller */,
 				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
 				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
 				ED57FCB023137CB20001A9AB /* Film.swift */,
 			);
-			path = VideoPlayer;
+			path = "Video player";
 			sourceTree = "<group>";
 		};
 		ED5AC1062314DCF00098A161 /* Watching */ = {
@@ -487,13 +487,13 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		ED82DBC3231464F900FEC56A /* Volume Module */ = {
+		ED82DBC3231464F900FEC56A /* Volume Controller */ = {
 			isa = PBXGroup;
 			children = (
 				ED82DBBF2314620F00FEC56A /* VolumeController.swift */,
 				ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */,
 			);
-			path = "Volume Module";
+			path = "Volume Controller";
 			sourceTree = "<group>";
 		};
 		ED909B31230F006600A67AC6 = {
