@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Debuger {
+struct Debuger {
     
     // Allows to display custom volume indicator.
     // Set to 'false' if there is a problem with the volume indicator.

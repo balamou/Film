@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-class Colors {
+struct Colors {
     
     static let backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1) // #191919
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Fonts {
+struct Fonts {
     
     static let defaultFont = UIFont.systemFont(ofSize: UIFont.labelFontSize)
     
