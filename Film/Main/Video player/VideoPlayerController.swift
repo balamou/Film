@@ -207,16 +207,14 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         updatePosition = false
     }
     
-    func positionSliderAction()
-    {
+    func positionSliderAction() {
         self.perform(#selector(setPositionForReal), with: nil, afterDelay: 0.3)
         
         setPosition = false
         updatePosition = true
     }
     
-    @objc func setPositionForReal()
-    {
+    @objc func setPositionForReal() {
         if !setPosition {
             mediaPlayer.position = videoPlayerView.slider.value
             setPosition = true

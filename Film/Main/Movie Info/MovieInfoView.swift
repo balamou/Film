@@ -158,11 +158,11 @@ class MovieInfoView: UIView {
         progressView.isHidden = true
     }
 
-    func changeStoppedAtMultiplier(_ multiplier: CGFloat) {
+    func changeStoppedAtMultiplier(_ multiplier: Float) {
         playButton.setTitle("Resume".localize(), for: .normal)
         progressView.isHidden = false
         stoppedAtAnchor.isActive = false
-        stoppedAtAnchor = stoppedAtView.widthAnchor.constraint(equalTo: progressView.widthAnchor, multiplier: multiplier)
+        stoppedAtAnchor = stoppedAtView.widthAnchor.constraint(equalTo: progressView.widthAnchor, multiplier: CGFloat(multiplier))
         stoppedAtAnchor.isActive = true
         layoutIfNeeded()
     }

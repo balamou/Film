@@ -153,7 +153,7 @@ class WatchingCell: UICollectionViewCell {
             posterImage.downloaded(from: url)
         }
         
-        switchMultiplier(multiplier: watched.stoppedAt)
+        switchMultiplier(multiplier: watched.percentViewed)
         viewedLabel.text = watched.label
     }
     

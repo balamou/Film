@@ -109,6 +109,7 @@
 		EDB1C878238384A8009D909F /* MockSeriesInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1C877238384A8009D909F /* MockSeriesInfoAPI.swift */; };
 		EDB1C87A238384C2009D909F /* MockMovieInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1C879238384C2009D909F /* MockMovieInfoAPI.swift */; };
 		EDB305B92384C9AC00724E97 /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB305B82384C9AC00724E97 /* ConnectionError.swift */; };
+		EDB305BB2384D6E200724E97 /* Film+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB305BA2384D6E200724E97 /* Film+mock.swift */; };
 		EDB57E90231766980049504E /* Watched.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E8F231766980049504E /* Watched.swift */; };
 		EDB57E92231769E20049504E /* Series.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E91231769E20049504E /* Series.swift */; };
 		EDB57E9423176EC70049504E /* UIImageView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E9323176EC70049504E /* UIImageView+extensions.swift */; };
@@ -277,6 +278,7 @@
 		EDB1C877238384A8009D909F /* MockSeriesInfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSeriesInfoAPI.swift; sourceTree = "<group>"; };
 		EDB1C879238384C2009D909F /* MockMovieInfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMovieInfoAPI.swift; sourceTree = "<group>"; };
 		EDB305B82384C9AC00724E97 /* ConnectionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionError.swift; sourceTree = "<group>"; };
+		EDB305BA2384D6E200724E97 /* Film+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Film+mock.swift"; sourceTree = "<group>"; };
 		EDB57E8F231766980049504E /* Watched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Watched.swift; sourceTree = "<group>"; };
 		EDB57E91231769E20049504E /* Series.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Series.swift; sourceTree = "<group>"; };
 		EDB57E9323176EC70049504E /* UIImageView+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+extensions.swift"; sourceTree = "<group>"; };
@@ -722,6 +724,7 @@
 				EDEF975D231C26C900025483 /* SeriesPresenter+mock.swift */,
 				EDE494F4232DC3D800547830 /* MoviesPresenter+mock.swift */,
 				EDEF9759231C264600025483 /* Series+mock.swift */,
+				EDB305BA2384D6E200724E97 /* Film+mock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -954,6 +957,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDB305BB2384D6E200724E97 /* Film+mock.swift in Sources */,
 				ED5AC1162314DE140098A161 /* SettingsView.swift in Sources */,
 				ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */,
 				ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */,

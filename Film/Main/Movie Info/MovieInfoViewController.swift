@@ -39,7 +39,7 @@ class MovieInfoViewController: UIViewController {
         }
         
         if let _ = movie.stoppedAt {
-            movieInfoView.changeStoppedAtMultiplier(movie.stoppedAtRatio())
+            movieInfoView.changeStoppedAtMultiplier(movie.percentViewed)
         }
     }
     
