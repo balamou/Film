@@ -11,7 +11,7 @@ import UIKit
 extension VideoPlayerController: VolumeControllerDelegate {
     
     func overrideVolumeBar() {
-        guard Debuger.allowVolumeOverride else { return }
+        guard Debugger.allowVolumeOverride else { return }
         
         volumeController = VolumeController(view: view)
         volumeController?.delegate = self
