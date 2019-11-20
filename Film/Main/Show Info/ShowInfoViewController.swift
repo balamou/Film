@@ -11,7 +11,7 @@ import UIKit
 protocol ShowInfoViewControllerDelegate: class {
     func showInfoViewControllerExit(_ showInfoViewController: ShowInfoViewController)
     func showInfoViewControllerPlayShow(_ showInfoViewController: ShowInfoViewController)
-    func showInfoViewControllerPlayEpisode(_ showInfoViewController: ShowInfoViewController)
+    func showInfoViewController(_ showInfoViewController: ShowInfoViewController, play episode: Episode)
     func showInfoViewController(_ showInfoViewController: ShowInfoViewController, exitWith error: Error)
 }
 
@@ -149,11 +149,12 @@ extension ShowInfoViewController: HeaderViewDelegate {
     
 }
 
-extension ShowInfoViewController: EpisodeCellDelegate {
+extension ShowInfoViewController: EpisodeCellActionable {
     
-    func thumbnailTapped() {
+    func thumbnailTapped(at row: Int) {
         // Play episode
-        delegate?.showInfoViewControllerPlayEpisode(self)
+        let episode = episodes[row]
+        delegate?.showInfoViewController(self, play: episode)
     }
     
 }
@@ -210,6 +211,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
             cell.delegate = self
             let episode = episodes[indexPath.item]
             
+            cell.rowNumber = indexPath.row
             cell.populate(episode: episode)
             
             return cell

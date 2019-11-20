@@ -8,15 +8,16 @@
 
 import UIKit
 
-protocol EpisodeCellDelegate: class {
-    func thumbnailTapped()
+protocol EpisodeCellActionable: class {
+    func thumbnailTapped(at row: Int)
 }
 
 class EpisodeCell: UICollectionViewCell {
     
     static let identifier: String = "EpisodeCell"
-    weak var delegate: EpisodeCellDelegate?
+    weak var delegate: EpisodeCellActionable?
     var stoppedAtConstraint: NSLayoutConstraint?
+    var rowNumber: Int?
     
     static let plotFont = Fonts.generateFont(font: "OpenSans-Regular", size: 14)
     static let maximumPlotCharacters = 180
@@ -175,7 +176,9 @@ class EpisodeCell: UICollectionViewCell {
     }
     
     @objc func thumbnailTapped() {
-        delegate?.thumbnailTapped()
+        guard let rowNumber = rowNumber else { return }
+        
+        delegate?.thumbnailTapped(at: rowNumber)
     }
     
     required init?(coder aDecoder: NSCoder) {

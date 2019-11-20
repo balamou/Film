@@ -19,6 +19,8 @@ protocol ViewControllerFactory {
     
     func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter, settings: Settings) -> ShowInfoViewController
     func createMovieInfoViewController(delegate: MovieInfoViewControllerDelegate?, movie: MoviesPresenter, settings: Settings) -> MovieInfoViewController
+    
+    func createVideoPlayerController(film: Film) -> VideoPlayerController
 }
 
 
@@ -88,5 +90,11 @@ class StandardFactory: ViewControllerFactory {
         movieInfoVC.apiManager = apiManager
         
         return movieInfoVC
+    }
+    
+    func createVideoPlayerController(film: Film) -> VideoPlayerController {
+        let videoPlayerVC = VideoPlayerController(film: film)
+        
+        return videoPlayerVC
     }
 }
