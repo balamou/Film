@@ -40,7 +40,7 @@ struct Film {
     
     static func from(watched: Watched) -> Film {
         return Film(id: watched.id,
-                    URL: watched.movieURL,
+                    URL: watched.videoURL,
                     duration: watched.duration,
                     type: watched.type,
                     stoppedAt: watched.stoppedAt,

@@ -14,7 +14,7 @@ struct Watched: Decodable {
     var duration: Int
     var stoppedAt: Int // Time stopped at
     var label: String // Either Season # and Episode # or duration
-    var movieURL: String // for player
+    var videoURL: String // for player
     var type: FilmType
     
     var showId: Int?

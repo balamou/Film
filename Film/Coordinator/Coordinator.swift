@@ -90,7 +90,7 @@ extension Coordinator: WatchingViewControllerDelegate {
     func watchingViewController(_ watchingViewController: WatchingViewController, selectMoreInfo watched: Watched) {
         switch watched.type {
         case .movie:
-            let movie = Movie(id: watched.id, title: watched.title ?? "", duration: 1, videoURL: watched.movieURL, poster: watched.posterURL, stoppedAt: watched.stoppedAt)
+            let movie = Movie(id: watched.id, title: watched.title ?? "", duration: 1, videoURL: watched.videoURL, poster: watched.posterURL, stoppedAt: watched.stoppedAt)
             
             let movieInfoVC = factory.createMovieInfoViewController(delegate: self, movie: movie, settings: settings)
             navigationController.pushViewController(movieInfoVC, animated: false)
