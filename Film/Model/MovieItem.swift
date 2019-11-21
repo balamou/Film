@@ -1,5 +1,5 @@
 //
-//  MoviesPresenter.swift
+//  MovieItem.swift
 //  Film
 //
 //  Created by Michel Balamou on 2019-09-01.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MoviesPresenter: Decodable {
+struct MovieItem: Decodable {
     var id: Int
     var posterURL: String?
 }

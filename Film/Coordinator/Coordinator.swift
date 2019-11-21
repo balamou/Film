@@ -117,8 +117,8 @@ extension Coordinator: ShowsDelegate {
 
 extension Coordinator: MoviesDelegate {
     
-    func moviesViewController(_ moviesViewController: MoviesViewController, selected moviePresenter: MoviesPresenter) {
-        let movie = Movie(id: moviePresenter.id, title: "", duration: 100, videoURL: "", poster: moviePresenter.posterURL)
+    func moviesViewController(_ moviesViewController: MoviesViewController, selected movieItem: MovieItem) {
+        let movie = Movie(id: movieItem.id, title: "", duration: 100, videoURL: "", poster: movieItem.posterURL)
         let movieInfoVC = factory.createMovieInfoViewController(delegate: self, movie: movie, settings: settings)
         
         navigationController.pushViewController(movieInfoVC, animated: false)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias MoviesHandler = (Result<([MoviesPresenter], Bool), Error>) -> Void
+typealias MoviesHandler = (Result<([MovieItem], Bool), Error>) -> Void
 
 protocol MoviesAPI {
     func getMovies(start: Int, quantity: Int, result: @escaping MoviesHandler)
@@ -18,7 +18,7 @@ class ConcreteMoviesAPI: MoviesAPI {
     private let settings: Settings
     
     private struct MoviesWrapper: Decodable {
-        let movies: [MoviesPresenter]
+        let movies: [MovieItem]
         let isLast: Bool
     }
     

@@ -10,13 +10,13 @@ import UIKit
 
 
 protocol MoviesDelegate: class {
-    func moviesViewController(_ moviesViewController: MoviesViewController, selected moviePresenter: MoviesPresenter)
+    func moviesViewController(_ moviesViewController: MoviesViewController, selected movieItem: MovieItem)
 }
 
 enum MoviesViewControllerState {
     case loading
     case idle
-    case hasData([MoviesPresenter], isLast: Bool)
+    case hasData([MovieItem], isLast: Bool)
 }
 
 class MoviesViewController: UIViewController {
@@ -26,7 +26,7 @@ class MoviesViewController: UIViewController {
     var alert: AlertViewController?
     
     private var moviesView: MoviesView = MoviesView()
-    private var data = [MoviesPresenter]()
+    private var data = [MovieItem]()
     
     private var state: MoviesViewControllerState = .loading {
         didSet { switchState(state) }

@@ -22,13 +22,13 @@ class MockMoviesAPI: MoviesAPI {
                 return
             }
             
-            let data: [MoviesPresenter]
+            let data: [MovieItem]
             if self.count == 4 {
-                data = MoviesPresenter.getMockData2()
+                data = MovieItem.getMockData2()
             } else if self.count == 3 {
                 data = []
             } else {
-                data = MoviesPresenter.getMockData()
+                data = MovieItem.getMockData()
             }
             
             let isLast = (start >= 2 * 9)
