@@ -22,13 +22,13 @@ class MockSeriesAPI: SeriesAPI {
                 return
             }
             
-            let data: [SeriesPresenter]
+            let data: [SeriesItem]
             if self.count == 4 {
-                data = SeriesPresenter.getMockData2()
+                data = SeriesItem.getMockData2()
             } else if self.count == 3 {
                 data = []
             } else {
-                data = SeriesPresenter.getMockData()
+                data = SeriesItem.getMockData()
             }
             
             let isLast = (start >= 2 * 9)

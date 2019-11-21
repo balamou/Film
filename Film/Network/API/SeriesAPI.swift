@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias SeriesRequest = Handler< ([SeriesPresenter], Bool) >
+typealias SeriesRequest = Handler< ([SeriesItem], Bool) >
 
 protocol SeriesAPI {
     func getSeries(start: Int, quantity: Int, result: @escaping SeriesRequest)
@@ -24,7 +24,7 @@ final class ConcreteSeriesAPI: SeriesAPI {
     /// Wrapper used to separate two values from the JSON data.
     /// Both are used independently of each other, but are encoded together (see code below)
     private struct SeriesWrapper: Decodable {
-        let showsData: [SeriesPresenter]
+        let showsData: [SeriesItem]
         let isLast: Bool
     }
     

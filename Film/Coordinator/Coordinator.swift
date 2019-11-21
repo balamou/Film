@@ -106,8 +106,8 @@ extension Coordinator: WatchingViewControllerDelegate {
 
 extension Coordinator: ShowsDelegate {
     
-    func showsViewController(_ showsViewController: ShowsViewController, selected seriesPresenter: SeriesPresenter) {
-        let series = Series(id: seriesPresenter.id, title: "", seasonSelected: 1, totalSeasons: 0, posterURL: seriesPresenter.posterURL)
+    func showsViewController(_ showsViewController: ShowsViewController, selected seriesItem: SeriesItem) {
+        let series = Series(id: seriesItem.id, title: "", seasonSelected: 1, totalSeasons: 0, posterURL: seriesItem.posterURL)
         let showInfoVC =  factory.createShowInfoViewController(delegate: self, series: series, settings: settings)
         
         navigationController.pushViewController(showInfoVC, animated: false)

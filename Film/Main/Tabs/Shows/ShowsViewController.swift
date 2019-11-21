@@ -9,13 +9,13 @@
 import UIKit
 
 protocol ShowsDelegate: class {
-    func showsViewController(_ showsViewController: ShowsViewController, selected seriesPresenter: SeriesPresenter)
+    func showsViewController(_ showsViewController: ShowsViewController, selected seriesItem: SeriesItem)
 }
 
 enum ShowsViewControllerState {
     case loading
     case idle
-    case hasData([SeriesPresenter], isLast: Bool)
+    case hasData([SeriesItem], isLast: Bool)
 }
 
 class ShowsViewController: UIViewController {
@@ -25,7 +25,7 @@ class ShowsViewController: UIViewController {
     var alert: AlertViewController?
     
     private var showsView: ShowsView = ShowsView()
-    private var data = [SeriesPresenter]()
+    private var data = [SeriesItem]()
     
     private var state: ShowsViewControllerState = .loading {
         didSet { switchState(state) }

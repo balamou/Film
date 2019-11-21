@@ -1,5 +1,5 @@
 //
-//  SeriesPresenter+mock.swift
+//  SeriesItem+mock.swift
 //  Film
 //
 //  Created by Michel Balamou on 2019-09-01.
@@ -9,17 +9,17 @@
 import Foundation
 
 
-extension SeriesPresenter {
+extension SeriesItem {
     
-    static func getMockData() -> [SeriesPresenter] {
+    static func getMockData() -> [SeriesItem] {
         return load(offset: 3, quantity: 9)
     }
     
-    static func getMockData2() -> [SeriesPresenter] {
+    static func getMockData2() -> [SeriesItem] {
         return load(offset: 3 + 9, quantity: 4)
     }
     
-    static func load(offset: Int, quantity: Int) -> [SeriesPresenter]  {
-        return Array(0..<quantity).map { SeriesPresenter(id: $0 + offset, posterURL: MockData.posters[$0 + offset]) }
+    static func load(offset: Int, quantity: Int) -> [SeriesItem]  {
+        return Array(0..<quantity).map { SeriesItem(id: $0 + offset, posterURL: MockData.posters[$0 + offset]) }
     }
 }
