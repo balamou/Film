@@ -17,8 +17,8 @@ protocol ViewControllerFactory {
     func createMoviesViewController(delegate: MoviesDelegate?, settings: Settings) -> MoviesViewController
     func createSettingsViewController(delegate: SettingsViewControllerDelegate?, settings: Settings) -> SettingsViewController
     
-    func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter, settings: Settings) -> ShowInfoViewController
-    func createMovieInfoViewController(delegate: MovieInfoViewControllerDelegate?, movie: MoviesPresenter, settings: Settings) -> MovieInfoViewController
+    func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: Series, settings: Settings) -> ShowInfoViewController
+    func createMovieInfoViewController(delegate: MovieInfoViewControllerDelegate?, movie: Movie, settings: Settings) -> MovieInfoViewController
     
     func createVideoPlayerController(film: Film) -> VideoPlayerController
 }
@@ -73,19 +73,18 @@ class StandardFactory: ViewControllerFactory {
         return settingsVC
     }
     
-    func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: SeriesPresenter, settings: Settings) -> ShowInfoViewController {
+    func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: Series, settings: Settings) -> ShowInfoViewController {
         let apiManager = ConcreteSeriesInfoAPI(settings: settings)
-        let showInfoVC = ShowInfoViewController(seriesPresenter: series)
+        let showInfoVC = ShowInfoViewController(series: series)
         showInfoVC.delegate = delegate
         showInfoVC.apiManager = apiManager
         
         return showInfoVC
     }
     
-    func createMovieInfoViewController(delegate: MovieInfoViewControllerDelegate?, movie: MoviesPresenter, settings: Settings) -> MovieInfoViewController {
-        // TODO: pass movie to MovieInfo
+    func createMovieInfoViewController(delegate: MovieInfoViewControllerDelegate?, movie: Movie, settings: Settings) -> MovieInfoViewController {
         let apiManager = ConcreteMovieInfoAPI(settings: settings)
-        let movieInfoVC = MovieInfoViewController()
+        let movieInfoVC = MovieInfoViewController(movie: movie)
         movieInfoVC.delegate = delegate
         movieInfoVC.apiManager = apiManager
         

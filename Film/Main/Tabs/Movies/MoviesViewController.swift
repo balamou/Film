@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol MoviesDelegate: class {
-    func moviesViewController(_ moviesViewController: MoviesViewController, selected movie: MoviesPresenter)
+    func moviesViewController(_ moviesViewController: MoviesViewController, selected moviePresenter: MoviesPresenter)
 }
 
 enum MoviesViewControllerState {

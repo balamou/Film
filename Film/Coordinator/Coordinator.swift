@@ -90,10 +90,15 @@ extension Coordinator: WatchingViewControllerDelegate {
     func watchingViewController(_ watchingViewController: WatchingViewController, selectMoreInfo watched: Watched) {
         switch watched.type {
         case .movie:
-             // TODO: open MovieInfoVC
-            break
+            let movie = Movie(id: watched.id, title: watched.title ?? "", duration: 1, videoURL: watched.movieURL, poster: watched.posterURL, stoppedAt: watched.stoppedAt)
+            
+            let movieInfoVC = factory.createMovieInfoViewController(delegate: self, movie: movie, settings: settings)
+            navigationController.pushViewController(movieInfoVC, animated: false)
         case .show:
-            let showInfoVC = factory.createShowInfoViewController(delegate: self, series: SeriesPresenter(watched), settings: settings)
+            guard let showId = watched.showId else { return }
+            let series = Series(id: showId, title: watched.title ?? "", seasonSelected: 1, totalSeasons: 0, posterURL: watched.posterURL)
+            
+            let showInfoVC = factory.createShowInfoViewController(delegate: self, series: series, settings: settings)
             navigationController.pushViewController(showInfoVC, animated: false)
         }
     }
@@ -101,8 +106,9 @@ extension Coordinator: WatchingViewControllerDelegate {
 
 extension Coordinator: ShowsDelegate {
     
-    func showsViewController(_ showsViewController: ShowsViewController, selected series: SeriesPresenter) {
-        let showInfoVC = factory.createShowInfoViewController(delegate: self, series: series, settings: settings)
+    func showsViewController(_ showsViewController: ShowsViewController, selected seriesPresenter: SeriesPresenter) {
+        let series = Series(id: seriesPresenter.id, title: "", seasonSelected: 1, totalSeasons: 0, posterURL: seriesPresenter.posterURL)
+        let showInfoVC =  factory.createShowInfoViewController(delegate: self, series: series, settings: settings)
         
         navigationController.pushViewController(showInfoVC, animated: false)
     }
@@ -111,7 +117,8 @@ extension Coordinator: ShowsDelegate {
 
 extension Coordinator: MoviesDelegate {
     
-    func moviesViewController(_ moviesViewController: MoviesViewController, selected movie: MoviesPresenter) {
+    func moviesViewController(_ moviesViewController: MoviesViewController, selected moviePresenter: MoviesPresenter) {
+        let movie = Movie(id: moviePresenter.id, title: "", duration: 100, videoURL: "", poster: moviePresenter.posterURL)
         let movieInfoVC = factory.createMovieInfoViewController(delegate: self, movie: movie, settings: settings)
         
         navigationController.pushViewController(movieInfoVC, animated: false)
@@ -154,7 +161,10 @@ extension Coordinator: ShowInfoViewControllerDelegate {
 
 extension Coordinator: MovieInfoViewControllerDelegate {
     
-    func movieInfoViewControllerPlay(_ movieInfoViewController: MovieInfoViewController) {
-        // TODO: launch player
+    func movieInfoViewController(_ movieInfoViewController: MovieInfoViewController, play movie: Movie) {
+        let playerVC = factory.createVideoPlayerController(film: Film.from(movie: movie))
+        self.playerVC = playerVC
+        
+        navigationController.pushViewController(playerVC, animated: false)
     }
 }

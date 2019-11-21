@@ -10,6 +10,7 @@ import Foundation
 
 
 struct Series: Decodable {
+    var id: Int
     var title: String
     var seasonSelected: Int
     var totalSeasons: Int

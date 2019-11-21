@@ -9,17 +9,26 @@
 import UIKit
 
 protocol MovieInfoViewControllerDelegate: class {
-    func movieInfoViewControllerPlay(_ movieInfoViewController: MovieInfoViewController)
+    func movieInfoViewController(_ movieInfoViewController: MovieInfoViewController, play movie: Movie)
 }
 
 class MovieInfoViewController: UIViewController {
     weak var delegate: MovieInfoViewControllerDelegate?
     private var movieInfoView = MovieInfoView()
     
-    private var movie: Movie?
+    private var movie: Movie
     var apiManager: MovieInfoAPI?
     
     private let maximumDescriptionCharacters = 180
+    
+    init(movie: Movie) {
+        self.movie = movie
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +68,7 @@ class MovieInfoViewController: UIViewController {
 extension MovieInfoViewController {
     
     func initialMovieInfoLoading() {
-        apiManager?.getMovieInfo(movieId: 0) { [weak self] result in
+        apiManager?.getMovieInfo(movieId: movie.id) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -79,7 +88,7 @@ extension MovieInfoViewController {
 extension MovieInfoViewController: MovieViewDelegate {
     
     func playButtonTapped() {
-        delegate?.movieInfoViewControllerPlay(self)
+        delegate?.movieInfoViewController(self, play: movie)
     }
     
     func exitButtonTapped() {

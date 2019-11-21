@@ -15,9 +15,9 @@ struct Movie: Decodable {
     let duration: Int
     let videoURL: String
     
-    let description: String?
-    let poster: String?
-    let stoppedAt: Int?
+    var description: String?
+    var poster: String?
+    var stoppedAt: Int?
         
     var percentViewed: Float {
         guard let stoppedAt = stoppedAt else { return 0 }

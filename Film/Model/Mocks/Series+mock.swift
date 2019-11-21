@@ -14,7 +14,7 @@ extension Series {
     static func getMock() -> Series {
         let desc = "An animated series on adult-swim about the infinite adventures of Rick, a genius alcoholic and careless scientist, with his grandson Morty, a 14 year-old anxious boy who is not so smart, but always tries to lead his grandfather with his own morale compass. Together, they explore the infinite universes; causing mayhem and running into trouble."
         
-        return Series(title: "Rick and Morty", seasonSelected: 2, totalSeasons: 4, description: desc, posterURL: MockData.randomPoster())
+        return Series(id: 0, title: "Rick and Morty", seasonSelected: 2, totalSeasons: 4, description: desc, posterURL: MockData.randomPoster())
     }
 }
 

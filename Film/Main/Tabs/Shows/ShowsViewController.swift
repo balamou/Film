@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ShowsDelegate: class {
-    func showsViewController(_ showsViewController: ShowsViewController, selected series: SeriesPresenter)
+    func showsViewController(_ showsViewController: ShowsViewController, selected seriesPresenter: SeriesPresenter)
 }
 
 enum ShowsViewControllerState {

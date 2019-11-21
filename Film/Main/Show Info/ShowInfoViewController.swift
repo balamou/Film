@@ -20,8 +20,7 @@ class ShowInfoViewController: UIViewController {
     weak var delegate: ShowInfoViewControllerDelegate?
     private var showView: ShowInfoView!
     
-    private var seriesId: Int
-    private var seriesInformation: Series
+    private var series: Series
     private var episodes: [Episode] = []
     
     private var isLoadingEpisodes = true
@@ -31,10 +30,8 @@ class ShowInfoViewController: UIViewController {
     // API
     var apiManager: SeriesInfoAPI?
     
-    init(seriesPresenter: SeriesPresenter) {
-        seriesId = seriesPresenter.id
-        seriesInformation = Series(title: "", seasonSelected: 1, totalSeasons: 0, posterURL: seriesPresenter.posterURL)
-        
+    init(series: Series) {
+        self.series = series
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,7 +46,7 @@ class ShowInfoViewController: UIViewController {
         view = showView
         
         setupCollectionView()
-        fetchSeries(by: seriesId)
+        fetchSeries(by: series.id)
     }
     
     //----------------------------------------------------------------------
@@ -90,7 +87,7 @@ extension ShowInfoViewController {
             
             switch result {
             case .success((let seriesData, let episodes)):
-                self.seriesInformation = seriesData
+                self.series = seriesData
                 self.episodes = episodes
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
@@ -105,7 +102,7 @@ extension ShowInfoViewController {
         isLoadingEpisodes = true
         episodesCollectionView.reloadData()
         
-        apiManager?.getEpisodes(seriesId: seriesId, season: season) { [weak self] result in
+        apiManager?.getEpisodes(seriesId: series.id, season: season) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -138,8 +135,8 @@ extension ShowInfoViewController: HeaderViewDelegate {
     }
     
     func seasonButtonTapped() {
-        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: seriesInformation.totalSeasons,
-                                                         selectedSeason: seriesInformation.seasonSelected)
+        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: series.totalSeasons,
+                                                         selectedSeason: series.seasonSelected)
         self.changeSeasonsVC = changeSeasonsVC
         changeSeasonsVC.delegate = self
         
@@ -167,7 +164,7 @@ extension ShowInfoViewController: ChangeSeasonViewControllerDelegate {
     
     func changeSeasonViewController(_ changeSeasonViewController: ChangeSeasonViewController, selected season: Int) {
         fetchEpisodes(from: season)
-        seriesInformation.seasonSelected = season
+        series.seasonSelected = season
         episodesCollectionView.reloadData()
         
         changeSeasonsVC?.removeSelfAsChildViewController()
@@ -199,7 +196,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
         header.delegate = self
         
-        header.populateData(series: seriesInformation)
+        header.populateData(series: series)
         
         return header
     }
@@ -226,7 +223,7 @@ extension ShowInfoViewController: UICollectionViewDataSource {
     // Size of the header
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            return HeaderView.getEstimatedSize(description: seriesInformation.description, collectionViewWidth: collectionView.frame.width)
+            return HeaderView.getEstimatedSize(description: series.description, collectionViewWidth: collectionView.frame.width)
         }
         
         return .zero

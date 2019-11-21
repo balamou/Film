@@ -1,5 +1,5 @@
 //
-//  UIImageView+extensions.swift
+//  AsyncImageView.swift
 //  Film
 //
 //  Created by Michel Balamou on 2019-08-28.
