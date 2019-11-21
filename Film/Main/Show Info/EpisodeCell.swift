@@ -22,8 +22,8 @@ class EpisodeCell: UICollectionViewCell {
     static let plotFont = Fonts.generateFont(font: "OpenSans-Regular", size: 14)
     static let maximumPlotCharacters = 180
     
-    var thumbnail: UIImageView = {
-        let imageView = UIImageView()
+    var thumbnail: AsyncImageView = {
+        let imageView = AsyncImageView()
         imageView.backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
         
         return imageView
@@ -156,7 +156,7 @@ class EpisodeCell: UICollectionViewCell {
         
         episodeTitleLabel.text = episode.constructTitle()
         if let url = episode.thumbnailURL {
-            thumbnail.downloaded(from: url)
+            thumbnail.loadImage(fromURL: url)
         }
         durationLabel.text = episode.durationInMinutes()
         plotLabel.text = episode.plot?.truncate(EpisodeCell.maximumPlotCharacters)

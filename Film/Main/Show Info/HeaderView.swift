@@ -22,8 +22,8 @@ class HeaderView: UICollectionReusableView {
     static let descriptionFont = Fonts.generateFont(font: "OpenSans-Regular", size: 14)
     static let maximumDescriptionCharacters = 180
     
-    var posterPicture: UIImageView = {
-        let imageView = UIImageView()
+    var posterPicture: AsyncImageView = {
+        let imageView = AsyncImageView()
         imageView.backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
         
         return imageView
@@ -162,7 +162,7 @@ class HeaderView: UICollectionReusableView {
         titleLabel.text = series.title
         descriptionLabel.text = series.description?.truncate(HeaderView.maximumDescriptionCharacters) ?? ""
         if let url = series.posterURL {
-            posterPicture.downloaded(from: url)
+            posterPicture.loadImage(fromURL: url)
         }
         
         let seasonSelected = "Season".localize() + " \(series.seasonSelected)"

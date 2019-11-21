@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ShowInfoViewControllerDelegate: class {
-    func showInfoViewControllerExit(_ showInfoViewController: ShowInfoViewController)
+    func showInfoViewControllerDidExit(_ showInfoViewController: ShowInfoViewController)
     func showInfoViewControllerPlayShow(_ showInfoViewController: ShowInfoViewController)
     func showInfoViewController(_ showInfoViewController: ShowInfoViewController, play episode: Episode)
     func showInfoViewController(_ showInfoViewController: ShowInfoViewController, exitWith error: Error)
@@ -129,7 +129,7 @@ extension ShowInfoViewController {
 extension ShowInfoViewController: HeaderViewDelegate {
     
     func exitButtonTapped() {
-        delegate?.showInfoViewControllerExit(self)
+        delegate?.showInfoViewControllerDidExit(self)
     }
     
     func playButtonTapped() {

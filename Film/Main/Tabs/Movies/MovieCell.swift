@@ -14,14 +14,15 @@ class MovieCell: UICollectionViewCell {
     
     var posterURL: String? = nil {
         didSet {
+            posterImageView.image = nil
             if let url = posterURL {
-                posterImageView.downloaded(from: url)
+                posterImageView.loadImage(fromURL: url)
             }
         }
     }
     
-    var posterImageView: UIImageView = {
-        let imageView = UIImageView()
+    var posterImageView: AsyncImageView = {
+        let imageView = AsyncImageView()
         
         return imageView
     }()

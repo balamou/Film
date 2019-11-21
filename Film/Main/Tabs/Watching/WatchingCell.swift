@@ -21,8 +21,8 @@ class WatchingCell: UICollectionViewCell {
     var id: Int = 0
    
     
-    var posterImage: UIImageView = {
-        let imageView = UIImageView()
+    var posterImage: AsyncImageView = {
+        let imageView = AsyncImageView()
         imageView.backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
         
         return imageView
@@ -150,7 +150,7 @@ class WatchingCell: UICollectionViewCell {
     func populate(watched: Watched) {
         
         if let url = watched.posterURL {
-            posterImage.downloaded(from: url)
+            posterImage.loadImage(fromURL: url)
         }
         
         switchMultiplier(multiplier: watched.percentViewed)

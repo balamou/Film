@@ -19,8 +19,8 @@ class MovieInfoView: UIView {
     var stoppedAtAnchor = NSLayoutConstraint()
     
     
-    var posterPicture: UIImageView = {
-        let imageView = UIImageView()
+    var posterPicture: AsyncImageView = {
+        let imageView = AsyncImageView()
         imageView.backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
         
         return imageView

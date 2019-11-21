@@ -35,7 +35,7 @@ class MovieInfoViewController: UIViewController {
         movieInfoView.descriptionLabel.text = movie.description?.truncate(maximumDescriptionCharacters) ?? ""
         
         if let url = movie.poster {
-            movieInfoView.posterPicture.downloaded(from: url)
+            movieInfoView.posterPicture.loadImage(fromURL: url)
         }
         
         if let _ = movie.stoppedAt {

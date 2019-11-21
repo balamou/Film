@@ -82,6 +82,8 @@ extension Coordinator: WatchingViewControllerDelegate {
     
     func watchingViewController(_ watchingViewController: WatchingViewController, play watched: Watched) {
         let playerVC = factory.createVideoPlayerController(film: Film.from(watched: watched))
+        self.playerVC = playerVC
+        
         navigationController.pushViewController(playerVC, animated: false)
     }
     
@@ -119,7 +121,7 @@ extension Coordinator: MoviesDelegate {
 
 extension Coordinator: ShowInfoViewControllerDelegate {
     
-    func showInfoViewControllerExit(_ showInfoViewController: ShowInfoViewController) {
+    func showInfoViewControllerDidExit(_ showInfoViewController: ShowInfoViewController) {
         navigationController.popViewController(animated: false)
     }
     
@@ -129,6 +131,7 @@ extension Coordinator: ShowInfoViewControllerDelegate {
     
     func showInfoViewController(_ showInfoViewController: ShowInfoViewController, play episode: Episode) {
         let playerVC = factory.createVideoPlayerController(film: Film.from(episode: episode))
+        self.playerVC = playerVC
         
         navigationController.pushViewController(playerVC, animated: false)
     }

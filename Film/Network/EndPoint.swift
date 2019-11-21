@@ -33,6 +33,9 @@ enum EndPoint {
     
     case movie(movieId: Int, userId: Int)
     
+    /// `id` is movie id or episode id
+    case updateStoppedAt(userId: Int, id: Int, type: FilmType)
+    
     var path: String {
         switch self {
         case let .login(username):
@@ -54,6 +57,9 @@ enum EndPoint {
             
         case let .movie(movieId, userId):
             return "/movie/\(movieId)/\(userId)"
+        
+        case let .updateStoppedAt(userId, id, type):
+            return "/updateStoppedAt/\(userId)/\(id)/\(type)"
         }
     }
 }
