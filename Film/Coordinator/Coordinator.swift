@@ -132,10 +132,6 @@ extension Coordinator: ShowInfoViewControllerDelegate {
         navigationController.popViewController(animated: false)
     }
     
-    func showInfoViewControllerPlayShow(_ showInfoViewController: ShowInfoViewController) {
-        print("play last episode")
-    }
-    
     func showInfoViewController(_ showInfoViewController: ShowInfoViewController, play episode: Episode) {
         let playerVC = factory.createVideoPlayerController(film: Film.from(episode: episode))
         self.playerVC = playerVC
