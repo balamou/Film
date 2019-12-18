@@ -17,12 +17,12 @@ class ChangeSeasonViewController: UIViewController {
     
     weak var delegate: ChangeSeasonViewControllerDelegate?
     var changeSeasonView: ChangeSeasonView!
-    var totalSeasons: Int
     var selectedSeason: Int
+    var availableSeasons: [Int]
     
-    init(totalSeasons: Int, selectedSeason: Int) {
-        self.totalSeasons = totalSeasons
+    init(selectedSeason: Int, availableSeasons: [Int]) {
         self.selectedSeason = selectedSeason
+        self.availableSeasons = availableSeasons
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -54,16 +54,16 @@ class ChangeSeasonViewController: UIViewController {
 extension ChangeSeasonViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return totalSeasons
+        return availableSeasons.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeasonCell.identifier, for: indexPath) as! SeasonCell
         
-        let seasonNumber = indexPath.row + 1
+        let seasonNumber = availableSeasons[indexPath.row]
         cell.seasonLabel.text = "Season".localize() + " \(seasonNumber)"
         
-        if indexPath.row + 1  == selectedSeason {
+        if availableSeasons[indexPath.row]  == selectedSeason {
             cell.seasonLabel.font = Fonts.generateFont(font: "OpenSans-Bold", size: 18.0)
             cell.seasonLabel.textColor = .white
         }

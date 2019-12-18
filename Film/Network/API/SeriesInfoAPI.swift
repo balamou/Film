@@ -9,7 +9,7 @@
 import Foundation
 
 protocol SeriesInfoAPI {
-    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode])>)
+    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode], [Int])>)
     func getEpisodes(seriesId: Int, season: Int, result: @escaping Handler<[Episode]>)
 }
 
@@ -19,6 +19,7 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
     private struct WrapperSeries: Decodable {
         let series: Series
         let episodes: [Episode]
+        let availableSeasons: [Int]
     }
     
     init(settings: Settings) {
@@ -33,7 +34,7 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         }
     }
     
-    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode])>) {
+    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode], [Int])>) {
         guard let userId = settings.userId else {
             result(.failure(ConnectionError.custom("UserId is nil")))
             return
@@ -45,7 +46,7 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         requestType.execute(onSuccess: { data in
             let episodeData = self.fixURL(episodes: data.episodes, urlFixer: self.settings.createPath)
             
-            result(.success((data.series, episodeData)))
+            result(.success((data.series, episodeData, data.availableSeasons)))
         }, onError: { error in
             result(.failure(error))
         })

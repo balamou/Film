@@ -13,12 +13,12 @@ class MockSeriesInfoAPI: SeriesInfoAPI {
     static var count = 0
     var count2 = 0
     
-    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode])>) {
+    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode], [Int])>) {
         DispatchQueue.main.asyncAfter(deadline: .now() + simulatedDelay) {
             if MockSeriesInfoAPI.count == 2 {
                 result(.failure(ConnectionError.invalidURL))
             } else {
-                result(.success((Series.getMock(), Episode.getMockArray())))
+                result(.success((Series.getMock(), Episode.getMockArray(), [1, 4])))
             }
             
             MockSeriesInfoAPI.count += 1

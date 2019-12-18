@@ -26,6 +26,8 @@ class ShowInfoViewController: UIViewController {
     
     private var changeSeasonsVC: ChangeSeasonViewController?
     
+    private var availableSeasons: [Int] = []
+    
     // API
     var apiManager: SeriesInfoAPI?
     
@@ -85,9 +87,10 @@ extension ShowInfoViewController {
             guard let self = self else { return }
             
             switch result {
-            case .success((let seriesData, let episodes)):
+            case .success((let seriesData, let episodes, let availableSeasons)):
                 self.series = seriesData
                 self.episodes = episodes
+                self.availableSeasons = availableSeasons
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
             case .failure(let error):
@@ -136,8 +139,8 @@ extension ShowInfoViewController: HeaderViewDelegate {
     }
     
     func seasonButtonTapped() {
-        let changeSeasonsVC = ChangeSeasonViewController(totalSeasons: series.totalSeasons,
-                                                         selectedSeason: series.seasonSelected)
+        let changeSeasonsVC = ChangeSeasonViewController(selectedSeason: series.seasonSelected,
+                                                         availableSeasons: availableSeasons)
         self.changeSeasonsVC = changeSeasonsVC
         changeSeasonsVC.delegate = self
         
