@@ -54,6 +54,11 @@ struct Episode: Decodable {
             return "\(hours) " + "h".localize() + " \(minutes) " + "min".localize()
         }
     }
+    
+    mutating func fixURL(with urlFixer: (String?) -> String?) {
+        videoURL = urlFixer(videoURL) ?? videoURL
+        thumbnailURL = urlFixer(thumbnailURL)
+    }
 }
 
 

@@ -37,7 +37,9 @@ final class ConcreteSeriesAPI: SeriesAPI {
         let request = RequestType<SeriesWrapper>(data: requestData)
         
         request.execute(onSuccess: { data in
-            result(.success((data.showsData, data.isLast)))
+            let shows = data.showsData.map { SeriesItem(id: $0.id, posterURL: self.settings.createPath(with: $0.posterURL))}
+            
+            result(.success((shows, data.isLast)))
         }, onError: { error in
             result(.failure(error))
         })

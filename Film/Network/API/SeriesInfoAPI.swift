@@ -25,6 +25,14 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         self.settings = settings
     }
     
+    func fixURL(episodes: [Episode], urlFixer: (String?) -> String?) -> [Episode] {
+        return episodes.map { episode -> Episode in
+            var episodeCopy = episode
+            episodeCopy.fixURL(with: urlFixer)
+            return episodeCopy
+        }
+    }
+    
     func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode])>) {
         guard let userId = settings.userId else {
             result(.failure(ConnectionError.custom("UserId is nil")))
@@ -35,7 +43,9 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         let requestType = RequestType<WrapperSeries>(data: requestData)
         
         requestType.execute(onSuccess: { data in
-            result(.success((data.series, data.episodes)))
+            let episodeData = self.fixURL(episodes: data.episodes, urlFixer: self.settings.createPath)
+            
+            result(.success((data.series, episodeData)))
         }, onError: { error in
             result(.failure(error))
         })
@@ -51,7 +61,9 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         let requestType = RequestType<[Episode]>(data: requestData)
         
         requestType.execute(onSuccess: { episodes in
-            result(.success(episodes))
+            let episodeData = self.fixURL(episodes: episodes, urlFixer: self.settings.createPath)
+            
+            result(.success(episodeData))
         }, onError: { error in
             result(.failure(error))
         })

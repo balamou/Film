@@ -71,6 +71,14 @@ class Settings: CustomStringConvertible {
         copy(self, Settings.default)
         saveToUserDefaults()
     }
+    
+    func createPath(with path: String?) -> String? {
+        guard let path = path else {
+            return nil
+        }
+        
+        return "\(basePath)/\(path)"
+    }
 }
 
 extension Settings {
