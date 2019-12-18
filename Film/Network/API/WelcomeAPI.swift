@@ -19,7 +19,8 @@ class ConcreteWelcomeAPI: WelcomeAPI {
     private let settings: Settings
     
     private struct WelcomeWrapper: Decodable {
-        let userId: Int
+        let userId: Int?
+        let error: String?
     }
     
     init(settings: Settings) {
@@ -31,7 +32,12 @@ class ConcreteWelcomeAPI: WelcomeAPI {
         let requestType = RequestType<WelcomeWrapper>(data: requestData)
         
         requestType.execute(onSuccess: { data in
-            result(.success(data.userId))
+            guard let userId = data.userId else {
+                result(.failure(ConnectionError.custom(data.error ?? "Error no user id")))
+                return
+            }
+            
+            result(.success(userId))
         }, onError: { error in
             result(.failure(error))
         })
@@ -42,7 +48,12 @@ class ConcreteWelcomeAPI: WelcomeAPI {
         let requestType = RequestType<WelcomeWrapper>(data: requestData)
         
         requestType.execute(onSuccess: { data in
-            result(.success(data.userId))
+            guard let userId = data.userId else {
+                result(.failure(ConnectionError.custom(data.error ?? "Error no user id")))
+                return
+            }
+            
+            result(.success(userId))
         }, onError: { error in
             result(.failure(error))
         })

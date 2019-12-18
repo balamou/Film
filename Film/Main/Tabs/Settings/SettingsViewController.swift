@@ -60,6 +60,7 @@ class SettingsViewController: UIViewController {
     }
     
     func setupDataFromSettings() {
+        settingsView.usernameField.text = settings.username
         settingsView.languageField.text = settings.language
         settingsView.ipAddressField.text = settings.ipAddress
         settingsView.portField.text = settings.port

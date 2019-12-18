@@ -91,13 +91,8 @@ extension WelcomeViewController {
             
             switch result {
             case .success(let userId):
-                if userId > 0 {
-                    self.updateSettings(with: userId, isLogged: true)
-                    
-                    self.delegate?.welcomeViewControllerSuccessfullLogin(self)
-                } else {
-                    self.alert?.mode = .showMessage("Username does not exist")
-                }
+                self.updateSettings(with: userId, isLogged: true)
+                self.delegate?.welcomeViewControllerSuccessfullLogin(self)
             case .failure(let error):
                 self.alert?.mode = .showMessage(error.toString)
             }
@@ -116,13 +111,8 @@ extension WelcomeViewController {
             
             switch result {
             case .success(let userId):
-                if userId > 0 {
-                    self.updateSettings(with: userId, isLogged: true)
-                    
-                    self.delegate?.welcomeViewControllerSuccessfullLogin(self)
-                } else {
-                    self.alert?.mode = .showMessage("Username does not exist")
-                }
+                self.updateSettings(with: userId, isLogged: true)
+                self.delegate?.welcomeViewControllerSuccessfullLogin(self)
             case .failure(let error):
                 self.alert?.mode = .showMessage(error.toString)
             }
