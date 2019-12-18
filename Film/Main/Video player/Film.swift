@@ -48,12 +48,17 @@ struct Film {
     }
     
     static func from(episode: Episode) -> Film {
+        var newTitle: String? = nil
+        if let title = episode.title {
+            newTitle = "\(episode.episodeNumber). \(title)"
+        }
+        
         return Film(id: episode.id,
                     URL: episode.videoURL,
                     duration: episode.duration,
                     type: .show,
                     stoppedAt: episode.stoppedAt,
-                    title: episode.title)
+                    title: newTitle)
     }
     
     static func from(movie: Movie) -> Film {

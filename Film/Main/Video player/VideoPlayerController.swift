@@ -34,7 +34,9 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         
         videoPlayerView = VideoPlayerView(frame: self.view.frame)
         view = videoPlayerView
-       
+        
+        videoPlayerView.titleLabel.text = film.title
+        
         setUpPlayer(url: film.URL)
         setActions()
         setTimerForControlHide()
