@@ -48,9 +48,9 @@ struct Film {
     }
     
     static func from(episode: Episode) -> Film {
-        var newTitle: String? = nil
+        var newTitle: String = "No title"
         if let title = episode.title {
-            newTitle = "\(episode.episodeNumber). \(title)"
+            newTitle = "S\(episode.seasonNumber)E\(episode.episodeNumber). \"\(title)\""
         }
         
         return Film(id: episode.id,

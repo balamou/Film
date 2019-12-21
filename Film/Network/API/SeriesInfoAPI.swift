@@ -17,21 +17,18 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
     private let settings: Settings
     
     private struct WrapperSeries: Decodable {
-        let series: Series
-        let episodes: [Episode]
+        var series: Series
+        var episodes: [Episode]
         let availableSeasons: [Int]
+        
+        mutating func fixURLs(urlFixer: (String?) -> String?) {
+            episodes = episodes.fixURLs(urlFixer: urlFixer)
+            series.lastWatchedEpisode?.fixURL(with: urlFixer)
+        }
     }
     
     init(settings: Settings) {
         self.settings = settings
-    }
-    
-    func fixURL(episodes: [Episode], urlFixer: (String?) -> String?) -> [Episode] {
-        return episodes.map { episode -> Episode in
-            var episodeCopy = episode
-            episodeCopy.fixURL(with: urlFixer)
-            return episodeCopy
-        }
     }
     
     func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode], [Int])>) {
@@ -44,9 +41,10 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         let requestType = RequestType<WrapperSeries>(data: requestData)
         
         requestType.execute(onSuccess: { data in
-            let episodeData = self.fixURL(episodes: data.episodes, urlFixer: self.settings.createPath)
+            var _data = data
+            _data.fixURLs(urlFixer: self.settings.createPath)
             
-            result(.success((data.series, episodeData, data.availableSeasons)))
+            result(.success((_data.series, _data.episodes, _data.availableSeasons)))
         }, onError: { error in
             result(.failure(error))
         })
@@ -62,11 +60,24 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         let requestType = RequestType<[Episode]>(data: requestData)
         
         requestType.execute(onSuccess: { episodes in
-            let episodeData = self.fixURL(episodes: episodes, urlFixer: self.settings.createPath)
+            let episodeData = episodes.fixURLs(urlFixer: self.settings.createPath)
             
             result(.success(episodeData))
         }, onError: { error in
             result(.failure(error))
         })
     }
+}
+
+
+extension Array where Element == Episode {
+    
+    func fixURLs(urlFixer: (String?) -> String?) -> [Episode] {
+        return self.map { episode -> Episode in
+            var episodeCopy = episode
+            episodeCopy.fixURL(with: urlFixer)
+            return episodeCopy
+        }
+    }
+    
 }
