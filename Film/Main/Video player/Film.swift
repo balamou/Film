@@ -48,9 +48,9 @@ struct Film {
     }
     
     static func from(episode: Episode) -> Film {
-        var newTitle: String = "No title"
+        var newTitle: String = "No title".localize()
         if let title = episode.title {
-            newTitle = "S\(episode.seasonNumber)E\(episode.episodeNumber). \"\(title)\""
+            newTitle = "S\(episode.seasonNumber):E\(episode.episodeNumber) \"\(title)\""
         }
         
         return Film(id: episode.id,
