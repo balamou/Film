@@ -76,8 +76,13 @@ extension ChangeSeasonViewController: UICollectionViewDataSource {
 extension ChangeSeasonViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let seasonNumber = indexPath.item + 1
-        delegate?.changeSeasonViewController(self, selected: seasonNumber)
+        let seasonNumber = availableSeasons[indexPath.item]
+        
+        if (selectedSeason == seasonNumber) {
+            delegate?.changeSeasonViewControllerExit(self)
+        } else {
+            delegate?.changeSeasonViewController(self, selected: seasonNumber)
+        }
     }
 }
 
