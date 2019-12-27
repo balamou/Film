@@ -8,19 +8,18 @@
 
 import UIKit
 
-
-protocol WelcomeViewControllerDelegate: AnyObject {
-    func onSuccessfullLogin()
+protocol WelcomeViewControllerDelegate: class {
+    func welcomeViewControllerSuccessfullLogin(_ welcomeViewController: WelcomeViewController)
 }
 
-
 class WelcomeViewController: UIViewController {
-    weak var delegate: WelcomeViewControllerDelegate?
     
-    let settings: Settings
-    let welcomeView: WelcomeView = WelcomeView()
-    var apiManager: WelcomeAPI?
+    weak var delegate: WelcomeViewControllerDelegate?
     var alert: AlertViewController?
+    var apiManager: WelcomeAPI?
+    
+    private let settings: Settings
+    private let welcomeView: WelcomeView = WelcomeView()
     
     init(settings: Settings) {
         self.settings = settings
@@ -38,20 +37,10 @@ class WelcomeViewController: UIViewController {
         alert = AlertViewController(parent: self)
         
         welcomeView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        welcomeView.signUpButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
         
         dismissKey()
         configureWithSettings()
-        
-        let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(languagesTapped))
-        welcomeView.languageField.addGestureRecognizer(languageTapGesture)
-    }
-    
-    @objc func languagesTapped() {
-        UIView.animate(withDuration: 0.3) {
-            let hiddenValue = self.welcomeView.collapsableView.isHidden
-            self.welcomeView.collapsableView.isHidden.toggle()
-            self.welcomeView.collapsableView.layer.opacity = hiddenValue ? 1.0 : 0.0
-        }
     }
     
     func configureWithSettings() {
@@ -71,7 +60,12 @@ class WelcomeViewController: UIViewController {
     }
     
     @objc func signupButtonTapped() {
+        guard let username = welcomeView.usernameField.text, !username.isEmpty else {
+            alert?.mode = .showMessage("Please enter a username".localize())
+            return
+        }
         
+        signup(username: username)
     }
     
     //----------------------------------------------------------------------
@@ -90,28 +84,56 @@ extension WelcomeViewController {
     func login(username: String) {
         welcomeView.loginButton.isEnabled = (apiManager == nil)
         
+        captureServerInfoFromFields()
+        
         apiManager?.login(username: username) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
-            case .success(let doesUserExist):
-                if doesUserExist {
-                    self.settings.username = username
-                    self.settings.isLogged = true
-                    
-                    self.delegate?.onSuccessfullLogin()
-                } else {
-                    self.alert?.mode = .showMessage("Username does not exist")
-                }
-                break
-            case .failure(_):
-                // TODO: show specific error
-                self.alert?.mode = .showMessage("An error occured")
-                break
+            case .success(let userId):
+                self.updateSettings(with: userId, isLogged: true)
+                self.delegate?.welcomeViewControllerSuccessfullLogin(self)
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.toString)
             }
             
             self.welcomeView.loginButton.isEnabled = true
         }
+    }
+    
+    func signup(username: String) {
+        welcomeView.signUpButton.isEnabled = false
+        
+        captureServerInfoFromFields()
+        
+        apiManager?.signUp(username: username) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let userId):
+                self.updateSettings(with: userId, isLogged: true)
+                self.delegate?.welcomeViewControllerSuccessfullLogin(self)
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.toString)
+            }
+            
+            self.welcomeView.signUpButton.isEnabled = true
+        }
+    }
+    
+    func captureServerInfoFromFields() {
+        settings.ipAddress = welcomeView.ipAddressField.text!
+        settings.port = welcomeView.portField.text!
+    }
+    
+    func updateSettings(with userId: Int, isLogged: Bool) {
+        settings.isLogged = isLogged
+        settings.userId = userId
+        settings.username = welcomeView.usernameField.text!
+        settings.language = welcomeView.languageField.text!
+        settings.ipAddress = welcomeView.ipAddressField.text!
+        settings.port = welcomeView.portField.text!
+        settings.saveToUserDefaults()
     }
     
 }
@@ -119,12 +141,13 @@ extension WelcomeViewController {
 extension WelcomeViewController {
     
     func dismissKey() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboard))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+        welcomeView.hideLanguagePicker()
     }
 }

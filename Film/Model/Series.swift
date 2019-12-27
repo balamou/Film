@@ -10,6 +10,7 @@ import Foundation
 
 
 struct Series: Decodable {
+    var id: Int
     var title: String
     var seasonSelected: Int
     var totalSeasons: Int
@@ -17,21 +18,6 @@ struct Series: Decodable {
     var description: String?
     var posterURL: String?
     var lastWatchedEpisode: Episode?
-    
-    init(title: String,
-         seasonSelected: Int,
-         totalSeasons: Int,
-         description: String? = nil,
-         posterURL: String? = nil,
-         lastWatchedEpisode: Episode? = nil) {
-        self.title = title
-        self.seasonSelected = seasonSelected
-        self.totalSeasons = totalSeasons
-        self.description = description
-        self.posterURL = posterURL
-        self.lastWatchedEpisode = lastWatchedEpisode
-    }
-    
 }
 
 struct Episode: Decodable {
@@ -44,28 +30,7 @@ struct Episode: Decodable {
     var thumbnailURL: String?
     var title: String?
     var plot: String?
-    var stoppedAt: Float?
-    
-    init(id: Int,
-         episodeNumber: Int,
-         seasonNumber: Int,
-         videoURL: String,
-         duration: Int,
-         thumbnailURL: String? = nil,
-         title: String? = nil,
-         plot: String? = nil,
-         stoppedAt: Float? = nil) {
-        self.id = id
-        self.episodeNumber = episodeNumber
-        self.seasonNumber = seasonNumber
-        self.videoURL = videoURL
-        self.duration = duration
-        
-        self.thumbnailURL = thumbnailURL
-        self.title = title
-        self.plot = plot
-        self.stoppedAt = stoppedAt
-    }
+    var stoppedAt: Int?
     
     func constructTitle() -> String {
         if let title = title {
@@ -90,7 +55,10 @@ struct Episode: Decodable {
         }
     }
     
-    
+    mutating func fixURL(with urlFixer: (String?) -> String?) {
+        videoURL = urlFixer(videoURL) ?? videoURL
+        thumbnailURL = urlFixer(thumbnailURL)
+    }
 }
 
 

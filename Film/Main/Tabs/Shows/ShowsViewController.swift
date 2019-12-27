@@ -8,45 +8,45 @@
 
 import UIKit
 
-
-protocol ShowsDelegate: AnyObject {
-    func tappedOnSeriesPoster(series: SeriesPresenter) // tapped on poster to get more information
+protocol ShowsDelegate: class {
+    func showsViewController(_ showsViewController: ShowsViewController, selected seriesItem: SeriesItem)
 }
 
 enum ShowsViewControllerState {
     case loading
     case idle
-    case hasData([SeriesPresenter], isLast: Bool)
+    case hasData([SeriesItem], isLast: Bool)
 }
 
 class ShowsViewController: UIViewController {
     
-    var showsView: ShowsView = ShowsView()
-    
-    var data = [SeriesPresenter]()
-    var apiManager: SeriesAPI?
     weak var delegate: ShowsDelegate?
-    var state: ShowsViewControllerState = .loading {
+    var apiManager: SeriesAPI?
+    var alert: AlertViewController?
+    
+    private var showsView: ShowsView = ShowsView()
+    private var data = [SeriesItem]()
+    
+    private var state: ShowsViewControllerState = .loading {
         didSet { switchState(state) }
     }
     
     // Params
-    let numberOfShowsToLoad = 9
-    var isInfiniteScrollEnabled: Bool = true
-    var isFetchingMore: Bool = false
+    private let numberOfShowsToLoad = 9
+    private var isInfiniteScrollEnabled: Bool = true
+    private var isFetchingMore: Bool = false
     
     // Collection view
-    var collectionView: UICollectionView!
+    private var collectionView: UICollectionView!
     
     // Sections
-    var sections: [Section] = []
-    var dataSection: Section!
-    var idleSection: Section!
-    var loadingSection: Section!
-    var loadingMoreSection: Section!
+    private var sections: [Section] = []
+    private var dataSection: Section!
+    private var idleSection: Section!
+    private var loadingSection: Section!
+    private var loadingMoreSection: Section!
     
-    // Alert
-    var alert: AlertViewController?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,7 +106,7 @@ class ShowsViewController: UIViewController {
         dataSection.selectedCell = { [weak self] row in
             guard let self = self else { return }
             
-            self.delegate?.tappedOnSeriesPoster(series: self.data[row])
+            self.delegate?.showsViewController(self, selected: self.data[row])
         }
     }
     
@@ -193,7 +193,7 @@ extension ShowsViewController {
                 self.state = series.isEmpty ? .idle : .hasData(series, isLast: isLast)
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.alert?.mode = .showMessage(error.toString)
                 self.state = .idle
             }
         }
@@ -209,7 +209,7 @@ extension ShowsViewController {
                 self.state = appendNewData.isEmpty ? .idle : .hasData(appendNewData, isLast: isLast)
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.alert?.mode = .showMessage(error.toString)
                 self.loadingMoreSection.hide()
                 self.collectionView.reloadSections(IndexSet(integer: 3)) // refresh the section with the spinner
             }
@@ -227,7 +227,7 @@ extension ShowsViewController {
                 self.state = series.isEmpty ? .idle : .hasData(series, isLast: isLast)
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.localizedDescription)
+                self.alert?.mode = .showMessage(error.toString)
             }
             
             self.collectionView.refreshControl?.endRefreshing()

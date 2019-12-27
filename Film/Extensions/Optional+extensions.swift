@@ -9,9 +9,13 @@
 import Foundation
 
 extension Optional where Wrapped: Collection {
-    
     var isNilOrEmpty: Bool {
         return self?.isEmpty ?? true
     }
-    
+}
+
+extension Optional where Wrapped: CustomStringConvertible {
+    var description: String {
+        return self?.description ?? "nil"
+    }
 }

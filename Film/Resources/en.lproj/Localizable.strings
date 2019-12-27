@@ -8,6 +8,10 @@
 
 //Welcome
 "Start" = "Start";
+"Login" = "Login";
+"Logging in..." = "Logging in...";
+"Sign up" = "Sign up";
+"Signing in..." = "Signing in...";
 
 // Tabs
 "Watching" = "Watching";
@@ -32,6 +36,7 @@
 
 // Player VC
 "Next episode" = "Next episode";
+"No title" = "No title";
 
 // Settings
 "settings" = "settings";
@@ -50,6 +55,8 @@
 "Please select language" = "Please select language";
 "Please enter IP Address" = "Please enter IP Address";
 "Please enter Port number" = "Please enter Port number";
+
+"Successfully saved" = "Successfully saved";
 
 // ShowInfoVC & ChangeSeasonVC
 "Season" = "Season";

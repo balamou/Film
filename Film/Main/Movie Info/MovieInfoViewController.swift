@@ -8,18 +8,27 @@
 
 import UIKit
 
-protocol MovieInfoViewControllerDelegate: AnyObject {
-    func playMovie()
+protocol MovieInfoViewControllerDelegate: class {
+    func movieInfoViewController(_ movieInfoViewController: MovieInfoViewController, play movie: Movie)
 }
 
 class MovieInfoViewController: UIViewController {
     weak var delegate: MovieInfoViewControllerDelegate?
-    var movieInfoView = MovieInfoView()
+    private var movieInfoView = MovieInfoView()
     
-    var movie: Movie?
+    private var movie: Movie
     var apiManager: MovieInfoAPI?
     
-    let maximumDescriptionCharacters = 180
+    private let maximumDescriptionCharacters = 180
+    
+    init(movie: Movie) {
+        self.movie = movie
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +44,11 @@ class MovieInfoViewController: UIViewController {
         movieInfoView.descriptionLabel.text = movie.description?.truncate(maximumDescriptionCharacters) ?? ""
         
         if let url = movie.poster {
-            movieInfoView.posterPicture.downloaded(from: url)
+            movieInfoView.posterPicture.loadImage(fromURL: url)
         }
         
         if let _ = movie.stoppedAt {
-            movieInfoView.changeStoppedAtMultiplier(movie.stoppedAtRatio())
+            movieInfoView.changeStoppedAtMultiplier(movie.percentViewed)
         }
     }
     
@@ -59,7 +68,7 @@ class MovieInfoViewController: UIViewController {
 extension MovieInfoViewController {
     
     func initialMovieInfoLoading() {
-        apiManager?.getMovieInfo(movieId: 0) { [weak self] result in
+        apiManager?.getMovieInfo(movieId: movie.id) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -79,7 +88,7 @@ extension MovieInfoViewController {
 extension MovieInfoViewController: MovieViewDelegate {
     
     func playButtonTapped() {
-        delegate?.playMovie()
+        delegate?.movieInfoViewController(self, play: movie)
     }
     
     func exitButtonTapped() {

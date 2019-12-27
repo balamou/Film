@@ -16,7 +16,7 @@ class Coordinator {
     let tabViewConroller = UITabBarController()
     
     var playerVC: VideoPlayerController?
-    let builder: Builder = StandardBuilder()
+    let factory: ViewControllerFactory = StandardFactory()
     let settings: Settings = Settings()
     
     init(window: UIWindow) {
@@ -32,17 +32,17 @@ class Coordinator {
     }
     
     func loginFlow() -> UIViewController {
-        let welcomeVC = builder.createWelcomeViewController(delegate: self, settings: settings)
+        let welcomeVC = factory.createWelcomeViewController(delegate: self, settings: settings)
         
-        print(settings.description())
+        print(settings)
         return welcomeVC
     }
     
     func mainFlow() -> UIViewController {
-        let watchingVC = builder.createWatchingViewController(delegate: self)
-        let showsVC = builder.createShowViewController(delegate: self)
-        let moviesVC = builder.createMoviesViewController(delegate: self)
-        let settingsVC = builder.createSettingsViewController(delegate: self, settings: settings)
+        let watchingVC = factory.createWatchingViewController(delegate: self, settings: settings)
+        let showsVC = factory.createShowViewController(delegate: self, settings: settings)
+        let moviesVC = factory.createMoviesViewController(delegate: self, settings: settings)
+        let settingsVC = factory.createSettingsViewController(delegate: self, settings: settings)
         
         tabViewConroller.viewControllers = [watchingVC, showsVC, moviesVC, settingsVC]
         tabViewConroller.tabBar.barTintColor = .black
@@ -65,7 +65,7 @@ class Coordinator {
 
 extension Coordinator: WelcomeViewControllerDelegate {
     
-    func onSuccessfullLogin() {
+    func welcomeViewControllerSuccessfullLogin(_ welcomeViewController: WelcomeViewController) {
         window.rootViewController = mainFlow()
     }
     
@@ -73,26 +73,32 @@ extension Coordinator: WelcomeViewControllerDelegate {
 
 extension Coordinator: SettingsViewControllerDelegate {
     
-    func logOutPerformed() {
+    func settingsViewControllerLogout(_ settingsViewController: SettingsViewController) {
         window.rootViewController = loginFlow()
     }
 }
 
 extension Coordinator: WatchingViewControllerDelegate {
     
-    func playTapped(watched: Watched) {
-        let playerVC = VideoPlayerController()
+    func watchingViewController(_ watchingViewController: WatchingViewController, play watched: Watched) {
+        let playerVC = factory.createVideoPlayerController(film: Film.from(watched: watched))
         self.playerVC = playerVC
+        
         navigationController.pushViewController(playerVC, animated: false)
     }
     
-    func moreInfoTapped(watched: Watched) {
+    func watchingViewController(_ watchingViewController: WatchingViewController, selectMoreInfo watched: Watched) {
         switch watched.type {
         case .movie:
-             // TODO: open MovieInfoVC
-            break
+            let movie = Movie(id: watched.id, title: watched.title ?? "", duration: 1, videoURL: watched.videoURL, poster: watched.posterURL, stoppedAt: watched.stoppedAt)
+            
+            let movieInfoVC = factory.createMovieInfoViewController(delegate: self, movie: movie, settings: settings)
+            navigationController.pushViewController(movieInfoVC, animated: false)
         case .show:
-            let showInfoVC = builder.createShowInfoViewController(delegate: self, series: SeriesPresenter(watched))
+            guard let showId = watched.showId else { return }
+            let series = Series(id: showId, title: watched.title ?? "", seasonSelected: 1, totalSeasons: 0, posterURL: watched.posterURL)
+            
+            let showInfoVC = factory.createShowInfoViewController(delegate: self, series: series, settings: settings)
             navigationController.pushViewController(showInfoVC, animated: false)
         }
     }
@@ -100,8 +106,9 @@ extension Coordinator: WatchingViewControllerDelegate {
 
 extension Coordinator: ShowsDelegate {
     
-    func tappedOnSeriesPoster(series: SeriesPresenter) {
-        let showInfoVC = builder.createShowInfoViewController(delegate: self, series: series)
+    func showsViewController(_ showsViewController: ShowsViewController, selected seriesItem: SeriesItem) {
+        let series = Series(id: seriesItem.id, title: "", seasonSelected: 1, totalSeasons: 0, posterURL: seriesItem.posterURL)
+        let showInfoVC =  factory.createShowInfoViewController(delegate: self, series: series, settings: settings)
         
         navigationController.pushViewController(showInfoVC, animated: false)
     }
@@ -110,39 +117,39 @@ extension Coordinator: ShowsDelegate {
 
 extension Coordinator: MoviesDelegate {
     
-    func tappedOnMoviesPoster(movie: MoviesPresenter) {
-        let movieInfoVS = builder.createMovieInfoViewController(delegate: self, movie: movie)
+    func moviesViewController(_ moviesViewController: MoviesViewController, selected movieItem: MovieItem) {
+        let movie = Movie(id: movieItem.id, title: "", duration: 100, videoURL: "", poster: movieItem.posterURL)
+        let movieInfoVC = factory.createMovieInfoViewController(delegate: self, movie: movie, settings: settings)
         
-        navigationController.pushViewController(movieInfoVS, animated: false)
+        navigationController.pushViewController(movieInfoVC, animated: false)
     }
     
 }
 
 extension Coordinator: ShowInfoViewControllerDelegate {
     
-    func exitButtonTapped() {
+    func showInfoViewControllerDidExit(_ showInfoViewController: ShowInfoViewController) {
         navigationController.popViewController(animated: false)
     }
     
-    func playButtonTapped() {
-        print("play last episode")
+    func showInfoViewController(_ showInfoViewController: ShowInfoViewController, play episode: Episode) {
+        let playerVC = factory.createVideoPlayerController(film: Film.from(episode: episode))
+        self.playerVC = playerVC
+        
+        navigationController.pushViewController(playerVC, animated: false)
     }
     
-    func thumbnailTapped() {
-        print("play episode")
-    }
-    
-    func exitWithError(error: Error) {
+    func showInfoViewController(_ showInfoViewController: ShowInfoViewController, exitWith error: Error) {
         navigationController.popViewController(animated: false)
         
         guard let shownVC = tabViewConroller.selectedViewController else { return }
         
         if let watchingViewController = shownVC as? WatchingViewController {
-            watchingViewController.alert?.mode = .showMessage(error.localizedDescription)
+            watchingViewController.alert?.mode = .showMessage(error.toString)
         }
         
         if let showViewController = shownVC as? ShowsViewController {
-            showViewController.alert?.mode = .showMessage(error.localizedDescription)
+            showViewController.alert?.mode = .showMessage(error.toString)
         }
     }
     
@@ -150,7 +157,10 @@ extension Coordinator: ShowInfoViewControllerDelegate {
 
 extension Coordinator: MovieInfoViewControllerDelegate {
     
-    func playMovie() {
-        // TODO: launch player
+    func movieInfoViewController(_ movieInfoViewController: MovieInfoViewController, play movie: Movie) {
+        let playerVC = factory.createVideoPlayerController(film: Film.from(movie: movie))
+        self.playerVC = playerVC
+        
+        navigationController.pushViewController(playerVC, animated: false)
     }
 }

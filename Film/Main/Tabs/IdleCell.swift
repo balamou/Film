@@ -14,7 +14,7 @@ class IdleCell: UICollectionViewCell {
     
     var idleImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = Images.idleImage
+        imageView.image = Images.Watching.idleImage
         
         return imageView
     }()
@@ -41,6 +41,10 @@ class IdleCell: UICollectionViewCell {
         }
     }
     
+    convenience init(message: String, frame: CGRect = .zero) {
+        self.init(frame: frame)
+        self.idleLabel.text = message
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,7 +54,6 @@ class IdleCell: UICollectionViewCell {
         
         Constraints.setIdleImage(idleImage, self)
         Constraints.setIdleLabel(idleLabel, idleImage)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

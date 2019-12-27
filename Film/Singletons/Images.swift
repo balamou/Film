@@ -8,28 +8,33 @@
 
 import Foundation
 
-class Images {
+struct Images {
     
-    // Tab View Controller Icons
-    static let watchingImage: UIImage = #imageLiteral(resourceName: "Watching")
-    static let showsImage: UIImage = #imageLiteral(resourceName: "Shows")
-    static let moviesImage: UIImage = #imageLiteral(resourceName: "Movies")
-    static let settingsImage: UIImage = #imageLiteral(resourceName: "Settings")
+    static let logoImage = UIImage(named: "Logo")
+    static let closeImage = UIImage(named: "Close")
     
-    // Watching View Controller Images
-    static let idleImage: UIImage = #imageLiteral(resourceName: "Nothing_found")
-    static let logoImage: UIImage = #imageLiteral(resourceName: "Logo")
-    static let informationImage: UIImage = #imageLiteral(resourceName: "info")
+    struct Tabs {
+        static let watchingImage = UIImage(named: "Watching")
+        static let showsImage = UIImage(named: "Shows")
+        static let moviesImage = UIImage(named: "Movies")
+        static let settingsImage = UIImage(named: "Settings")
+    }
     
-    // Player View Controller Images
-    static let pauseImage: UIImage = #imageLiteral(resourceName: "Pause")
-    static let playImage: UIImage = #imageLiteral(resourceName: "Play")
-    static let forwardImage: UIImage = #imageLiteral(resourceName: "forward")
-    static let backwardImage: UIImage = #imageLiteral(resourceName: "backward")
-    static let nextEpisodeImage: UIImage = #imageLiteral(resourceName: "Next_episode")
-    static let volumeImage: UIImage = #imageLiteral(resourceName: "Volume")
-    static let closeImage: UIImage = #imageLiteral(resourceName: "Close")
+    struct Watching {
+        static let idleImage = UIImage(named: "Nothing_found")
+        static let informationImage = UIImage(named: "info")
+    }
     
-    // Show Info
-    static let playEpisode: UIImage = #imageLiteral(resourceName: "play_episode")
+    struct Player {
+        static let pauseImage = UIImage(named: "Pause")
+        static let playImage = UIImage(named: "Play")
+        static let forwardImage = UIImage(named: "forward")
+        static let backwardImage = UIImage(named: "backward")
+        static let nextEpisodeImage = UIImage(named: "Next_episode")
+        static let volumeImage = UIImage(named: "Volume")
+    }
+    
+    struct ShowInfo {
+        static let playEpisode = UIImage(named: "play_episode")
+    }
 }

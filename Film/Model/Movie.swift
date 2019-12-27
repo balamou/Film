@@ -10,32 +10,18 @@ import Foundation
 
 
 struct Movie: Decodable {
-    
-    var id: Int
-    var title: String
-    var duration: Int
+    let id: Int
+    let title: String
+    let duration: Int
+    let videoURL: String
     
     var description: String?
     var poster: String?
     var stoppedAt: Int?
-    
-    init(id: Int,
-         title: String,
-         duration: Int,
-         description: String? = nil,
-         poster: String? = nil,
-         stoppedAt: Int? = nil) {
-        self.id = id
-        self.title = title
-        self.description = description
-        self.duration = duration
-        self.poster = poster
-        self.stoppedAt = stoppedAt
-    }
-    
-    func stoppedAtRatio() -> CGFloat {
+        
+    var percentViewed: Float {
         guard let stoppedAt = stoppedAt else { return 0 }
         
-        return CGFloat(stoppedAt)/CGFloat(duration)
+        return Float(stoppedAt)/Float(duration)
     }
 }

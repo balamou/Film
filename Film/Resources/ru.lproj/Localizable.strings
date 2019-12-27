@@ -8,6 +8,10 @@
 
 //Welcome
 "Start" = "Начать";
+"Login" = "Авторизоваться";
+"Logging in..." = "Вход в систему...";
+"Sign up" = "Зарегистрироваться";
+"Signing in..." = "Регистрирует...";
 
 // Tabs
 "Watching" = "Просмотры";
@@ -32,6 +36,7 @@
 
 // Player VC
 "Next episode" = "Следующий эпизод";
+"No title" = "Без названия";
 
 // Settings
 "settings" = "настройки";
@@ -50,6 +55,8 @@
 "Please select language" = "Пожалуйста выберите язык";
 "Please enter IP Address" = "Пожалуйста напишите IP Address";
 "Please enter Port number" = "Пожалуйста напишите номер порта";
+
+"Successfully saved" = "Успешно сохранено";
 
 // ShowInfoVC & ChangeSeasonVC
 "Season" = "Сезон";

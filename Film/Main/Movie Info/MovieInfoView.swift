@@ -8,11 +8,10 @@
 
 import UIKit
 
-protocol MovieViewDelegate: AnyObject {
+protocol MovieViewDelegate: class {
     func playButtonTapped()
     func exitButtonTapped()
 }
-
 
 class MovieInfoView: UIView {
     weak var delegate: MovieViewDelegate?
@@ -20,8 +19,8 @@ class MovieInfoView: UIView {
     var stoppedAtAnchor = NSLayoutConstraint()
     
     
-    var posterPicture: UIImageView = {
-        let imageView = UIImageView()
+    var posterPicture: AsyncImageView = {
+        let imageView = AsyncImageView()
         imageView.backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
         
         return imageView
@@ -159,11 +158,11 @@ class MovieInfoView: UIView {
         progressView.isHidden = true
     }
 
-    func changeStoppedAtMultiplier(_ multiplier: CGFloat) {
+    func changeStoppedAtMultiplier(_ multiplier: Float) {
         playButton.setTitle("Resume".localize(), for: .normal)
         progressView.isHidden = false
         stoppedAtAnchor.isActive = false
-        stoppedAtAnchor = stoppedAtView.widthAnchor.constraint(equalTo: progressView.widthAnchor, multiplier: multiplier)
+        stoppedAtAnchor = stoppedAtView.widthAnchor.constraint(equalTo: progressView.widthAnchor, multiplier: CGFloat(multiplier))
         stoppedAtAnchor.isActive = true
         layoutIfNeeded()
     }

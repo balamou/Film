@@ -18,20 +18,18 @@ struct Language {
 }
 
 protocol SettingsViewControllerDelegate: class {
-    func logOutPerformed()
+    func settingsViewControllerLogout(_ settingsViewController: SettingsViewController)
 }
 
 class SettingsViewController: UIViewController {
     weak var delegate: SettingsViewControllerDelegate?
-    
-    let settings: Settings
-    let settingsView: SettingsView = SettingsView()
-    let languages = Language.default
-    let pickerRowHeight: CGFloat = 30
-    
-    // Alert
     var alert: AlertViewController?
 
+    private let settings: Settings
+    private let settingsView: SettingsView = SettingsView()
+    private let languages = Language.default
+    private let pickerRowHeight: CGFloat = 30
+    
     init(settings: Settings) {
         self.settings = settings
         super.init(nibName: nil, bundle: nil)
@@ -62,6 +60,7 @@ class SettingsViewController: UIViewController {
     }
     
     func setupDataFromSettings() {
+        settingsView.usernameField.text = settings.username
         settingsView.languageField.text = settings.language
         settingsView.ipAddressField.text = settings.ipAddress
         settingsView.portField.text = settings.port
@@ -83,8 +82,10 @@ class SettingsViewController: UIViewController {
         let errorMessages = [(language.isNilOrEmpty, message: "Please select language".localize()),
                             (ipAddress.isNilOrEmpty, message: "Please enter IP Address".localize()),
                             (port.isNilOrEmpty, message: "Please enter Port number".localize())]
-
-        if let errorMessage = errorMessages.first(where: { $0.0 == true })?.message {
+        
+        let firstFieldThatsNilOrEmpty = errorMessages.first(where: { $0.0 == true })
+        
+        if let errorMessage = firstFieldThatsNilOrEmpty?.message {
             alert?.mode = .showMessage(errorMessage)
             return
         }
@@ -95,7 +96,7 @@ class SettingsViewController: UIViewController {
         
         settings.saveToUserDefaults()
         
-        print(settings.description())
+        print(settings)
         
         alert?.mode = .success("Successfully saved")
     }
@@ -106,7 +107,7 @@ class SettingsViewController: UIViewController {
     
     @objc func logoutButtonTapped() {
         settings.logout()
-        delegate?.logOutPerformed()
+        delegate?.settingsViewControllerLogout(self)
     }
     
     //----------------------------------------------------------------------
@@ -120,7 +121,7 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController {
     
     func dismissKey() {
-        let tap = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboard))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }

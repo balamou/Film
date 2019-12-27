@@ -10,26 +10,18 @@ import Foundation
 
 
 struct Watched: Decodable {
-    
-    enum WatchedType: String, Decodable {
-        case movie
-        case show
-    }
-    
-    var id: Int // database id (for information button)
-    var posterURL: String? // URL of the poster image
-    var stoppedAt: Float // percentage of the progression
+    var id: Int // MovieID OR EpisodeID (this is not the show id, see below)
+    var duration: Int
+    var stoppedAt: Int // Time stopped at
     var label: String // Either Season # and Episode # or duration
-    var movieURL: String // for player
-    var type: WatchedType
+    var videoURL: String // for player
+    var type: FilmType
     
-    init(id: Int, posterURL: String? = nil, stoppedAt: Float, label: String, movieURL: String, type: WatchedType) {
-        self.id = id
-        self.posterURL = posterURL
-        self.stoppedAt = stoppedAt
-        self.label = label
-        self.movieURL = movieURL
-        self.type = type
+    var showId: Int?
+    var title: String?
+    var posterURL: String? // URL of the poster image
+    
+    var percentViewed: Float {
+        return Float(stoppedAt)/Float(duration)
     }
-    
 }

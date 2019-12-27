@@ -8,10 +8,9 @@
 
 import UIKit
 
-
-protocol WatchingViewControllerDelegate: AnyObject {
-    func playTapped(watched: Watched)
-    func moreInfoTapped(watched: Watched)
+protocol WatchingViewControllerDelegate: class {
+    func watchingViewController(_ watchingViewController: WatchingViewController, play watched: Watched)
+    func watchingViewController(_ watchingViewController: WatchingViewController, selectMoreInfo watched: Watched)
 }
 
 enum WatchingViewControllerMode {
@@ -23,20 +22,20 @@ enum WatchingViewControllerMode {
 class WatchingViewController: UIViewController {
     
     weak var delegate: WatchingViewControllerDelegate?
-    
-    var watchingView: WatchingView = WatchingView()
-    var data = [Watched]()
     var apiManager: WatchedAPI?
     
+    private var watchingView: WatchingView = WatchingView()
+    private var data = [Watched]()
+    
     // Collection view
-    var collectionVC: AbstractedCollectionViewController!
-    var collectionView: UICollectionView!
+    private var collectionVC: AbstractedCollectionViewController!
+    private var collectionView: UICollectionView!
     
     // Sections
-    var sections: [Section] = []
-    var dataSection: Section!
-    var idleSection: Section!
-    var loadingSection: Section!
+    private var sections: [Section] = []
+    private var dataSection: Section!
+    private var idleSection: Section!
+    private var loadingSection: Section!
     
     // Alert
     var alert: AlertViewController?
@@ -50,7 +49,6 @@ class WatchingViewController: UIViewController {
         initializeSections()
         addCollectionView()
         initialLoadWatching()
-        setupPullToRefresh()
     }
     
     //----------------------------------------------------------------------
@@ -94,6 +92,9 @@ class WatchingViewController: UIViewController {
     
     func addCollectionView() {
         collectionVC = AbstractedCollectionViewController(sections: sections)
+        collectionVC.addPullOnRefresh { [weak self] in
+            self?.refreshOnPull()
+        }
         addChildViewController(child: collectionVC)
         
         // Setup collection view
@@ -105,18 +106,6 @@ class WatchingViewController: UIViewController {
          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
          collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ].activate()
-    }
-    
-    func setupPullToRefresh() {
-        let refreshControl = UIRefreshControl()
-        collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
-    }
-    
-    @objc func refreshTriggered(_ sender: UIRefreshControl) {
-        refreshOnPull {
-            sender.endRefreshing()
-        }
     }
     
 }
@@ -140,13 +129,17 @@ extension WatchingViewController {
                 self.loadingSection.hide()
                 
                 self.collectionView.reloadData()
-            case .failure(_):
-                return
+            case .failure(let error):
+                self.alert?.mode = .showMessage(error.toString)
+                
+                self.idleSection.show()
+                self.loadingSection.hide()
+                self.collectionView.reloadData()
             }
         }
     }
     
-    func refreshOnPull(completion: @escaping () -> ()) {
+    func refreshOnPull() {
         apiManager?.getWatched { [weak self] result in
             guard let self = self else { return }
             
@@ -158,16 +151,17 @@ extension WatchingViewController {
                     self.idleSection.show()
                     self.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // reload both sections
                 } else {
+                    self.data = watched
                     self.dataSection.show()
                     self.dataSection.numberOfItems = watched.count
                     self.collectionView.reloadSections(IndexSet(integersIn: 0...1)) // reload both sections
                 }
                 
             case .failure(let error):
-                self.alert?.mode = .showMessage(error.getDescription())
+                self.alert?.mode = .showMessage(error.toString)
             }
             
-            completion()
+            self.collectionVC.endRefreshing()
         }
     }
 }
@@ -179,11 +173,10 @@ extension WatchingViewController {
 extension WatchingViewController: WatchingCellDelegate {
     
     func playButtonTapped(row: Int) {
-        delegate?.playTapped(watched: data[row])
+        delegate?.watchingViewController(self, play: data[row])
     }
     
     func informationButtonTapped(row: Int) {
-        delegate?.moreInfoTapped(watched: data[row])
+        delegate?.watchingViewController(self, selectMoreInfo: data[row])
     }
-    
 }

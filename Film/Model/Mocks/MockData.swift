@@ -8,12 +8,10 @@
 
 import Foundation
 
-
-class MockData {
-    
-    static let videoURLs = ["http://192.168.72.46:9989/EN/series/rick_and_morty/S1/E01.mp4",
-                     "http://192.168.72.46:9989/EN/movies/get_out/movie.mp4",
-                     "http://192.168.72.46:9989/EN/series/westworld/S1/E07.mp4"]
+struct MockData {
+    static let videoURLs = ["http://192.168.72.59:3000/E03.mkv",
+                     "http://192.168.72.59:3000/E03.mkv",
+                     "http://192.168.72.59:3000/E03.mkv"]
     static let posters: [String] = loadFromAsset(assetName: "Posters")
     static let moviePosters: [String] = loadFromAsset(assetName: "MoviePosters")
     

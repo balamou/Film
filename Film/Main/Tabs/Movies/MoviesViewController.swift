@@ -9,44 +9,43 @@
 import UIKit
 
 
-protocol MoviesDelegate: AnyObject {
-    func tappedOnMoviesPoster(movie: MoviesPresenter)
+protocol MoviesDelegate: class {
+    func moviesViewController(_ moviesViewController: MoviesViewController, selected movieItem: MovieItem)
 }
 
 enum MoviesViewControllerState {
     case loading
     case idle
-    case hasData([MoviesPresenter], isLast: Bool)
+    case hasData([MovieItem], isLast: Bool)
 }
 
 class MoviesViewController: UIViewController {
     
-    var moviesView: MoviesView = MoviesView()
-    
-    var data = [MoviesPresenter]()
-    var apiManager: MoviesAPI?
     weak var delegate: MoviesDelegate?
-    var state: MoviesViewControllerState = .loading {
+    var apiManager: MoviesAPI?
+    var alert: AlertViewController?
+    
+    private var moviesView: MoviesView = MoviesView()
+    private var data = [MovieItem]()
+    
+    private var state: MoviesViewControllerState = .loading {
         didSet { switchState(state) }
     }
     
     // Params
-    let numberOfMoviesToLoad = 9
-    var isInfiniteScrollEnabled: Bool = true
-    var isFetchingMore: Bool = false
+    private let numberOfMoviesToLoad = 9
+    private var isInfiniteScrollEnabled: Bool = true
+    private var isFetchingMore: Bool = false
     
     // Collection view
-    var collectionView: UICollectionView!
+    private var collectionView: UICollectionView!
     
     // Sections
-    var sections: [Section] = []
-    var dataSection: Section!
-    var idleSection: Section!
-    var loadingSection: Section!
-    var loadingMoreSection: Section!
-    
-    // Alert
-    var alert: AlertViewController?
+    private var sections: [Section] = []
+    private var dataSection: Section!
+    private var idleSection: Section!
+    private var loadingSection: Section!
+    private var loadingMoreSection: Section!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,7 +105,7 @@ class MoviesViewController: UIViewController {
         dataSection.selectedCell = { [weak self] row in
             guard let self = self else { return }
             
-            self.delegate?.tappedOnMoviesPoster(movie: self.data[row])
+            self.delegate?.moviesViewController(self, selected: self.data[row])
         }
     }
     
@@ -131,7 +130,6 @@ class MoviesViewController: UIViewController {
          collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ].activate()
     }
-    
 }
 
 //----------------------------------------------------------------------

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol WatchingCellDelegate: AnyObject {
+protocol WatchingCellDelegate: class {
     func playButtonTapped(row: Int)
     func informationButtonTapped(row: Int)
 }
@@ -21,8 +21,8 @@ class WatchingCell: UICollectionViewCell {
     var id: Int = 0
    
     
-    var posterImage: UIImageView = {
-        let imageView = UIImageView()
+    var posterImage: AsyncImageView = {
+        let imageView = AsyncImageView()
         imageView.backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
         
         return imageView
@@ -60,7 +60,7 @@ class WatchingCell: UICollectionViewCell {
     
     var informationButton: UIButton = {
         let button = UIButton()
-        button.setImage(Images.informationImage, for: .normal)
+        button.setImage(Images.Watching.informationImage, for: .normal)
         
         return button
     }()
@@ -150,10 +150,10 @@ class WatchingCell: UICollectionViewCell {
     func populate(watched: Watched) {
         
         if let url = watched.posterURL {
-            posterImage.downloaded(from: url)
+            posterImage.loadImage(fromURL: url)
         }
         
-        switchMultiplier(multiplier: watched.stoppedAt)
+        switchMultiplier(multiplier: watched.percentViewed)
         viewedLabel.text = watched.label
     }
     
