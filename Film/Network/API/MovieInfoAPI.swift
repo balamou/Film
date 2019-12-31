@@ -29,7 +29,10 @@ class ConcreteMovieInfoAPI: MovieInfoAPI {
         let requestType = RequestType<Movie>(data: requestData)
         
         requestType.execute(onSuccess: { movie in
-            result(.success(movie))
+            var _movie = movie
+            _movie.fixURL(with: self.settings.createPath)
+                
+            result(.success(_movie))
         }, onError: { error in
             result(.failure(error))
         })
