@@ -264,16 +264,19 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         timer?.invalidate()
     }
     
-    override func viewWillDisappear(_ animated: Bool)
-    {
+    override func viewWillDisappear(_ animated: Bool) {
         mediaPlayer.stop()
         timer?.invalidate()
-        
-        // RESET ORIENTATION
-        if (self.isMovingFromParent) {
-            let portrait = UIInterfaceOrientation.portrait.rawValue
-            UIDevice.current.setValue(portrait, forKey: "orientation")
+        resetOrientation()
+    }
+    
+    private func resetOrientation() {
+        guard isMovingFromParent else {
+            return
         }
+        
+        let portrait = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(portrait, forKey: "orientation")
     }
 }
 
