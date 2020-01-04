@@ -247,47 +247,58 @@ class VideoPlayerView: UIView {
         
         backgroundColor = .black
         
-        addSubviewLayout(mediaView)
+        setupMainViewComponents()
+        setupVolumeIndicator()
+        setupMainControls()
+        setupSecondaryControls()
         
+        controlView.addSubview(currentPositionLabel)
+    }
+    
+    private func setupMainViewComponents() {
+        addSubviewLayout(mediaView)
         addSubviewLayout(controlView)
+        
         controlView.addSubviewLayout(topBar)
         controlView.addSubviewLayout(bottomBar)
         
-        topBar.addSubviewLayout(titleLabel)
-        bottomBar.addSubviewLayout(durationLabel)
-        bottomBar.addSubviewLayout(slider)
-        
-        controlView.addSubview(currentPositionLabel)
-        
         Constraints.setMediaView(mediaView, self)
         Constraints.setControlView(controlView, self)
+        
         Constraints.setTopBar(topBar, controlView)
         Constraints.setBottomBar(bottomBar, controlView)
-        
-        Constraints.setTitleLabel(titleLabel, topBar)
-        Constraints.setDurationLabel(durationLabel, bottomBar)
-        Constraints.setSlider(slider, durationLabel, bottomBar)
-        
-        // CONTROLLS
-        controlView.addSubviewLayout(pausePlayButton)
-        controlView.addSubviewLayout(forward10sButton)
-        controlView.addSubviewLayout(backward10sButton)
-        topBar.addSubviewLayout(closeButton)
-        
-        Constraints.setPausePlayButton(pausePlayButton, controlView)
-        Constraints.setForwardButton(forward10sButton, pausePlayButton)
-        Constraints.setBackwardButton(backward10sButton, pausePlayButton)
-        Constraints.setCloseButton(closeButton, titleLabel, topBar)
-        
-        bottomBar.addSubviewLayout(nextEpisodeButton)
-        Constraints.setNextEpisodeButton(nextEpisodeButton, bottomBar)
-        
-        // VOLUME
+    }
+    
+    private func setupVolumeIndicator() {
         addSubviewLayout(volumeBar)
         addSubviewLayout(volumeImage)
         
         Constraints.setVolumeBar(volumeBar, self)
         Constraints.setVolumeImage(volumeImage, volumeBar)
+    }
+    
+    private func setupMainControls() {
+        controlView.addSubviewLayout(pausePlayButton)
+        controlView.addSubviewLayout(forward10sButton)
+        controlView.addSubviewLayout(backward10sButton)
+        
+        Constraints.setPausePlayButton(pausePlayButton, controlView)
+        Constraints.setForwardButton(forward10sButton, pausePlayButton)
+        Constraints.setBackwardButton(backward10sButton, pausePlayButton)
+    }
+    
+    private func setupSecondaryControls() {
+        topBar.addSubviewLayout(titleLabel)
+        topBar.addSubviewLayout(closeButton)
+        bottomBar.addSubviewLayout(durationLabel)
+        bottomBar.addSubviewLayout(slider)
+        bottomBar.addSubviewLayout(nextEpisodeButton)
+        
+        Constraints.setTitleLabel(titleLabel, topBar)
+        Constraints.setCloseButton(closeButton, titleLabel, topBar)
+        Constraints.setDurationLabel(durationLabel, bottomBar)
+        Constraints.setSlider(slider, durationLabel, bottomBar)
+        Constraints.setNextEpisodeButton(nextEpisodeButton, bottomBar)
     }
     
     func didAppear() {
