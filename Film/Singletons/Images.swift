@@ -39,5 +39,6 @@ struct Images {
     
     struct ShowInfo {
         static let playEpisode = UIImage(named: "play_episode")
+        static let exitImage = UIImage(named: "exit")
     }
 }
