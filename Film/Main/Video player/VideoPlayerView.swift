@@ -110,6 +110,24 @@ class VideoPlayerView: UIView {
         return button
     }()
     
+    var forward10sLabel: UILabel = {
+        let label = UILabel()
+        label.text = "10"
+        label.textColor = .white
+        label.font = Fonts.helveticaBold(size: 13.0)
+        
+        return label
+    }()
+    
+    var backward10sLabel: UILabel = {
+           let label = UILabel()
+           label.text = "10"
+           label.textColor = .white
+           label.font = Fonts.helveticaBold(size: 13.0)
+           
+           return label
+       }()
+    
     var currentPositionLabel: UILabel = {
         let label = UILabel()
         label.text = "00:00"
@@ -162,7 +180,7 @@ class VideoPlayerView: UIView {
     class Constraints {
         
         static let topBottomBarsHeight: CGFloat = 80.0
-        static let controlHorizontalSpacing: CGFloat = 150.0
+        static let controlHorizontalSpacing: CGFloat = 141.0
         
         static func setMediaView(_ view: UIView, _ parent: UIView) {
             view.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
@@ -191,7 +209,7 @@ class VideoPlayerView: UIView {
         }
         
         static func setDurationLabel(_ label: UILabel, _ parent: UIView) {
-            let labelDistanceFromBottom: CGFloat = 62.0
+            let labelDistanceFromBottom: CGFloat = 66.0
             let labelDistanceFromEdge: CGFloat = 20.0
             
             label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -1 * labelDistanceFromEdge).isActive = true
@@ -220,6 +238,16 @@ class VideoPlayerView: UIView {
         static func setBackwardButton(_ button: UIButton, _ pause: UIView) {
             button.centerYAnchor.constraint(equalTo: pause.centerYAnchor).isActive = true
             button.centerXAnchor.constraint(equalTo: pause.centerXAnchor, constant: -1 * controlHorizontalSpacing).isActive = true
+        }
+        
+        static func setForwardLabel(_ label: UILabel, _ forwardButton: UIButton) {
+            label.centerYAnchor.constraint(equalTo: forwardButton.centerYAnchor, constant: 2).isActive = true
+            label.centerXAnchor.constraint(equalTo: forwardButton.centerXAnchor).isActive = true
+        }
+        
+        static func setBackwardLabel(_ label: UILabel, _ backwardButton: UIButton) {
+            label.centerYAnchor.constraint(equalTo: backwardButton.centerYAnchor, constant: 2).isActive = true
+            label.centerXAnchor.constraint(equalTo: backwardButton.centerXAnchor).isActive = true
         }
         
         static func setCloseButton(_ button: UIButton, _ label: UILabel, _ parent: UIView) {
@@ -291,10 +319,14 @@ class VideoPlayerView: UIView {
         controlView.addSubviewLayout(pausePlayButton)
         controlView.addSubviewLayout(forward10sButton)
         controlView.addSubviewLayout(backward10sButton)
+        controlView.addSubviewLayout(forward10sLabel)
+        controlView.addSubviewLayout(backward10sLabel)
         
         Constraints.setPausePlayButton(pausePlayButton, controlView)
         Constraints.setForwardButton(forward10sButton, pausePlayButton)
         Constraints.setBackwardButton(backward10sButton, pausePlayButton)
+        Constraints.setForwardLabel(forward10sLabel, forward10sButton)
+        Constraints.setBackwardLabel(backward10sLabel, backward10sButton)
     }
     
     private func setupSecondaryControls() {
