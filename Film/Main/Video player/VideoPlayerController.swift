@@ -9,6 +9,58 @@
 import UIKit
 
 
+enum PlayState {
+    case playing
+    case paused
+}
+
+enum VideoPlayerState {
+    case initial
+    case shown(PlayState)
+    case hidden(PlayState)
+    case loadingShown
+    case loadingHidden
+    case scrolling
+}
+
+class VideoPlayerStateMachine {
+    private var view: VideoPlayerView
+    var currentState: VideoPlayerState = .initial {
+        willSet {
+            let isallowed = canTransition(from: currentState, to: newValue)
+            print("----> '\(isallowed)' from \(currentState) to \(newValue)")
+        }
+    }
+    
+    init(view: VideoPlayerView) {
+        self.view = view
+    }
+    
+    private func canTransition(from: VideoPlayerState, to: VideoPlayerState) -> Bool {
+        switch (from, to) {
+        case (.initial, .shown):
+            return true
+        case (.shown, .hidden),
+             (.shown, .loadingShown),
+             (.shown, .scrolling):
+            return true
+        case (.hidden, .shown),
+             (.hidden, .loadingHidden):
+            return true
+        case (.loadingShown, .shown),
+             (.loadingShown, .loadingHidden),
+             (.loadingShown, .scrolling):
+            return true
+        case (.scrolling, .loadingShown):
+            return true
+        default:
+            return false
+        }
+    }
+    
+    
+}
+
 class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
 
     var videoPlayerView: VideoPlayerView!
@@ -41,6 +93,10 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         setActions()
         setTimerForControlHide()
         overrideVolumeBar()
+        
+        let stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
+        stateMachine.currentState = .shown(.paused)
+        stateMachine.currentState = .loadingHidden
     }
     
     override func viewDidLayoutSubviews() {
