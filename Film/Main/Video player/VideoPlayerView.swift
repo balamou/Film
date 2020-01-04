@@ -181,7 +181,7 @@ class VideoPlayerView: UIView {
         }
         
         static func setDurationLabel(_ label: UILabel, _ parent: UIView) {
-            let labelDistanceFromBottom: CGFloat = 50.0
+            let labelDistanceFromBottom: CGFloat = 62.0
             let labelDistanceFromEdge: CGFloat = 20.0
             
             label.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -1 * labelDistanceFromEdge).isActive = true
@@ -189,10 +189,10 @@ class VideoPlayerView: UIView {
         }
         
         static func setSlider(_ slider: UISlider, _ durationLabel: UILabel, _ parent: UIView) {
-            let sliderDistanceFromEdge: CGFloat = 25.0
+            let sliderDistanceFromEdge: CGFloat = 20.0
          
             slider.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: sliderDistanceFromEdge).isActive = true
-            slider.trailingAnchor.constraint(equalTo: durationLabel.leadingAnchor, constant: -15.0).isActive = true
+            slider.trailingAnchor.constraint(equalTo: durationLabel.leadingAnchor, constant: -10.0).isActive = true
             slider.centerYAnchor.constraint(equalTo: durationLabel.centerYAnchor).isActive = true
         }
         
@@ -297,7 +297,7 @@ class VideoPlayerView: UIView {
     
     func applyGradient() {
         gradientLayer?.removeFromSuperlayer()
-        gradientLayer = controlView.setGradient(colors: [UIColor.black.setAlpha(0.8), UIColor.black.setAlpha(0), UIColor.black.setAlpha(0.8)])
+        gradientLayer = controlView.setGradient(colors: [UIColor.black.setAlpha(0.8), UIColor.black.setAlpha(0.3), UIColor.black.setAlpha(0.8)])
     }
     
     required init?(coder aDecoder: NSCoder) {
