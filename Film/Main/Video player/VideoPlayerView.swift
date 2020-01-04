@@ -59,8 +59,8 @@ class VideoPlayerView: UIView {
         return label
     }()
     
-    var airPlayButton: UIButton = {
-        let button = UIButton()
+    var airPlayButton: CustomMarginButton = {
+        let button = CustomMarginButton(horizontalMargin: 30, verticalMargin: 20)
         button.setImage(Images.Player.airPlayImage, for: .normal)
         
         return button
@@ -76,7 +76,7 @@ class VideoPlayerView: UIView {
     }()
     
     var closeButton: CustomMarginButton = {
-        let button = CustomMarginButton(horizontalMargin: 30, verticalMargin: 10)
+        let button = CustomMarginButton(horizontalMargin: 30, verticalMargin: 15)
         button.setImage(Images.Player.closeImage, for: .normal)
         
         return button
@@ -84,8 +84,8 @@ class VideoPlayerView: UIView {
     
     // MAIN CONTROLS
     
-    var pausePlayButton: UIButton = {
-        let button = UIButton()
+    var pausePlayButton: CustomMarginButton = {
+        let button = CustomMarginButton(horizontalMargin: 20, verticalMargin: 15)
         button.setImage(Images.Player.pauseImage, for: .normal) // ▌▌
         
         return button

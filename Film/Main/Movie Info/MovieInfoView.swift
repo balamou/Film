@@ -91,8 +91,6 @@ class MovieInfoView: UIView {
         static func setExitButton(_ button: UIButton, _ parent: UIView) {
             button.topAnchor.constraint(equalTo: parent.topAnchor, constant: 30.0).isActive = true
             button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -15.0).isActive = true
-            button.widthAnchor.constraint(equalToConstant: 25.0).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
         }
         
         static func setTitleLabel(_ label: UILabel, _ topNeighbour: UIView) {
