@@ -66,6 +66,7 @@
 		ED70C09D231C302900380BE0 /* MovieItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED70C09C231C302900380BE0 /* MovieItem.swift */; };
 		ED725116232ED83A0040C279 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED725115232ED83A0040C279 /* CustomTextField.swift */; };
 		ED725118232EE8680040C279 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED725117232EE8680040C279 /* Colors.swift */; };
+		ED76BA2B23C0503200CAC72D /* CustomHeightSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76BA2A23C0503200CAC72D /* CustomHeightSlider.swift */; };
 		ED8060A6231B76CD0032A128 /* SeriesItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8060A5231B76CD0032A128 /* SeriesItem.swift */; };
 		ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBBF2314620F00FEC56A /* VolumeController.swift */; };
 		ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */; };
@@ -215,6 +216,7 @@
 		ED70C09C231C302900380BE0 /* MovieItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieItem.swift; sourceTree = "<group>"; };
 		ED725115232ED83A0040C279 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ED725117232EE8680040C279 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		ED76BA2A23C0503200CAC72D /* CustomHeightSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeightSlider.swift; sourceTree = "<group>"; };
 		ED8060A5231B76CD0032A128 /* SeriesItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesItem.swift; sourceTree = "<group>"; };
 		ED82DBBF2314620F00FEC56A /* VolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeController.swift; sourceTree = "<group>"; };
 		ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerController+Volume.swift"; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				ED82DBC3231464F900FEC56A /* Volume Controller */,
 				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
 				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
+				ED76BA2A23C0503200CAC72D /* CustomHeightSlider.swift */,
 				ED57FCB023137CB20001A9AB /* Film.swift */,
 			);
 			path = "Video player";
@@ -963,6 +966,7 @@
 				ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */,
 				EDE494F3232DC37600547830 /* MoviesAPI.swift in Sources */,
 				EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */,
+				ED76BA2B23C0503200CAC72D /* CustomHeightSlider.swift in Sources */,
 				ED1B58CF2336A65500307EDC /* WelcomeAPI.swift in Sources */,
 				ED1B58CD23367F5A00307EDC /* Optional+extensions.swift in Sources */,
 				EDACC49C2319FE6B005DC09C /* WatchedAPI.swift in Sources */,

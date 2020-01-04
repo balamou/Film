@@ -36,15 +36,15 @@ class VideoPlayerView: UIView {
         return view
     }()
     
-    var slider: UISlider = {
-        let slider = UISlider()
+    var slider: CustomHeightSlider = {
+        let slider = CustomHeightSlider(trackHeight: 2.0)
         slider.minimumValue = 0.0
         slider.maximumValue = 1.0
         slider.value = 0.5
         
         slider.minimumTrackTintColor = #colorLiteral(red: 0.9215686275, green: 0.2078431373, blue: 0.1764705882, alpha: 1)
         slider.thumbTintColor = #colorLiteral(red: 0.9215686275, green: 0.2078431373, blue: 0.1764705882, alpha: 1)
-        slider.maximumTrackTintColor = #colorLiteral(red: 0.2941176471, green: 0.2941176471, blue: 0.2941176471, alpha: 1)
+        slider.maximumTrackTintColor = #colorLiteral(red: 0.6208083034, green: 0.6209152341, blue: 0.6207941771, alpha: 0.5510013204)
         slider.isContinuous = true
         
         return slider
@@ -190,9 +190,10 @@ class VideoPlayerView: UIView {
         
         static func setSlider(_ slider: UISlider, _ durationLabel: UILabel, _ parent: UIView) {
             let sliderDistanceFromEdge: CGFloat = 20.0
+            let sliderDistanceFromLabel: CGFloat = 10.0
          
             slider.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: sliderDistanceFromEdge).isActive = true
-            slider.trailingAnchor.constraint(equalTo: durationLabel.leadingAnchor, constant: -10.0).isActive = true
+            slider.trailingAnchor.constraint(equalTo: durationLabel.leadingAnchor, constant: -1 * sliderDistanceFromLabel).isActive = true
             slider.centerYAnchor.constraint(equalTo: durationLabel.centerYAnchor).isActive = true
         }
         
