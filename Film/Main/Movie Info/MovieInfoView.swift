@@ -27,8 +27,7 @@ class MovieInfoView: UIView {
     }()
     
     var exitButton: CustomMarginButton = {
-        let button = CustomMarginButton()
-        button.margin = 40.0
+        let button = CustomMarginButton(margin: 40)
         button.setImage(Images.Player.closeImage, for: .normal)
         
         return button

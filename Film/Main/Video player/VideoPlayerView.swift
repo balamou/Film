@@ -76,7 +76,7 @@ class VideoPlayerView: UIView {
     }()
     
     var closeButton: CustomMarginButton = {
-        let button = CustomMarginButton()
+        let button = CustomMarginButton(horizontalMargin: 30, verticalMargin: 10)
         button.setImage(Images.Player.closeImage, for: .normal)
         
         return button

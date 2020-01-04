@@ -26,7 +26,7 @@ class ShowInfoView: UIView {
     }()
     
     var exitButton: CustomMarginButton = {
-        let button = CustomMarginButton()
+        let button = CustomMarginButton(margin: 20)
         button.setImage(Images.ShowInfo.exitImage, for: .normal)
         
         return button
