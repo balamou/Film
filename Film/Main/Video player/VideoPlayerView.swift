@@ -199,31 +199,21 @@ class VideoPlayerView: UIView {
         static func setPausePlayButton(_ button: UIButton, _ parent: UIView) {
             button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             button.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
-            button.widthAnchor.constraint(equalToConstant: 41.0).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
         }
         
         static func setForwardButton(_ button: UIButton, _ pause: UIView) {
             button.centerYAnchor.constraint(equalTo: pause.centerYAnchor).isActive = true
             button.centerXAnchor.constraint(equalTo: pause.centerXAnchor, constant: controlHorizontalSpacing).isActive = true
-            
-            button.widthAnchor.constraint(equalToConstant: 44.0).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
         }
         
         static func setBackwardButton(_ button: UIButton, _ pause: UIView) {
             button.centerYAnchor.constraint(equalTo: pause.centerYAnchor).isActive = true
             button.centerXAnchor.constraint(equalTo: pause.centerXAnchor, constant: -1 * controlHorizontalSpacing).isActive = true
-            
-            button.widthAnchor.constraint(equalToConstant: 44.0).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
         }
         
         static func setCloseButton(_ button: UIButton, _ label: UILabel, _ parent: UIView) {
             button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -30.0).isActive = true
             button.centerYAnchor.constraint(equalTo: label.centerYAnchor).isActive = true
-            button.widthAnchor.constraint(equalToConstant: 17.0).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 17.0).isActive = true
         }
         
         static func setControlView(_ view: UIView, _ parent: UIView) {
