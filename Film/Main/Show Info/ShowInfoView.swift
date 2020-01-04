@@ -43,7 +43,7 @@ class ShowInfoView: UIView {
         
         static func setExitButton(_ button: UIButton, _ parent: UIView) {
             button.topAnchor.constraint(equalTo: parent.topAnchor, constant: 30).isActive = true
-            button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -10).isActive = true
+            button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -15).isActive = true
         }
         
     }

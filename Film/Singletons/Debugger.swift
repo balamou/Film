@@ -14,5 +14,5 @@ struct Debugger {
     /// Set to `false` if there is a problem with the volume indicator.
     /// Setting to false will also mute `[MediaRemote] OutputDeviceUID is nil Speaker: (null)` warnings.
     static let allowVolumeOverride = true
-    static let showButtonMargins = true
+    static let showButtonMargins = false
 }

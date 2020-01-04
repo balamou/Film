@@ -26,12 +26,12 @@ class MovieInfoView: UIView {
         return imageView
     }()
     
-    var exitButton: CustomMarginButton = {
-        let button = CustomMarginButton(margin: 40)
-        button.setImage(Images.Player.closeImage, for: .normal)
-        
-        return button
-    }()
+     var exitButton: CustomMarginButton = {
+         let button = CustomMarginButton(margin: 20)
+         button.setImage(Images.ShowInfo.exitImage, for: .normal)
+         
+         return button
+     }()
     
     var titleLabel: UILabel = {
         let label = UILabel()
