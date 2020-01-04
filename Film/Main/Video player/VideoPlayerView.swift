@@ -59,6 +59,13 @@ class VideoPlayerView: UIView {
         return label
     }()
     
+    var airPlayButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Images.Player.airPlayImage, for: .normal)
+        
+        return button
+    }()
+    
     var durationLabel: UILabel = {
         let label = UILabel()
         label.text = "56:00"
@@ -71,9 +78,6 @@ class VideoPlayerView: UIView {
     var closeButton: CustomMarginButton = {
         let button = CustomMarginButton()
         button.setImage(Images.Player.closeImage, for: .normal)
-        button.imageView?.contentMode = ContentMode.scaleAspectFit
-        button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
-        button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
         
         return button
     }()
@@ -83,9 +87,6 @@ class VideoPlayerView: UIView {
     var pausePlayButton: UIButton = {
         let button = UIButton()
         button.setImage(Images.Player.pauseImage, for: .normal) // ▌▌
-        button.imageView?.contentMode = ContentMode.scaleAspectFit
-        button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
-        button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
         
         return button
     }()
@@ -93,9 +94,6 @@ class VideoPlayerView: UIView {
     var forward10sButton: UIButton = {
         let button = UIButton()
         button.setImage(Images.Player.forwardImage, for: .normal)
-        button.imageView?.contentMode = ContentMode.scaleAspectFit
-        button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
-        button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
         
         return button
     }()
@@ -103,9 +101,6 @@ class VideoPlayerView: UIView {
     var backward10sButton: UIButton = {
         let button = UIButton()
         button.setImage(Images.Player.backwardImage, for: .normal)
-        button.imageView?.contentMode = ContentMode.scaleAspectFit
-        button.contentVerticalAlignment = UIControl.ContentVerticalAlignment.fill
-        button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.fill
         
         return button
     }()
@@ -206,6 +201,11 @@ class VideoPlayerView: UIView {
         static func setTitleLabel(_ label: UILabel, _ parent: UIView) {
             label.topAnchor.constraint(equalTo: parent.topAnchor, constant: 30.0).isActive = true
             label.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+        }
+        
+        static func setAirPlayButton(_ button: UIButton, _ parent: UIView) {
+            button.topAnchor.constraint(equalTo: parent.topAnchor, constant: 33).isActive = true
+            button.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 21).isActive = true
         }
         
         static func setDurationLabel(_ label: UILabel, _ parent: UIView) {
@@ -332,12 +332,14 @@ class VideoPlayerView: UIView {
     private func setupSecondaryControls() {
         topBar.addSubviewLayout(titleLabel)
         topBar.addSubviewLayout(closeButton)
+        topBar.addSubviewLayout(airPlayButton)
         bottomBar.addSubviewLayout(durationLabel)
         bottomBar.addSubviewLayout(slider)
         bottomBar.addSubviewLayout(nextEpisodeButton)
         
         Constraints.setTitleLabel(titleLabel, topBar)
         Constraints.setCloseButton(closeButton, titleLabel, topBar)
+        Constraints.setAirPlayButton(airPlayButton, topBar)
         Constraints.setDurationLabel(durationLabel, bottomBar)
         Constraints.setSlider(slider, durationLabel, bottomBar)
         Constraints.setNextEpisodeButton(nextEpisodeButton, bottomBar)
