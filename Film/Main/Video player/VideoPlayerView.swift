@@ -199,7 +199,7 @@ class VideoPlayerView: UIView {
         }
         
         static func setTitleLabel(_ label: UILabel, _ parent: UIView) {
-            label.topAnchor.constraint(equalTo: parent.topAnchor, constant: 30.0).isActive = true
+            label.topAnchor.constraint(equalTo: parent.topAnchor, constant: 33.0).isActive = true
             label.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
         }
         
