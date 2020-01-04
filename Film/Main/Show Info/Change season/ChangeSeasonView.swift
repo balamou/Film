@@ -20,7 +20,7 @@ class ChangeSeasonView: UIView {
     
     var exitSeasonSelectorButton: UIButton = {
         let button = UIButton()
-        button.setImage(Images.closeImage, for: .normal)
+        button.setImage(Images.Player.closeImage, for: .normal)
         
         return button
     }()
