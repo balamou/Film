@@ -32,7 +32,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         super.viewDidLoad()
         forceLandscapeOrientation()
         
-        videoPlayerView = VideoPlayerView(frame: self.view.frame)
+        videoPlayerView = VideoPlayerView(frame: view.frame)
         view = videoPlayerView
         
         videoPlayerView.titleLabel.text = film.title

@@ -129,6 +129,16 @@ class VideoPlayerView: UIView {
         return button
     }()
     
+    var subtitlesButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Audio and subtitles".localize(), for: .normal)
+        button.setImage(Images.Player.subtitlesImage, for: .normal)
+        button.titleLabel?.font = Fonts.helveticaNeue(size: 15.0)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
+        
+        return button
+    }()
+    
     // VOLUME BAR
     
     var volumeBar: UIProgressView = {
