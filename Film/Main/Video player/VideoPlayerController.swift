@@ -8,144 +8,11 @@
 
 import UIKit
 
-
-enum PlayState {
-    case playing
-    case paused
-}
-
-enum VideoPlayerState {
-    case initial
-    case shown(PlayState)
-    case hidden(PlayState)
-    case loadingShown
-    case loadingHidden
-    case scrolling
-}
-
-class VideoPlayerStateMachine {
-    private var view: VideoPlayerView
-    private var currentState: VideoPlayerState = .initial
-    private var thumbImage: UIImage?
-    
-    init(view: VideoPlayerView) {
-        self.view = view
-    }
-    
-    private func canTransition(from: VideoPlayerState, to: VideoPlayerState) -> Bool {
-        switch (from, to) {
-        case (.initial, .shown):
-            return true
-        case (.shown, .hidden),
-             (.shown, .loadingShown),
-             (.shown, .scrolling):
-            return true
-        case (.hidden, .shown),
-             (.hidden, .loadingHidden):
-            return true
-        case (.loadingShown, .shown),
-             (.loadingShown, .loadingHidden),
-             (.loadingShown, .scrolling):
-            return true
-        case (.scrolling, .loadingShown):
-            return true
-        default:
-            return false
-        }
-    }
-    
-    func transitionTo(state newState: VideoPlayerState) {
-        guard canTransition(from: currentState, to: newState) else {
-            assertionFailure("Attempting to transition from '\(currentState)' to '\(newState)'")
-            return
-        }
-        
-        let from = currentState
-        let to = newState
-        currentState = newState
-        
-        switch (from, to) {
-        case (.shown, .hidden):
-            break // animate
-        case (.hidden, .shown):
-            break
-        case (.loadingShown, .loadingHidden):
-            break
-        case (.loadingHidden, .loadingShown):
-            break
-        default:
-            updateUI()
-        }
-    }
-    
-    func updateUI() {
-        thumbImage = thumbImage ?? view.slider.thumbImage(for: .normal)
-        
-        switch currentState {
-        case .initial:
-            view.controlView.show()
-            
-            view.backward10sLabel.hide()
-            view.backward10sButton.hide()
-            view.forward10sLabel.hide()
-            view.forward10sButton.hide()
-            view.pausePlayButton.hide()
-            view.airPlayButton.hide()
-            view.spinner.startAnimating()
-            
-            view.slider.setThumbImage(UIImage(), for: .normal)
-        case .shown(let playing):
-            switch playing {
-            case .paused:
-                view.pausePlayButton.setImage(Images.Player.playImage, for: .normal)
-            case .playing:
-                view.pausePlayButton.setImage(Images.Player.pauseImage, for: .normal)
-            }
-            
-            view.controlView.show()
-            
-            view.backward10sLabel.show()
-            view.backward10sButton.show()
-            view.forward10sLabel.show()
-            view.forward10sButton.show()
-            view.pausePlayButton.show()
-            view.airPlayButton.show()
-            view.spinner.stopAnimating()
-            
-            view.slider.setThumbImage(thumbImage, for: .normal)
-        case .loadingShown:
-            view.controlView.show()
-            view.pausePlayButton.hide()
-
-            view.backward10sLabel.show()
-            view.backward10sButton.show()
-            view.forward10sLabel.show()
-            view.forward10sButton.show()
-            view.airPlayButton.show()
-            view.spinner.startAnimating()
-            
-            view.slider.setThumbImage(thumbImage, for: .normal)
-        default:
-            return
-        }
-    }
-}
-
-extension UIView {
-    
-    func hide() {
-        isHidden = true
-    }
-    
-    func show() {
-        isHidden = false
-    }
-}
-
 class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
 
     var videoPlayerView: VideoPlayerView!
     var volumeController: VolumeController?
+    var stateMachine: VideoPlayerStateMachine!
     
     private var isPlaying: Bool = true
     private var mediaPlayer = VLCMediaPlayer()
@@ -174,20 +41,12 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         setActions()
         setTimerForControlHide()
         overrideVolumeBar()
-        
-        let stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
+       
+        stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
         stateMachine.updateUI()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            stateMachine.transitionTo(state: .shown(.playing))
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            stateMachine.transitionTo(state: .loadingShown)
-        }
-      
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            stateMachine.transitionTo(state: .shown(.paused))
+            self.stateMachine.transitionTo(state: .shown(.playing))
         }
     }
     
@@ -271,8 +130,9 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     // Actions: Controlls
     //----------------------------------------------------------------------
     func setTimerForControlHide() {
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] timer in
-            self?.hideControlls()
+        timer = Timer.scheduledTimer(withTimeInterval: 7.0, repeats: false) { [weak self] timer in
+//            self?.hideControlls()
+            self?.stateMachine.transitionTo(state: .hidden(.playing))
         }
     }
     
