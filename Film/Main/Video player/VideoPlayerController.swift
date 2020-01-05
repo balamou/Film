@@ -215,13 +215,10 @@ extension VideoPlayerController {
     
     // When leaving the app
     func applicationWillResignActive() {
-        // Pause the player
         mediaPlayer.pause()
         isPlaying = .paused
-        videoPlayerView.pausePlayButton.setImage(Images.Player.playImage, for: .normal) // ▶
+        stateMachine.transitionTo(state: .shown(isPlaying))
         
-        // SHOW CONTROLLS
-        videoPlayerView.controlView.isHidden = false
         isStatusBarHidden = false
         setNeedsStatusBarAppearanceUpdate()
     }

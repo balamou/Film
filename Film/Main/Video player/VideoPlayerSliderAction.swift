@@ -9,10 +9,11 @@
 import UIKit
 
 class VideoPlayerSliderAction: NSObject {
-    var setPosition = true
-    var updatePosition = true
-    let view: VideoPlayerView
-    let mediaPlayer: VLCMediaPlayer
+    private let view: VideoPlayerView
+    private let mediaPlayer: VLCMediaPlayer
+    
+    private var setPosition = true
+    private var updatePosition = true
     
     init(view: VideoPlayerView, mediaPlayer: VLCMediaPlayer) {
         self.view = view
@@ -32,8 +33,8 @@ class VideoPlayerSliderAction: NSObject {
         if (setPosition && updatePosition) {
             view.slider.value = mediaPlayer.position // move slider
             
-            var remaining =  mediaPlayer.remainingTime.description
-            remaining.remove(at: remaining.startIndex)
+            var remaining = mediaPlayer.remainingTime.description
+            remaining.remove(at: remaining.startIndex) // remove first character
             view.durationLabel.text = remaining // display time
         }
     }
@@ -55,8 +56,8 @@ class VideoPlayerSliderAction: NSObject {
         updatePosition = false
     }
     
-    func positionSliderAction() {
-        self.perform(#selector(setPositionForReal), with: nil, afterDelay: 0.3)
+    private func positionSliderAction() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: setPositionForReal)
         
         setPosition = false
         updatePosition = true
@@ -76,19 +77,23 @@ class VideoPlayerSliderAction: NSObject {
         let label = view.currentPositionLabel
         label.sizeToFit()
         
-        let position = setUISliderThumbValueWithLabel(slider: view.slider, label: label)
-        let rect = label.frame.addToWidth(5.0)
-        let duration = mediaPlayer.media.length.intValue/1000
-        label.text = Film.durationMin(seconds: Int(sender.value * Float(duration)))
-            
+        let newLabelPosition = setUISliderThumbValueWithLabel(slider: view.slider, label: label)
+        let newLabelSize = label.frame.addToWidth(5.0).size
+        
+        label.text = getTimeFromValue(sender.value)
         label.isHidden = false
-        label.frame = CGRect(origin: position, size: rect.size)
+        label.frame = CGRect(origin: newLabelPosition, size: newLabelSize)
     }
     
-    func setUISliderThumbValueWithLabel(slider: UISlider, label: UILabel) -> CGPoint {
+    private func getTimeFromValue(_ value: Float) -> String {
+        let totalVideoDuration = mediaPlayer.media.length.intValue/1000
+        return Film.durationMin(seconds: Int(value * Float(totalVideoDuration)))
+    }
+    
+    private func setUISliderThumbValueWithLabel(slider: UISlider, label: UILabel) -> CGPoint {
         let sliderTrack = slider.trackRect(forBounds: slider.bounds)
-        let sliderFrm = slider.thumbRect(forBounds: slider.bounds, trackRect: sliderTrack, value: slider.value)
-        return CGPoint(x: sliderFrm.origin.x + slider.frame.origin.x + sliderFrm.size.width/2 - label.frame.size.width/2, y: view.bottomBar.frame.origin.y)
+        let sliderFrame = slider.thumbRect(forBounds: slider.bounds, trackRect: sliderTrack, value: slider.value)
+        return CGPoint(x: sliderFrame.origin.x + slider.frame.origin.x + sliderFrame.size.width/2 - label.frame.size.width/2, y: view.bottomBar.frame.origin.y - 20)
     }
 
     deinit {
