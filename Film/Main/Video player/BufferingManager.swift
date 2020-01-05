@@ -13,7 +13,6 @@ protocol BufferingDelegate: class {
     func endedBuffering()
 }
 
-
 class BufferingManager: VLCMediaPlayerDelegate {
     private let mediaPlayer: VLCMediaPlayer
     weak var delegate: BufferingDelegate?
@@ -29,7 +28,6 @@ class BufferingManager: VLCMediaPlayerDelegate {
     
     internal func mediaPlayerStateChanged(_ aNotification: Notification!) {
         let newState = mediaPlayer.state
-//        printState(newState)
         timer?.invalidate()
         
         switch (currentState, newState) {
@@ -43,6 +41,8 @@ class BufferingManager: VLCMediaPlayerDelegate {
             break
         }
         
+        // When notifications are done, we wait 1 second and if no notifications are flowing
+        // Execute done buffering
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] timer in
             self?.doneBuffering()
             timer.invalidate()

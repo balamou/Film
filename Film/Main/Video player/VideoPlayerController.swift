@@ -20,6 +20,9 @@ class VideoPlayerController: UIViewController {
     private let film: Film
     private var sliderAction: VideoPlayerSliderAction?
     
+    private let backwardTime: Int32 = 10
+    private let forwardTime: Int32 = 10
+    
     init(film: Film) {
         self.film = film
         super.init(nibName: nil, bundle: nil)
@@ -67,7 +70,6 @@ class VideoPlayerController: UIViewController {
     //----------------------------------------------------------------------
     // MARK: Actions
     //----------------------------------------------------------------------
-    
     func setActions() {
         videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
         
@@ -121,11 +123,11 @@ class VideoPlayerController: UIViewController {
     }
     
     @objc func rewindForward() {
-        mediaPlayer.jumpForward(Int32(10))
+        mediaPlayer.jumpForward(forwardTime)
     }
     
     @objc func rewindBack() {
-        mediaPlayer.jumpBackward(Int32(10))
+        mediaPlayer.jumpBackward(backwardTime)
     }
     
     @objc func doubleTap(sender: UITapGestureRecognizer) {
