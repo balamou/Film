@@ -15,13 +15,13 @@ class VideoPlayerController: UIViewController {
     
     private var stateMachine: VideoPlayerStateMachine!
     private var bufferingManager: BufferingManager!
+    private var sliderAction: VideoPlayerSliderAction!
     
-    private var isPlaying: PlayState = .playing
+    private var playState: PlayState = .playing
     private var mediaPlayer = VLCMediaPlayer()
     private let film: Film
-    private var sliderAction: VideoPlayerSliderAction?
     
-    private let backwardTime: Int32 = 10
+    private let backwardTime: Int32 = -10
     private let forwardTime: Int32 = 10
     
     init(film: Film) {
@@ -42,21 +42,23 @@ class VideoPlayerController: UIViewController {
         
         videoPlayerView.titleLabel.text = film.title
         
-        sliderAction = VideoPlayerSliderAction(view: videoPlayerView, mediaPlayer: mediaPlayer)
-        sliderAction?.delegate = self
-        bufferingManager = BufferingManager(mediaPlayer: mediaPlayer)
-        bufferingManager.delegate = self
-        
+        setupPlayerHelpers()
         setUpPlayer(url: film.URL)
         setActions()
         overrideVolumeBar()
-       
-        stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
-        stateMachine.updateUI()
     }
     
     override func viewDidLayoutSubviews() {
         videoPlayerView.didAppear()
+    }
+    
+    func setupPlayerHelpers() {
+        sliderAction = VideoPlayerSliderAction(view: videoPlayerView, mediaPlayer: mediaPlayer)
+        sliderAction.delegate = self
+        bufferingManager = BufferingManager(mediaPlayer: mediaPlayer)
+        bufferingManager.delegate = self
+        stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
+        stateMachine.updateUI()
     }
     
     func setUpPlayer(url: String) {
@@ -102,7 +104,7 @@ class VideoPlayerController: UIViewController {
     //----------------------------------------------------------------------
     @objc func showControls() {
         guard stateMachine.canTapToShowHideControls else { return }
-        stateMachine.showControls(playState: isPlaying)
+        stateMachine.showControls(playState: playState)
     }
     
     @objc func hideControls() {
@@ -111,17 +113,17 @@ class VideoPlayerController: UIViewController {
     }
     
     @objc func pausePlayButtonPressed(sender: UIButton) {
-        switch isPlaying {
+        switch playState {
         case .playing:
             mediaPlayer.pause()
-            isPlaying = .paused
+            playState = .paused
             
         case .paused:
             mediaPlayer.play()
-            isPlaying = .playing
+            playState = .playing
         }
         
-        stateMachine.transitionTo(state: .shown(isPlaying))
+        stateMachine.transitionTo(state: .shown(playState))
     }
     
     @objc func rewindForward() {
@@ -221,7 +223,7 @@ extension VideoPlayerController: BufferingDelegate {
     }
     
     func endedBuffering() {
-        stateMachine.doneBuffering(playState: isPlaying)
+        stateMachine.doneBuffering(playState: playState)
         print("DONE BUFFERING")
     }
     
@@ -247,8 +249,8 @@ extension VideoPlayerController {
     // When leaving the app
     func applicationWillResignActive() {
         mediaPlayer.pause()
-        isPlaying = .paused
-        stateMachine.transitionTo(state: .shown(isPlaying))
+        playState = .paused
+        stateMachine.transitionTo(state: .shown(playState))
         
         isStatusBarHidden = false
         setNeedsStatusBarAppearanceUpdate()
