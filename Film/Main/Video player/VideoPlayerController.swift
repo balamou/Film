@@ -105,7 +105,7 @@ class VideoPlayerController: UIViewController {
     
     @objc func hideControls() {
         guard stateMachine.canTapToShowHideControls else { return }
-        stateMachine.hideControls(playState: isPlaying)
+        stateMachine.hideControls()
     }
     
     @objc func pausePlayButtonPressed(sender: UIButton) {

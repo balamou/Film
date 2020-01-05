@@ -16,7 +16,7 @@ enum PlayState {
 enum VideoPlayerState: CustomStringConvertible {
     case initial
     case shown(PlayState)
-    case hidden(PlayState)
+    case hidden
     case loadingShown
     case loadingHidden
     case scrolling
@@ -27,7 +27,7 @@ enum VideoPlayerState: CustomStringConvertible {
             return ".initial"
         case .shown(_):
             return ".shown"
-        case .hidden(_):
+        case .hidden:
             return ".hidden"
         case .loadingShown:
             return ".loadingShown"
@@ -112,8 +112,8 @@ class VideoPlayerStateMachine {
         timer?.invalidate()
         
         switch (from, to) {
-        case (.loadingShown, .shown(let playing)):
-            setupTimer { [weak self] in self?.transitionTo(state: .hidden(playing)) }
+        case (.loadingShown, .shown):
+            setupTimer { [weak self] in self?.transitionTo(state: .hidden) }
         case (.shown, .hidden):
             transitioning = true
             UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
@@ -130,7 +130,7 @@ class VideoPlayerStateMachine {
                 self.transitioning = false
             })
             
-            setupTimer { [weak self] in self?.transitionTo(state: .hidden(.playing)) }
+            setupTimer { [weak self] in self?.transitionTo(state: .hidden) }
         case (.shown, .shown(let playing)): // update playOrPause icon
             setupPlaying(playing)
         case (.loadingShown, .loadingHidden):
@@ -151,7 +151,7 @@ class VideoPlayerStateMachine {
             setupTimer { [weak self] in self?.transitionTo(state: .loadingHidden) }
         case (.initial, .shown(let playing)):
             setupPlaying(playing)
-            setupTimer { [weak self] in self?.transitionTo(state: .hidden(.playing)) }
+            setupTimer { [weak self] in self?.transitionTo(state: .hidden) }
         default:
             break
         }
@@ -239,7 +239,7 @@ class VideoPlayerStateMachine {
         case .loadingShown:
             transitionTo(state: .shown(.playing))
         case .loadingHidden:
-            transitionTo(state: .hidden(.playing))
+            transitionTo(state: .hidden)
         default:
             return
         }
@@ -256,10 +256,10 @@ class VideoPlayerStateMachine {
         }
     }
     
-    func hideControls(playState: PlayState) {
+    func hideControls() {
         switch currentState {
         case .shown:
-            transitionTo(state: .hidden(playState))
+            transitionTo(state: .hidden)
         case .loadingShown:
             transitionTo(state: .loadingHidden)
         default:

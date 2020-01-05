@@ -41,13 +41,12 @@ class BufferingManager: VLCMediaPlayerDelegate {
             break
         }
         
-        // When notifications are done, we wait 1 second and if no notifications are flowing
-        // Execute done buffering
+        // When notifications are done, we wait 1 second to make sure there is no more buffering notifications
+        // and proceed to calling `done buffering`
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] timer in
             self?.doneBuffering()
             timer.invalidate()
         }
-        
         
         currentState = newState
     }
