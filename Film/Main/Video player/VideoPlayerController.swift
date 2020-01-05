@@ -10,10 +10,11 @@ import UIKit
 
 class VideoPlayerController: UIViewController {
 
-    var videoPlayerView: VideoPlayerView!
     var volumeController: VolumeController?
-    var stateMachine: VideoPlayerStateMachine!
-    var bufferingManager: BufferingManager!
+    var videoPlayerView: VideoPlayerView!
+    
+    private var stateMachine: VideoPlayerStateMachine!
+    private var bufferingManager: BufferingManager!
     
     private var isPlaying: PlayState = .playing
     private var mediaPlayer = VLCMediaPlayer()
@@ -220,7 +221,7 @@ extension VideoPlayerController: BufferingDelegate {
     }
     
     func endedBuffering() {
-        stateMachine.doneBuffering()
+        stateMachine.doneBuffering(playState: isPlaying)
         print("DONE BUFFERING")
     }
     

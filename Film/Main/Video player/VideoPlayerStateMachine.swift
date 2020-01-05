@@ -244,12 +244,12 @@ class VideoPlayerStateMachine {
         }
     }
     
-    func doneBuffering() {
+    func doneBuffering(playState: PlayState) {
         switch currentState {
         case .initial:
-            transitionTo(state: .shown(.playing))
+            transitionTo(state: .shown(playState))
         case .loadingShown:
-            transitionTo(state: .shown(.playing))
+            transitionTo(state: .shown(playState))
         case .loadingHidden:
             transitionTo(state: .hidden)
         default:
