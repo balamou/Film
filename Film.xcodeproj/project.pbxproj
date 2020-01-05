@@ -68,6 +68,7 @@
 		ED725118232EE8680040C279 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED725117232EE8680040C279 /* Colors.swift */; };
 		ED76BA2B23C0503200CAC72D /* CustomHeightSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76BA2A23C0503200CAC72D /* CustomHeightSlider.swift */; };
 		ED76BA2D23C171E600CAC72D /* VideoPlayerStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76BA2C23C171E600CAC72D /* VideoPlayerStateMachine.swift */; };
+		ED76BA2F23C17F6100CAC72D /* VideoPlayerSliderAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76BA2E23C17F6100CAC72D /* VideoPlayerSliderAction.swift */; };
 		ED8060A6231B76CD0032A128 /* SeriesItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8060A5231B76CD0032A128 /* SeriesItem.swift */; };
 		ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBBF2314620F00FEC56A /* VolumeController.swift */; };
 		ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */; };
@@ -219,6 +220,7 @@
 		ED725117232EE8680040C279 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		ED76BA2A23C0503200CAC72D /* CustomHeightSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeightSlider.swift; sourceTree = "<group>"; };
 		ED76BA2C23C171E600CAC72D /* VideoPlayerStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerStateMachine.swift; sourceTree = "<group>"; };
+		ED76BA2E23C17F6100CAC72D /* VideoPlayerSliderAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerSliderAction.swift; sourceTree = "<group>"; };
 		ED8060A5231B76CD0032A128 /* SeriesItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesItem.swift; sourceTree = "<group>"; };
 		ED82DBBF2314620F00FEC56A /* VolumeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeController.swift; sourceTree = "<group>"; };
 		ED82DBC1231464E000FEC56A /* VideoPlayerController+Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerController+Volume.swift"; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 				ED82DBC3231464F900FEC56A /* Volume Controller */,
 				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
 				ED76BA2C23C171E600CAC72D /* VideoPlayerStateMachine.swift */,
+				ED76BA2E23C17F6100CAC72D /* VideoPlayerSliderAction.swift */,
 				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
 				ED76BA2A23C0503200CAC72D /* CustomHeightSlider.swift */,
 				ED57FCB023137CB20001A9AB /* Film.swift */,
@@ -980,6 +983,7 @@
 				EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */,
 				ED5AC1142314DE0C0098A161 /* SettingsViewController.swift in Sources */,
 				ED909B40230F006600A67AC6 /* VideoPlayerController.swift in Sources */,
+				ED76BA2F23C17F6100CAC72D /* VideoPlayerSliderAction.swift in Sources */,
 				EDB57E96231885F10049504E /* SeriesAPI.swift in Sources */,
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
 				ED5AC1122314DDEF0098A161 /* MoviesView.swift in Sources */,
