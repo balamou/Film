@@ -21,7 +21,7 @@ class VideoPlayerController: UIViewController {
     private var mediaPlayer = VLCMediaPlayer()
     private let film: Film
     
-    private let backwardTime: Int32 = -10
+    private let backwardTime: Int32 = 10
     private let forwardTime: Int32 = 10
     
     init(film: Film) {
@@ -235,7 +235,7 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
     }
     
     func didEndScrolling() {
-        stateMachine.transitionTo(state: .shown(isPlaying))
+        stateMachine.transitionTo(state: .shown(playState))
     }
 }
 
