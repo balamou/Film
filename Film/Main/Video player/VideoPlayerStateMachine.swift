@@ -28,6 +28,8 @@ class VideoPlayerStateMachine {
     private var thumbImage: UIImage?
     private var transitioning = false
     
+    private var timer: Timer?
+    
     init(view: VideoPlayerView) {
         self.view = view
     }
@@ -64,6 +66,7 @@ class VideoPlayerStateMachine {
         let from = currentState
         let to = newState
         currentState = newState
+        timer?.invalidate()
         
         switch (from, to) {
         case (.shown, .hidden):
@@ -81,14 +84,27 @@ class VideoPlayerStateMachine {
             }, completion: {_ in
                 self.transitioning = false
             })
+            
+            setupTimer { [weak self] in self?.transitionTo(state: .hidden(.playing)) }
         case (.shown, .shown(let playing)): // update playOrPause icon
             setupPlaying(playing)
         case (.loadingShown, .loadingHidden):
             break
         case (.loadingHidden, .loadingShown):
             break
+        case (.initial, .shown(let playing)):
+            setupPlaying(playing)
+            setupTimer { [weak self] in self?.transitionTo(state: .hidden(.playing)) }
+            fallthrough
         default:
             updateUI()
+        }
+    }
+    
+    func setupTimer(callback: @escaping () -> Void) {
+        timer = Timer.scheduledTimer(withTimeInterval: 7.0, repeats: false) { timer in
+            callback()
+            timer.invalidate()
         }
     }
     

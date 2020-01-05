@@ -16,7 +16,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     
     private var isPlaying: PlayState = .playing
     private var mediaPlayer = VLCMediaPlayer()
-    private var timer: Timer?
     private let film: Film
     
     init(film: Film) {
@@ -39,7 +38,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         
         setUpPlayer(url: film.URL)
         setActions()
-        setTimerForControlHide()
         overrideVolumeBar()
        
         stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
@@ -129,20 +127,12 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     //----------------------------------------------------------------------
     // Actions: Controlls
     //----------------------------------------------------------------------
-    func setTimerForControlHide() {
-        timer = Timer.scheduledTimer(withTimeInterval: 7.0, repeats: false) { [weak self] timer in
-            self?.stateMachine.transitionTo(state: .hidden(.playing))
-        }
-    }
-    
     @objc func showControlls() {
         stateMachine.transitionTo(state: .shown(isPlaying))
-        setTimerForControlHide()
     }
     
     @objc func hideControlls() {
         stateMachine.transitionTo(state: .hidden(isPlaying))
-        timer?.invalidate()
     }
     
     @objc func pausePlayButtonPressed(sender: UIButton) {
@@ -255,12 +245,10 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         print("Remove Observers: Deinit")
         mediaPlayer.removeObserver(self, forKeyPath: "time")
         mediaPlayer.stop()
-        timer?.invalidate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         mediaPlayer.stop()
-        timer?.invalidate()
         resetOrientation()
     }
     
