@@ -73,13 +73,13 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     func setActions() {
         videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
         
-        let tapToShowControlls = UITapGestureRecognizer(target: self, action: #selector(showControlls))
-        tapToShowControlls.numberOfTapsRequired = 1
-        videoPlayerView.mediaView.addGestureRecognizer(tapToShowControlls)
+        let tapToShowControls = UITapGestureRecognizer(target: self, action: #selector(showControls))
+        tapToShowControls.numberOfTapsRequired = 1
+        videoPlayerView.mediaView.addGestureRecognizer(tapToShowControls)
         
-        let tapToHideControlls = UITapGestureRecognizer(target: self, action: #selector(hideControlls))
-        tapToHideControlls.numberOfTapsRequired = 1
-        videoPlayerView.controlView.addGestureRecognizer(tapToHideControlls)
+        let tapToHideControls = UITapGestureRecognizer(target: self, action: #selector(hideControls))
+        tapToHideControls.numberOfTapsRequired = 1
+        videoPlayerView.controlView.addGestureRecognizer(tapToHideControls)
         
         videoPlayerView.forward10sButton.addTarget(self, action: #selector(rewindForward), for: .touchUpInside)
         videoPlayerView.backward10sButton.addTarget(self, action: #selector(rewindBack), for: .touchUpInside)
@@ -91,7 +91,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         doubleTap.numberOfTapsRequired = 2
         videoPlayerView.mediaView.addGestureRecognizer(doubleTap)
         
-        tapToShowControlls.require(toFail: doubleTap)
+        tapToShowControls.require(toFail: doubleTap)
     }
     
     //----------------------------------------------------------------------
@@ -128,14 +128,14 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     //----------------------------------------------------------------------
-    // Actions: Controlls
+    // Actions: Controls
     //----------------------------------------------------------------------
-    @objc func showControlls() {
+    @objc func showControls() {
         guard stateMachine.canTapToShowHideControls else { return }
         stateMachine.transitionTo(state: .shown(isPlaying))
     }
     
-    @objc func hideControlls() {
+    @objc func hideControls() {
         guard stateMachine.canTapToShowHideControls else { return }
         stateMachine.transitionTo(state: .hidden(isPlaying))
     }
