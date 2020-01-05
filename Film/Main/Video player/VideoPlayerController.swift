@@ -74,17 +74,24 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
         
         let tapToShowControlls = UITapGestureRecognizer(target: self, action: #selector(showControlls))
+        tapToShowControlls.numberOfTapsRequired = 1
         videoPlayerView.mediaView.addGestureRecognizer(tapToShowControlls)
         
         let tapToHideControlls = UITapGestureRecognizer(target: self, action: #selector(hideControlls))
+        tapToHideControlls.numberOfTapsRequired = 1
         videoPlayerView.controlView.addGestureRecognizer(tapToHideControlls)
         
         videoPlayerView.forward10sButton.addTarget(self, action: #selector(rewindForward), for: .touchUpInside)
         videoPlayerView.backward10sButton.addTarget(self, action: #selector(rewindBack), for: .touchUpInside)
         
         videoPlayerView.closeButton.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
-        
         videoPlayerView.nextEpisodeButton.addTarget(self, action: #selector(playNextEpisode), for: .touchUpInside)
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTap(sender:)))
+        doubleTap.numberOfTapsRequired = 2
+        videoPlayerView.mediaView.addGestureRecognizer(doubleTap)
+        
+        tapToShowControlls.require(toFail: doubleTap)
     }
     
     //----------------------------------------------------------------------
@@ -151,6 +158,20 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     
     @objc func rewindBack() {
         mediaPlayer.jumpBackward(Int32(10))
+    }
+    
+    @objc func doubleTap(sender: UITapGestureRecognizer) {
+        guard sender.state == .ended else {
+            return
+        }
+        
+        let location = sender.location(in: view)
+        let percentage = location.x/view.frame.width
+        if percentage < 0.5 {
+            rewindBack()
+        } else {
+            rewindForward()
+        }
     }
     
     @objc func closeVideo() {
