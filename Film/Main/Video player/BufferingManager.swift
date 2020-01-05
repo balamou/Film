@@ -16,21 +16,20 @@ protocol BufferingDelegate: class {
 
 class BufferingManager: VLCMediaPlayerDelegate {
     private let mediaPlayer: VLCMediaPlayer
-    private var currentState: VLCMediaPlayerState
     weak var delegate: BufferingDelegate?
-    
+
+    private var currentState: VLCMediaPlayerState?
     private var timer: Timer?
     private var didStartBuffering: Bool = false
     
     init(mediaPlayer: VLCMediaPlayer) {
         self.mediaPlayer = mediaPlayer
-        self.currentState = mediaPlayer.state
         self.mediaPlayer.delegate = self
     }
     
     internal func mediaPlayerStateChanged(_ aNotification: Notification!) {
         let newState = mediaPlayer.state
-        printState(newState)
+//        printState(newState)
         timer?.invalidate()
         
         switch (currentState, newState) {
@@ -63,6 +62,7 @@ class BufferingManager: VLCMediaPlayerDelegate {
         
         delegate?.endedBuffering()
         didStartBuffering = false
+        currentState = nil
     }
     
     private func printState(_ state: VLCMediaPlayerState) {
@@ -84,7 +84,7 @@ class BufferingManager: VLCMediaPlayerDelegate {
         case .esAdded:
             print("~ES ADDED")
         @unknown default:
-            print("~ UNKNOWN \(state)")
+            print("~UNKNOWN \(state)")
         }
     }
     

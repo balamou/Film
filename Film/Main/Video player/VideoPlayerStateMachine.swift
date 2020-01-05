@@ -13,13 +13,30 @@ enum PlayState {
     case paused
 }
 
-enum VideoPlayerState {
+enum VideoPlayerState: CustomStringConvertible {
     case initial
     case shown(PlayState)
     case hidden(PlayState)
     case loadingShown
     case loadingHidden
     case scrolling
+    
+    var description: String {
+        switch self {
+        case .initial:
+            return ".initial"
+        case .shown(_):
+            return ".shown"
+        case .hidden(_):
+            return ".hidden"
+        case .loadingShown:
+            return ".loadingShown"
+        case .loadingHidden:
+            return ".loadingHidden"
+        case .scrolling:
+            return ".scrolling"
+        }
+    }
 }
 
 class VideoPlayerStateMachine {
@@ -71,6 +88,9 @@ class VideoPlayerStateMachine {
              (.loadingShown, .loadingHidden),
              (.loadingShown, .scrolling):
             return true
+        case (.loadingHidden, .loadingShown),
+             (.loadingHidden, .hidden):
+            return true
         case (.scrolling, .loadingShown):
             return true
         default:
@@ -84,12 +104,16 @@ class VideoPlayerStateMachine {
             return
         }
         
+        print("\(currentState) -> \(newState)")
+        
         let from = currentState
         let to = newState
         currentState = newState
         timer?.invalidate()
         
         switch (from, to) {
+        case (.loadingShown, .shown(let playing)):
+            setupTimer { [weak self] in self?.transitionTo(state: .hidden(playing)) }
         case (.shown, .hidden):
             transitioning = true
             UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
@@ -128,10 +152,11 @@ class VideoPlayerStateMachine {
         case (.initial, .shown(let playing)):
             setupPlaying(playing)
             setupTimer { [weak self] in self?.transitionTo(state: .hidden(.playing)) }
-            fallthrough
         default:
-            updateUI()
+            break
         }
+        
+        updateUI()
     }
     
     func setupTimer(callback: @escaping () -> Void) {
@@ -169,7 +194,6 @@ class VideoPlayerStateMachine {
             view.slider.setThumbImage(UIImage(), for: .normal)
         case .shown(let playing):
             setupPlaying(playing)
-            view.controlView.show()
             
             view.backward10sLabel.show()
             view.backward10sButton.show()
@@ -179,11 +203,9 @@ class VideoPlayerStateMachine {
             view.airPlayButton.show()
             view.spinner.stopAnimating()
         case .hidden:
-            view.controlView.hide()
             view.airPlayButton.show()
-            view.spinner.startAnimating()
+            view.spinner.stopAnimating()
         case .loadingShown:
-            view.controlView.show()
             view.pausePlayButton.hide()
 
             view.backward10sLabel.show()
@@ -193,7 +215,6 @@ class VideoPlayerStateMachine {
             view.airPlayButton.show()
             view.spinner.startAnimating()
         case .loadingHidden:
-            view.controlView.hide()
             view.spinner.startAnimating()
         default:
             return
@@ -221,6 +242,28 @@ class VideoPlayerStateMachine {
             transitionTo(state: .hidden(.playing))
         default:
             return
+        }
+    }
+    
+    func showControls(playState: PlayState) {
+        switch currentState {
+        case .hidden:
+            transitionTo(state: .shown(playState))
+        case .loadingHidden:
+            transitionTo(state: .loadingShown)
+        default:
+            print("Attempting to show controls in invalid state ('\(currentState)')")
+        }
+    }
+    
+    func hideControls(playState: PlayState) {
+        switch currentState {
+        case .shown:
+            transitionTo(state: .hidden(playState))
+        case .loadingShown:
+            transitionTo(state: .loadingHidden)
+        default:
+            print("Attempting to show controls in invalid state ('\(currentState)')")
         }
     }
 }
