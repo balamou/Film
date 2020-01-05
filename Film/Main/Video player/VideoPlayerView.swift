@@ -91,6 +91,14 @@ class VideoPlayerView: UIView {
         return button
     }()
     
+    var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.hidesWhenStopped = true
+        spinner.style = .whiteLarge
+        
+        return spinner
+    }()
+    
     var forward10sButton: UIButton = {
         let button = UIButton()
         button.setImage(Images.Player.forwardImage, for: .normal)
@@ -230,6 +238,11 @@ class VideoPlayerView: UIView {
             button.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
         }
         
+        static func setSpinner(_ spinner: UIActivityIndicatorView, _ parent: UIView) {
+            spinner.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
+            spinner.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+        }
+        
         static func setForwardButton(_ button: UIButton, _ pause: UIView) {
             button.centerYAnchor.constraint(equalTo: pause.centerYAnchor).isActive = true
             button.centerXAnchor.constraint(equalTo: pause.centerXAnchor, constant: controlHorizontalSpacing).isActive = true
@@ -321,12 +334,14 @@ class VideoPlayerView: UIView {
         controlView.addSubviewLayout(backward10sButton)
         controlView.addSubviewLayout(forward10sLabel)
         controlView.addSubviewLayout(backward10sLabel)
+        controlView.addSubviewLayout(spinner)
         
         Constraints.setPausePlayButton(pausePlayButton, controlView)
         Constraints.setForwardButton(forward10sButton, pausePlayButton)
         Constraints.setBackwardButton(backward10sButton, pausePlayButton)
         Constraints.setForwardLabel(forward10sLabel, forward10sButton)
         Constraints.setBackwardLabel(backward10sLabel, backward10sButton)
+        Constraints.setSpinner(spinner, self)
     }
     
     private func setupSecondaryControls() {

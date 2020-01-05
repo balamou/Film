@@ -25,12 +25,8 @@ enum VideoPlayerState {
 
 class VideoPlayerStateMachine {
     private var view: VideoPlayerView
-    var currentState: VideoPlayerState = .initial {
-        willSet {
-            let isallowed = canTransition(from: currentState, to: newValue)
-            print("----> '\(isallowed)' from \(currentState) to \(newValue)")
-        }
-    }
+    private var currentState: VideoPlayerState = .initial
+    private var thumbImage: UIImage?
     
     init(view: VideoPlayerView) {
         self.view = view
@@ -58,7 +54,92 @@ class VideoPlayerStateMachine {
         }
     }
     
+    func transitionTo(state newState: VideoPlayerState) {
+        guard canTransition(from: currentState, to: newState) else {
+            assertionFailure("Attempting to transition from '\(currentState)' to '\(newState)'")
+            return
+        }
+        
+        let from = currentState
+        let to = newState
+        currentState = newState
+        
+        switch (from, to) {
+        case (.shown, .hidden):
+            break // animate
+        case (.hidden, .shown):
+            break
+        case (.loadingShown, .loadingHidden):
+            break
+        case (.loadingHidden, .loadingShown):
+            break
+        default:
+            updateUI()
+        }
+    }
     
+    func updateUI() {
+        thumbImage = thumbImage ?? view.slider.thumbImage(for: .normal)
+        
+        switch currentState {
+        case .initial:
+            view.controlView.show()
+            
+            view.backward10sLabel.hide()
+            view.backward10sButton.hide()
+            view.forward10sLabel.hide()
+            view.forward10sButton.hide()
+            view.pausePlayButton.hide()
+            view.airPlayButton.hide()
+            view.spinner.startAnimating()
+            
+            view.slider.setThumbImage(UIImage(), for: .normal)
+        case .shown(let playing):
+            switch playing {
+            case .paused:
+                view.pausePlayButton.setImage(Images.Player.playImage, for: .normal)
+            case .playing:
+                view.pausePlayButton.setImage(Images.Player.pauseImage, for: .normal)
+            }
+            
+            view.controlView.show()
+            
+            view.backward10sLabel.show()
+            view.backward10sButton.show()
+            view.forward10sLabel.show()
+            view.forward10sButton.show()
+            view.pausePlayButton.show()
+            view.airPlayButton.show()
+            view.spinner.stopAnimating()
+            
+            view.slider.setThumbImage(thumbImage, for: .normal)
+        case .loadingShown:
+            view.controlView.show()
+            view.pausePlayButton.hide()
+
+            view.backward10sLabel.show()
+            view.backward10sButton.show()
+            view.forward10sLabel.show()
+            view.forward10sButton.show()
+            view.airPlayButton.show()
+            view.spinner.startAnimating()
+            
+            view.slider.setThumbImage(thumbImage, for: .normal)
+        default:
+            return
+        }
+    }
+}
+
+extension UIView {
+    
+    func hide() {
+        isHidden = true
+    }
+    
+    func show() {
+        isHidden = false
+    }
 }
 
 class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
@@ -95,8 +176,19 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         overrideVolumeBar()
         
         let stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
-        stateMachine.currentState = .shown(.paused)
-        stateMachine.currentState = .loadingHidden
+        stateMachine.updateUI()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            stateMachine.transitionTo(state: .shown(.playing))
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            stateMachine.transitionTo(state: .loadingShown)
+        }
+      
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            stateMachine.transitionTo(state: .shown(.paused))
+        }
     }
     
     override func viewDidLayoutSubviews() {
