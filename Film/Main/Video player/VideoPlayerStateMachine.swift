@@ -34,6 +34,26 @@ class VideoPlayerStateMachine {
         self.view = view
     }
     
+    var canDoubleTap: Bool {
+        switch currentState {
+        case .initial,
+             .scrolling:
+            return false
+        default:
+            return true
+        }
+    }
+    
+    var canTapToShowHideControls: Bool {
+        switch currentState {
+        case .initial,
+             .scrolling:
+            return false
+        default:
+            return true
+        }
+    }
+    
     private func canTransition(from: VideoPlayerState, to: VideoPlayerState) -> Bool {
         switch (from, to) {
         case (.initial, .shown):
@@ -90,9 +110,21 @@ class VideoPlayerStateMachine {
         case (.shown, .shown(let playing)): // update playOrPause icon
             setupPlaying(playing)
         case (.loadingShown, .loadingHidden):
-            break
+            transitioning = true
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+                self.view.controlView.alpha = 0.0
+            }, completion: { _ in
+                self.transitioning = false
+            })
         case (.loadingHidden, .loadingShown):
-            break
+            transitioning = true
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+                self.view.controlView.alpha = 1.0
+            }, completion: {_ in
+                self.transitioning = false
+            })
+            
+            setupTimer { [weak self] in self?.transitionTo(state: .loadingHidden) }
         case (.initial, .shown(let playing)):
             setupPlaying(playing)
             setupTimer { [weak self] in self?.transitionTo(state: .hidden(.playing)) }
@@ -120,6 +152,7 @@ class VideoPlayerStateMachine {
     
     func updateUI() {
         thumbImage = thumbImage ?? view.slider.thumbImage(for: .normal)
+        view.slider.setThumbImage(thumbImage, for: .normal)
         
         switch currentState {
         case .initial:
@@ -145,8 +178,10 @@ class VideoPlayerStateMachine {
             view.pausePlayButton.show()
             view.airPlayButton.show()
             view.spinner.stopAnimating()
-            
-            view.slider.setThumbImage(thumbImage, for: .normal)
+        case .hidden:
+            view.controlView.hide()
+            view.airPlayButton.show()
+            view.spinner.startAnimating()
         case .loadingShown:
             view.controlView.show()
             view.pausePlayButton.hide()
@@ -157,13 +192,9 @@ class VideoPlayerStateMachine {
             view.forward10sButton.show()
             view.airPlayButton.show()
             view.spinner.startAnimating()
-            
-            view.slider.setThumbImage(thumbImage, for: .normal)
         case .loadingHidden:
             view.controlView.hide()
             view.spinner.startAnimating()
-            
-            view.slider.setThumbImage(thumbImage, for: .normal)
         default:
             return
         }

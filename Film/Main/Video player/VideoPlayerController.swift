@@ -131,10 +131,12 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     // Actions: Controlls
     //----------------------------------------------------------------------
     @objc func showControlls() {
+        guard stateMachine.canTapToShowHideControls else { return }
         stateMachine.transitionTo(state: .shown(isPlaying))
     }
     
     @objc func hideControlls() {
+        guard stateMachine.canTapToShowHideControls else { return }
         stateMachine.transitionTo(state: .hidden(isPlaying))
     }
     
@@ -161,9 +163,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     @objc func doubleTap(sender: UITapGestureRecognizer) {
-        guard sender.state == .ended else {
-            return
-        }
+        guard sender.state == .ended else { return }
+        guard stateMachine.canDoubleTap else { return }
         
         let location = sender.location(in: view)
         let percentage = location.x/view.frame.width
