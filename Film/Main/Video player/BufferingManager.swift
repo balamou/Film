@@ -35,8 +35,6 @@ class BufferingManager: VLCMediaPlayerDelegate {
             break
         case (_, .buffering):
             startedBuffering()
-        case (_, .playing):
-            doneBuffering()
         default:
             break
         }
@@ -52,6 +50,8 @@ class BufferingManager: VLCMediaPlayerDelegate {
     }
     
     private func startedBuffering() {
+        guard !didStartBuffering else { return }
+        
         delegate?.startedBuffering()
         didStartBuffering = true
     }
