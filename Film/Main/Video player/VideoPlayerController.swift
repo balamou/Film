@@ -42,6 +42,7 @@ class VideoPlayerController: UIViewController {
         videoPlayerView.titleLabel.text = film.title
         
         sliderAction = VideoPlayerSliderAction(view: videoPlayerView, mediaPlayer: mediaPlayer)
+        sliderAction?.delegate = self
         bufferingManager = BufferingManager(mediaPlayer: mediaPlayer)
         bufferingManager.delegate = self
         
@@ -223,6 +224,16 @@ extension VideoPlayerController: BufferingDelegate {
         print("DONE BUFFERING")
     }
     
+}
+
+extension VideoPlayerController: VideoPlayerSliderActionDelegate {
+    func didStartScrolling() {
+        stateMachine.transitionTo(state: .scrolling)
+    }
+    
+    func didEndScrolling() {
+        stateMachine.transitionTo(state: .shown(isPlaying))
+    }
 }
 
 

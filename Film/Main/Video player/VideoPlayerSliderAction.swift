@@ -8,12 +8,19 @@
 
 import UIKit
 
+protocol VideoPlayerSliderActionDelegate: class {
+    func didStartScrolling()
+    func didEndScrolling()
+}
+
 class VideoPlayerSliderAction: NSObject {
     private let view: VideoPlayerView
     private let mediaPlayer: VLCMediaPlayer
     
     private var setPosition = true
     private var updatePosition = true
+    
+    weak var delegate: VideoPlayerSliderActionDelegate?
     
     init(view: VideoPlayerView, mediaPlayer: VLCMediaPlayer) {
         self.view = view
@@ -43,17 +50,20 @@ class VideoPlayerSliderAction: NSObject {
     @objc func touchUpOutside(_ sender: UISlider) {
         positionSliderAction()
         view.currentPositionLabel.isHidden = true
+        delegate?.didEndScrolling()
     }
     
     // When the value of the slider is set but the finger is inside the slider
     @objc func touchUpInside(_ sender: UISlider) {
         positionSliderAction()
         view.currentPositionLabel.isHidden = true
+        delegate?.didEndScrolling()
     }
     
     // When the slider is touched
     @objc func touchDown(_ sender: UISlider) {
         updatePosition = false
+        delegate?.didStartScrolling()
     }
     
     private func positionSliderAction() {

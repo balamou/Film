@@ -91,7 +91,7 @@ class VideoPlayerStateMachine {
         case (.loadingHidden, .loadingShown),
              (.loadingHidden, .hidden):
             return true
-        case (.scrolling, .loadingShown):
+        case (.scrolling, .shown):
             return true
         default:
             return false
@@ -179,6 +179,9 @@ class VideoPlayerStateMachine {
         thumbImage = thumbImage ?? view.slider.thumbImage(for: .normal)
         view.slider.setThumbImage(thumbImage, for: .normal)
         
+        view.closeButton.show()
+        view.nextEpisodeButton.show()
+        
         switch currentState {
         case .initial:
             view.controlView.show()
@@ -216,8 +219,16 @@ class VideoPlayerStateMachine {
             view.spinner.startAnimating()
         case .loadingHidden:
             view.spinner.startAnimating()
-        default:
-            return
+        case .scrolling:
+            view.nextEpisodeButton.hide()
+            view.airPlayButton.hide()
+            view.pausePlayButton.hide()
+            view.spinner.hide()
+            view.backward10sLabel.hide()
+            view.backward10sButton.hide()
+            view.forward10sLabel.hide()
+            view.forward10sButton.hide()
+            view.closeButton.hide()
         }
     }
     
