@@ -199,6 +199,30 @@ class VideoPlayerStateMachine {
             return
         }
     }
+    
+    func startedBuffering() {
+        switch currentState {
+        case .shown:
+            transitionTo(state: .loadingShown)
+        case .hidden:
+            transitionTo(state: .loadingHidden)
+        default:
+            return
+        }
+    }
+    
+    func doneBuffering() {
+        switch currentState {
+        case .initial:
+            transitionTo(state: .shown(.playing))
+        case .loadingShown:
+            transitionTo(state: .shown(.playing))
+        case .loadingHidden:
+            transitionTo(state: .hidden(.playing))
+        default:
+            return
+        }
+    }
 }
 
 extension UIView {

@@ -8,11 +8,12 @@
 
 import UIKit
 
-class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
+class VideoPlayerController: UIViewController {
 
     var videoPlayerView: VideoPlayerView!
     var volumeController: VolumeController?
     var stateMachine: VideoPlayerStateMachine!
+    var bufferingManager: BufferingManager!
     
     private var isPlaying: PlayState = .playing
     private var mediaPlayer = VLCMediaPlayer()
@@ -38,6 +39,8 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         videoPlayerView.titleLabel.text = film.title
         
         sliderAction = VideoPlayerSliderAction(view: videoPlayerView, mediaPlayer: mediaPlayer)
+        bufferingManager = BufferingManager(mediaPlayer: mediaPlayer)
+        bufferingManager.delegate = self
         
         setUpPlayer(url: film.URL)
         setActions()
@@ -45,10 +48,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
        
         stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
         stateMachine.updateUI()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.stateMachine.transitionTo(state: .shown(.playing))
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -60,7 +59,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         let vlcMedia = VLCMedia(url: streamURL)
         
         mediaPlayer.media = vlcMedia
-        mediaPlayer.delegate = self
         mediaPlayer.drawable = videoPlayerView.mediaView
         
         mediaPlayer.play()
@@ -94,38 +92,6 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         tapToShowControls.require(toFail: doubleTap)
     }
     
-    //----------------------------------------------------------------------
-    // Orientation: Landscape
-    //----------------------------------------------------------------------
-    func forceLandscapeOrientation() {
-        let landscapeRight = UIInterfaceOrientation.landscapeRight.rawValue
-        UIDevice.current.setValue(landscapeRight, forKey: "orientation")
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscapeRight
-    }
-    
-    override var shouldAutorotate: Bool {
-        return false
-    }
-    
-    //----------------------------------------------------------------------
-    // Status bar
-    //----------------------------------------------------------------------
-    var isStatusBarHidden = false
-    
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .fade
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return self.isStatusBarHidden
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
     
     //----------------------------------------------------------------------
     // Actions: Controls
@@ -185,6 +151,39 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     //----------------------------------------------------------------------
+    // Orientation: Landscape
+    //----------------------------------------------------------------------
+    func forceLandscapeOrientation() {
+        let landscapeRight = UIInterfaceOrientation.landscapeRight.rawValue
+        UIDevice.current.setValue(landscapeRight, forKey: "orientation")
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .landscapeRight
+    }
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    //----------------------------------------------------------------------
+    // Status bar
+    //----------------------------------------------------------------------
+    var isStatusBarHidden = false
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return self.isStatusBarHidden
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    //----------------------------------------------------------------------
     // MARK: Removing observers/pointers
     //----------------------------------------------------------------------
     deinit {
@@ -205,6 +204,23 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         let portrait = UIInterfaceOrientation.portrait.rawValue
         UIDevice.current.setValue(portrait, forKey: "orientation")
     }
+}
+
+//----------------------------------------------------------------------
+// MARK: Buffering
+//----------------------------------------------------------------------
+extension VideoPlayerController: BufferingDelegate {
+    
+    func startedBuffering() {
+        stateMachine.startedBuffering()
+        print("STARTED BUFFERING")
+    }
+    
+    func endedBuffering() {
+        stateMachine.doneBuffering()
+        print("DONE BUFFERING")
+    }
+    
 }
 
 

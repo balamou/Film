@@ -48,7 +48,7 @@ class VolumeController {
             return
         }
         
-        print(volumeLevel)
+//        print(volumeLevel)
         
         if let prevVolumeLevel = previousVolumeLevel, volumeLevel != prevVolumeLevel {
             delegate?.showVolumeIndicator(volumeLevel: volumeLevel)
