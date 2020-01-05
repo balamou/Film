@@ -26,6 +26,7 @@ class VideoPlayerStateMachine {
     private var view: VideoPlayerView
     private var currentState: VideoPlayerState = .initial
     private var thumbImage: UIImage?
+    private var transitioning = false
     
     init(view: VideoPlayerView) {
         self.view = view
@@ -35,7 +36,8 @@ class VideoPlayerStateMachine {
         switch (from, to) {
         case (.initial, .shown):
             return true
-        case (.shown, .hidden),
+        case (.shown, .shown),
+             (.shown, .hidden),
              (.shown, .loadingShown),
              (.shown, .scrolling):
             return true
@@ -65,19 +67,37 @@ class VideoPlayerStateMachine {
         
         switch (from, to) {
         case (.shown, .hidden):
-            UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveLinear, animations: {
+            transitioning = true
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
                 self.view.controlView.alpha = 0.0
+            }, completion: { _ in
+                self.transitioning = false
             })
-        case (.hidden, .shown):
-            UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveLinear, animations: {
+        case (.hidden, .shown(let playing)):
+            setupPlaying(playing)
+            transitioning = true
+            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
                 self.view.controlView.alpha = 1.0
+            }, completion: {_ in
+                self.transitioning = false
             })
+        case (.shown, .shown(let playing)): // update playOrPause icon
+            setupPlaying(playing)
         case (.loadingShown, .loadingHidden):
             break
         case (.loadingHidden, .loadingShown):
             break
         default:
             updateUI()
+        }
+    }
+    
+    func setupPlaying(_ playing: PlayState) {
+        switch playing {
+        case .paused:
+            view.pausePlayButton.setImage(Images.Player.playImage, for: .normal)
+        case .playing:
+            view.pausePlayButton.setImage(Images.Player.pauseImage, for: .normal)
         }
     }
     
@@ -98,13 +118,7 @@ class VideoPlayerStateMachine {
             
             view.slider.setThumbImage(UIImage(), for: .normal)
         case .shown(let playing):
-            switch playing {
-            case .paused:
-                view.pausePlayButton.setImage(Images.Player.playImage, for: .normal)
-            case .playing:
-                view.pausePlayButton.setImage(Images.Player.pauseImage, for: .normal)
-            }
-            
+            setupPlaying(playing)
             view.controlView.show()
             
             view.backward10sLabel.show()
@@ -125,6 +139,11 @@ class VideoPlayerStateMachine {
             view.forward10sLabel.show()
             view.forward10sButton.show()
             view.airPlayButton.show()
+            view.spinner.startAnimating()
+            
+            view.slider.setThumbImage(thumbImage, for: .normal)
+        case .loadingHidden:
+            view.controlView.hide()
             view.spinner.startAnimating()
             
             view.slider.setThumbImage(thumbImage, for: .normal)

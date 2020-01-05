@@ -14,7 +14,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     var volumeController: VolumeController?
     var stateMachine: VideoPlayerStateMachine!
     
-    private var isPlaying: Bool = true
+    private var isPlaying: PlayState = .playing
     private var mediaPlayer = VLCMediaPlayer()
     private var timer: Timer?
     private let film: Film
@@ -131,46 +131,32 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     //----------------------------------------------------------------------
     func setTimerForControlHide() {
         timer = Timer.scheduledTimer(withTimeInterval: 7.0, repeats: false) { [weak self] timer in
-//            self?.hideControlls()
             self?.stateMachine.transitionTo(state: .hidden(.playing))
         }
     }
     
     @objc func showControlls() {
-        videoPlayerView.controlView.isHidden = false
-        
-        if videoPlayerView.volumeBar.isHidden { // show status bar only if volume bar is hidden
-            self.isStatusBarHidden = false
-            
-            UIView.animate(withDuration: 0.1) {
-                self.setNeedsStatusBarAppearanceUpdate()
-            }
-        }
-        
+        stateMachine.transitionTo(state: .shown(isPlaying))
         setTimerForControlHide()
     }
     
     @objc func hideControlls() {
-        videoPlayerView.controlView.isHidden = true
-        self.isStatusBarHidden = true
-        
-        UIView.animate(withDuration: 0.1) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-        
+        stateMachine.transitionTo(state: .hidden(isPlaying))
         timer?.invalidate()
     }
     
     @objc func pausePlayButtonPressed(sender: UIButton) {
-        if isPlaying {
+        switch isPlaying {
+        case .playing:
             mediaPlayer.pause()
-            isPlaying = false
-            sender.setImage(Images.Player.playImage, for: .normal) // ▶
-        } else {
+            isPlaying = .paused
+            
+        case .paused:
             mediaPlayer.play()
-            isPlaying = true
-            sender.setImage(Images.Player.pauseImage, for: .normal) // ▌▌
+            isPlaying = .playing
         }
+        
+        stateMachine.transitionTo(state: .shown(isPlaying))
     }
     
     @objc func rewindForward() {
@@ -299,7 +285,7 @@ extension VideoPlayerController {
     func applicationWillResignActive() {
         // Pause the player
         mediaPlayer.pause()
-        isPlaying = false
+        isPlaying = .paused
         videoPlayerView.pausePlayButton.setImage(Images.Player.playImage, for: .normal) // ▶
         
         // SHOW CONTROLLS

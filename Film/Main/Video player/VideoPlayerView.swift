@@ -334,7 +334,7 @@ class VideoPlayerView: UIView {
         controlView.addSubviewLayout(backward10sButton)
         controlView.addSubviewLayout(forward10sLabel)
         controlView.addSubviewLayout(backward10sLabel)
-        controlView.addSubviewLayout(spinner)
+        addSubviewLayout(spinner)
         
         Constraints.setPausePlayButton(pausePlayButton, controlView)
         Constraints.setForwardButton(forward10sButton, pausePlayButton)
