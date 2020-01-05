@@ -91,7 +91,8 @@ class VideoPlayerStateMachine {
         case (.loadingHidden, .loadingShown),
              (.loadingHidden, .hidden):
             return true
-        case (.scrolling, .shown):
+        case (.scrolling, .scrolling),
+             (.scrolling, .shown):
             return true
         default:
             return false
