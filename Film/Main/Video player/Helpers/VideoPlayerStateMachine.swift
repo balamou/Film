@@ -95,6 +95,8 @@ class VideoPlayerStateMachine {
         case (.scrolling, .scrolling),
              (.scrolling, .shown):
             return true
+        case (_, .initial): // when tapped "play next episode"
+            return true
         default:
             return false
         }

@@ -19,7 +19,7 @@ class VideoPlayerController: UIViewController {
     private var playState: PlayState = .playing
     
     private let mediaPlayer = VLCMediaPlayer()
-    private let film: Film
+    private var film: Film
     
     private let backwardTime: Int32 = 10
     private let forwardTime: Int32 = 10
@@ -164,8 +164,23 @@ class VideoPlayerController: UIViewController {
     
     @objc func playNextEpisode() {
         print("Next episode")
-        nextEpisodeProvider.getNextEpisode(episodeId: film.id, result: { newFilm in
-            print(newFilm)
+        videoPlayerView.nextEpisodeButton.isEnabled = false
+        
+        nextEpisodeProvider.getNextEpisode(episodeId: film.id, result: { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(newFilm):
+                self.stateMachine.transitionTo(state: .initial)
+                self.mediaPlayer.stop()
+                self.setUpPlayer(url: newFilm.URL)
+                self.videoPlayerView.titleLabel.text = newFilm.title
+                self.film = newFilm
+            case let .failure(error):
+                print("Error occurred! \(error)") // TODO: Display alert
+            }
+            
+            self.videoPlayerView.nextEpisodeButton.isEnabled = true
         })
     }
     
