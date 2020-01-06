@@ -116,39 +116,18 @@ class VideoPlayerStateMachine {
         case (.loadingShown, .shown):
             setupTimer { [weak self] in self?.transitionTo(state: .hidden) }
         case (.shown, .hidden):
-            transitioning = true
-            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-                self.view.controlView.alpha = 0.0
-            }, completion: { _ in
-                self.transitioning = false
-            })
+            hideAnimation()
         case (.hidden, .shown(let playing)):
             setupPlaying(playing)
-            transitioning = true
-            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-                self.view.controlView.alpha = 1.0
-            }, completion: {_ in
-                self.transitioning = false
-            })
-            
+            showAnimation()
             setupTimer { [weak self] in self?.transitionTo(state: .hidden) }
         case (.shown, .shown(let playing)): // update playOrPause icon
             setupPlaying(playing)
         case (.loadingShown, .loadingHidden):
-            transitioning = true
-            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-                self.view.controlView.alpha = 0.0
-            }, completion: { _ in
-                self.transitioning = false
-            })
+            hideAnimation()
         case (.loadingHidden, .loadingShown):
             transitioning = true
-            UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
-                self.view.controlView.alpha = 1.0
-            }, completion: {_ in
-                self.transitioning = false
-            })
-            
+            showAnimation()
             setupTimer { [weak self] in self?.transitionTo(state: .loadingHidden) }
         case (.initial, .shown(let playing)):
             setupPlaying(playing)
@@ -158,6 +137,24 @@ class VideoPlayerStateMachine {
         }
         
         updateUI()
+    }
+    
+    private func hideAnimation() {
+        transitioning = true
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+            self.view.controlView.alpha = 0.0
+        }, completion: { _ in
+            self.transitioning = false
+        })
+    }
+    
+    private func showAnimation() {
+        transitioning = true
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
+            self.view.controlView.alpha = 1.0
+        }, completion: {_ in
+            self.transitioning = false
+        })
     }
     
     func setupTimer(callback: @escaping () -> Void) {
