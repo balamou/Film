@@ -114,24 +114,31 @@ class VideoPlayerStateMachine {
         
         switch (from, to) {
         case (.loadingShown, .shown):
-            setupTimer { [weak self] in self?.transitionTo(state: .hidden) }
+            transitionTo(state: .hidden, after: 7.0)
+            
         case (.shown, .hidden):
             hideAnimation()
+            
         case (.hidden, .shown(let playing)):
             setupPlaying(playing)
             showAnimation()
-            setupTimer { [weak self] in self?.transitionTo(state: .hidden) }
-        case (.shown, .shown(let playing)): // update playOrPause icon
+            transitionTo(state: .hidden, after: 7.0)
+            
+        case (.shown, .shown(let playing)):
+            // update playOrPause icon
             setupPlaying(playing)
+            
         case (.loadingShown, .loadingHidden):
             hideAnimation()
+            
         case (.loadingHidden, .loadingShown):
-            transitioning = true
             showAnimation()
-            setupTimer { [weak self] in self?.transitionTo(state: .loadingHidden) }
+            transitionTo(state: .loadingHidden, after: 7.0)
+            
         case (.initial, .shown(let playing)):
             setupPlaying(playing)
-            setupTimer { [weak self] in self?.transitionTo(state: .hidden) }
+            transitionTo(state: .hidden, after: 7.0)
+            
         default:
             break
         }
@@ -157,9 +164,10 @@ class VideoPlayerStateMachine {
         })
     }
     
-    func setupTimer(callback: @escaping () -> Void) {
-        timer = Timer.scheduledTimer(withTimeInterval: 7.0, repeats: false) { timer in
-            callback()
+    private func transitionTo(state: VideoPlayerState, after seconds: TimeInterval) {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: false) { [weak self] timer in
+            self?.transitionTo(state: state)
             timer.invalidate()
         }
     }
