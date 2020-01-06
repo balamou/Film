@@ -16,9 +16,9 @@ class VideoPlayerController: UIViewController {
     private var stateMachine: VideoPlayerStateMachine!
     private var bufferingManager: BufferingManager!
     private var sliderAction: VideoPlayerSliderAction!
-    
     private var playState: PlayState = .playing
-    private var mediaPlayer = VLCMediaPlayer()
+    
+    private let mediaPlayer = VLCMediaPlayer()
     private let film: Film
     
     private let backwardTime: Int32 = 10
@@ -38,9 +38,9 @@ class VideoPlayerController: UIViewController {
         forceLandscapeOrientation()
         
         videoPlayerView = VideoPlayerView(frame: view.frame)
-        view = videoPlayerView
-        
         videoPlayerView.titleLabel.text = film.title
+        
+        view = videoPlayerView
         
         setupPlayerHelpers()
         setUpPlayer(url: film.URL)
@@ -55,10 +55,11 @@ class VideoPlayerController: UIViewController {
     func setupPlayerHelpers() {
         sliderAction = VideoPlayerSliderAction(view: videoPlayerView, mediaPlayer: mediaPlayer)
         sliderAction.delegate = self
+        
         bufferingManager = BufferingManager(mediaPlayer: mediaPlayer)
         bufferingManager.delegate = self
+        
         stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
-        stateMachine.updateUI()
     }
     
     func setUpPlayer(url: String) {

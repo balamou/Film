@@ -14,7 +14,7 @@ protocol VideoPlayerSliderActionDelegate: class {
 }
 
 class VideoPlayerSliderAction: NSObject {
-    private let view: VideoPlayerView
+    private let view: VideoPlayerView // TODO: inject only views that are needed, not the whole view
     private let mediaPlayer: VLCMediaPlayer
     
     private var setPosition = true

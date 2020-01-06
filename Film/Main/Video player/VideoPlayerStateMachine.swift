@@ -41,7 +41,7 @@ enum VideoPlayerState: CustomStringConvertible {
 
 class VideoPlayerStateMachine {
     private var view: VideoPlayerView
-    private var currentState: VideoPlayerState = .initial
+    private var currentState: VideoPlayerState
     private var thumbImage: UIImage?
     private var transitioning = false
     
@@ -49,6 +49,8 @@ class VideoPlayerStateMachine {
     
     init(view: VideoPlayerView) {
         self.view = view
+        self.currentState = .initial
+        updateUI()
     }
     
     var canDoubleTap: Bool {
