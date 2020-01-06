@@ -24,8 +24,13 @@ class VideoPlayerController: UIViewController {
     private let backwardTime: Int32 = 10
     private let forwardTime: Int32 = 10
     
-    init(film: Film) {
+    private let nextEpisodeProvider: NextEpisodeNetworkProvider
+    private let settings: Settings
+    
+    init(film: Film, settings: Settings) {
         self.film = film
+        self.settings = settings
+        self.nextEpisodeProvider = NextEpisodeNetworkProvider(settings: settings) // TODO: inject
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -159,6 +164,9 @@ class VideoPlayerController: UIViewController {
     
     @objc func playNextEpisode() {
         print("Next episode")
+        nextEpisodeProvider.getNextEpisode(episodeId: film.id, result: { newFilm in
+            print(newFilm)
+        })
     }
     
     //----------------------------------------------------------------------

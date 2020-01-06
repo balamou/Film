@@ -13,14 +13,18 @@ enum FilmType: String, Decodable {
     case show
 }
 
-struct Film {
+struct Film: Decodable {
     let id: Int // MovieID OR EpisodeID (this is not the show id)
-    let URL: String
+    var URL: String
     let duration: Int
     let type: FilmType
     
     var stoppedAt: Int?
     var title: String?
+    
+    mutating func fixURL(with urlFixer: (String?) -> String?) {
+        URL = urlFixer(URL) ?? URL
+    }
     
     func durationMin() -> String {
         return Film.durationMin(seconds: duration)

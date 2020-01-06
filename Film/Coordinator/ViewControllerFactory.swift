@@ -20,7 +20,7 @@ protocol ViewControllerFactory {
     func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: Series, settings: Settings) -> ShowInfoViewController
     func createMovieInfoViewController(delegate: MovieInfoViewControllerDelegate?, movie: Movie, settings: Settings) -> MovieInfoViewController
     
-    func createVideoPlayerController(film: Film) -> VideoPlayerController
+    func createVideoPlayerController(film: Film, settings: Settings) -> VideoPlayerController
 }
 
 
@@ -91,8 +91,8 @@ class StandardFactory: ViewControllerFactory {
         return movieInfoVC
     }
     
-    func createVideoPlayerController(film: Film) -> VideoPlayerController {
-        let videoPlayerVC = VideoPlayerController(film: film)
+    func createVideoPlayerController(film: Film, settings: Settings) -> VideoPlayerController {
+        let videoPlayerVC = VideoPlayerController(film: film, settings: settings)
         
         return videoPlayerVC
     }
