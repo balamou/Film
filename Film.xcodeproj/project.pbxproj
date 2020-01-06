@@ -427,12 +427,9 @@
 			isa = PBXGroup;
 			children = (
 				ED82DBC3231464F900FEC56A /* Volume Controller */,
+				ED76BA3223C2D3DB00CAC72D /* Helpers */,
 				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
-				ED76BA2C23C171E600CAC72D /* VideoPlayerStateMachine.swift */,
-				ED76BA3023C1A1E200CAC72D /* BufferingManager.swift */,
-				ED76BA2E23C17F6100CAC72D /* VideoPlayerSliderAction.swift */,
 				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
-				ED76BA2A23C0503200CAC72D /* CustomHeightSlider.swift */,
 				ED57FCB023137CB20001A9AB /* Film.swift */,
 			);
 			path = "Video player";
@@ -499,6 +496,16 @@
 				EDE494FF232EA78B00547830 /* MovieInfoAPI.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		ED76BA3223C2D3DB00CAC72D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				ED76BA2C23C171E600CAC72D /* VideoPlayerStateMachine.swift */,
+				ED76BA3023C1A1E200CAC72D /* BufferingManager.swift */,
+				ED76BA2E23C17F6100CAC72D /* VideoPlayerSliderAction.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		ED82DBC3231464F900FEC56A /* Volume Controller */ = {
@@ -641,6 +648,7 @@
 			isa = PBXGroup;
 			children = (
 				ED1FEEB92318B71900DE69AB /* Alert */,
+				ED76BA2A23C0503200CAC72D /* CustomHeightSlider.swift */,
 				ED5AC12723158FED0098A161 /* CustomNavigationBar.swift */,
 				EDACC49D231A0D8E005DC09C /* CustomMarginButton.swift */,
 				ED725115232ED83A0040C279 /* CustomTextField.swift */,
