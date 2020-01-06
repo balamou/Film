@@ -131,9 +131,16 @@ class VideoPlayerController: UIViewController {
         case .paused:
             mediaPlayer.play()
             playState = .playing
+            shortVibration()
         }
         
         stateMachine.transitionTo(state: .shown(playState))
+    }
+    
+    private func shortVibration() {
+        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
+        impactFeedbackgenerator.prepare()
+        impactFeedbackgenerator.impactOccurred()
     }
     
     @objc func rewindForward() {
