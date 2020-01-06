@@ -39,6 +39,10 @@ class VideoPlayerController: UIViewController {
         
         videoPlayerView = VideoPlayerView(frame: view.frame)
         videoPlayerView.titleLabel.text = film.title
+        if film.type == .movie {
+            videoPlayerView.nextEpisodeButton.isEnabled = false
+            videoPlayerView.nextEpisodeButton.setTitleColor(.gray, for: .disabled)
+        }
         
         view = videoPlayerView
         
