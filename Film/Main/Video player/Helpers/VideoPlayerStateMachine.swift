@@ -42,7 +42,6 @@ enum VideoPlayerState: CustomStringConvertible {
 class VideoPlayerStateMachine {
     private var view: VideoPlayerView
     private var currentState: VideoPlayerState
-    private var thumbImage: UIImage?
     private var transitioning = false
     
     private var timer: Timer?
@@ -184,8 +183,14 @@ class VideoPlayerStateMachine {
     }
     
     func updateUI() {
-        thumbImage = thumbImage ?? view.slider.thumbImage(for: .normal)
-        view.slider.setThumbImage(thumbImage, for: .normal)
+        switch currentState {
+        case .initial:
+            break
+        default:
+            view.slider.setThumbImage(Images.Player.thumbTrackImage, for: .normal)
+            view.slider.setThumbImage(Images.Player.thumbTrackImage, for: .focused)
+            view.slider.setThumbImage(Images.Player.thumbTrackImage, for: .highlighted)
+        }
         
         view.closeButton.show()
         view.nextEpisodeButton.show()

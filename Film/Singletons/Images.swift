@@ -35,6 +35,7 @@ struct Images {
         static let closeImage = UIImage(named: "close")
         static let subtitlesImage = UIImage(named: "subtiles")
         static let airplayImage = UIImage(named: "airplay")
+        static let thumbTrackImage = UIImage(named: "thumb_track")
     }
     
     struct ShowInfo {
