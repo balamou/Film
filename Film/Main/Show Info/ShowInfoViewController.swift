@@ -45,6 +45,7 @@ class ShowInfoViewController: UIViewController {
         
         showView = ShowInfoView()
         view = showView
+        showView.delegate = self
         
         setupCollectionView()
         fetchSeries(by: series.id)
@@ -125,9 +126,9 @@ extension ShowInfoViewController {
 // MARK: Delegate action
 //----------------------------------------------------------------------
 
-extension ShowInfoViewController: HeaderViewDelegate {
+extension ShowInfoViewController: HeaderViewDelegate, ShowInfoViewDelegate {
     
-    func exitButtonTapped() {
+    func didTapExit() {
         delegate?.showInfoViewControllerDidExit(self)
     }
     

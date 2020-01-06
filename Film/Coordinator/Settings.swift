@@ -17,7 +17,7 @@ class Settings: CustomStringConvertible {
     var userId: Int?
     var language = "english"
     var ipAddress = "192.168.72.46"
-    var port = "9989"
+    var port = "3000"
     
     var basePath: String {
         return "http://\(ipAddress):\(port)"
@@ -90,7 +90,7 @@ extension Settings {
         settings.username = nil
         settings.language = "english"
         settings.ipAddress = "192.168.72.46"
-        settings.port = "9989"
+        settings.port = "3000"
         
         return settings
     }

@@ -8,16 +8,21 @@
 
 import UIKit
 
+class VideoPlayerController: UIViewController {
 
-class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
-
-    var videoPlayerView: VideoPlayerView!
     var volumeController: VolumeController?
+    var videoPlayerView: VideoPlayerView!
     
-    private var isPlaying: Bool = true
-    private var mediaPlayer = VLCMediaPlayer()
-    private var timer: Timer?
+    private var stateMachine: VideoPlayerStateMachine!
+    private var bufferingManager: BufferingManager!
+    private var sliderAction: VideoPlayerSliderAction!
+    private var playState: PlayState = .playing
+    
+    private let mediaPlayer = VLCMediaPlayer()
     private let film: Film
+    
+    private let backwardTime: Int32 = 10
+    private let forwardTime: Int32 = 10
     
     init(film: Film) {
         self.film = film
@@ -32,14 +37,18 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         super.viewDidLoad()
         forceLandscapeOrientation()
         
-        videoPlayerView = VideoPlayerView(frame: self.view.frame)
+        videoPlayerView = VideoPlayerView(frame: view.frame)
+        videoPlayerView.titleLabel.text = film.title
+        if film.type == .movie {
+            videoPlayerView.nextEpisodeButton.isEnabled = false
+            videoPlayerView.nextEpisodeButton.setTitleColor(.gray, for: .disabled)
+        }
+        
         view = videoPlayerView
         
-        videoPlayerView.titleLabel.text = film.title
-        
+        setupPlayerHelpers()
         setUpPlayer(url: film.URL)
         setActions()
-        setTimerForControlHide()
         overrideVolumeBar()
     }
     
@@ -47,12 +56,21 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         videoPlayerView.didAppear()
     }
     
+    func setupPlayerHelpers() {
+        sliderAction = VideoPlayerSliderAction(view: videoPlayerView, mediaPlayer: mediaPlayer)
+        sliderAction.delegate = self
+        
+        bufferingManager = BufferingManager(mediaPlayer: mediaPlayer)
+        bufferingManager.delegate = self
+        
+        stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
+    }
+    
     func setUpPlayer(url: String) {
         let streamURL = URL(string: url)!
         let vlcMedia = VLCMedia(url: streamURL)
         
         mediaPlayer.media = vlcMedia
-        mediaPlayer.delegate = self
         mediaPlayer.drawable = videoPlayerView.mediaView
         
         mediaPlayer.play()
@@ -61,29 +79,86 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     //----------------------------------------------------------------------
     // MARK: Actions
     //----------------------------------------------------------------------
-    
     func setActions() {
         videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
         
-        let tapToShowControlls = UITapGestureRecognizer(target: self, action: #selector(showControlls))
-        videoPlayerView.mediaView.addGestureRecognizer(tapToShowControlls)
+        let tapToShowControls = UITapGestureRecognizer(target: self, action: #selector(showControls))
+        tapToShowControls.numberOfTapsRequired = 1
+        videoPlayerView.mediaView.addGestureRecognizer(tapToShowControls)
         
-        let tapToHideControlls = UITapGestureRecognizer(target: self, action: #selector(hideControlls))
-        videoPlayerView.controlView.addGestureRecognizer(tapToHideControlls)
+        let tapToHideControls = UITapGestureRecognizer(target: self, action: #selector(hideControls))
+        tapToHideControls.numberOfTapsRequired = 1
+        videoPlayerView.controlView.addGestureRecognizer(tapToHideControls)
         
         videoPlayerView.forward10sButton.addTarget(self, action: #selector(rewindForward), for: .touchUpInside)
         videoPlayerView.backward10sButton.addTarget(self, action: #selector(rewindBack), for: .touchUpInside)
         
         videoPlayerView.closeButton.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
-        
         videoPlayerView.nextEpisodeButton.addTarget(self, action: #selector(playNextEpisode), for: .touchUpInside)
         
-        // Slider
-        mediaPlayer.addObserver(self, forKeyPath: "time", options: NSKeyValueObservingOptions(rawValue: 0), context: nil)
-        videoPlayerView.slider.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
-        videoPlayerView.slider.addTarget(self, action: #selector(touchUpInside(_:)), for: .touchUpInside)
-        videoPlayerView.slider.addTarget(self, action: #selector(touchUpOutside(_:)), for: .touchUpOutside)
-        videoPlayerView.slider.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTap(sender:)))
+        doubleTap.numberOfTapsRequired = 2
+        videoPlayerView.mediaView.addGestureRecognizer(doubleTap)
+        
+        tapToShowControls.require(toFail: doubleTap)
+    }
+    
+    
+    //----------------------------------------------------------------------
+    // Actions: Controls
+    //----------------------------------------------------------------------
+    @objc func showControls() {
+        guard stateMachine.canTapToShowHideControls else { return }
+        stateMachine.showControls(playState: playState)
+    }
+    
+    @objc func hideControls() {
+        guard stateMachine.canTapToShowHideControls else { return }
+        stateMachine.hideControls()
+    }
+    
+    @objc func pausePlayButtonPressed(sender: UIButton) {
+        switch playState {
+        case .playing:
+            mediaPlayer.pause()
+            playState = .paused
+            
+        case .paused:
+            mediaPlayer.play()
+            playState = .playing
+        }
+        
+        stateMachine.transitionTo(state: .shown(playState))
+    }
+    
+    @objc func rewindForward() {
+        mediaPlayer.jumpForward(forwardTime)
+    }
+    
+    @objc func rewindBack() {
+        mediaPlayer.jumpBackward(backwardTime)
+    }
+    
+    @objc func doubleTap(sender: UITapGestureRecognizer) {
+        guard sender.state == .ended else { return }
+        guard stateMachine.canDoubleTap else { return }
+        
+        let location = sender.location(in: view)
+        let percentage = location.x/view.frame.width
+        if percentage < 0.5 {
+            rewindBack()
+        } else {
+            rewindForward()
+        }
+    }
+    
+    @objc func closeVideo() {
+        print("Close video")
+        navigationController?.popViewController(animated: false)
+    }
+    
+    @objc func playNextEpisode() {
+        print("Next episode")
     }
     
     //----------------------------------------------------------------------
@@ -93,7 +168,7 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
         let landscapeRight = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(landscapeRight, forKey: "orientation")
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscapeRight
     }
@@ -120,160 +195,52 @@ class VideoPlayerController: UIViewController, VLCMediaPlayerDelegate {
     }
     
     //----------------------------------------------------------------------
-    // Actions: Controlls
-    //----------------------------------------------------------------------
-    func setTimerForControlHide() {
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] timer in
-            self?.hideControlls()
-        }
-    }
-    
-    @objc func showControlls() {
-        videoPlayerView.controlView.isHidden = false
-        
-        if videoPlayerView.volumeBar.isHidden { // show status bar only if volume bar is hidden
-            self.isStatusBarHidden = false
-            
-            UIView.animate(withDuration: 0.1) {
-                self.setNeedsStatusBarAppearanceUpdate()
-            }
-        }
-        
-        setTimerForControlHide()
-    }
-    
-    @objc func hideControlls() {
-        videoPlayerView.controlView.isHidden = true
-        self.isStatusBarHidden = true
-        
-        UIView.animate(withDuration: 0.1) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-        
-        timer?.invalidate()
-    }
-    
-    @objc func pausePlayButtonPressed(sender: UIButton) {
-        if isPlaying {
-            mediaPlayer.pause()
-            isPlaying = false
-            sender.setImage(Images.Player.playImage, for: .normal) // ▶
-        } else {
-            mediaPlayer.play()
-            isPlaying = true
-            sender.setImage(Images.Player.pauseImage, for: .normal) // ▌▌
-        }
-    }
-    
-    @objc func rewindForward() {
-        mediaPlayer.jumpForward(Int32(10))
-    }
-    
-    @objc func rewindBack() {
-        mediaPlayer.jumpBackward(Int32(10))
-    }
-    
-    @objc func closeVideo() {
-        print("Close video")
-        navigationController?.popViewController(animated: false)
-    }
-    
-    @objc func playNextEpisode() {
-        print("Next episode")
-    }
-    
-    //----------------------------------------------------------------------
-    // Slider
-    //----------------------------------------------------------------------
-    var setPosition = true
-    var updatePosition = true
-    
-    // continuously update slider and time displayed
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        
-        if (setPosition && updatePosition)
-        {
-            videoPlayerView.slider.value = mediaPlayer.position // move slider
-            
-            var remaining =  mediaPlayer.remainingTime.description
-            remaining.remove(at: remaining.startIndex)
-            videoPlayerView.durationLabel.text = remaining // display time
-        }
-    }
-    
-    // When the value of the slider is set but the finger is outside the slider
-    @objc func touchUpOutside(_ sender: UISlider) {
-        positionSliderAction()
-        videoPlayerView.currentPositionLabel.isHidden = true
-    }
-    
-    // When the value of the slider is set but the finger is inside the slider
-    @objc func touchUpInside(_ sender: UISlider) {
-        positionSliderAction()
-        videoPlayerView.currentPositionLabel.isHidden = true
-    }
-    
-    // When the slider is touched
-    @objc func touchDown(_ sender: UISlider) {
-        updatePosition = false
-    }
-    
-    func positionSliderAction() {
-        self.perform(#selector(setPositionForReal), with: nil, afterDelay: 0.3)
-        
-        setPosition = false
-        updatePosition = true
-    }
-    
-    @objc func setPositionForReal() {
-        if !setPosition {
-            mediaPlayer.position = videoPlayerView.slider.value
-            setPosition = true
-        }
-    }
-    
-    //----------------------------------------------------------------------
-    // MARK: Update time label as slider is moving
-    //----------------------------------------------------------------------
-    @objc func valueChanged(_ sender: UISlider) {
-        let label = videoPlayerView.currentPositionLabel
-        label.sizeToFit()
-        
-        let position = setUISliderThumbValueWithLabel(slider: videoPlayerView.slider, label: label)
-        let rect = label.frame.addToWidth(5.0)
-        let duration = mediaPlayer.media.length.intValue/1000
-        label.text = film.durationMin(seconds: Int(sender.value * Float(duration)))
-            
-        label.isHidden = false
-        label.frame = CGRect(origin: position, size: rect.size)
-    }
-    
-    func setUISliderThumbValueWithLabel(slider: UISlider, label: UILabel) -> CGPoint {
-        let sliderTrack = slider.trackRect(forBounds: slider.bounds)
-        let sliderFrm = slider .thumbRect(forBounds: slider.bounds, trackRect: sliderTrack, value: slider.value)
-        return CGPoint(x: sliderFrm.origin.x + slider.frame.origin.x + sliderFrm.size.width/2 - label.frame.size.width/2, y: videoPlayerView.bottomBar.frame.origin.y)
-    }
-
-    //----------------------------------------------------------------------
     // MARK: Removing observers/pointers
     //----------------------------------------------------------------------
     deinit {
         print("Remove Observers: Deinit")
-        mediaPlayer.removeObserver(self, forKeyPath: "time")
         mediaPlayer.stop()
-        timer?.invalidate()
     }
     
-    override func viewWillDisappear(_ animated: Bool)
-    {
+    override func viewWillDisappear(_ animated: Bool) {
         mediaPlayer.stop()
-        timer?.invalidate()
-        
-        // RESET ORIENTATION
-        if (self.isMovingFromParent) {
-            let portrait = UIInterfaceOrientation.portrait.rawValue
-            UIDevice.current.setValue(portrait, forKey: "orientation")
+        resetOrientation()
+    }
+    
+    private func resetOrientation() {
+        guard isMovingFromParent else {
+            return
         }
+        
+        let portrait = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(portrait, forKey: "orientation")
+    }
+}
+
+//----------------------------------------------------------------------
+// MARK: Buffering
+//----------------------------------------------------------------------
+extension VideoPlayerController: BufferingDelegate {
+    
+    func startedBuffering() {
+        stateMachine.startedBuffering()
+        print("STARTED BUFFERING")
+    }
+    
+    func endedBuffering() {
+        stateMachine.doneBuffering(playState: playState)
+        print("DONE BUFFERING")
+    }
+    
+}
+
+extension VideoPlayerController: VideoPlayerSliderActionDelegate {
+    func didStartScrolling() {
+        stateMachine.transitionTo(state: .scrolling)
+    }
+    
+    func didEndScrolling() {
+        stateMachine.transitionTo(state: .shown(playState))
     }
 }
 
@@ -286,13 +253,10 @@ extension VideoPlayerController {
     
     // When leaving the app
     func applicationWillResignActive() {
-        // Pause the player
         mediaPlayer.pause()
-        isPlaying = false
-        videoPlayerView.pausePlayButton.setImage(Images.Player.playImage, for: .normal) // ▶
+        playState = .paused
+        stateMachine.transitionTo(state: .shown(playState))
         
-        // SHOW CONTROLLS
-        videoPlayerView.controlView.isHidden = false
         isStatusBarHidden = false
         setNeedsStatusBarAppearanceUpdate()
     }

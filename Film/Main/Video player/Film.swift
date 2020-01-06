@@ -23,10 +23,10 @@ struct Film {
     var title: String?
     
     func durationMin() -> String {
-        return durationMin(seconds: duration)
+        return Film.durationMin(seconds: duration)
     }
     
-    func durationMin(seconds sec: Int) -> String {
+    static func durationMin(seconds sec: Int) -> String {
         let hours: Int = sec / 3600
         let minutes: Int = (sec % 3600) / 60
         let seconds: Int = sec - minutes * 60

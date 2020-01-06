@@ -13,7 +13,7 @@ struct Movie: Decodable {
     let id: Int
     let title: String
     let duration: Int
-    let videoURL: String
+    var videoURL: String
     
     var description: String?
     var poster: String?
@@ -23,5 +23,10 @@ struct Movie: Decodable {
         guard let stoppedAt = stoppedAt else { return 0 }
         
         return Float(stoppedAt)/Float(duration)
+    }
+    
+    mutating func fixURL(with urlFixer: (String?) -> String?) {
+        videoURL = urlFixer(videoURL) ?? videoURL
+        poster = urlFixer(poster)
     }
 }

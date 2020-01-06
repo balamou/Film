@@ -10,31 +10,36 @@ import Foundation
 
 struct Images {
     
-    static let logoImage = UIImage(named: "Logo")
-    static let closeImage = UIImage(named: "Close")
+    static let logoImage = UIImage(named: "logo")
     
     struct Tabs {
-        static let watchingImage = UIImage(named: "Watching")
-        static let showsImage = UIImage(named: "Shows")
-        static let moviesImage = UIImage(named: "Movies")
-        static let settingsImage = UIImage(named: "Settings")
+        static let watchingImage = UIImage(named: "watching")
+        static let showsImage = UIImage(named: "shows")
+        static let moviesImage = UIImage(named: "movies")
+        static let settingsImage = UIImage(named: "settings")
     }
     
     struct Watching {
-        static let idleImage = UIImage(named: "Nothing_found")
+        static let idleImage = UIImage(named: "nothing_found")
         static let informationImage = UIImage(named: "info")
     }
     
     struct Player {
-        static let pauseImage = UIImage(named: "Pause")
-        static let playImage = UIImage(named: "Play")
+        static let pauseImage = UIImage(named: "pause")
+        static let playImage = UIImage(named: "play")
         static let forwardImage = UIImage(named: "forward")
         static let backwardImage = UIImage(named: "backward")
-        static let nextEpisodeImage = UIImage(named: "Next_episode")
-        static let volumeImage = UIImage(named: "Volume")
+        static let nextEpisodeImage = UIImage(named: "next_episode")
+        static let volumeImage = UIImage(named: "volume")
+        static let airPlayImage = UIImage(named: "airplay")
+        static let closeImage = UIImage(named: "close")
+        static let subtitlesImage = UIImage(named: "subtiles")
+        static let airplayImage = UIImage(named: "airplay")
+        static let thumbTrackImage = UIImage(named: "thumb_track")
     }
     
     struct ShowInfo {
         static let playEpisode = UIImage(named: "play_episode")
+        static let exitImage = UIImage(named: "exit")
     }
 }

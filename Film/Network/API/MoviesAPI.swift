@@ -31,7 +31,9 @@ class ConcreteMoviesAPI: MoviesAPI {
         let requestType = RequestType<MoviesWrapper>(data: requestData)
         
         requestType.execute(onSuccess: { data in
-            result(.success((data.movies, data.isLast)))
+            let movies = data.movies.map { MovieItem(id: $0.id, posterURL: self.settings.createPath(with: $0.posterURL))}
+            
+            result(.success((movies, data.isLast)))
         }, onError: { error in
             result(.failure(error))
         })

@@ -10,7 +10,6 @@ import UIKit
 
 
 protocol HeaderViewDelegate: class {
-    func exitButtonTapped()
     func playButtonTapped()
     func seasonButtonTapped()
 }
@@ -27,14 +26,6 @@ class HeaderView: UICollectionReusableView {
         imageView.backgroundColor = #colorLiteral(red: 0.1843137255, green: 0.1843137255, blue: 0.1843137255, alpha: 1) // #2F2F2F
         
         return imageView
-    }()
-    
-    var exitButton: CustomMarginButton = {
-        let button = CustomMarginButton()
-        button.margin = 40.0
-        button.setImage(Images.closeImage, for: .normal)
-        
-        return button
     }()
     
     var titleLabel: UILabel = {
@@ -91,13 +82,6 @@ class HeaderView: UICollectionReusableView {
             imageView.heightAnchor.constraint(equalToConstant: 192.0).isActive = true
         }
         
-        static func setExitButton(_ button: UIButton, _ parent: UIView) {
-            button.topAnchor.constraint(equalTo: parent.topAnchor, constant: 30.0).isActive = true
-            button.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -15.0).isActive = true
-            button.widthAnchor.constraint(equalToConstant: 25.0).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
-        }
-        
         static func setTitleLabel(_ label: UILabel, _ topNeighbour: UIView) {
             label.topAnchor.constraint(equalTo: topNeighbour.bottomAnchor, constant: 10.0).isActive = true
             label.centerXAnchor.constraint(equalTo: topNeighbour.centerXAnchor).isActive = true
@@ -137,7 +121,6 @@ class HeaderView: UICollectionReusableView {
         backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.09803921569, alpha: 1) // #191919
         
         addSubviewLayout(posterPicture)
-        addSubviewLayout(exitButton)
         addSubviewLayout(titleLabel)
         addSubviewLayout(playButton)
         addSubviewLayout(descriptionLabel)
@@ -145,14 +128,12 @@ class HeaderView: UICollectionReusableView {
         addSubviewLayout(seasonButton)
         
         Constraints.setPosterPicture(posterPicture, self)
-        Constraints.setExitButton(exitButton, self)
         Constraints.setTitleLabel(titleLabel, posterPicture)
         Constraints.setPlayButton(playButton, titleLabel, parent: self)
         Constraints.setDescriptionLabel(descriptionLabel, playButton, parent: self)
         Constraints.setDividerView(dividerView, descriptionLabel, parent: self)
         Constraints.setSeasonButton(seasonButton, dividerView, parent: self)
         
-        exitButton.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         seasonButton.addTarget(self, action: #selector(seasonButtonTapped), for: .touchUpInside)
     }
@@ -168,10 +149,6 @@ class HeaderView: UICollectionReusableView {
         let seasonSelected = "Season".localize() + " \(series.seasonSelected)"
         seasonButton.setTitle(seasonSelected, for: .normal)
         
-    }
-    
-    @objc func exitButtonTapped() {
-        delegate?.exitButtonTapped()
     }
     
     @objc func playButtonTapped() {

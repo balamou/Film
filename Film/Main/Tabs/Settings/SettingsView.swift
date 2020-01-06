@@ -110,7 +110,7 @@ class SettingsView: UIView {
         textField.backgroundColor = textFieldColor
         textField.textColor = .white
         textField.font = textFieldFont
-        textField.text = "9989"
+        textField.text = "3000"
         textField.keyboardAppearance = .dark
         textField.layer.cornerRadius = textFieldRadius
         
