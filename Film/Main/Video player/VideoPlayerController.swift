@@ -118,12 +118,10 @@ class VideoPlayerController: UIViewController {
     // Actions: Controls
     //----------------------------------------------------------------------
     @objc func showControls() {
-        guard stateMachine.canTapToShowHideControls else { return }
         stateMachine.showControls(playState: playState)
     }
     
     @objc func hideControls() {
-        guard stateMachine.canTapToShowHideControls else { return }
         stateMachine.hideControls()
     }
     
@@ -221,7 +219,7 @@ class VideoPlayerController: UIViewController {
     }
     
     override var prefersStatusBarHidden: Bool {
-        return self.isStatusBarHidden
+        return isStatusBarHidden
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

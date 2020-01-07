@@ -39,6 +39,8 @@ enum VideoPlayerState: CustomStringConvertible {
     }
 }
 
+/// Manages player's state transitions.
+/// See [player state transitions](https://github.com/balamou/Film/blob/master/images/video_player_state_transitions.png?raw=true).
 class VideoPlayerStateMachine {
     private var view: VideoPlayerView
     private var currentState: VideoPlayerState
@@ -61,17 +63,7 @@ class VideoPlayerStateMachine {
             return true
         }
     }
-    
-    var canTapToShowHideControls: Bool {
-        switch currentState {
-        case .initial,
-             .scrolling:
-            return false
-        default:
-            return true
-        }
-    }
-    
+        
     private func canTransition(from: VideoPlayerState, to: VideoPlayerState) -> Bool {
         switch (from, to) {
         case (.initial, .shown):
