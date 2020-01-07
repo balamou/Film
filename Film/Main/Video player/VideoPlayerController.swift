@@ -165,12 +165,10 @@ class VideoPlayerController: UIViewController {
     }
     
     @objc func closeVideo() {
-        print("Close video")
         navigationController?.popViewController(animated: false)
     }
     
     @objc func playNextEpisode() {
-        print("Next episode")
         videoPlayerView.nextEpisodeButton.isEnabled = false
         
         nextEpisodeProvider.getNextEpisode(episodeId: film.id, result: { [weak self] result in

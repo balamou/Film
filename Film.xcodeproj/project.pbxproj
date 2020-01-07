@@ -13,7 +13,6 @@
 		ED0D06322327D28D007D3F8B /* SeasonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D06312327D28D007D3F8B /* SeasonCell.swift */; };
 		ED0F1E0B23C419620062192B /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E0A23C419620062192B /* PlayPauseButton.swift */; };
 		ED0F1E0D23C419770062192B /* ShapeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E0C23C419770062192B /* ShapeComponent.swift */; };
-		ED0F1E0F23C422480062192B /* ViewBasedPlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E0E23C422480062192B /* ViewBasedPlayPauseButton.swift */; };
 		ED19988323234E75005D48D3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */; };
 		ED19988423234E75005D48D3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */; };
 		ED19988523234E75005D48D3 /* OpenSans-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */; };
@@ -168,7 +167,6 @@
 		ED0D06312327D28D007D3F8B /* SeasonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonCell.swift; sourceTree = "<group>"; };
 		ED0F1E0A23C419620062192B /* PlayPauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
 		ED0F1E0C23C419770062192B /* ShapeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeComponent.swift; sourceTree = "<group>"; };
-		ED0F1E0E23C422480062192B /* ViewBasedPlayPauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBasedPlayPauseButton.swift; sourceTree = "<group>"; };
 		ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-RegularItalic.ttf"; sourceTree = "<group>"; };
@@ -386,7 +384,6 @@
 			children = (
 				ED0F1E0A23C419620062192B /* PlayPauseButton.swift */,
 				ED0F1E0C23C419770062192B /* ShapeComponent.swift */,
-				ED0F1E0E23C422480062192B /* ViewBasedPlayPauseButton.swift */,
 			);
 			path = PlayPauseButton;
 			sourceTree = "<group>";
@@ -1049,7 +1046,6 @@
 				EDE49500232EA78B00547830 /* MovieInfoAPI.swift in Sources */,
 				ED76BA3423C2E3E800CAC72D /* NextEpisodeProvider.swift in Sources */,
 				ED0F1E0D23C419770062192B /* ShapeComponent.swift in Sources */,
-				ED0F1E0F23C422480062192B /* ViewBasedPlayPauseButton.swift in Sources */,
 				EDB0CD3D231B57EE00246CDF /* IdleCell.swift in Sources */,
 				EDB1C878238384A8009D909F /* MockSeriesInfoAPI.swift in Sources */,
 				EDE494F5232DC3D800547830 /* MovieItem+mock.swift in Sources */,

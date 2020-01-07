@@ -84,18 +84,11 @@ class VideoPlayerView: UIView {
     
     // MAIN CONTROLS
     
-//    var pausePlayButton: CustomMarginButton = {
-//        let button = CustomMarginButton(horizontalMargin: 20, verticalMargin: 15)
-//        button.setImage(Images.Player.pauseImage, for: .normal) // ▌▌
-//
-//        return button
-//    }()
-//
     var pausePlayButton: PlayPauseButton = {
-        let button = PlayPauseButton(state: .paused, size: CGSize(width: 60/2, height: 72/2))
-          
-          return button
-      }()
+        let button = PlayPauseButton(state: .paused, size: CGSize(width: 60/2, height: 72/2), horizontalMargin: 20, verticalMargin: 15)
+        
+        return button
+    }()
     
     var spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()

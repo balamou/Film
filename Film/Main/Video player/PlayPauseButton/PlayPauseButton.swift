@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlayPauseButton: UIButton {
+class PlayPauseButton: CustomMarginButton {
     private let shape: ShapeComponent
     private let color: UIColor
     
@@ -26,18 +26,25 @@ class PlayPauseButton: UIButton {
     /**
     Creates a button with a custom animation
 
-    - Parameter state: The initial state of the button `.paused` (►) or `.playing` (▐▐ ). It is **.paused** by default
-    - Parameter color: The color of the shape. White by default
+    - Parameter state: The initial state of the button `.paused` (►) or `.playing` (▐▐ ) (default **.paused**)
+    - Parameter color: The color of the shape (default *white*)
     - Parameter size: size of the icon
     - Parameter shape: Contains the bezier paths that are used for rendering the button
+    - Parameter horizontalMargin: increased button's horizontal tap area
+    - Parameter verticalMargin: increased button's vertical tap area
     */
-    init(state: PlayPauseState = .paused, color: UIColor = .white, size: CGSize = .zero, shape: ShapeComponent? = nil) {
+    init(state: PlayPauseState = .paused,
+         color: UIColor = .white,
+         size: CGSize = .zero,
+         shape: ShapeComponent? = nil,
+         horizontalMargin: CGFloat = 0.0,
+         verticalMargin: CGFloat = 0.0) {
         self.playState = state
         self.color = color
         self.shape = shape ?? RelativeShape(width: size.width, height: size.height)
         let frame = CGRect(origin: .zero, size: size)
         
-        super.init(frame: frame)
+        super.init(horizontalMargin: horizontalMargin, verticalMargin: verticalMargin)
         leftLayer = createLayer(color: color, frame: frame)
         rightLayer = createLayer(color: color, frame: frame)
         setupInitialState()
