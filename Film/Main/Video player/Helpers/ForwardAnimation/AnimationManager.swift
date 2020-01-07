@@ -8,36 +8,49 @@
 
 import UIKit
 
+enum AnimationDirection {
+    case forward
+    case backward
+}
+
 class AnimationManager {
-    private let forwardLabel: UILabel
-    private let forwardButton: UIButton
+    private let label: UILabel
+    private let button: UIButton
+    private let animationDirection: AnimationDirection
     
-    var forward10sButton: UIButton = {
+    private var view: UIView!
+    private var leadingConstraint: NSLayoutConstraint?
+    private var animator: Animator!
+    
+    private var forward10sButton: UIButton = {
         let button = UIButton()
         
         button.setImage(Images.Player.forwardImage, for: .normal)
         button.adjustsImageWhenHighlighted = false
         button.isHidden = true
+        button.isUserInteractionEnabled = false
         
         return button
     }()
     
-    var whiteCircledView: UIView = {
+    private var whiteCircledView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 35.0/2.0
         view.backgroundColor = .white
         view.isHidden = true
         view.alpha = 0.6
+        view.isUserInteractionEnabled = false
         
         return view
     }()
     
-    var forward10sLabel: UILabel = {
+    private var forward10sLabel: UILabel = {
         let label = UILabel()
         label.text = "+10"
         label.textColor = .white
         label.isHidden = true
-        label.font = Fonts.helveticaBold(size: 13.0)
+        label.font = Fonts.helveticaBold(size: 14.0)
+        label.isUserInteractionEnabled = false
         
         return label
     }()
@@ -64,17 +77,16 @@ class AnimationManager {
             view.heightAnchor.constraint(equalToConstant: 33).isActive = true
         }
     }
-        
-    var viewSafe: UIView!
-    var leadingConstraint: NSLayoutConstraint?
-    var animator: Animator!
     
-    init(forwardButton: UIButton, forwardLabel: UILabel) {
-        self.forwardButton = forwardButton
-        self.forwardLabel = forwardLabel
+    init(_ view: UIView, button: UIButton, label: UILabel, animationDirection: AnimationDirection) {
+        self.button = button
+        self.label = label
+        self.animationDirection = animationDirection
+        self.view = view
+        setup(view: view)
     }
     
-    func setup(view: UIView) {
+    private func setup(view: UIView) {
         view.addSubviewLayout(whiteCircledView)
         view.addSubviewLayout(forward10sLabel)
         view.addSubviewLayout(forward10sButton)
@@ -87,8 +99,7 @@ class AnimationManager {
         leadingConstraint?.isActive = true
         
         animator = setupAnimator()
-    
-        self.viewSafe = view
+        
         view.layoutIfNeeded()
     }
     
@@ -103,7 +114,7 @@ class AnimationManager {
             self.leadingConstraint?.isActive = true
         }, after: {
             self.whiteCircledView.alpha = 0.0
-            self.viewSafe.layoutIfNeeded()
+            self.view.layoutIfNeeded()
         })
         
         let second = AnimationBlock(duration: 0.3, delay: 0.4, time: .curveLinear, after: {
@@ -117,13 +128,13 @@ class AnimationManager {
     }
     
     func animate(completion: @escaping (() -> Void) = {}) {
-        forwardLabel.alpha = 0.0
-        forwardButton.alpha = 0.0
+        label.alpha = 0.0
+        button.alpha = 0.0
            
         recoilLoop()
         animator.finally(key: "show_original_buttons", {
-            self.forwardLabel.alpha = 1.0
-            self.forwardButton.alpha = 1.0
+            self.label.alpha = 1.0
+            self.button.alpha = 1.0
         }).finally(key: "completion", completion).animate()
     }
     
@@ -133,7 +144,7 @@ class AnimationManager {
         }, completion: { fin in
             UIView.animate(withDuration: 0.12, animations: {
                 self.forward10sButton.transform = CGAffineTransform(rotationAngle: (0 * .pi)/180.0)
-                self.viewSafe.layoutSubviews()
+                self.view.layoutSubviews()
             })
         })
     }
@@ -151,7 +162,7 @@ class AnimationManager {
         
         whiteCircledView.alpha = 0.6
         whiteCircledView.isHidden = true
-        self.viewSafe.layoutIfNeeded()
+        view.layoutIfNeeded()
     }
     
 }

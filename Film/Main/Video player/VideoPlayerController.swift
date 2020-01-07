@@ -27,7 +27,7 @@ class VideoPlayerController: UIViewController {
     private let nextEpisodeProvider: NextEpisodeNetworkProvider
     private let settings: Settings
     
-    private var animationManager: AnimationManager!
+    private var skipForwardAnimation: AnimationManager!
     
     init(film: Film, settings: Settings) {
         self.film = film
@@ -72,8 +72,7 @@ class VideoPlayerController: UIViewController {
         
         stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
         
-        animationManager = AnimationManager(forwardButton: videoPlayerView.forward10sButton, forwardLabel: videoPlayerView.forward10sLabel)
-        animationManager.setup(view: view)
+        skipForwardAnimation = AnimationManager(view, button: videoPlayerView.forward10sButton, label: videoPlayerView.forward10sLabel, animationDirection: .forward)
     }
     
     private func setUpPlayer(url: String) {
@@ -149,7 +148,7 @@ class VideoPlayerController: UIViewController {
     
     @objc func rewindForward() {
         mediaPlayer.jumpForward(forwardTime)
-        animationManager.animate()
+        skipForwardAnimation.animate()
     }
     
     @objc func rewindBack() {
