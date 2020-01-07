@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ A button that has a custom transition between paused shape (►) and playing shape (▐▐ )
+ */
 class PlayPauseButton: CustomMarginButton {
     private let shape: ShapeComponent
     private let color: UIColor
@@ -19,19 +22,22 @@ class PlayPauseButton: CustomMarginButton {
     private let animationDuration: CFTimeInterval = 0.2
     
     enum PlayPauseState {
-        case playing // ▐▐
-        case paused  // ►
+        /// Represents this icon ▐▐
+        case playing
+        /// Represents this icon  ►
+        case paused
     }
     
     /**
     Creates a button with a custom animation
 
-    - Parameter state: The initial state of the button `.paused` (►) or `.playing` (▐▐ ) (default **.paused**)
-    - Parameter color: The color of the shape (default *white*)
-    - Parameter size: size of the icon
-    - Parameter shape: Contains the bezier paths that are used for rendering the button
-    - Parameter horizontalMargin: increased button's horizontal tap area
-    - Parameter verticalMargin: increased button's vertical tap area
+    - Parameters:
+        - state: The initial state of the button `.paused` (►) or `.playing` (▐▐ ) (default **.paused**)
+        - color: The color of the shape (default *white*)
+        - size: size of the icon
+        - shape: Contains the bezier paths that are used for rendering the button
+        -  horizontalMargin: increases button's horizontal tap area
+        - verticalMargin: increases button's vertical tap area
     */
     init(state: PlayPauseState = .paused,
          color: UIColor = .white,
