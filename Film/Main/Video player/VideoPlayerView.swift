@@ -165,7 +165,7 @@ class VideoPlayerView: UIView {
         let progressView = UIProgressView()
         progressView.progress = 0.7
         progressView.tintColor = .white
-        progressView.trackTintColor = #colorLiteral(red: 0.2941176471, green: 0.2941176471, blue: 0.2941176471, alpha: 1)
+        progressView.trackTintColor = #colorLiteral(red: 0.436260283, green: 0.4363379776, blue: 0.436250031, alpha: 0.5510013204)
         progressView.isHidden = true
         
         return progressView
