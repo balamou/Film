@@ -111,6 +111,9 @@ class AnimationManager {
             self.leadingConstraint?.isActive = false
             self.leadingConstraint = self.getFinalConstraint()
             self.leadingConstraint?.isActive = true
+            
+            self.originalLabel.alpha = 0.0
+            self.originalButton.alpha = 0.0
         }, after: {
             self.whiteCircledView.alpha = 0.0
             self.view.layoutIfNeeded()
@@ -121,22 +124,22 @@ class AnimationManager {
             self.button.alpha = 0.0
         })
         
-        return Animator(first).then(second).finally {
+        let third = AnimationBlock(duration: 0.2, time: .curveLinear, after: {
+            self.originalLabel.alpha = 1.0
+            self.originalButton.alpha = 1.0
+        })
+        
+        return Animator(first).then(second).then(third).finally {
             self.finalState()
         }
     }
     
     func animate(completion: @escaping (() -> Void) = {}) {
-        originalLabel.alpha = 0.0
-        originalButton.alpha = 0.0
-           
         recoilLoop()
-        animator.finally(key: "show_original_buttons", {
-            self.originalLabel.alpha = 1.0
-            self.originalButton.alpha = 1.0
-        }).finally(key: "completion", completion).animate()
+        animator.finally(key: "completion", completion).animate()
     }
     
+    /// Recoils the forward/backward loop by 30 degrees and back
     private func recoilLoop() {
         UIView.animate(withDuration: 0.1, animations: {
             self.button.transform = CGAffineTransform(rotationAngle: (self.getAngleRotation() * .pi)/180.0)

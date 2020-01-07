@@ -392,13 +392,13 @@
 			path = PlayPauseButton;
 			sourceTree = "<group>";
 		};
-		ED0F1E1223C518C00062192B /* ForwardAnimation */ = {
+		ED0F1E1223C518C00062192B /* ForwardBackwardAnimation */ = {
 			isa = PBXGroup;
 			children = (
 				ED0F1E1023C437040062192B /* AnimationManager.swift */,
 				ED0F1E1323C518CF0062192B /* Animator.swift */,
 			);
-			path = ForwardAnimation;
+			path = ForwardBackwardAnimation;
 			sourceTree = "<group>";
 		};
 		ED19987823234E3A005D48D3 /* Open Sans */ = {
@@ -534,7 +534,7 @@
 				ED76BA2C23C171E600CAC72D /* VideoPlayerStateMachine.swift */,
 				ED76BA3023C1A1E200CAC72D /* BufferingManager.swift */,
 				ED76BA2E23C17F6100CAC72D /* VideoPlayerSliderAction.swift */,
-				ED0F1E1223C518C00062192B /* ForwardAnimation */,
+				ED0F1E1223C518C00062192B /* ForwardBackwardAnimation */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
