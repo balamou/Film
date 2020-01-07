@@ -11,6 +11,9 @@
 		A4845765411C5C49E0C935CB /* Pods_Film.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D06F59D32E4BE75B821F3E4 /* Pods_Film.framework */; };
 		ED09BD9D2324A3350023DF83 /* SeriesInfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED09BD9C2324A3350023DF83 /* SeriesInfoAPI.swift */; };
 		ED0D06322327D28D007D3F8B /* SeasonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D06312327D28D007D3F8B /* SeasonCell.swift */; };
+		ED0F1E0B23C419620062192B /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E0A23C419620062192B /* PlayPauseButton.swift */; };
+		ED0F1E0D23C419770062192B /* ShapeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E0C23C419770062192B /* ShapeComponent.swift */; };
+		ED0F1E0F23C422480062192B /* ViewBasedPlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E0E23C422480062192B /* ViewBasedPlayPauseButton.swift */; };
 		ED19988323234E75005D48D3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */; };
 		ED19988423234E75005D48D3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */; };
 		ED19988523234E75005D48D3 /* OpenSans-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */; };
@@ -163,6 +166,9 @@
 		CD48029F391D4C6B1D9C650C /* Pods-Film.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Film.debug.xcconfig"; path = "Target Support Files/Pods-Film/Pods-Film.debug.xcconfig"; sourceTree = "<group>"; };
 		ED09BD9C2324A3350023DF83 /* SeriesInfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesInfoAPI.swift; sourceTree = "<group>"; };
 		ED0D06312327D28D007D3F8B /* SeasonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonCell.swift; sourceTree = "<group>"; };
+		ED0F1E0A23C419620062192B /* PlayPauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
+		ED0F1E0C23C419770062192B /* ShapeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeComponent.swift; sourceTree = "<group>"; };
+		ED0F1E0E23C422480062192B /* ViewBasedPlayPauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBasedPlayPauseButton.swift; sourceTree = "<group>"; };
 		ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-RegularItalic.ttf"; sourceTree = "<group>"; };
@@ -375,6 +381,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		ED0F1E0923C4194F0062192B /* PlayPauseButton */ = {
+			isa = PBXGroup;
+			children = (
+				ED0F1E0A23C419620062192B /* PlayPauseButton.swift */,
+				ED0F1E0C23C419770062192B /* ShapeComponent.swift */,
+				ED0F1E0E23C422480062192B /* ViewBasedPlayPauseButton.swift */,
+			);
+			path = PlayPauseButton;
+			sourceTree = "<group>";
+		};
 		ED19987823234E3A005D48D3 /* Open Sans */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,6 +444,7 @@
 		ED57FCAF231366A80001A9AB /* Video player */ = {
 			isa = PBXGroup;
 			children = (
+				ED0F1E0923C4194F0062192B /* PlayPauseButton */,
 				ED82DBC3231464F900FEC56A /* Volume Controller */,
 				ED76BA3223C2D3DB00CAC72D /* Helpers */,
 				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
@@ -1008,6 +1025,7 @@
 				EDE494ED232D4E8800547830 /* LoadingWaitCell.swift in Sources */,
 				EDEF975C231C268E00025483 /* Watched+mock.swift in Sources */,
 				ED1CC3A7231620790061EE21 /* EpisodeCell.swift in Sources */,
+				ED0F1E0B23C419620062192B /* PlayPauseButton.swift in Sources */,
 				ED5AC11A2314DE610098A161 /* WelcomeView.swift in Sources */,
 				ED2DBB412315E356009250EC /* ShowsCell.swift in Sources */,
 				ED5AC10C2314DD4D0098A161 /* ShowsViewController.swift in Sources */,
@@ -1030,6 +1048,8 @@
 				EDE494FE232EA4D100547830 /* Movie.swift in Sources */,
 				EDE49500232EA78B00547830 /* MovieInfoAPI.swift in Sources */,
 				ED76BA3423C2E3E800CAC72D /* NextEpisodeProvider.swift in Sources */,
+				ED0F1E0D23C419770062192B /* ShapeComponent.swift in Sources */,
+				ED0F1E0F23C422480062192B /* ViewBasedPlayPauseButton.swift in Sources */,
 				EDB0CD3D231B57EE00246CDF /* IdleCell.swift in Sources */,
 				EDB1C878238384A8009D909F /* MockSeriesInfoAPI.swift in Sources */,
 				EDE494F5232DC3D800547830 /* MovieItem+mock.swift in Sources */,

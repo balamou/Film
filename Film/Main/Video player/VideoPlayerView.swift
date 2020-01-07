@@ -84,12 +84,18 @@ class VideoPlayerView: UIView {
     
     // MAIN CONTROLS
     
-    var pausePlayButton: CustomMarginButton = {
-        let button = CustomMarginButton(horizontalMargin: 20, verticalMargin: 15)
-        button.setImage(Images.Player.pauseImage, for: .normal) // ▌▌
-        
-        return button
-    }()
+//    var pausePlayButton: CustomMarginButton = {
+//        let button = CustomMarginButton(horizontalMargin: 20, verticalMargin: 15)
+//        button.setImage(Images.Player.pauseImage, for: .normal) // ▌▌
+//
+//        return button
+//    }()
+//
+    var pausePlayButton: PlayPauseButton = {
+        let button = PlayPauseButton(state: .paused, size: CGSize(width: 60/2, height: 72/2))
+          
+          return button
+      }()
     
     var spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
@@ -233,9 +239,11 @@ class VideoPlayerView: UIView {
             slider.centerYAnchor.constraint(equalTo: durationLabel.centerYAnchor).isActive = true
         }
         
-        static func setPausePlayButton(_ button: UIButton, _ parent: UIView) {
+        static func setPausePlayButton(_ button: UIView, _ parent: UIView) {
             button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             button.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+            button.widthAnchor.constraint(equalToConstant: 60/2).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 72/2).isActive = true
         }
         
         static func setSpinner(_ spinner: UIActivityIndicatorView, _ parent: UIView) {

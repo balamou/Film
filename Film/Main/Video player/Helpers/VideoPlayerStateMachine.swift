@@ -178,9 +178,9 @@ class VideoPlayerStateMachine {
     func setupPlaying(_ playing: PlayState) {
         switch playing {
         case .paused:
-            view.pausePlayButton.setImage(Images.Player.playImage, for: .normal)
+            view.pausePlayButton.pause()
         case .playing:
-            view.pausePlayButton.setImage(Images.Player.pauseImage, for: .normal)
+            view.pausePlayButton.play()
         }
     }
     
