@@ -19,7 +19,7 @@ struct Debugger {
         /// Setting to false will also mute `[MediaRemote] OutputDeviceUID is nil Speaker: (null)` warnings.
         static let allowVolumeOverride = true
         static let printPlayerStateTransitions = false
-        static let printBufferingState = true
+        static let printBufferingState = false
         
         /// Crashes the app with an assertion when attempting to
         /// make illegal transition between states in Player.

@@ -63,7 +63,7 @@ class VideoPlayerController: UIViewController {
         videoPlayerView.didAppear()
     }
     
-    func setupPlayerHelpers() {
+    private func setupPlayerHelpers() {
         sliderAction = VideoPlayerSliderAction(view: videoPlayerView, mediaPlayer: mediaPlayer)
         sliderAction.delegate = self
         
@@ -76,7 +76,7 @@ class VideoPlayerController: UIViewController {
         animationManager.setup(view: view)
     }
     
-    func setUpPlayer(url: String) {
+    private func setUpPlayer(url: String) {
         let streamURL = URL(string: url)!
         let vlcMedia = VLCMedia(url: streamURL)
         
@@ -84,12 +84,13 @@ class VideoPlayerController: UIViewController {
         mediaPlayer.drawable = videoPlayerView.mediaView
         
         mediaPlayer.play()
+        playState = .playing
     }
     
     //----------------------------------------------------------------------
     // MARK: Actions
     //----------------------------------------------------------------------
-    func setActions() {
+    private func setActions() {
         videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
         
         let tapToShowControls = UITapGestureRecognizer(target: self, action: #selector(showControls))
