@@ -22,10 +22,10 @@ class AnimationManager {
     private var leadingConstraint: NSLayoutConstraint?
     private var animator: Animator!
     
-    private var forward10sButton: UIButton = {
+    private lazy var forward10sButton: UIButton = {
         let button = UIButton()
         
-        button.setImage(Images.Player.forwardImage, for: .normal)
+        button.setImage(getArrowImage(), for: .normal)
         button.adjustsImageWhenHighlighted = false
         button.isHidden = true
         button.isUserInteractionEnabled = false
@@ -44,9 +44,9 @@ class AnimationManager {
         return view
     }()
     
-    private var forward10sLabel: UILabel = {
+    private lazy var forward10sLabel: UILabel = {
         let label = UILabel()
-        label.text = "+10"
+        label.text = getLabelText()
         label.textColor = .white
         label.isHidden = true
         label.font = Fonts.helveticaBold(size: 14.0)
@@ -57,10 +57,9 @@ class AnimationManager {
     
     
     class Constraints {
-        static let controlHorizontalSpacing: CGFloat = 141.0
         
-        static func setForwardButton(_ button: UIButton, _ parent: UIView) {
-            button.centerXAnchor.constraint(equalTo: parent.centerXAnchor, constant: controlHorizontalSpacing).isActive = true
+        static func setForwardButton(_ button: UIButton, _ parent: UIView, horizontalDistance: CGFloat) {
+            button.centerXAnchor.constraint(equalTo: parent.centerXAnchor, constant: horizontalDistance).isActive = true
             button.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
             button.widthAnchor.constraint(equalToConstant: 35).isActive = true
             button.heightAnchor.constraint(equalToConstant: 38).isActive = true
@@ -91,11 +90,11 @@ class AnimationManager {
         view.addSubviewLayout(forward10sLabel)
         view.addSubviewLayout(forward10sButton)
         
-        Constraints.setForwardButton(forward10sButton, view)
+        Constraints.setForwardButton(forward10sButton, view, horizontalDistance: getButtonLocation())
         Constraints.setForwardLabel(forward10sLabel, forward10sButton)
         Constraints.whiteCircle(whiteCircledView, forward10sButton)
         
-        leadingConstraint = forward10sLabel.leadingAnchor.constraint(equalTo: forward10sButton.trailingAnchor)
+        leadingConstraint = getInitialConstraint()
         leadingConstraint?.isActive = true
         
         animator = setupAnimator()
@@ -110,7 +109,7 @@ class AnimationManager {
             self.whiteCircledView.isHidden = false
             
             self.leadingConstraint?.isActive = false
-            self.leadingConstraint = self.forward10sLabel.leadingAnchor.constraint(equalTo: self.forward10sButton.trailingAnchor, constant: 30.0)
+            self.leadingConstraint = self.getFinalConstraint()
             self.leadingConstraint?.isActive = true
         }, after: {
             self.whiteCircledView.alpha = 0.0
@@ -140,7 +139,7 @@ class AnimationManager {
     
     private func recoilLoop() {
         UIView.animate(withDuration: 0.1, animations: {
-            self.forward10sButton.transform = CGAffineTransform(rotationAngle: (30.0 * .pi)/180.0)
+            self.forward10sButton.transform = CGAffineTransform(rotationAngle: (self.getAngleRotation() * .pi)/180.0)
         }, completion: { fin in
             UIView.animate(withDuration: 0.12, animations: {
                 self.forward10sButton.transform = CGAffineTransform(rotationAngle: (0 * .pi)/180.0)
@@ -151,7 +150,7 @@ class AnimationManager {
     
     private func finalState() {
         leadingConstraint?.isActive = false
-        leadingConstraint = forward10sLabel.leadingAnchor.constraint(equalTo: forward10sButton.trailingAnchor)
+        leadingConstraint = getInitialConstraint()
         leadingConstraint?.isActive = true
         
         forward10sLabel.alpha = 1.0
@@ -163,6 +162,64 @@ class AnimationManager {
         whiteCircledView.alpha = 0.6
         whiteCircledView.isHidden = true
         view.layoutIfNeeded()
+    }
+    
+}
+
+extension AnimationManager {
+    
+    func getArrowImage() -> UIImage? {
+        switch animationDirection {
+        case .forward:
+            return Images.Player.forwardImage
+        case .backward:
+            return Images.Player.backwardImage
+        }
+    }
+    
+    func getLabelText() -> String {
+        switch animationDirection {
+        case .forward:
+            return "+10"
+        case .backward:
+            return "-10"
+        }
+    }
+    
+    func getButtonLocation() -> CGFloat {
+        switch animationDirection {
+        case .forward:
+            return 141.0
+        case .backward:
+            return -141.0
+        }
+    }
+    
+    func getInitialConstraint() -> NSLayoutConstraint {
+        switch animationDirection {
+        case .forward:
+            return forward10sLabel.leadingAnchor.constraint(equalTo: forward10sButton.trailingAnchor)
+        case .backward:
+            return forward10sLabel.trailingAnchor.constraint(equalTo: forward10sButton.leadingAnchor)
+        }
+    }
+    
+    func getFinalConstraint() -> NSLayoutConstraint {
+        switch animationDirection {
+        case .forward:
+            return forward10sLabel.leadingAnchor.constraint(equalTo: forward10sButton.trailingAnchor, constant: 30.0)
+        case .backward:
+            return forward10sLabel.trailingAnchor.constraint(equalTo: forward10sButton.leadingAnchor, constant: -30.0)
+        }
+    }
+    
+    func getAngleRotation() -> CGFloat {
+        switch animationDirection {
+        case .forward:
+            return 30.0
+        case .backward:
+            return -30.0
+        }
     }
     
 }

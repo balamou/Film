@@ -28,6 +28,7 @@ class VideoPlayerController: UIViewController {
     private let settings: Settings
     
     private var skipForwardAnimation: AnimationManager!
+    private var skipBackwardAnimation: AnimationManager!
     
     init(film: Film, settings: Settings) {
         self.film = film
@@ -73,6 +74,7 @@ class VideoPlayerController: UIViewController {
         stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
         
         skipForwardAnimation = AnimationManager(view, button: videoPlayerView.forward10sButton, label: videoPlayerView.forward10sLabel, animationDirection: .forward)
+        skipBackwardAnimation = AnimationManager(view, button: videoPlayerView.backward10sButton, label: videoPlayerView.backward10sLabel, animationDirection: .backward)
     }
     
     private func setUpPlayer(url: String) {
@@ -153,6 +155,7 @@ class VideoPlayerController: UIViewController {
     
     @objc func rewindBack() {
         mediaPlayer.jumpBackward(backwardTime)
+        skipBackwardAnimation.animate()
     }
     
     @objc func doubleTap(sender: UITapGestureRecognizer) {
