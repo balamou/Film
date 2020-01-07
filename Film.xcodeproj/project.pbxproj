@@ -13,6 +13,8 @@
 		ED0D06322327D28D007D3F8B /* SeasonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D06312327D28D007D3F8B /* SeasonCell.swift */; };
 		ED0F1E0B23C419620062192B /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E0A23C419620062192B /* PlayPauseButton.swift */; };
 		ED0F1E0D23C419770062192B /* ShapeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E0C23C419770062192B /* ShapeComponent.swift */; };
+		ED0F1E1123C437040062192B /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1023C437040062192B /* AnimationManager.swift */; };
+		ED0F1E1423C518CF0062192B /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1323C518CF0062192B /* Animator.swift */; };
 		ED19988323234E75005D48D3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */; };
 		ED19988423234E75005D48D3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */; };
 		ED19988523234E75005D48D3 /* OpenSans-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */; };
@@ -167,6 +169,8 @@
 		ED0D06312327D28D007D3F8B /* SeasonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonCell.swift; sourceTree = "<group>"; };
 		ED0F1E0A23C419620062192B /* PlayPauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
 		ED0F1E0C23C419770062192B /* ShapeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeComponent.swift; sourceTree = "<group>"; };
+		ED0F1E1023C437040062192B /* AnimationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
+		ED0F1E1323C518CF0062192B /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-RegularItalic.ttf"; sourceTree = "<group>"; };
@@ -388,6 +392,15 @@
 			path = PlayPauseButton;
 			sourceTree = "<group>";
 		};
+		ED0F1E1223C518C00062192B /* ForwardAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				ED0F1E1023C437040062192B /* AnimationManager.swift */,
+				ED0F1E1323C518CF0062192B /* Animator.swift */,
+			);
+			path = ForwardAnimation;
+			sourceTree = "<group>";
+		};
 		ED19987823234E3A005D48D3 /* Open Sans */ = {
 			isa = PBXGroup;
 			children = (
@@ -521,6 +534,7 @@
 				ED76BA2C23C171E600CAC72D /* VideoPlayerStateMachine.swift */,
 				ED76BA3023C1A1E200CAC72D /* BufferingManager.swift */,
 				ED76BA2E23C17F6100CAC72D /* VideoPlayerSliderAction.swift */,
+				ED0F1E1223C518C00062192B /* ForwardAnimation */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1054,6 +1068,7 @@
 				EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */,
 				EDB57E90231766980049504E /* Watched.swift in Sources */,
 				ED70C09D231C302900380BE0 /* MovieItem.swift in Sources */,
+				ED0F1E1423C518CF0062192B /* Animator.swift in Sources */,
 				EDE494EB232BC81200547830 /* AbstractedCollectionView.swift in Sources */,
 				ED0D06322327D28D007D3F8B /* SeasonCell.swift in Sources */,
 				ED57FCB3231383540001A9AB /* CGRect+extensions.swift in Sources */,
@@ -1070,6 +1085,7 @@
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
 				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
 				ED725116232ED83A0040C279 /* CustomTextField.swift in Sources */,
+				ED0F1E1123C437040062192B /* AnimationManager.swift in Sources */,
 				ED658C762381F055004B871D /* EndPoint.swift in Sources */,
 				ED725118232EE8680040C279 /* Colors.swift in Sources */,
 				EDB0CD3B231B516000246CDF /* Settings.swift in Sources */,
