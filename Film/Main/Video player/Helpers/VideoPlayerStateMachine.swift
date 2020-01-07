@@ -191,9 +191,10 @@ class VideoPlayerStateMachine {
             view.slider.setThumbImage(Images.Player.thumbTrackImage, for: .focused)
             view.slider.setThumbImage(Images.Player.thumbTrackImage, for: .highlighted)
         }
-        
+
         view.closeButton.show()
         view.nextEpisodeButton.show()
+        view.slider.isUserInteractionEnabled = true
         
         switch currentState {
         case .initial:
@@ -206,6 +207,7 @@ class VideoPlayerStateMachine {
             view.pausePlayButton.hide()
             view.airPlayButton.hide()
             view.spinner.startAnimating()
+            view.slider.isUserInteractionEnabled = false
             
             view.slider.setThumbImage(UIImage(), for: .normal)
         case .shown(let playing):
