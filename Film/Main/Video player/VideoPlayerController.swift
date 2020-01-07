@@ -258,12 +258,18 @@ extension VideoPlayerController: BufferingDelegate {
     
     func startedBuffering() {
         stateMachine.startedBuffering()
-        print("STARTED BUFFERING")
+        
+        if Debugger.Player.printBufferingState {
+            print("STARTED BUFFERING")
+        }
     }
     
     func endedBuffering() {
         stateMachine.doneBuffering(playState: playState)
-        print("DONE BUFFERING")
+        
+        if Debugger.Player.printBufferingState {
+            print("DONE BUFFERING")
+        }
     }
     
 }

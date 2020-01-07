@@ -104,11 +104,17 @@ class VideoPlayerStateMachine {
     
     func transitionTo(state newState: VideoPlayerState) {
         guard canTransition(from: currentState, to: newState) else {
-            assertionFailure("Attempting to transition from '\(currentState)' to '\(newState)'")
+            if Debugger.Player.crashWhenAttemptingIllegalTransition {
+                assertionFailure("Attempting to transition from '\(currentState)' to '\(newState)'")
+            } else {
+                print("Illegal Transition: Attempting to transition from '\(currentState)' to '\(newState)'")
+            }
             return
         }
         
-        print("\(currentState) -> \(newState)")
+        if Debugger.Player.printPlayerStateTransitions {
+            print("\(currentState) -> \(newState)")
+        }
         
         let from = currentState
         let to = newState
