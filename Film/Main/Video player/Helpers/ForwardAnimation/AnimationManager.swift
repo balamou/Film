@@ -14,15 +14,15 @@ enum AnimationDirection {
 }
 
 class AnimationManager {
-    private let label: UILabel
-    private let button: UIButton
+    private let originalLabel: UILabel
+    private let originalButton: UIButton
     private let animationDirection: AnimationDirection
     
     private var view: UIView!
     private var leadingConstraint: NSLayoutConstraint?
     private var animator: Animator!
     
-    private lazy var forward10sButton: UIButton = {
+    private lazy var button: UIButton = {
         let button = UIButton()
         
         button.setImage(getArrowImage(), for: .normal)
@@ -44,7 +44,7 @@ class AnimationManager {
         return view
     }()
     
-    private lazy var forward10sLabel: UILabel = {
+    private lazy var label: UILabel = {
         let label = UILabel()
         label.text = getLabelText()
         label.textColor = .white
@@ -78,8 +78,8 @@ class AnimationManager {
     }
     
     init(_ view: UIView, button: UIButton, label: UILabel, animationDirection: AnimationDirection) {
-        self.button = button
-        self.label = label
+        self.originalButton = button
+        self.originalLabel = label
         self.animationDirection = animationDirection
         self.view = view
         setup(view: view)
@@ -87,12 +87,12 @@ class AnimationManager {
     
     private func setup(view: UIView) {
         view.addSubviewLayout(whiteCircledView)
-        view.addSubviewLayout(forward10sLabel)
-        view.addSubviewLayout(forward10sButton)
+        view.addSubviewLayout(label)
+        view.addSubviewLayout(button)
         
-        Constraints.setForwardButton(forward10sButton, view, horizontalDistance: getButtonLocation())
-        Constraints.setForwardLabel(forward10sLabel, forward10sButton)
-        Constraints.whiteCircle(whiteCircledView, forward10sButton)
+        Constraints.setForwardButton(button, view, horizontalDistance: getButtonLocation())
+        Constraints.setForwardLabel(label, button)
+        Constraints.whiteCircle(whiteCircledView, button)
         
         leadingConstraint = getInitialConstraint()
         leadingConstraint?.isActive = true
@@ -104,8 +104,8 @@ class AnimationManager {
     
     private func setupAnimator() -> Animator {
         let first = AnimationBlock(duration: 0.2, time: .curveEaseOut, before: {
-            self.forward10sButton.isHidden = false
-            self.forward10sLabel.isHidden = false
+            self.button.isHidden = false
+            self.label.isHidden = false
             self.whiteCircledView.isHidden = false
             
             self.leadingConstraint?.isActive = false
@@ -117,8 +117,8 @@ class AnimationManager {
         })
         
         let second = AnimationBlock(duration: 0.3, delay: 0.4, time: .curveLinear, after: {
-            self.forward10sLabel.alpha = 0.0
-            self.forward10sButton.alpha = 0.0
+            self.label.alpha = 0.0
+            self.button.alpha = 0.0
         })
         
         return Animator(first).then(second).finally {
@@ -127,22 +127,22 @@ class AnimationManager {
     }
     
     func animate(completion: @escaping (() -> Void) = {}) {
-        label.alpha = 0.0
-        button.alpha = 0.0
+        originalLabel.alpha = 0.0
+        originalButton.alpha = 0.0
            
         recoilLoop()
         animator.finally(key: "show_original_buttons", {
-            self.label.alpha = 1.0
-            self.button.alpha = 1.0
+            self.originalLabel.alpha = 1.0
+            self.originalButton.alpha = 1.0
         }).finally(key: "completion", completion).animate()
     }
     
     private func recoilLoop() {
         UIView.animate(withDuration: 0.1, animations: {
-            self.forward10sButton.transform = CGAffineTransform(rotationAngle: (self.getAngleRotation() * .pi)/180.0)
+            self.button.transform = CGAffineTransform(rotationAngle: (self.getAngleRotation() * .pi)/180.0)
         }, completion: { fin in
             UIView.animate(withDuration: 0.12, animations: {
-                self.forward10sButton.transform = CGAffineTransform(rotationAngle: (0 * .pi)/180.0)
+                self.button.transform = CGAffineTransform(rotationAngle: (0 * .pi)/180.0)
                 self.view.layoutSubviews()
             })
         })
@@ -153,11 +153,11 @@ class AnimationManager {
         leadingConstraint = getInitialConstraint()
         leadingConstraint?.isActive = true
         
-        forward10sLabel.alpha = 1.0
-        forward10sLabel.isHidden = true
+        label.alpha = 1.0
+        label.isHidden = true
         
-        forward10sButton.alpha = 1.0
-        forward10sButton.isHidden = true
+        button.alpha = 1.0
+        button.isHidden = true
         
         whiteCircledView.alpha = 0.6
         whiteCircledView.isHidden = true
@@ -198,18 +198,18 @@ extension AnimationManager {
     func getInitialConstraint() -> NSLayoutConstraint {
         switch animationDirection {
         case .forward:
-            return forward10sLabel.leadingAnchor.constraint(equalTo: forward10sButton.trailingAnchor)
+            return label.leadingAnchor.constraint(equalTo: button.trailingAnchor)
         case .backward:
-            return forward10sLabel.trailingAnchor.constraint(equalTo: forward10sButton.leadingAnchor)
+            return label.trailingAnchor.constraint(equalTo: button.leadingAnchor)
         }
     }
     
     func getFinalConstraint() -> NSLayoutConstraint {
         switch animationDirection {
         case .forward:
-            return forward10sLabel.leadingAnchor.constraint(equalTo: forward10sButton.trailingAnchor, constant: 30.0)
+            return label.leadingAnchor.constraint(equalTo: button.trailingAnchor, constant: 30.0)
         case .backward:
-            return forward10sLabel.trailingAnchor.constraint(equalTo: forward10sButton.leadingAnchor, constant: -30.0)
+            return label.trailingAnchor.constraint(equalTo: button.leadingAnchor, constant: -30.0)
         }
     }
     
