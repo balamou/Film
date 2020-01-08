@@ -96,8 +96,12 @@ class VideoPlayerSliderAction: NSObject {
         }
     }
     
+    /// Tihs method is needed, otherwise `didEndScrolling` never runs and
+    /// ends up being stuck in scrolling state
     @objc func touchCancelled(_ sender: UISlider) {
         delegate?.didEndScrolling()
+        positionSliderAction()
+        view.currentPositionLabel.isHidden = true
     }
     
     //----------------------------------------------------------------------

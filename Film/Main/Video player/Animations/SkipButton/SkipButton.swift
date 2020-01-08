@@ -36,7 +36,7 @@ class SkipButton: UIButton {
         /// Amount of the button is going to be clipped for animation
         static let clippedButtonWidth: CGFloat = 20.0
         
-        static let labelFont = UIFont(name: "Arial", size: 16.0)
+        static let labelFont = UIFont(name: "Arial-BoldMT", size: 14.5)
     }
     
     private lazy var label: UILabel = {
@@ -85,11 +85,11 @@ class SkipButton: UIButton {
         titleLabel?.font = Constants.labelFont
         titleLabel?.lineBreakMode = .byClipping
         
-        backgroundColor = #colorLiteral(red: 0.1833875477, green: 0.1844216585, blue: 0.186948508, alpha: 1)
-        contentEdgeInsets = UIEdgeInsets(top: 8, left: Constants.leftMargin, bottom: 8, right: Constants.rightMargin)
-        layer.cornerRadius = 2
+        backgroundColor = #colorLiteral(red: 0.1458538473, green: 0.1472284496, blue: 0.1561358869, alpha: 0.93)
+        contentEdgeInsets = UIEdgeInsets(top: 12, left: Constants.leftMargin, bottom: 12, right: Constants.rightMargin)
+        layer.cornerRadius = 3
         layer.borderWidth = 2
-        layer.borderColor = #colorLiteral(red: 0.3413020372, green: 0.338840127, blue: 0.3431904018, alpha: 1)
+        layer.borderColor = #colorLiteral(red: 0.3500417173, green: 0.3588891029, blue: 0.3683685064, alpha: 1)
     }
     
     private func addSubviews() {

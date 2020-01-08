@@ -78,7 +78,7 @@ class VideoPlayerController: UIViewController {
     
     private func fetchVideoInfo() {
         let info = [
-            VideoAction(name: "Skip intro", action: .skip(from: 128, to: 158)),
+            VideoAction(name: "Ignorer l’introduction", action: .skip(from: 128, to: 158)),
             VideoAction(name: "Next Episode", action: .nextEpisode(from: 1295))
         ];
         
