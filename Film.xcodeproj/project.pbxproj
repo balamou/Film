@@ -16,6 +16,7 @@
 		ED0F1E1123C437040062192B /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1023C437040062192B /* AnimationManager.swift */; };
 		ED0F1E1423C518CF0062192B /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1323C518CF0062192B /* Animator.swift */; };
 		ED0F1E1723C57C9C0062192B /* SkipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1623C57C9C0062192B /* SkipButton.swift */; };
+		ED0F1E1A23C673BB0062192B /* ActionType+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1923C673BB0062192B /* ActionType+extensions.swift */; };
 		ED19988323234E75005D48D3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */; };
 		ED19988423234E75005D48D3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */; };
 		ED19988523234E75005D48D3 /* OpenSans-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */; };
@@ -173,6 +174,7 @@
 		ED0F1E1023C437040062192B /* AnimationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
 		ED0F1E1323C518CF0062192B /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		ED0F1E1623C57C9C0062192B /* SkipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipButton.swift; sourceTree = "<group>"; };
+		ED0F1E1923C673BB0062192B /* ActionType+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActionType+extensions.swift"; sourceTree = "<group>"; };
 		ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-RegularItalic.ttf"; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 				ED82DBC3231464F900FEC56A /* Volume Controller */,
 				ED76BA3223C2D3DB00CAC72D /* Helpers */,
 				ED909B3F230F006600A67AC6 /* VideoPlayerController.swift */,
+				ED0F1E1923C673BB0062192B /* ActionType+extensions.swift */,
 				ED909B8523124CC500A67AC6 /* VideoPlayerView.swift */,
 				ED57FCB023137CB20001A9AB /* Film.swift */,
 			);
@@ -1028,6 +1031,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDB305BB2384D6E200724E97 /* Film+mock.swift in Sources */,
+				ED0F1E1A23C673BB0062192B /* ActionType+extensions.swift in Sources */,
 				ED5AC1162314DE140098A161 /* SettingsView.swift in Sources */,
 				ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */,
 				ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */,

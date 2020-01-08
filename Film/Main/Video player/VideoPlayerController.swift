@@ -8,12 +8,12 @@
 
 import UIKit
 
-struct VideoAction {
-    enum ActionType {
-        case skip(from: Int, to: Int)
-        case nextEpisode(from: Int)
-    }
-    
+enum ActionType {
+    case skip(from: Int, to: Int)
+    case nextEpisode(from: Int)
+}
+
+struct VideoTimestamp: Decodable {
     /// Custom string displayed on the label.
     /// Examples include: `Skip intro`, `Skip to end scene` or `Next episode`
     let name: String
@@ -42,7 +42,7 @@ class VideoPlayerController: UIViewController {
     private var skipForwardAnimation: AnimationManager!
     private var skipBackwardAnimation: AnimationManager!
     
-    private var stops: [(VideoAction, SkipButton)] = []
+    private var timestamps: [(VideoTimestamp, SkipButton)] = []
     
     init(film: Film, settings: Settings) {
         self.film = film
@@ -78,16 +78,16 @@ class VideoPlayerController: UIViewController {
     
     private func fetchVideoInfo() {
         let info = [
-            VideoAction(name: "Ignorer l’introduction", action: .skip(from: 128, to: 158)),
-            VideoAction(name: "Next Episode", action: .nextEpisode(from: 1295))
+            VideoTimestamp(name: "Ignorer l’introduction", action: .skip(from: 128, to: 158)),
+            VideoTimestamp(name: "Next Episode", action: .nextEpisode(from: 1295))
         ];
         
-        stops = info.map { videoAction in
-            let button = SkipButton(parentView: view, buttonText: videoAction.name)
+        timestamps = info.map { videoTimestamp in
+            let button = SkipButton(parentView: view, buttonText: videoTimestamp.name)
             button.attachAction { [weak self] skipButton in
                 guard let self = self else { return }
                 
-                switch videoAction.action {
+                switch videoTimestamp.action {
                 case let .skip(from: _, to: to):
                     self.mediaPlayer.position = Float(to)/Float(self.mediaPlayer.totalDuration)
                 case .nextEpisode(from: _):
@@ -97,7 +97,7 @@ class VideoPlayerController: UIViewController {
 
             }
             
-            return (videoAction, button)
+            return (videoTimestamp, button)
         }
     }
     
@@ -323,7 +323,7 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
     }
     
     func observeSecondsChange(currentTimeSeconds: Int) {
-        stops.forEach { (videoInfo, button) in
+        timestamps.forEach { (videoInfo, button) in
             switch videoInfo.action {
             case let .skip(from: from, to: to):
                 if currentTimeSeconds >= from && currentTimeSeconds < to {
