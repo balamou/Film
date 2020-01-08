@@ -11,6 +11,9 @@ import UIKit
 protocol VideoPlayerSliderActionDelegate: class {
     func didStartScrolling()
     func didEndScrolling()
+    func observeCurrentTime(percentagePlayed: Float, totalDuration: Int)
+    
+    func observeSecondsChange(currentTimeSeconds: Int)
 }
 
 class VideoPlayerSliderAction: NSObject {
@@ -21,6 +24,8 @@ class VideoPlayerSliderAction: NSObject {
     private var updatePosition = true
     
     weak var delegate: VideoPlayerSliderActionDelegate?
+    
+    private var previousSecond: Int = -1
     
     init(view: VideoPlayerView, mediaPlayer: VLCMediaPlayer) {
         self.view = view
@@ -43,6 +48,20 @@ class VideoPlayerSliderAction: NSObject {
             var remaining = mediaPlayer.remainingTime.description
             remaining.remove(at: remaining.startIndex) // remove first character
             view.durationLabel.text = remaining // display time
+            
+            notifyDelegate()
+        }
+    }
+    
+    private func notifyDelegate() {
+        let totalDuration = Int(mediaPlayer.media.length.intValue/1000)
+        delegate?.observeCurrentTime(percentagePlayed: mediaPlayer.position, totalDuration: totalDuration)
+        
+        let currentSecond = Int(mediaPlayer.position * Float(totalDuration))
+        
+        if previousSecond != currentSecond {
+            previousSecond = currentSecond
+            delegate?.observeSecondsChange(currentTimeSeconds: currentSecond)
         }
     }
     

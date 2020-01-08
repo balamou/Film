@@ -15,6 +15,7 @@
 		ED0F1E0D23C419770062192B /* ShapeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E0C23C419770062192B /* ShapeComponent.swift */; };
 		ED0F1E1123C437040062192B /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1023C437040062192B /* AnimationManager.swift */; };
 		ED0F1E1423C518CF0062192B /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1323C518CF0062192B /* Animator.swift */; };
+		ED0F1E1723C57C9C0062192B /* SkipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1623C57C9C0062192B /* SkipButton.swift */; };
 		ED19988323234E75005D48D3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */; };
 		ED19988423234E75005D48D3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */; };
 		ED19988523234E75005D48D3 /* OpenSans-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */; };
@@ -171,6 +172,7 @@
 		ED0F1E0C23C419770062192B /* ShapeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeComponent.swift; sourceTree = "<group>"; };
 		ED0F1E1023C437040062192B /* AnimationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
 		ED0F1E1323C518CF0062192B /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		ED0F1E1623C57C9C0062192B /* SkipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipButton.swift; sourceTree = "<group>"; };
 		ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-RegularItalic.ttf"; sourceTree = "<group>"; };
@@ -401,6 +403,22 @@
 			path = ForwardBackwardAnimation;
 			sourceTree = "<group>";
 		};
+		ED0F1E1523C57C8A0062192B /* SkipButton */ = {
+			isa = PBXGroup;
+			children = (
+				ED0F1E1623C57C9C0062192B /* SkipButton.swift */,
+			);
+			path = SkipButton;
+			sourceTree = "<group>";
+		};
+		ED0F1E1823C583250062192B /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				ED0F1E1523C57C8A0062192B /* SkipButton */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		ED19987823234E3A005D48D3 /* Open Sans */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,6 +472,7 @@
 		ED57FCAF231366A80001A9AB /* Video player */ = {
 			isa = PBXGroup;
 			children = (
+				ED0F1E1823C583250062192B /* Animations */,
 				ED0F1E0923C4194F0062192B /* PlayPauseButton */,
 				ED82DBC3231464F900FEC56A /* Volume Controller */,
 				ED76BA3223C2D3DB00CAC72D /* Helpers */,
@@ -1021,6 +1040,7 @@
 				ED909B6323123C8300A67AC6 /* header.m in Sources */,
 				ED1FEEBB2318B73900DE69AB /* AlertView.swift in Sources */,
 				ED5AC12E2315CE500098A161 /* Fonts.swift in Sources */,
+				ED0F1E1723C57C9C0062192B /* SkipButton.swift in Sources */,
 				EDB57E92231769E20049504E /* Series.swift in Sources */,
 				EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */,
 				ED5AC1142314DE0C0098A161 /* SettingsViewController.swift in Sources */,

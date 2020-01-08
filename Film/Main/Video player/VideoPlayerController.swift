@@ -275,7 +275,34 @@ extension VideoPlayerController: BufferingDelegate {
     
 }
 
+struct VideoMetadata: Decodable {
+    enum ActionType: String, Decodable {
+        case skip = "skip"
+        case nextEpisode = "next episode"
+    }
+    
+    /// name displayed on the label: 'Skip intro'/'Skip to end scene' or 'Next episode'
+    let name: String
+    let action: ActionType
+    /// timestamp at which to display the block
+    let from: Int
+    let to: Int?
+}
+
 extension VideoPlayerController: VideoPlayerSliderActionDelegate {
+    func observeCurrentTime(percentagePlayed: Float, totalDuration: Int) {
+//        print(Int(percentagePlayed * Float(totalDuration)))
+    }
+    
+    func observeSecondsChange(currentTimeSeconds: Int) {
+        print(currentTimeSeconds)
+        
+        if currentTimeSeconds == 9 {
+            let skipIntro = SkipButton(parentView: view, buttonText: "Skip Intro")
+            skipIntro.animateShow()
+        }
+    }
+    
     func didStartScrolling() {
         stateMachine.transitionTo(state: .scrolling)
     }
