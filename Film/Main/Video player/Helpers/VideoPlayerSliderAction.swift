@@ -38,6 +38,7 @@ class VideoPlayerSliderAction: NSObject {
         view.slider.addTarget(self, action: #selector(touchUpInside(_:)), for: .touchUpInside)
         view.slider.addTarget(self, action: #selector(touchUpOutside(_:)), for: .touchUpOutside)
         view.slider.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
+        view.slider.addTarget(self, action: #selector(touchCancelled(_:)), for: .touchCancel)
     }
     
     // continuously update slider and time displayed
@@ -93,6 +94,10 @@ class VideoPlayerSliderAction: NSObject {
             mediaPlayer.position = view.slider.value
             setPosition = true
         }
+    }
+    
+    @objc func touchCancelled(_ sender: UISlider) {
+        delegate?.didEndScrolling()
     }
     
     //----------------------------------------------------------------------
