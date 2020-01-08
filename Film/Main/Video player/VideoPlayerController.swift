@@ -79,7 +79,7 @@ class VideoPlayerController: UIViewController {
     private func fetchVideoInfo() {
         let info = [
             VideoAction(name: "Skip intro", action: .skip(from: 128, to: 158)),
-            VideoAction(name: "Skip to end scene", action: .skip(from: 500, to: 560))
+            VideoAction(name: "Next Episode", action: .nextEpisode(from: 1295))
         ];
         
         stops = info.map { videoAction in
@@ -91,7 +91,8 @@ class VideoPlayerController: UIViewController {
                 case let .skip(from: _, to: to):
                     self.mediaPlayer.position = Float(to)/Float(self.mediaPlayer.totalDuration)
                 case .nextEpisode(from: _):
-                    break // TODO: switch to next episode
+                    button.animateHide()
+                    self.playNextEpisode()
                 }
 
             }
@@ -178,6 +179,8 @@ class VideoPlayerController: UIViewController {
             playState = .playing
             shortVibration()
         }
+        
+        print(mediaPlayer.currentPositionInSeconds)
         
         stateMachine.transitionTo(state: .shown(playState))
     }

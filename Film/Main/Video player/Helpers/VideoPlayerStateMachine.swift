@@ -152,12 +152,17 @@ class VideoPlayerStateMachine {
         UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
             self.view.controlView.alpha = 0.0
         }, completion: { _ in
+            self.view.controlView.alpha = 1.0
+            self.view.controlView.hide()
             self.transitioning = false
         })
     }
     
     private func showAnimation() {
         transitioning = true
+        self.view.controlView.alpha = 0.0
+        self.view.controlView.show()
+        
         UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
             self.view.controlView.alpha = 1.0
         }, completion: {_ in
