@@ -9,6 +9,13 @@
 import UIKit
 
 class SkipButton: UIButton {
+    private enum DisplayState {
+        case shown
+        case hidden
+    }
+    
+    private var displayState: DisplayState = .hidden
+    
     private var parentView: UIView
     private let buttonText: String
     private var initialWidth: CGFloat!
@@ -105,21 +112,29 @@ class SkipButton: UIButton {
     }
     
     func animateShow() {
+        guard case .hidden = displayState else { return }
+        
         widthConstraint?.constant = initialWidth
         
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.alpha = 1.0
             self.parentView.layoutIfNeeded()
         })
+        
+        displayState = .shown
     }
     
     func animateHide() {
+        guard case .shown = displayState else { return }
+        
         widthConstraint?.constant = initialWidth - Constants.clippedButtonWidth
         
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.alpha = 0.0
             self.parentView.layoutIfNeeded()
         })
+        
+        displayState = .hidden
     }
     
     func attachAction(action: @escaping () -> Void) {

@@ -8,6 +8,18 @@
 
 import UIKit
 
+struct VideoAction {
+    enum ActionType {
+        case skip(from: Int, to: Int)
+        case nextEpisode(from: Int)
+    }
+    
+    /// Custom string displayed on the label.
+    /// Examples include: `Skip intro`, `Skip to end scene` or `Next episode`
+    let name: String
+    let action: ActionType
+}
+
 class VideoPlayerController: UIViewController {
 
     var volumeController: VolumeController?
@@ -29,6 +41,8 @@ class VideoPlayerController: UIViewController {
     
     private var skipForwardAnimation: AnimationManager!
     private var skipBackwardAnimation: AnimationManager!
+    
+    private var stops: [(VideoAction, SkipButton)] = []
     
     init(film: Film, settings: Settings) {
         self.film = film
@@ -58,6 +72,32 @@ class VideoPlayerController: UIViewController {
         setUpPlayer(url: film.URL)
         setActions()
         overrideVolumeBar()
+        
+        fetchVideoInfo()  // TODO: Implement `VideoInfoDataProvider`
+    }
+    
+    private func fetchVideoInfo() {
+        let info = [
+            VideoAction(name: "Skip intro", action: .skip(from: 128, to: 158)),
+            VideoAction(name: "Skip to end scene", action: .skip(from: 500, to: 560))
+        ];
+        
+        stops = info.map { videoAction in
+            let button = SkipButton(parentView: view, buttonText: videoAction.name)
+            button.attachAction { [weak self] in
+                guard let self = self else { return }
+                
+                switch videoAction.action {
+                case let .skip(from: _, to: to):
+                    self.mediaPlayer.position = Float(to)/Float(self.mediaPlayer.totalDuration)
+                case .nextEpisode(from: _):
+                    break // TODO: switch to next episode
+                }
+
+            }
+            
+            return (videoAction, button)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -275,31 +315,26 @@ extension VideoPlayerController: BufferingDelegate {
     
 }
 
-struct VideoMetadata: Decodable {
-    enum ActionType: String, Decodable {
-        case skip = "skip"
-        case nextEpisode = "next episode"
-    }
-    
-    /// name displayed on the label: 'Skip intro'/'Skip to end scene' or 'Next episode'
-    let name: String
-    let action: ActionType
-    /// timestamp at which to display the block
-    let from: Int
-    let to: Int?
-}
-
 extension VideoPlayerController: VideoPlayerSliderActionDelegate {
     func observeCurrentTime(percentagePlayed: Float, totalDuration: Int) {
-//        print(Int(percentagePlayed * Float(totalDuration)))
     }
     
     func observeSecondsChange(currentTimeSeconds: Int) {
-        print(currentTimeSeconds)
-        
-        if currentTimeSeconds == 9 {
-            let skipIntro = SkipButton(parentView: view, buttonText: "Skip Intro")
-            skipIntro.animateShow()
+        stops.forEach { (videoInfo, button) in
+            switch videoInfo.action {
+            case let .skip(from: from, to: to):
+                if currentTimeSeconds >= from && currentTimeSeconds < to {
+                    button.animateShow()
+                } else {
+                    button.animateHide()
+                }
+            case let .nextEpisode(from: from):
+                if currentTimeSeconds >= from {
+                    button.animateShow()
+                } else {
+                    button.animateHide()
+                }
+            }
         }
     }
     

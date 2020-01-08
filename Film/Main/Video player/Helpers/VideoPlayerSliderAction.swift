@@ -129,3 +129,20 @@ class VideoPlayerSliderAction: NSObject {
         mediaPlayer.removeObserver(self, forKeyPath: "time")
     }
 }
+
+
+extension VLCMediaPlayer {
+    
+    var totalDuration: Int {
+        get {
+            return Int(media.length.intValue/1000)
+        }
+    }
+    
+    var currentPositionInSeconds: Int {
+        get {
+            return Int(position * Float(totalDuration))
+        }
+    }
+    
+}
