@@ -414,6 +414,7 @@
 		ED0F1E1823C583250062192B /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				ED0F1E1223C518C00062192B /* ForwardBackwardAnimation */,
 				ED0F1E1523C57C8A0062192B /* SkipButton */,
 			);
 			path = Animations;
@@ -553,7 +554,6 @@
 				ED76BA2C23C171E600CAC72D /* VideoPlayerStateMachine.swift */,
 				ED76BA3023C1A1E200CAC72D /* BufferingManager.swift */,
 				ED76BA2E23C17F6100CAC72D /* VideoPlayerSliderAction.swift */,
-				ED0F1E1223C518C00062192B /* ForwardBackwardAnimation */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

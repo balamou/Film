@@ -84,14 +84,14 @@ class VideoPlayerController: UIViewController {
         
         stops = info.map { videoAction in
             let button = SkipButton(parentView: view, buttonText: videoAction.name)
-            button.attachAction { [weak self] in
+            button.attachAction { [weak self] skipButton in
                 guard let self = self else { return }
                 
                 switch videoAction.action {
                 case let .skip(from: _, to: to):
                     self.mediaPlayer.position = Float(to)/Float(self.mediaPlayer.totalDuration)
                 case .nextEpisode(from: _):
-                    button.animateHide()
+                    skipButton.animateHide()
                     self.playNextEpisode()
                 }
 

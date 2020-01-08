@@ -24,7 +24,7 @@ class SkipButton: UIButton {
     private var widthConstraint: NSLayoutConstraint?
     private var labelWidthConstraint: NSLayoutConstraint?
     
-    private var action: (() -> Void)?
+    private var action: ((SkipButton) -> Void)?
     
     private struct Constants {
         static let animationDuration = 0.3
@@ -137,13 +137,15 @@ class SkipButton: UIButton {
         displayState = .hidden
     }
     
-    func attachAction(action: @escaping () -> Void) {
+    func attachAction(action: @escaping (SkipButton) -> Void) {
         self.action = action
         
         addTarget(self, action: #selector(tappedButton), for: .touchUpInside)
     }
     
-    @objc private func tappedButton() {
-        action?()
+    @objc private func tappedButton(sender: UIButton) {
+        if let button = sender as? SkipButton {
+            action?(button)
+        }
     }
 }
