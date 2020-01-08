@@ -44,20 +44,16 @@ class VideoPlayerSliderAction: NSObject {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (setPosition && updatePosition) {
             view.slider.value = mediaPlayer.position // move slider
-            
-            var remaining = mediaPlayer.remainingTime.description
-            remaining.remove(at: remaining.startIndex) // remove first character
-            view.durationLabel.text = remaining // display time
+            view.durationLabel.text = mediaPlayer.timeRemaining
             
             notifyDelegate()
         }
     }
     
     private func notifyDelegate() {
-        let totalDuration = Int(mediaPlayer.media.length.intValue/1000)
-        delegate?.observeCurrentTime(percentagePlayed: mediaPlayer.position, totalDuration: totalDuration)
+        delegate?.observeCurrentTime(percentagePlayed: mediaPlayer.position, totalDuration: mediaPlayer.totalDuration)
         
-        let currentSecond = Int(mediaPlayer.position * Float(totalDuration))
+        let currentSecond = mediaPlayer.currentPositionInSeconds
         
         if previousSecond != currentSecond {
             previousSecond = currentSecond
@@ -112,10 +108,12 @@ class VideoPlayerSliderAction: NSObject {
         label.text = getTimeFromValue(sender.value)
         label.isHidden = false
         label.frame = CGRect(origin: newLabelPosition, size: newLabelSize)
+        
+        view.durationLabel.text = getTimeFromValue(1 - sender.value)
     }
     
     private func getTimeFromValue(_ value: Float) -> String {
-        let totalVideoDuration = mediaPlayer.media.length.intValue/1000
+        let totalVideoDuration = mediaPlayer.totalDuration
         return Film.durationMin(seconds: Int(value * Float(totalVideoDuration)))
     }
     
@@ -133,15 +131,26 @@ class VideoPlayerSliderAction: NSObject {
 
 extension VLCMediaPlayer {
     
+    /// Returns the video's total duration in seconds
     var totalDuration: Int {
         get {
             return Int(media.length.intValue/1000)
         }
     }
     
+    /// Returns the current position in the video in seconds
     var currentPositionInSeconds: Int {
         get {
             return Int(position * Float(totalDuration))
+        }
+    }
+    
+    /// Returns the time remaining time of the video in this format `hh:mm:ss`
+    var timeRemaining: String {
+        get {
+            var remaining = remainingTime.description
+            remaining.remove(at: remaining.startIndex)
+            return remaining
         }
     }
     
