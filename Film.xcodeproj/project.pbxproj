@@ -17,6 +17,7 @@
 		ED0F1E1423C518CF0062192B /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1323C518CF0062192B /* Animator.swift */; };
 		ED0F1E1723C57C9C0062192B /* SkipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1623C57C9C0062192B /* SkipButton.swift */; };
 		ED0F1E1A23C673BB0062192B /* ActionType+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1923C673BB0062192B /* ActionType+extensions.swift */; };
+		ED0F1E1C23C67D9D0062192B /* TimestampsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F1E1B23C67D9D0062192B /* TimestampsDataProvider.swift */; };
 		ED19988323234E75005D48D3 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */; };
 		ED19988423234E75005D48D3 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */; };
 		ED19988523234E75005D48D3 /* OpenSans-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */; };
@@ -175,6 +176,7 @@
 		ED0F1E1323C518CF0062192B /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		ED0F1E1623C57C9C0062192B /* SkipButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipButton.swift; sourceTree = "<group>"; };
 		ED0F1E1923C673BB0062192B /* ActionType+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActionType+extensions.swift"; sourceTree = "<group>"; };
+		ED0F1E1B23C67D9D0062192B /* TimestampsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampsDataProvider.swift; sourceTree = "<group>"; };
 		ED19987923234E74005D48D3 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		ED19987A23234E74005D48D3 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		ED19987B23234E74005D48D3 /* OpenSans-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-RegularItalic.ttf"; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 				ED09BD9C2324A3350023DF83 /* SeriesInfoAPI.swift */,
 				EDE494FF232EA78B00547830 /* MovieInfoAPI.swift */,
 				ED76BA3323C2E3E800CAC72D /* NextEpisodeProvider.swift */,
+				ED0F1E1B23C67D9D0062192B /* TimestampsDataProvider.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1110,6 +1113,7 @@
 				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
 				ED725116232ED83A0040C279 /* CustomTextField.swift in Sources */,
 				ED0F1E1123C437040062192B /* AnimationManager.swift in Sources */,
+				ED0F1E1C23C67D9D0062192B /* TimestampsDataProvider.swift in Sources */,
 				ED658C762381F055004B871D /* EndPoint.swift in Sources */,
 				ED725118232EE8680040C279 /* Colors.swift in Sources */,
 				EDB0CD3B231B516000246CDF /* Settings.swift in Sources */,

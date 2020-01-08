@@ -43,11 +43,13 @@ class VideoPlayerController: UIViewController {
     private var skipBackwardAnimation: AnimationManager!
     
     private var timestamps: [(VideoTimestamp, SkipButton)] = []
+    private var timestampsProvider: TimestampsDataProvider
     
     init(film: Film, settings: Settings) {
         self.film = film
         self.settings = settings
         self.nextEpisodeProvider = NextEpisodeNetworkProvider(settings: settings) // TODO: inject
+        self.timestampsProvider = TimestampsNetworkProvider(settings: settings) // TODO: inject
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -73,16 +75,29 @@ class VideoPlayerController: UIViewController {
         setActions()
         overrideVolumeBar()
         
-        fetchVideoInfo()  // TODO: Implement `VideoInfoDataProvider`
+        fetchVideoTimestamps()
     }
     
-    private func fetchVideoInfo() {
-        let info = [
-            VideoTimestamp(name: "Ignorer l’introduction", action: .skip(from: 128, to: 158)),
-            VideoTimestamp(name: "Next Episode", action: .nextEpisode(from: 1295))
-        ];
+    private func fetchVideoTimestamps() {
+        guard case .show = film.type else { return } // TODO: implement movie timestamps provider
         
-        timestamps = info.map { videoTimestamp in
+        timestampsProvider.getEpisodeTimestamps(episodeId: film.id) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(videoTimestamps):
+                self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
+                print(videoTimestamps)
+            case let .failure(error):
+                self.timestamps = []
+                print(error) // TODO: show alert perhaps?
+            }
+            
+        }
+    }
+    
+    private func processTimestamps(timestamps: [VideoTimestamp]) -> [(VideoTimestamp, SkipButton)] {
+        return timestamps.map { videoTimestamp in
             let button = SkipButton(parentView: view, buttonText: videoTimestamp.name)
             button.attachAction { [weak self] skipButton in
                 guard let self = self else { return }
@@ -94,7 +109,6 @@ class VideoPlayerController: UIViewController {
                     skipButton.animateHide()
                     self.playNextEpisode()
                 }
-
             }
             
             return (videoTimestamp, button)
@@ -226,11 +240,13 @@ class VideoPlayerController: UIViewController {
             
             switch result {
             case let .success(newFilm):
+                self.film = newFilm
+                self.timestamps = [] // clear timestamps from previous video
+                self.fetchVideoTimestamps()
                 self.stateMachine.transitionTo(state: .initial)
                 self.mediaPlayer.stop()
                 self.setUpPlayer(url: newFilm.URL)
                 self.videoPlayerView.titleLabel.text = newFilm.title
-                self.film = newFilm
             case let .failure(error):
                 print("Error occurred! \(error)") // TODO: Display alert
             }

@@ -38,6 +38,8 @@ enum EndPoint {
     
     case nextEpisode(episodeId: Int, userId: Int)
     
+    case timestamp(episodeId: Int)
+    
     var path: String {
         switch self {
         case let .login(username):
@@ -65,6 +67,9 @@ enum EndPoint {
             
         case let .nextEpisode(episodeId, userId):
             return "/next_episode/\(episodeId)/\(userId)"
+        
+        case let .timestamp(episodeId):
+            return "/episode_timestamps/\(episodeId)"
         }
     }
 }
