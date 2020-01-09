@@ -81,7 +81,7 @@ extension Coordinator: SettingsViewControllerDelegate {
 extension Coordinator: WatchingViewControllerDelegate {
     
     func watchingViewController(_ watchingViewController: WatchingViewController, play watched: Watched) {
-        let playerVC = factory.createVideoPlayerController(film: Film.from(watched: watched))
+        let playerVC = factory.createVideoPlayerController(film: Film.from(watched: watched), settings: settings)
         self.playerVC = playerVC
         
         navigationController.pushViewController(playerVC, animated: false)
@@ -133,7 +133,7 @@ extension Coordinator: ShowInfoViewControllerDelegate {
     }
     
     func showInfoViewController(_ showInfoViewController: ShowInfoViewController, play episode: Episode) {
-        let playerVC = factory.createVideoPlayerController(film: Film.from(episode: episode))
+        let playerVC = factory.createVideoPlayerController(film: Film.from(episode: episode), settings: settings)
         self.playerVC = playerVC
         
         navigationController.pushViewController(playerVC, animated: false)
@@ -158,7 +158,7 @@ extension Coordinator: ShowInfoViewControllerDelegate {
 extension Coordinator: MovieInfoViewControllerDelegate {
     
     func movieInfoViewController(_ movieInfoViewController: MovieInfoViewController, play movie: Movie) {
-        let playerVC = factory.createVideoPlayerController(film: Film.from(movie: movie))
+        let playerVC = factory.createVideoPlayerController(film: Film.from(movie: movie), settings: settings)
         self.playerVC = playerVC
         
         navigationController.pushViewController(playerVC, animated: false)

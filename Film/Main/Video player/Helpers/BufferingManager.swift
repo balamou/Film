@@ -21,6 +21,8 @@ class BufferingManager: VLCMediaPlayerDelegate {
     private var timer: Timer?
     private var didStartBuffering: Bool = false
     
+    private let bufferingTimeoutInterval = 0.5
+    
     init(mediaPlayer: VLCMediaPlayer) {
         self.mediaPlayer = mediaPlayer
         self.mediaPlayer.delegate = self
@@ -43,7 +45,7 @@ class BufferingManager: VLCMediaPlayerDelegate {
         if newState == .buffering {
             timer?.invalidate()
             
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] timer in
+            timer = Timer.scheduledTimer(withTimeInterval: bufferingTimeoutInterval, repeats: false) { [weak self] timer in
                 self?.doneBuffering()
                 timer.invalidate()
             }

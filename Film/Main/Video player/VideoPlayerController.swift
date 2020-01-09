@@ -8,6 +8,18 @@
 
 import UIKit
 
+enum ActionType {
+    case skip(from: Int, to: Int)
+    case nextEpisode(from: Int)
+}
+
+struct VideoTimestamp: Decodable {
+    /// Custom string displayed on the label.
+    /// Examples include: `Skip intro`, `Skip to end scene` or `Next episode`
+    let name: String
+    let action: ActionType
+}
+
 class VideoPlayerController: UIViewController {
 
     var volumeController: VolumeController?
@@ -19,13 +31,25 @@ class VideoPlayerController: UIViewController {
     private var playState: PlayState = .playing
     
     private let mediaPlayer = VLCMediaPlayer()
-    private let film: Film
+    private var film: Film
     
     private let backwardTime: Int32 = 10
     private let forwardTime: Int32 = 10
     
-    init(film: Film) {
+    private let nextEpisodeProvider: NextEpisodeNetworkProvider
+    private let settings: Settings
+    
+    private var skipForwardAnimation: AnimationManager!
+    private var skipBackwardAnimation: AnimationManager!
+    
+    private var timestamps: [(VideoTimestamp, SkipButton)] = []
+    private var timestampsProvider: TimestampsDataProvider
+    
+    init(film: Film, settings: Settings) {
         self.film = film
+        self.settings = settings
+        self.nextEpisodeProvider = NextEpisodeNetworkProvider(settings: settings) // TODO: inject
+        self.timestampsProvider = TimestampsNetworkProvider(settings: settings) // TODO: inject
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,13 +74,52 @@ class VideoPlayerController: UIViewController {
         setUpPlayer(url: film.URL)
         setActions()
         overrideVolumeBar()
+        
+        fetchVideoTimestamps()
+    }
+    
+    private func fetchVideoTimestamps() {
+        guard case .show = film.type else { return } // TODO: implement movie timestamps provider
+        
+        timestampsProvider.getEpisodeTimestamps(episodeId: film.id) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(videoTimestamps):
+                self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
+                print(videoTimestamps)
+            case let .failure(error):
+                self.timestamps = []
+                print(error) // TODO: show alert perhaps?
+            }
+            
+        }
+    }
+    
+    private func processTimestamps(timestamps: [VideoTimestamp]) -> [(VideoTimestamp, SkipButton)] {
+        return timestamps.map { videoTimestamp in
+            let button = SkipButton(parentView: view, buttonText: videoTimestamp.name)
+            button.attachAction { [weak self] skipButton in
+                guard let self = self else { return }
+                
+                switch videoTimestamp.action {
+                case let .skip(from: _, to: to):
+                    self.mediaPlayer.position = Float(to)/Float(self.mediaPlayer.totalDuration)
+                case .nextEpisode(from: _):
+                    skipButton.animateHide()
+                    self.playNextEpisode()
+                }
+            }
+            
+            return (videoTimestamp, button)
+        }
     }
     
     override func viewDidLayoutSubviews() {
         videoPlayerView.didAppear()
     }
     
-    func setupPlayerHelpers() {
+    private func setupPlayerHelpers() {
         sliderAction = VideoPlayerSliderAction(view: videoPlayerView, mediaPlayer: mediaPlayer)
         sliderAction.delegate = self
         
@@ -64,9 +127,12 @@ class VideoPlayerController: UIViewController {
         bufferingManager.delegate = self
         
         stateMachine = VideoPlayerStateMachine(view: videoPlayerView)
+        
+        skipForwardAnimation = AnimationManager(view, button: videoPlayerView.forward10sButton, label: videoPlayerView.forward10sLabel, animationDirection: .forward)
+        skipBackwardAnimation = AnimationManager(view, button: videoPlayerView.backward10sButton, label: videoPlayerView.backward10sLabel, animationDirection: .backward)
     }
     
-    func setUpPlayer(url: String) {
+    private func setUpPlayer(url: String) {
         let streamURL = URL(string: url)!
         let vlcMedia = VLCMedia(url: streamURL)
         
@@ -74,12 +140,13 @@ class VideoPlayerController: UIViewController {
         mediaPlayer.drawable = videoPlayerView.mediaView
         
         mediaPlayer.play()
+        playState = .playing
     }
     
     //----------------------------------------------------------------------
     // MARK: Actions
     //----------------------------------------------------------------------
-    func setActions() {
+    private func setActions() {
         videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
         
         let tapToShowControls = UITapGestureRecognizer(target: self, action: #selector(showControls))
@@ -108,12 +175,10 @@ class VideoPlayerController: UIViewController {
     // Actions: Controls
     //----------------------------------------------------------------------
     @objc func showControls() {
-        guard stateMachine.canTapToShowHideControls else { return }
         stateMachine.showControls(playState: playState)
     }
     
     @objc func hideControls() {
-        guard stateMachine.canTapToShowHideControls else { return }
         stateMachine.hideControls()
     }
     
@@ -126,17 +191,28 @@ class VideoPlayerController: UIViewController {
         case .paused:
             mediaPlayer.play()
             playState = .playing
+            shortVibration()
         }
+        
+        print(mediaPlayer.currentPositionInSeconds)
         
         stateMachine.transitionTo(state: .shown(playState))
     }
     
+    private func shortVibration() {
+        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
+        impactFeedbackgenerator.prepare()
+        impactFeedbackgenerator.impactOccurred()
+    }
+    
     @objc func rewindForward() {
         mediaPlayer.jumpForward(forwardTime)
+        skipForwardAnimation.animate()
     }
     
     @objc func rewindBack() {
         mediaPlayer.jumpBackward(backwardTime)
+        skipBackwardAnimation.animate()
     }
     
     @objc func doubleTap(sender: UITapGestureRecognizer) {
@@ -153,12 +229,30 @@ class VideoPlayerController: UIViewController {
     }
     
     @objc func closeVideo() {
-        print("Close video")
         navigationController?.popViewController(animated: false)
     }
     
     @objc func playNextEpisode() {
-        print("Next episode")
+        videoPlayerView.nextEpisodeButton.isEnabled = false
+        
+        nextEpisodeProvider.getNextEpisode(episodeId: film.id, result: { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(newFilm):
+                self.film = newFilm
+                self.timestamps = [] // clear timestamps from previous video
+                self.fetchVideoTimestamps()
+                self.stateMachine.transitionTo(state: .initial)
+                self.mediaPlayer.stop()
+                self.setUpPlayer(url: newFilm.URL)
+                self.videoPlayerView.titleLabel.text = newFilm.title
+            case let .failure(error):
+                print("Error occurred! \(error)") // TODO: Display alert
+            }
+            
+            self.videoPlayerView.nextEpisodeButton.isEnabled = true
+        })
     }
     
     //----------------------------------------------------------------------
@@ -187,7 +281,7 @@ class VideoPlayerController: UIViewController {
     }
     
     override var prefersStatusBarHidden: Bool {
-        return self.isStatusBarHidden
+        return isStatusBarHidden
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -224,17 +318,45 @@ extension VideoPlayerController: BufferingDelegate {
     
     func startedBuffering() {
         stateMachine.startedBuffering()
-        print("STARTED BUFFERING")
+        
+        if Debugger.Player.printBufferingState {
+            print("STARTED BUFFERING")
+        }
     }
     
     func endedBuffering() {
         stateMachine.doneBuffering(playState: playState)
-        print("DONE BUFFERING")
+        
+        if Debugger.Player.printBufferingState {
+            print("DONE BUFFERING")
+        }
     }
     
 }
 
 extension VideoPlayerController: VideoPlayerSliderActionDelegate {
+    func observeCurrentTime(percentagePlayed: Float, totalDuration: Int) {
+    }
+    
+    func observeSecondsChange(currentTimeSeconds: Int) {
+        timestamps.forEach { (videoInfo, button) in
+            switch videoInfo.action {
+            case let .skip(from: from, to: to):
+                if currentTimeSeconds >= from && currentTimeSeconds < to {
+                    button.animateShow()
+                } else {
+                    button.animateHide()
+                }
+            case let .nextEpisode(from: from):
+                if currentTimeSeconds >= from {
+                    button.animateShow()
+                } else {
+                    button.animateHide()
+                }
+            }
+        }
+    }
+    
     func didStartScrolling() {
         stateMachine.transitionTo(state: .scrolling)
     }

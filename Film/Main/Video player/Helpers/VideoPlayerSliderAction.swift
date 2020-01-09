@@ -11,6 +11,9 @@ import UIKit
 protocol VideoPlayerSliderActionDelegate: class {
     func didStartScrolling()
     func didEndScrolling()
+    func observeCurrentTime(percentagePlayed: Float, totalDuration: Int)
+    
+    func observeSecondsChange(currentTimeSeconds: Int)
 }
 
 class VideoPlayerSliderAction: NSObject {
@@ -21,6 +24,8 @@ class VideoPlayerSliderAction: NSObject {
     private var updatePosition = true
     
     weak var delegate: VideoPlayerSliderActionDelegate?
+    
+    private var previousSecond: Int = -1
     
     init(view: VideoPlayerView, mediaPlayer: VLCMediaPlayer) {
         self.view = view
@@ -33,16 +38,27 @@ class VideoPlayerSliderAction: NSObject {
         view.slider.addTarget(self, action: #selector(touchUpInside(_:)), for: .touchUpInside)
         view.slider.addTarget(self, action: #selector(touchUpOutside(_:)), for: .touchUpOutside)
         view.slider.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
+        view.slider.addTarget(self, action: #selector(touchCancelled(_:)), for: .touchCancel)
     }
     
     // continuously update slider and time displayed
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (setPosition && updatePosition) {
             view.slider.value = mediaPlayer.position // move slider
+            view.durationLabel.text = mediaPlayer.timeRemaining
             
-            var remaining = mediaPlayer.remainingTime.description
-            remaining.remove(at: remaining.startIndex) // remove first character
-            view.durationLabel.text = remaining // display time
+            notifyDelegate()
+        }
+    }
+    
+    private func notifyDelegate() {
+        delegate?.observeCurrentTime(percentagePlayed: mediaPlayer.position, totalDuration: mediaPlayer.totalDuration)
+        
+        let currentSecond = mediaPlayer.currentPositionInSeconds
+        
+        if previousSecond != currentSecond {
+            previousSecond = currentSecond
+            delegate?.observeSecondsChange(currentTimeSeconds: currentSecond)
         }
     }
     
@@ -80,6 +96,14 @@ class VideoPlayerSliderAction: NSObject {
         }
     }
     
+    /// Tihs method is needed, otherwise `didEndScrolling` never runs and
+    /// ends up being stuck in scrolling state
+    @objc func touchCancelled(_ sender: UISlider) {
+        delegate?.didEndScrolling()
+        positionSliderAction()
+        view.currentPositionLabel.isHidden = true
+    }
+    
     //----------------------------------------------------------------------
     // MARK: Update time label as slider is moving
     //----------------------------------------------------------------------
@@ -93,10 +117,12 @@ class VideoPlayerSliderAction: NSObject {
         label.text = getTimeFromValue(sender.value)
         label.isHidden = false
         label.frame = CGRect(origin: newLabelPosition, size: newLabelSize)
+        
+        view.durationLabel.text = getTimeFromValue(1 - sender.value)
     }
     
     private func getTimeFromValue(_ value: Float) -> String {
-        let totalVideoDuration = mediaPlayer.media.length.intValue/1000
+        let totalVideoDuration = mediaPlayer.totalDuration
         return Film.durationMin(seconds: Int(value * Float(totalVideoDuration)))
     }
     
@@ -109,4 +135,32 @@ class VideoPlayerSliderAction: NSObject {
     deinit {
         mediaPlayer.removeObserver(self, forKeyPath: "time")
     }
+}
+
+
+extension VLCMediaPlayer {
+    
+    /// Returns the video's total duration in seconds
+    var totalDuration: Int {
+        get {
+            return Int(media.length.intValue/1000)
+        }
+    }
+    
+    /// Returns the current position in the video in seconds
+    var currentPositionInSeconds: Int {
+        get {
+            return Int(position * Float(totalDuration))
+        }
+    }
+    
+    /// Returns the time remaining time of the video in this format `hh:mm:ss`
+    var timeRemaining: String {
+        get {
+            var remaining = remainingTime.description
+            remaining.remove(at: remaining.startIndex)
+            return remaining
+        }
+    }
+    
 }

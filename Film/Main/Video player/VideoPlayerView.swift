@@ -84,9 +84,8 @@ class VideoPlayerView: UIView {
     
     // MAIN CONTROLS
     
-    var pausePlayButton: CustomMarginButton = {
-        let button = CustomMarginButton(horizontalMargin: 20, verticalMargin: 15)
-        button.setImage(Images.Player.pauseImage, for: .normal) // ▌▌
+    var pausePlayButton: PlayPauseButton = {
+        let button = PlayPauseButton(state: .paused, size: CGSize(width: 60/2, height: 72/2), horizontalMargin: 20, verticalMargin: 15)
         
         return button
     }()
@@ -166,7 +165,7 @@ class VideoPlayerView: UIView {
         let progressView = UIProgressView()
         progressView.progress = 0.7
         progressView.tintColor = .white
-        progressView.trackTintColor = #colorLiteral(red: 0.2941176471, green: 0.2941176471, blue: 0.2941176471, alpha: 1)
+        progressView.trackTintColor = #colorLiteral(red: 0.436260283, green: 0.4363379776, blue: 0.436250031, alpha: 0.5510013204)
         progressView.isHidden = true
         
         return progressView
@@ -233,9 +232,11 @@ class VideoPlayerView: UIView {
             slider.centerYAnchor.constraint(equalTo: durationLabel.centerYAnchor).isActive = true
         }
         
-        static func setPausePlayButton(_ button: UIButton, _ parent: UIView) {
+        static func setPausePlayButton(_ button: UIView, _ parent: UIView) {
             button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
             button.centerYAnchor.constraint(equalTo: parent.centerYAnchor).isActive = true
+            button.widthAnchor.constraint(equalToConstant: 60/2).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 72/2).isActive = true
         }
         
         static func setSpinner(_ spinner: UIActivityIndicatorView, _ parent: UIView) {

@@ -25,8 +25,8 @@ struct Images {
     }
     
     struct Player {
-        static let pauseImage = UIImage(named: "pause")
-        static let playImage = UIImage(named: "play")
+//        static let pauseImage = UIImage(named: "pause")
+//        static let playImage = UIImage(named: "play")
         static let forwardImage = UIImage(named: "forward")
         static let backwardImage = UIImage(named: "backward")
         static let nextEpisodeImage = UIImage(named: "next_episode")

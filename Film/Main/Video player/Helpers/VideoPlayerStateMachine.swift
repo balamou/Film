@@ -39,6 +39,8 @@ enum VideoPlayerState: CustomStringConvertible {
     }
 }
 
+/// Manages player's state transitions.
+/// See [player state transitions](https://github.com/balamou/Film/blob/master/images/video_player_state_transitions.png?raw=true).
 class VideoPlayerStateMachine {
     private var view: VideoPlayerView
     private var currentState: VideoPlayerState
@@ -61,17 +63,7 @@ class VideoPlayerStateMachine {
             return true
         }
     }
-    
-    var canTapToShowHideControls: Bool {
-        switch currentState {
-        case .initial,
-             .scrolling:
-            return false
-        default:
-            return true
-        }
-    }
-    
+        
     private func canTransition(from: VideoPlayerState, to: VideoPlayerState) -> Bool {
         switch (from, to) {
         case (.initial, .shown):
@@ -95,6 +87,8 @@ class VideoPlayerStateMachine {
         case (.scrolling, .scrolling),
              (.scrolling, .shown):
             return true
+        case (_, .initial): // when tapped "play next episode"
+            return true
         default:
             return false
         }
@@ -102,11 +96,17 @@ class VideoPlayerStateMachine {
     
     func transitionTo(state newState: VideoPlayerState) {
         guard canTransition(from: currentState, to: newState) else {
-            assertionFailure("Attempting to transition from '\(currentState)' to '\(newState)'")
+            if Debugger.Player.crashWhenAttemptingIllegalTransition {
+                assertionFailure("Attempting to transition from '\(currentState)' to '\(newState)'")
+            } else {
+                print("Illegal Transition: Attempting to transition from '\(currentState)' to '\(newState)'")
+            }
             return
         }
         
-        print("\(currentState) -> \(newState)")
+        if Debugger.Player.printPlayerStateTransitions {
+            print("\(currentState) -> \(newState)")
+        }
         
         let from = currentState
         let to = newState
@@ -152,12 +152,17 @@ class VideoPlayerStateMachine {
         UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
             self.view.controlView.alpha = 0.0
         }, completion: { _ in
+            self.view.controlView.alpha = 1.0
+            self.view.controlView.hide()
             self.transitioning = false
         })
     }
     
     private func showAnimation() {
         transitioning = true
+        self.view.controlView.alpha = 0.0
+        self.view.controlView.show()
+        
         UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: {
             self.view.controlView.alpha = 1.0
         }, completion: {_ in
@@ -176,9 +181,9 @@ class VideoPlayerStateMachine {
     func setupPlaying(_ playing: PlayState) {
         switch playing {
         case .paused:
-            view.pausePlayButton.setImage(Images.Player.playImage, for: .normal)
+            view.pausePlayButton.pause()
         case .playing:
-            view.pausePlayButton.setImage(Images.Player.pauseImage, for: .normal)
+            view.pausePlayButton.play()
         }
     }
     
@@ -191,9 +196,10 @@ class VideoPlayerStateMachine {
             view.slider.setThumbImage(Images.Player.thumbTrackImage, for: .focused)
             view.slider.setThumbImage(Images.Player.thumbTrackImage, for: .highlighted)
         }
-        
+
         view.closeButton.show()
         view.nextEpisodeButton.show()
+        view.slider.isUserInteractionEnabled = true
         
         switch currentState {
         case .initial:
@@ -206,6 +212,7 @@ class VideoPlayerStateMachine {
             view.pausePlayButton.hide()
             view.airPlayButton.hide()
             view.spinner.startAnimating()
+            view.slider.isUserInteractionEnabled = false
             
             view.slider.setThumbImage(UIImage(), for: .normal)
         case .shown(let playing):
