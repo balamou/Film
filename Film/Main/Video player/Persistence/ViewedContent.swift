@@ -8,25 +8,16 @@
 
 import Foundation
 
-struct ViewedContent {
-    enum ViewedContent {
-        struct EpisodeContent {
-            let id: Int
-            let showId: Int
-            /// used to match to the proper show in the database
-            let showTitle: String
-            /// used to match seasons in `ShowInfoVC`
-            let seasonNumber: Int
-            /// used to match episodes in `ShowInfoVC`
-            let episodeNumber: Int
-        }
-        
-        case movie(id: Int, title: String)
-        case episode(id: Int, episode: EpisodeContent)
+struct ViewedContent: Codable {
+    enum ContentID {
+        case movie(id: Int)
+        case episode(id: Int, showId: Int, seasonNumber: Int, episodeNumber: Int)
     }
-    
-    /// content viewed
-    let content: ViewedContent
+
+    /// id of the content viewed
+    let id: ContentID
+    /// TItle of the content viewed (used to matching it to the right show/movie id after backup)
+    let title: String
     /// date initially played the content
     let intialPlayTime: Date
     /// date last played the content
