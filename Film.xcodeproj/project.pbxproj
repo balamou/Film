@@ -128,6 +128,7 @@
 		EDB57E96231885F10049504E /* SeriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E95231885F10049504E /* SeriesAPI.swift */; };
 		EDB57E9B231887030049504E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDB57E99231887030049504E /* InfoPlist.strings */; };
 		EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E9E23188B450049504E /* LoadingCell.swift */; };
+		EDBE1D2423C7ADD7009DEA01 /* ViewedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE1D2323C7ADD7009DEA01 /* ViewedContent.swift */; };
 		EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */; };
 		EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55423161B3E00041D29 /* ShowInfoView.swift */; };
 		EDC8AB422319970100400312 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AB412319970100400312 /* ViewControllerFactory.swift */; };
@@ -311,6 +312,7 @@
 		EDB57E9C231887390049504E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDB57E9D2318873C0049504E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDB57E9E23188B450049504E /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
+		EDBE1D2323C7ADD7009DEA01 /* ViewedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedContent.swift; sourceTree = "<group>"; };
 		EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoViewController.swift; sourceTree = "<group>"; };
 		EDBEC55423161B3E00041D29 /* ShowInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoView.swift; sourceTree = "<group>"; };
 		EDC8AB412319970100400312 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
@@ -477,6 +479,7 @@
 		ED57FCAF231366A80001A9AB /* Video player */ = {
 			isa = PBXGroup;
 			children = (
+				EDBE1D2223C7ADBA009DEA01 /* Persistence */,
 				ED0F1E1823C583250062192B /* Animations */,
 				ED0F1E0923C4194F0062192B /* PlayPauseButton */,
 				ED82DBC3231464F900FEC56A /* Volume Controller */,
@@ -737,6 +740,14 @@
 				EDEF9758231C263500025483 /* Mocks */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EDBE1D2223C7ADBA009DEA01 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				EDBE1D2323C7ADD7009DEA01 /* ViewedContent.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		EDBEC5512316181A00041D29 /* Show Info */ = {
@@ -1055,6 +1066,7 @@
 				ED76BA2F23C17F6100CAC72D /* VideoPlayerSliderAction.swift in Sources */,
 				EDB57E96231885F10049504E /* SeriesAPI.swift in Sources */,
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
+				EDBE1D2423C7ADD7009DEA01 /* ViewedContent.swift in Sources */,
 				ED5AC1122314DDEF0098A161 /* MoviesView.swift in Sources */,
 				EDE494EF232D4FCF00547830 /* Array+extensions.swift in Sources */,
 				ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */,

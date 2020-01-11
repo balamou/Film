@@ -31,15 +31,22 @@ struct Film: Decodable {
     }
     
     static func durationMin(seconds sec: Int) -> String {
-        let hours: Int = sec / 3600
-        let minutes: Int = (sec % 3600) / 60
-        let seconds: Int = sec - minutes * 60
+        let secondsInHour = 3600
+        let secondsInMinute = 60
+        
+        let hours: Int = sec / secondsInHour
+        let minutes: Int = (sec % secondsInHour) / secondsInMinute
+        let seconds: Int = sec - minutes * secondsInMinute
         
         if hours == 0 {
-            return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
-        } else {
-            return "\(String(format: "%02d", hours)):\(String(format: "%02d", minutes))"
+            return "\(addZero(to: minutes)):\(addZero(to: seconds))"
         }
+        
+        return "\(addZero(to: hours)):\(addZero(to: minutes)))"
+    }
+    
+    static private func addZero(to number: Int) -> String {
+        return String(format: "%02d", number)
     }
     
     static func from(watched: Watched) -> Film {
