@@ -133,7 +133,7 @@ class VideoPlayerController: UIViewController {
     }
     
     private func setUpPlayer(url: String) {
-        let streamURL = URL(string: url)!
+        let streamURL = URL(string: url)! // TODO: return error if nil
         let vlcMedia = VLCMedia(url: streamURL)
         
         mediaPlayer.media = vlcMedia
