@@ -19,15 +19,15 @@ class ViewedContent: Codable {
     /// TItle of the content viewed (used to matching it to the right show/movie id after backup)
     let title: String
     /// date initially played the content
-    let intialPlayTime: Date
+    let intialPlayTime: TimeInterval
     /// date last played the content
-    var lastPlayedTime: Date
+    var lastPlayedTime: TimeInterval
     /// position in the content
     var position: Int
     /// duration of the content
     let duration: Int
     
-    init(id: ContentID, title: String, intialPlayTime: Date = Date(), lastPlayedTime: Date, position: Int, duration: Int) {
+    init(id: ContentID, title: String, intialPlayTime: TimeInterval = Date().timeIntervalSince1970, lastPlayedTime: TimeInterval, position: Int, duration: Int) {
         self.id = id
         self.title = title
         self.intialPlayTime = intialPlayTime

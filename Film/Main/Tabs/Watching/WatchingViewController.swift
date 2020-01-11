@@ -45,7 +45,7 @@ class WatchingViewController: UIViewController {
         view = watchingView
         
         alert = AlertViewController(parent: self)
-        
+        apiManager = ViewedContentManager()
         initializeSections()
         addCollectionView()
         initialLoadWatching()
