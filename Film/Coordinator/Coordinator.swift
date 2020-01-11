@@ -28,6 +28,8 @@ class Coordinator {
             return loginFlow()
         }
         
+        ViewedContentManager.test() // TODO: REMOVE
+        
         return mainFlow()
     }
     

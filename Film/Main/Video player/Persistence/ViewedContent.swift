@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ViewedContent: Codable {
+class ViewedContent: Codable {
     enum ContentID {
         case movie(id: Int)
         case episode(id: Int, showId: Int, seasonNumber: Int, episodeNumber: Int)
@@ -21,9 +21,26 @@ struct ViewedContent: Codable {
     /// date initially played the content
     let intialPlayTime: Date
     /// date last played the content
-    let lastPlayedTime: Date
+    var lastPlayedTime: Date
     /// position in the content
-    let position: Int
+    var position: Int
     /// duration of the content
     let duration: Int
+    
+    init(id: ContentID, title: String, intialPlayTime: Date = Date(), lastPlayedTime: Date, position: Int, duration: Int) {
+        self.id = id
+        self.title = title
+        self.intialPlayTime = intialPlayTime
+        self.lastPlayedTime = lastPlayedTime
+        self.position = position
+        self.duration = duration
+    }
+}
+
+extension ViewedContent: CustomStringConvertible {
+    
+    var description: String {
+        return "(\(id), \"\(title)\", \(intialPlayTime), \(lastPlayedTime), \(position), \(duration))"
+    }
+    
 }

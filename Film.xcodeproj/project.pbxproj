@@ -149,6 +149,7 @@
 		EDEF975E231C26C900025483 /* SeriesItem+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975D231C26C900025483 /* SeriesItem+mock.swift */; };
 		EDEF9760231C274500025483 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975F231C274500025483 /* MockData.swift */; };
 		EDF1B3D623CA3862003D27B7 /* ViewedContent+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3D523CA3862003D27B7 /* ViewedContent+extensions.swift */; };
+		EDF1B3D823CA4741003D27B7 /* ViewedContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */; };
 		EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB055231497C90045E8D6 /* WatchingViewController.swift */; };
 		EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB0572314985A0045E8D6 /* WatchingView.swift */; };
 /* End PBXBuildFile section */
@@ -334,6 +335,7 @@
 		EDEF975D231C26C900025483 /* SeriesItem+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeriesItem+mock.swift"; sourceTree = "<group>"; };
 		EDEF975F231C274500025483 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		EDF1B3D523CA3862003D27B7 /* ViewedContent+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewedContent+extensions.swift"; sourceTree = "<group>"; };
+		EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedContentManager.swift; sourceTree = "<group>"; };
 		EDFDB055231497C90045E8D6 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
 		EDFDB0572314985A0045E8D6 /* WatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -748,6 +750,7 @@
 			isa = PBXGroup;
 			children = (
 				EDBE1D2323C7ADD7009DEA01 /* ViewedContent.swift */,
+				EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */,
 				EDF1B3D523CA3862003D27B7 /* ViewedContent+extensions.swift */,
 			);
 			path = Persistence;
@@ -1121,6 +1124,7 @@
 				ED1FEEBD2318B74100DE69AB /* AlertViewController.swift in Sources */,
 				EDB57E9423176EC70049504E /* AsyncImageView.swift in Sources */,
 				ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */,
+				EDF1B3D823CA4741003D27B7 /* ViewedContentManager.swift in Sources */,
 				EDB1C86F2383840F009D909F /* MockWelcomeAPI.swift in Sources */,
 				EDEF9760231C274500025483 /* MockData.swift in Sources */,
 				EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */,
