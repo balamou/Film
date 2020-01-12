@@ -17,6 +17,7 @@ struct RequestData {
     var baseURL: String
     var endPoint: EndPoint
     var method: HTTPMethod
+    var data: Data?
 }
 
 enum EndPoint {
@@ -41,6 +42,8 @@ enum EndPoint {
     case timestamp(episodeId: Int)
     
     case videoURL(id: Int, type: FilmType)
+    
+    case posters
     
     var path: String {
         switch self {
@@ -75,6 +78,9 @@ enum EndPoint {
             
         case let .videoURL(id, type):
             return "/video_url/\(id)/\(type)"
+        
+        case .posters:
+            return "/posters"
         }
     }
 }

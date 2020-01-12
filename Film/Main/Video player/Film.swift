@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum FilmType: String, Decodable {
+enum FilmType: String, Codable {
     case movie
     case show
 }

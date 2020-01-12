@@ -152,6 +152,7 @@
 		EDF1B3D823CA4741003D27B7 /* ViewedContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */; };
 		EDF1B3DA23CA863B003D27B7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3D923CA863B003D27B7 /* StorageManager.swift */; };
 		EDF1B3DC23CA8B29003D27B7 /* VideoURLProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3DB23CA8B29003D27B7 /* VideoURLProvider.swift */; };
+		EDF1B3DE23CAAA38003D27B7 /* PostersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3DD23CAAA38003D27B7 /* PostersProvider.swift */; };
 		EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB055231497C90045E8D6 /* WatchingViewController.swift */; };
 		EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB0572314985A0045E8D6 /* WatchingView.swift */; };
 /* End PBXBuildFile section */
@@ -340,6 +341,7 @@
 		EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedContentManager.swift; sourceTree = "<group>"; };
 		EDF1B3D923CA863B003D27B7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		EDF1B3DB23CA8B29003D27B7 /* VideoURLProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoURLProvider.swift; sourceTree = "<group>"; };
+		EDF1B3DD23CAAA38003D27B7 /* PostersProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostersProvider.swift; sourceTree = "<group>"; };
 		EDFDB055231497C90045E8D6 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
 		EDFDB0572314985A0045E8D6 /* WatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -562,6 +564,7 @@
 				ED76BA3323C2E3E800CAC72D /* NextEpisodeProvider.swift */,
 				ED0F1E1B23C67D9D0062192B /* TimestampsDataProvider.swift */,
 				EDF1B3DB23CA8B29003D27B7 /* VideoURLProvider.swift */,
+				EDF1B3DD23CAAA38003D27B7 /* PostersProvider.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1081,6 +1084,7 @@
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
 				EDBE1D2423C7ADD7009DEA01 /* ViewedContent.swift in Sources */,
 				ED5AC1122314DDEF0098A161 /* MoviesView.swift in Sources */,
+				EDF1B3DE23CAAA38003D27B7 /* PostersProvider.swift in Sources */,
 				EDE494EF232D4FCF00547830 /* Array+extensions.swift in Sources */,
 				ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */,
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,

@@ -88,18 +88,63 @@ class ViewedContentManager {
         manager.save()
         
         print()
+        
+//        let p = PostersNetworkProvider(settings: Settings())
+//        let data = [ContentInfo(type: .movie, id: 123), ContentInfo(type: .show, id: 69)]
+//        p.getPosters(data: data, result: { res in })
     }
 }
 
 extension ViewedContentManager: WatchedAPI {
     
+    // TODO: cut the amount of watched data showed
     func getWatched(result: @escaping WatchedHandler) {
-        contents.sort(by: { $0.lastPlayedTime < $1.lastPlayedTime })
-        let groupped = group(viewed: contents)
-        let watched = convertToWatched(viewed: groupped)
-        // TODO: fetch posters & cut the amount of watched data showed
+        var groupped = group(viewed: contents)
+        groupped.sort(by: { $0.lastPlayedTime < $1.lastPlayedTime })
         
-        result(.success(watched))
+        let postersProvider = PostersNetworkProvider(settings: Settings())
+        postersProvider.getPosters(data: convertToContentInfo(viewed: groupped)) { [weak self] posterResult in
+            guard let self = self else { return }
+            
+            switch posterResult {
+            case let .success(posters):
+                let watched = self.merge(viewed: groupped, with: posters)
+                result(.success(watched))
+            case let .failure(error):
+                result(.failure(error))
+            }
+        }
+    }
+    
+    private func merge(viewed: [ViewedContent], with posters: [Poster]) -> [Watched] {
+        var moviePosters: [Int: String] = [:]
+        var showPosters: [Int: String] = [:]
+        
+        posters.filter { $0.type == .movie }.forEach { poster in
+            moviePosters[poster.id] = poster.posterURL
+        }
+        posters.filter { $0.type == .show }.forEach { poster in
+            showPosters[poster.id] = poster.posterURL
+        }
+        
+        return convertToWatched(viewed: viewed, moviePosters: moviePosters, showPosters: showPosters)
+    }
+    
+    private func convertToContentInfo(viewed: [ViewedContent]) -> [ContentInfo] {
+        viewed.map { item in
+            let filmType: FilmType
+            let id: Int
+            switch item.id {
+            case let .movie(movieId):
+                filmType = .movie
+                id = movieId
+            case let .episode(_, showId, _, _):
+                filmType = .show
+                id = showId
+            }
+            
+            return ContentInfo(type: filmType, id: id)
+        }
     }
     
     private func group(viewed: [ViewedContent]) -> [ViewedContent] {
@@ -128,17 +173,17 @@ extension ViewedContentManager: WatchedAPI {
         return movies
     }
     
-    private func convertToWatched(viewed: [ViewedContent]) -> [Watched] {
+    private func convertToWatched(viewed: [ViewedContent], moviePosters: [Int: String], showPosters: [Int: String]) -> [Watched] {
         viewed.map { item -> Watched in
             switch item.id {
             case let .movie(id: movieId):
                 let label = Film.durationMinWithTime(seconds: item.duration)
                 
-                return Watched(id: movieId, duration: item.duration, stoppedAt: item.position, label: label, videoURL: "^^^", type: .movie, showId: nil, title: item.title, posterURL: "^^^")
+                return Watched(id: movieId, duration: item.duration, stoppedAt: item.position, label: label, videoURL: "^^^", type: .movie, showId: nil, title: item.title, posterURL: moviePosters[movieId])
             case let .episode(id: episodeId, showId: showId, seasonNumber: seasonNumber, episodeNumber: episodeNumber):
                 let label = "S\(seasonNumber):E\(episodeNumber)"
                 
-                return Watched(id: episodeId, duration: item.duration, stoppedAt: item.position, label: label, videoURL: "^^^", type: .show, showId: showId, title: item.title, posterURL: "^^^")
+                return Watched(id: episodeId, duration: item.duration, stoppedAt: item.position, label: label, videoURL: "^^^", type: .show, showId: showId, title: item.title, posterURL: showPosters[showId])
             }
         }
     }
