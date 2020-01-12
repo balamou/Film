@@ -10,10 +10,10 @@ import Foundation
 
 extension ViewedContentManager: WatchedAPI {
     
-    // TODO: cut the amount of watched data showed
     func getWatched(result: @escaping WatchedHandler) {
         var groupped = group(viewed: contents)
         groupped.sort(by: { $0.lastPlayedTime > $1.lastPlayedTime })
+        groupped = Array(groupped.prefix(9))
         
         let postersProvider = PostersNetworkProvider(settings: Settings())
         postersProvider.getPosters(data: convertToContentInfo(viewed: groupped)) { [weak self] posterResult in

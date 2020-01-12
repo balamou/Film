@@ -760,10 +760,10 @@
 			isa = PBXGroup;
 			children = (
 				EDBE1D2323C7ADD7009DEA01 /* ViewedContent.swift */,
-				EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */,
 				EDF1B3D523CA3862003D27B7 /* ViewedContent+extensions.swift */,
-				EDF1B3D923CA863B003D27B7 /* StorageManager.swift */,
+				EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */,
 				EDF1B3E123CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift */,
+				EDF1B3D923CA863B003D27B7 /* StorageManager.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
