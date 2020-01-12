@@ -345,6 +345,8 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
     }
     
     func observeSecondsChange(currentTimeSeconds: Int) {
+        updateViewedContent(position: currentTimeSeconds)
+        
         timestamps.forEach { (videoInfo, button) in
             switch videoInfo.action {
             case let .skip(from: from, to: to):
@@ -361,6 +363,12 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
                 }
             }
         }
+    }
+    
+    private func updateViewedContent(position: Int) {
+        viewingContent?.position = position
+        viewingContent?.lastPlayedTime = Date().timeIntervalSince1970
+        viewedContentManager.save()
     }
     
     func didStartScrolling() {

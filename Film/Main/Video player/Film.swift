@@ -35,7 +35,7 @@ struct Film: Decodable {
             return "\(addZero(to: minutes)):\(addZero(to: seconds))"
         }
         
-        return "\(addZero(to: hours)):\(addZero(to: minutes)))"
+        return "\(addZero(to: hours)):\(addZero(to: minutes))"
     }
     
     static private func addZero(to number: Int) -> String {
