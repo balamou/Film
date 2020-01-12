@@ -47,7 +47,6 @@ class VideoPlayerController: UIViewController {
     
     private let videoProvider: VideoURLProvider
     private let viewedContentManager: ViewedContentManager
-    private var viewingContent: ViewedContent?
     
     init(film: Film, settings: Settings, viewedContentManager: ViewedContentManager) {
         self.film = film
@@ -352,9 +351,7 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
     }
     
     private func updateViewedContent(position: Int) {
-        guard let viewingContent = viewingContent else { return } // TODO: Log as inconsistency
-        
-        viewedContentManager.update(viewingContent: viewingContent, with: position)
+        viewedContentManager.update(id: film.id, type: film.type, with: position)
         viewedContentManager.save()
     }
     
@@ -437,9 +434,9 @@ extension VideoPlayerController {
                 
                 let contentID: ViewedContent.ContentID = .episode(id: data.id, showId: data.showId, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
                 let value = ViewedContent(id: contentID, title: data.showTitle, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
-                self.viewingContent = self.viewedContentManager.findEpisode(by: data.id, orAdd: value)
+                let viewingContent = self.viewedContentManager.addEpisodeIfNotAdded(id: data.id, value: value)
                 
-                let stoppedAt = self.viewingContent!.stoppedAt
+                let stoppedAt = viewingContent.stoppedAt
                 self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
             case let .failure(error):
                 print(error) // TODO: show alert & exit
@@ -463,9 +460,9 @@ extension VideoPlayerController {
                 self.film = Film(id: data.id, type: .movie, URL: data.videoURL, title: data.title)
                 
                 let value = ViewedContent(id: .movie(id: data.id), title: data.title, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
-                self.viewingContent = self.viewedContentManager.findMovie(by: data.id, orAdd: value)
+                let viewingContent = self.viewedContentManager.addMovieIfNotAdded(id: data.id, value: value)
                 
-                 let stoppedAt = self.viewingContent!.stoppedAt
+                 let stoppedAt = viewingContent.stoppedAt
                 self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
             case let .failure(error):
                 print(error) // TODO: show alert & exit

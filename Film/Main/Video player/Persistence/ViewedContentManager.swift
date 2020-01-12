@@ -17,6 +17,8 @@ class ViewedContentManager {
     internal var contents: [ViewedContent]
     weak var delegate: ViewContentManagerObservable?
     
+    private var currentViewingContent: ViewedContent?
+    
     init() {
         storageManager = StorageManager<ViewedContent>(key: "viewed_content")
         contents = (try? storageManager.bulkLoad()) ?? []
@@ -52,29 +54,53 @@ class ViewedContentManager {
         })
     }
     
-    func findMovie(by id: Int, orAdd defaultValue: ViewedContent) -> ViewedContent {
+    func addMovieIfNotAdded(id: Int, value: ViewedContent) -> ViewedContent {
         guard let movie = findMovie(by: id) else {
-            contents.append(defaultValue)
-            return defaultValue
+            contents.append(value)
+            return value
         }
         
         return movie
     }
     
-    func findEpisode(by id: Int, orAdd defaultValue: ViewedContent) -> ViewedContent {
+    func addEpisodeIfNotAdded(id: Int, value: ViewedContent) -> ViewedContent {
         guard let episode = findEpisode(by: id) else {
-            contents.append(defaultValue)
-            return defaultValue
+            contents.append(value)
+            return value
         }
         
         return episode
     }
-    
-    func update(viewingContent: ViewedContent, with position: Int) {
-        viewingContent.position = position
-        viewingContent.lastPlayedTime = Date().timeIntervalSince1970
+        
+    func update(id: Int, type: FilmType, with position: Int) {
+        currentViewingContent = getReference(id: id, type: type)
+        
+        currentViewingContent?.position = position
+        currentViewingContent?.lastPlayedTime = Date().timeIntervalSince1970
+        
         delegate?.didUpdateWatched()
     }
+    
+    private func getReference(id: Int, type: FilmType) -> ViewedContent? {
+        if let viewing = currentViewingContent {
+            switch (type, viewing.id) {
+            case (.movie, .movie(let movieId)) where movieId == id:
+                return viewing
+            case (.show, .episode(let episodeId, _, _, _)) where episodeId == id:
+                return viewing
+            default:
+                break
+            }
+        }
+        
+        switch type {
+        case .movie:
+            return findMovie(by: id)
+        case .show:
+            return findEpisode(by: id)
+        }
+    }
+    
     
     static func test() {
         let manager = ViewedContentManager()
