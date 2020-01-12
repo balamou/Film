@@ -436,7 +436,7 @@ extension VideoPlayerController {
         })
     }
     
-    func fetchVideoURL() {
+    private func fetchVideoURL() {
         switch film.type {
         case .movie:
             fetchMovieData()

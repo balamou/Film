@@ -101,6 +101,30 @@ class ViewedContentManager {
         }
     }
     
+    func lastWatchedSeason(showId: Int) -> Int? {
+        var show: ViewedContent?
+        var season: Int?
+        
+        for item in contents {
+            switch item.id {
+            case .episode(_, let _showId, let seasonNumber, _) where _showId == showId:
+                guard let actualShow = show else {
+                    show = item
+                    season = seasonNumber
+                    break
+                }
+                
+                if actualShow.lastPlayedTime < item.lastPlayedTime {
+                    show = item
+                    season = seasonNumber
+                }
+            default:
+                break
+            }
+        }
+        
+        return season
+    }
     
     static func test() {
         let manager = ViewedContentManager()

@@ -28,11 +28,14 @@ class ShowInfoViewController: UIViewController {
     
     private var availableSeasons: [Int] = []
     
+    private let viewedContentManager: ViewedContentManager
+    
     // API
     var apiManager: SeriesInfoAPI?
     
-    init(series: Series) {
+    init(series: Series, viewedContentManager: ViewedContentManager) {
         self.series = series
+        self.viewedContentManager = viewedContentManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -84,7 +87,9 @@ class ShowInfoViewController: UIViewController {
 extension ShowInfoViewController {
     
     func fetchSeries(by seriesId: Int) {
-        apiManager?.getSeriesInfo(seriesId: seriesId) { [weak self] result in
+        let season = viewedContentManager.lastWatchedSeason(showId: seriesId) ?? -1
+        
+        apiManager?.getSeriesInfo(seriesId: seriesId, season: season) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
