@@ -24,6 +24,7 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         mutating func fixURLs(urlFixer: (String?) -> String?) {
             episodes = episodes.fixURLs(urlFixer: urlFixer)
             series.lastWatchedEpisode?.fixURL(with: urlFixer)
+            series.posterURL = urlFixer(series.posterURL)
         }
     }
     
