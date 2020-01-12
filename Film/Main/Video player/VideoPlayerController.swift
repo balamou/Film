@@ -143,6 +143,8 @@ class VideoPlayerController: UIViewController {
             print("Error reading the URL") // TODO: exit & alert
             return
         }
+        videoPlayerView.titleLabel.text = film.title
+        
         let vlcMedia = VLCMedia(url: streamURL)
         
         mediaPlayer.media = vlcMedia
@@ -431,7 +433,8 @@ extension VideoPlayerController {
             
             switch result {
             case let .success(data):
-                self.film = Film(id: data.id, type: .show, URL: data.videoURL, title: data.episodeTitle)
+                let title = self.titleFromEpisode(title: data.episodeTitle, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
+                self.film = Film(id: data.id, type: .show, URL: data.videoURL, title: title)
                 
                 let contentID: ViewedContent.ContentID = .episode(id: data.id, showId: data.showId, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
                 let value = ViewedContent(id: contentID, title: data.showTitle, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
@@ -443,6 +446,13 @@ extension VideoPlayerController {
                 print(error) // TODO: show alert & exit
             }
         }
+    }
+    
+    private func titleFromEpisode(title: String?, seasonNumber: Int, episodeNumber: Int) -> String {
+        let notitle = "No title".localize()
+        let newTitle = title ?? notitle
+      
+        return "S\(seasonNumber):E\(episodeNumber) \"\(newTitle)\""
     }
     
     private func fetchMovieData() {
