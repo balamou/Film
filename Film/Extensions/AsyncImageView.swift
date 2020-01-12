@@ -7,12 +7,38 @@
 //
 
 import UIKit
-
+import Kingfisher
 
 class AsyncImageView: UIImageView {
     private var currentURL: String?
     
-    func loadImage(fromURL url: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+    func loadImage(fromURL url: String) {
+        guard let imageURL = URL(string: url) else { return }
+        
+        kf.setImage(with: imageURL)
+    }
+    
+    func loadImageAnimation(fromURL url: String) {
+        guard let imageURL = URL(string: url) else { return }
+        
+        kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: { (receivedSize, totalSize) -> () in
+            print("Download Progress: \(receivedSize)/\(totalSize)")
+            self.alpha = 0
+        }, completionHandler: { result in
+            switch result {
+            case .success:
+                print("Downloaded and set!")
+                UIView.transition(with: self, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+                    self.alpha = 1.0
+                }, completion: nil)
+            case .failure:
+                return
+            }
+          
+        })
+    }
+    
+    func loadImageOLD(fromURL url: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         guard let imageURL = URL(string: url) else { return }
         
         let cache = URLCache.shared

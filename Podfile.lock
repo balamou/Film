@@ -1,16 +1,22 @@
 PODS:
+  - Kingfisher (5.12.0):
+    - Kingfisher/Core (= 5.12.0)
+  - Kingfisher/Core (5.12.0)
   - MobileVLCKit (3.2.0)
 
 DEPENDENCIES:
+  - Kingfisher (~> 5.0)
   - MobileVLCKit
 
 SPEC REPOS:
   trunk:
+    - Kingfisher
     - MobileVLCKit
 
 SPEC CHECKSUMS:
+  Kingfisher: dc6e0f53bb5b12c3e75bedb0e01bbd7a640eea69
   MobileVLCKit: f7af7d6bee693b904265768eaae6a0ed29fdcd65
 
-PODFILE CHECKSUM: c22288ba872aeaab3c07653f67b05e7371124897
+PODFILE CHECKSUM: 3cc5e22814d4cb306064b8eda6b96914110c8022
 
 COCOAPODS: 1.8.4

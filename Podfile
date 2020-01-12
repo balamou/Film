@@ -7,7 +7,8 @@ target 'Film' do
 
   # Pods for Film
   pod 'MobileVLCKit'
-
+  pod 'Kingfisher', '~> 5.0'
+  
   target 'FilmTests' do
     inherit! :search_paths
     # Pods for testing
