@@ -142,6 +142,13 @@ extension WatchingViewController {
             case .success(let watched):
                 self.data = watched
                 
+                guard watched.count > 0 else {
+                    self.loadingSection.hide()
+                    self.idleSection.show()
+                    self.collectionView.reloadData()
+                    return
+                }
+                
                 self.dataSection.numberOfItems = watched.count
                 self.dataSection.show()
                 self.loadingSection.hide()
