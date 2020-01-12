@@ -332,6 +332,8 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
     func observeSecondsChange(currentTimeSeconds: Int) {
         updateViewedContent(position: currentTimeSeconds)
         
+        guard stateMachine.shouldShowTimestamps else { return }
+        
         timestamps.forEach { (videoInfo, button) in
             switch videoInfo.action {
             case let .skip(from: from, to: to):
