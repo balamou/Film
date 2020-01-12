@@ -100,6 +100,19 @@ class ViewedContentManager {
             return findEpisode(by: id)
         }
     }
+        
+    static func test() {
+        let manager = ViewedContentManager()
+        //manager.contents = []
+        manager.contents.forEach { item in
+            print(item)
+        }
+        
+        manager.save()
+    }
+}
+
+extension ViewedContentManager { // TODO: create protocol for methods
     
     func lastWatchedSeason(showId: Int) -> Int? {
         var show: ViewedContent?
@@ -126,13 +139,13 @@ class ViewedContentManager {
         return season
     }
     
-    static func test() {
-        let manager = ViewedContentManager()
-        //manager.contents = []
-        manager.contents.forEach { item in
-            print(item)
+    func fetchStoppedAt(for episodes: [Episode]) -> [Episode] {
+        episodes.map { episode in
+            var _episode = episode
+            let viewedEpisode = findEpisode(by: episode.id)
+            _episode.stoppedAt = viewedEpisode?.position
+            
+            return _episode
         }
-        
-        manager.save()
     }
 }

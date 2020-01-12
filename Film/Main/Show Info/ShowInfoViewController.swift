@@ -87,7 +87,8 @@ class ShowInfoViewController: UIViewController {
 extension ShowInfoViewController {
     
     func fetchSeries(by seriesId: Int) {
-        let season = viewedContentManager.lastWatchedSeason(showId: seriesId) ?? -1
+        let flagForSmallestAvailableSeason = -1 // make the server fetch first available season
+        let season = viewedContentManager.lastWatchedSeason(showId: seriesId) ?? flagForSmallestAvailableSeason
         
         apiManager?.getSeriesInfo(seriesId: seriesId, season: season) { [weak self] result in
             guard let self = self else { return }
@@ -95,7 +96,7 @@ extension ShowInfoViewController {
             switch result {
             case .success((let seriesData, let episodes, let availableSeasons)):
                 self.series = seriesData
-                self.episodes = episodes
+                self.episodes = self.viewedContentManager.fetchStoppedAt(for: episodes)
                 self.availableSeasons = availableSeasons
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
@@ -115,7 +116,7 @@ extension ShowInfoViewController {
             
             switch result {
             case .success(let episodes):
-                self.episodes = episodes
+                self.episodes = self.viewedContentManager.fetchStoppedAt(for: episodes)
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
             case .failure(let error):
