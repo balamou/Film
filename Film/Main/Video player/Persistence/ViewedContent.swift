@@ -27,6 +27,10 @@ class ViewedContent: Codable {
     /// duration of the content
     let duration: Int
     
+    var stoppedAt: Float {
+        return Float(position)/Float(duration)
+    }
+    
     init(id: ContentID, title: String, intialPlayTime: TimeInterval = Date().timeIntervalSince1970, lastPlayedTime: TimeInterval, position: Int, duration: Int) {
         self.id = id
         self.title = title
@@ -40,7 +44,7 @@ class ViewedContent: Codable {
 extension ViewedContent: CustomStringConvertible {
     
     var description: String {
-        return "(\(id), \"\(title)\", \(intialPlayTime), \(lastPlayedTime), \(position), \(duration))"
+        return "\(id), \"\(title)\", \(intialPlayTime), \(lastPlayedTime), \(position), \(duration)"
     }
     
 }

@@ -138,15 +138,22 @@ class VideoPlayerController: UIViewController {
         skipBackwardAnimation = AnimationManager(view, button: videoPlayerView.backward10sButton, label: videoPlayerView.backward10sLabel, animationDirection: .backward)
     }
     
-    private func setUpPlayer(url: String) {
-        let streamURL = URL(string: url)! // TODO: return error if nil
+    private func setUpPlayer(url: String, stoppedAt: Float) {
+        guard let streamURL = URL(string: url) else {
+            print("Error reading the URL") // TODO: exit & alert
+            return
+        }
         let vlcMedia = VLCMedia(url: streamURL)
         
         mediaPlayer.media = vlcMedia
         mediaPlayer.drawable = videoPlayerView.mediaView
         
         mediaPlayer.play()
-        playState = .playing
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { // update 0.5 seconds later to let the media load the video
+            self.mediaPlayer.position = stoppedAt
+            self.playState = .playing
+            self.videoPlayerView.slider.value = stoppedAt
+        })
     }
     
     //----------------------------------------------------------------------
@@ -236,29 +243,6 @@ class VideoPlayerController: UIViewController {
     
     @objc func closeVideo() {
         navigationController?.popViewController(animated: false)
-    }
-    
-    @objc func playNextEpisode() {
-        videoPlayerView.nextEpisodeButton.isEnabled = false
-        
-        nextEpisodeProvider.getNextEpisode(episodeId: film.id, result: { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case let .success(newFilm):
-                self.film = newFilm
-                self.timestamps = [] // clear timestamps from previous video
-                self.fetchVideoTimestamps()
-                self.stateMachine.transitionTo(state: .initial)
-                self.mediaPlayer.stop()
-                self.setUpPlayer(url: newFilm.URL)
-                self.videoPlayerView.titleLabel.text = newFilm.title
-            case let .failure(error):
-                print("Error occurred! \(error)") // TODO: Display alert
-            }
-            
-            self.videoPlayerView.nextEpisodeButton.isEnabled = true
-        })
     }
     
     //----------------------------------------------------------------------
@@ -406,6 +390,29 @@ extension VideoPlayerController {
 
 extension VideoPlayerController {
     
+    @objc func playNextEpisode() {
+        videoPlayerView.nextEpisodeButton.isEnabled = false
+        
+        nextEpisodeProvider.getNextEpisode(episodeId: film.id, result: { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(newFilm):
+                self.film = newFilm
+                self.timestamps = [] // clear timestamps from previous video
+                self.fetchVideoTimestamps()
+                self.stateMachine.transitionTo(state: .initial)
+                self.mediaPlayer.stop()
+                self.setUpPlayer(url: newFilm.URL, stoppedAt: 0)
+                self.videoPlayerView.titleLabel.text = newFilm.title
+            case let .failure(error):
+                print("Error occurred! \(error)") // TODO: Display alert
+            }
+            
+            self.videoPlayerView.nextEpisodeButton.isEnabled = true
+        })
+    }
+    
     func fetchVideoURL() {
         switch film.type {
         case .movie:
@@ -422,11 +429,13 @@ extension VideoPlayerController {
             switch result {
             case let .success(data):
                 self.film = Film(id: data.id, URL: data.videoURL, type: .show, title: data.episodeTitle)
-                self.setUpPlayer(url: data.videoURL)
                 
                 let contentID: ViewedContent.ContentID = .episode(id: data.id, showId: data.showId, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
                 let value = ViewedContent(id: contentID, title: data.showTitle, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
                 self.viewingContent = self.viewedContentManager.findEpisode(by: data.id, orAdd: value)
+                
+                let stoppedAt = self.viewingContent!.stoppedAt
+                self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
             case let .failure(error):
                 print(error) // TODO: show alert & exit
             }
@@ -440,12 +449,12 @@ extension VideoPlayerController {
             switch result {
             case let .success(data):
                 self.film = Film(id: data.id, URL: data.videoURL, type: .movie, title: data.title)
-                self.setUpPlayer(url: data.videoURL)
                 
                 let value = ViewedContent(id: .movie(id: data.id), title: data.title, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
                 self.viewingContent = self.viewedContentManager.findMovie(by: data.id, orAdd: value)
                 
-                print(data)
+                 let stoppedAt = self.viewingContent!.stoppedAt
+                self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
             case let .failure(error):
                 print(error) // TODO: show alert & exit
             }

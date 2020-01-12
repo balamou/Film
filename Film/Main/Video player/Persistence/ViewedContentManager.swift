@@ -132,7 +132,7 @@ extension ViewedContentManager: WatchedAPI {
         viewed.map { item -> Watched in
             switch item.id {
             case let .movie(id: movieId):
-                let label = Film.durationMin(seconds: item.duration)
+                let label = Film.durationMinWithTime(seconds: item.duration)
                 
                 return Watched(id: movieId, duration: item.duration, stoppedAt: item.position, label: label, videoURL: "^^^", type: .movie, showId: nil, title: item.title, posterURL: "^^^")
             case let .episode(id: episodeId, showId: showId, seasonNumber: seasonNumber, episodeNumber: episodeNumber):

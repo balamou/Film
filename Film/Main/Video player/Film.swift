@@ -38,6 +38,21 @@ struct Film: Decodable {
         return "\(addZero(to: hours)):\(addZero(to: minutes))"
     }
     
+    static func durationMinWithTime(seconds sec: Int) -> String {
+        let secondsInHour = 3600
+        let secondsInMinute = 60
+        
+        let hours: Int = sec / secondsInHour
+        let minutes: Int = (sec % secondsInHour) / secondsInMinute
+        let seconds: Int = sec - minutes * secondsInMinute
+        
+        if hours == 0 {
+            return "\(minutes)min \(seconds)s"
+        }
+        
+        return "\(hours)h \(minutes)min"
+    }
+    
     static private func addZero(to number: Int) -> String {
         return String(format: "%02d", number)
     }
