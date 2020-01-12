@@ -76,7 +76,7 @@ class StandardFactory: ViewControllerFactory {
     
     func createShowInfoViewController(delegate: ShowInfoViewControllerDelegate?, series: Series, settings: Settings) -> ShowInfoViewController {
         let apiManager = ConcreteSeriesInfoAPI(settings: settings)
-        let showInfoVC = ShowInfoViewController(series: series, viewedContentManager: viewedContentManager)
+        let showInfoVC = ShowInfoViewController(series: series, watchableManager: viewedContentManager)
         showInfoVC.delegate = delegate
         showInfoVC.apiManager = apiManager
         

@@ -112,7 +112,7 @@ class ViewedContentManager {
     }
 }
 
-extension ViewedContentManager { // TODO: create protocol for methods
+extension ViewedContentManager: WatchableContent {
     
     func lastWatchedSeason(showId: Int) -> Int? {
         var show: ViewedContent?
