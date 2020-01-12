@@ -35,6 +35,7 @@ class VideoPlayerController: UIViewController {
     
     private let backwardTime: Int32 = 10
     private let forwardTime: Int32 = 10
+    private let playNextEpisodeAfterWatchingPercentage: Float = 0.95
     
     private let nextEpisodeProvider: NextEpisodeNetworkProvider
     private let settings: Settings
@@ -405,7 +406,7 @@ extension VideoPlayerController {
         }
         
         guard doesHaveNextEpisode else {
-            let from = Int(Float(duration) * 0.95)
+            let from = Int(Float(duration) * playNextEpisodeAfterWatchingPercentage)
             let timestamp = VideoTimestamp(name: "Next episode".localize(), action: .nextEpisode(from: from))
             return videoTimestamps + [timestamp]
         }
@@ -514,7 +515,7 @@ extension VideoPlayerController {
                 let value = ViewedContent(id: .movie(id: data.id), title: data.title, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
                 let viewingContent = self.viewedContentManager.addMovieIfNotAdded(id: data.id, value: value)
                 
-                 let stoppedAt = viewingContent.stoppedAt
+                let stoppedAt = viewingContent.stoppedAt
                 self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
             case let .failure(error):
                 print(error) // TODO: show alert & exit
