@@ -40,6 +40,8 @@ class WatchingViewController: UIViewController {
     // Alert
     var alert: AlertViewController?
     
+    private var watchedContentUpdated = false
+    
     init(apiManager: WatchedAPI) {
         self.apiManager = apiManager
         super.init(nibName: nil, bundle: nil)
@@ -118,8 +120,11 @@ class WatchingViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("APPEARED!")
-        
+        // Refresh if updated watched contents
+        if watchedContentUpdated {
+            refreshOnPull()
+            watchedContentUpdated = false
+        }
     }
 }
 
@@ -192,4 +197,12 @@ extension WatchingViewController: WatchingCellDelegate {
     func informationButtonTapped(row: Int) {
         delegate?.watchingViewController(self, selectMoreInfo: data[row])
     }
+}
+
+extension WatchingViewController: ViewContentManagerObservable {
+    
+    func didUpdateWatched() {
+        watchedContentUpdated = true
+    }
+    
 }

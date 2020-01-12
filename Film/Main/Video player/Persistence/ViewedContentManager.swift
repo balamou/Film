@@ -8,9 +8,14 @@
 
 import Foundation
 
+protocol ViewContentManagerObservable: class {
+    func didUpdateWatched()
+}
+
 class ViewedContentManager {
     internal let storageManager: StorageManager<ViewedContent>
     internal var contents: [ViewedContent]
+    weak var delegate: ViewContentManagerObservable?
     
     init() {
         storageManager = StorageManager<ViewedContent>(key: "viewed_content")
@@ -68,6 +73,7 @@ class ViewedContentManager {
     func update(viewingContent: ViewedContent, with position: Int) {
         viewingContent.position = position
         viewingContent.lastPlayedTime = Date().timeIntervalSince1970
+        delegate?.didUpdateWatched()
     }
     
     static func test() {

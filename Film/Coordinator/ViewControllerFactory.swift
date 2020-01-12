@@ -38,6 +38,7 @@ class StandardFactory: ViewControllerFactory {
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?, settings: Settings) -> WatchingViewController {
         let watchingVC = WatchingViewController(apiManager: viewedContentManager)
         watchingVC.delegate = delegate
+        viewedContentManager.delegate = watchingVC
         watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: Images.Tabs.watchingImage, tag: 0)
         
         return watchingVC
