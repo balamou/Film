@@ -49,13 +49,13 @@ class VideoPlayerController: UIViewController {
     private let viewedContentManager: ViewedContentManager
     private var viewingContent: ViewedContent?
     
-    init(film: Film, settings: Settings) {
+    init(film: Film, settings: Settings, viewedContentManager: ViewedContentManager) {
         self.film = film
         self.settings = settings
         self.nextEpisodeProvider = NextEpisodeNetworkProvider(settings: settings) // TODO: inject
         self.timestampsProvider = TimestampsNetworkProvider(settings: settings) // TODO: inject
         self.videoProvider = VideoURLNetworkProvider(settings: settings) // TODO: inject
-        self.viewedContentManager = ViewedContentManager() // TODO: inject
+        self.viewedContentManager = viewedContentManager
         super.init(nibName: nil, bundle: nil)
     }
     

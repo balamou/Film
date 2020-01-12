@@ -25,6 +25,7 @@ protocol ViewControllerFactory {
 
 
 class StandardFactory: ViewControllerFactory {
+    private let viewedContentManager = ViewedContentManager()
     
     func createWelcomeViewController(delegate: WelcomeViewControllerDelegate?, settings: Settings) -> WelcomeViewController {
         let welcomeVC = WelcomeViewController(settings: settings)
@@ -35,9 +36,8 @@ class StandardFactory: ViewControllerFactory {
     }
     
     func createWatchingViewController(delegate: WatchingViewControllerDelegate?, settings: Settings) -> WatchingViewController {
-        let watchingVC = WatchingViewController()
+        let watchingVC = WatchingViewController(apiManager: viewedContentManager)
         watchingVC.delegate = delegate
-        watchingVC.apiManager = ViewedContentManager() //ConcreteWatchedAPI(settings: settings)
         watchingVC.tabBarItem = UITabBarItem(title: "Watching".localize(), image: Images.Tabs.watchingImage, tag: 0)
         
         return watchingVC
@@ -92,7 +92,7 @@ class StandardFactory: ViewControllerFactory {
     }
     
     func createVideoPlayerController(film: Film, settings: Settings) -> VideoPlayerController {
-        let videoPlayerVC = VideoPlayerController(film: film, settings: settings)
+        let videoPlayerVC = VideoPlayerController(film: film, settings: settings, viewedContentManager: viewedContentManager)
         
         return videoPlayerVC
     }

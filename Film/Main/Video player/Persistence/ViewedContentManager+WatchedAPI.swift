@@ -13,7 +13,7 @@ extension ViewedContentManager: WatchedAPI {
     // TODO: cut the amount of watched data showed
     func getWatched(result: @escaping WatchedHandler) {
         var groupped = group(viewed: contents)
-        groupped.sort(by: { $0.lastPlayedTime < $1.lastPlayedTime })
+        groupped.sort(by: { $0.lastPlayedTime > $1.lastPlayedTime })
         
         let postersProvider = PostersNetworkProvider(settings: Settings())
         postersProvider.getPosters(data: convertToContentInfo(viewed: groupped)) { [weak self] posterResult in
@@ -41,6 +41,21 @@ extension ViewedContentManager: WatchedAPI {
         }
         
         return convertToWatched(viewed: viewed, moviePosters: moviePosters, showPosters: showPosters)
+    }
+    
+    private func convertToWatched(viewed: [ViewedContent], moviePosters: [Int: String], showPosters: [Int: String]) -> [Watched] {
+        viewed.map { item -> Watched in
+            switch item.id {
+            case let .movie(id: movieId):
+                let label = Film.durationMinWithTime(seconds: item.duration)
+                
+                return Watched(id: movieId, duration: item.duration, stoppedAt: item.position, label: label, type: .movie, showId: nil, title: item.title, posterURL: moviePosters[movieId])
+            case let .episode(id: episodeId, showId: showId, seasonNumber: seasonNumber, episodeNumber: episodeNumber):
+                let label = "S\(seasonNumber):E\(episodeNumber)"
+                
+                return Watched(id: episodeId, duration: item.duration, stoppedAt: item.position, label: label, type: .show, showId: showId, title: item.title, posterURL: showPosters[showId])
+            }
+        }
     }
     
     private func convertToContentInfo(viewed: [ViewedContent]) -> [ContentInfo] {
@@ -86,18 +101,4 @@ extension ViewedContentManager: WatchedAPI {
         return movies
     }
     
-    private func convertToWatched(viewed: [ViewedContent], moviePosters: [Int: String], showPosters: [Int: String]) -> [Watched] {
-        viewed.map { item -> Watched in
-            switch item.id {
-            case let .movie(id: movieId):
-                let label = Film.durationMinWithTime(seconds: item.duration)
-                
-                return Watched(id: movieId, duration: item.duration, stoppedAt: item.position, label: label, type: .movie, showId: nil, title: item.title, posterURL: moviePosters[movieId])
-            case let .episode(id: episodeId, showId: showId, seasonNumber: seasonNumber, episodeNumber: episodeNumber):
-                let label = "S\(seasonNumber):E\(episodeNumber)"
-                
-                return Watched(id: episodeId, duration: item.duration, stoppedAt: item.position, label: label, type: .show, showId: showId, title: item.title, posterURL: showPosters[showId])
-            }
-        }
-    }
 }
