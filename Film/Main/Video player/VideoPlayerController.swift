@@ -79,26 +79,6 @@ class VideoPlayerController: UIViewController {
         fetchVideoURL()
         setActions()
         overrideVolumeBar()
-        
-        fetchVideoTimestamps()
-    }
-    
-    private func fetchVideoTimestamps() {
-        guard case .show = film.type else { return } // TODO: implement movie timestamps provider
-        
-        timestampsProvider.getEpisodeTimestamps(episodeId: film.id) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case let .success(videoTimestamps):
-                self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
-                print(videoTimestamps)
-            case let .failure(error):
-                self.timestamps = []
-                print(error) // TODO: show alert perhaps?
-            }
-            
-        }
     }
     
     private func processTimestamps(timestamps: [VideoTimestamp]) -> [(VideoTimestamp, SkipButton)] {
@@ -392,6 +372,45 @@ extension VideoPlayerController {
 
 extension VideoPlayerController {
     
+    /// duration is the video duration in seconds
+    private func fetchVideoTimestamps(duration: Int) {
+        guard case .show = film.type else { return } // TODO: implement movie timestamps provider
+        
+        timestampsProvider.getEpisodeTimestamps(episodeId: film.id) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case var .success(videoTimestamps):
+                videoTimestamps = self.addNextEpisodeTimestamp(videoTimestamps: videoTimestamps, duration: duration)
+                self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
+                print(videoTimestamps)
+            case let .failure(error):
+                let videoTimestamps = self.addNextEpisodeTimestamp(videoTimestamps: [], duration: duration)
+                self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
+                print(error) // TODO: show alert perhaps? (Not critical)
+            }
+        }
+    }
+    
+    private func addNextEpisodeTimestamp(videoTimestamps: [VideoTimestamp], duration: Int) -> [VideoTimestamp] {
+        let doesHaveNextEpisode = videoTimestamps.contains { timestamp in
+            switch timestamp.action {
+            case .nextEpisode:
+                return true
+            default:
+                return false
+            }
+        }
+        
+        guard doesHaveNextEpisode else {
+            let from = Int(Float(duration) * 0.95)
+            let timestamp = VideoTimestamp(name: "Next episode", action: .nextEpisode(from: from))
+            return videoTimestamps + [timestamp]
+        }
+        
+        return videoTimestamps
+    }
+    
     @objc func playNextEpisode() {
         videoPlayerView.nextEpisodeButton.isEnabled = false
         
@@ -402,7 +421,6 @@ extension VideoPlayerController {
             case let .success(newFilm):
                 self.film = newFilm
                 self.timestamps = [] // clear timestamps from previous video
-                self.fetchVideoTimestamps()
                 self.stateMachine.transitionTo(state: .initial)
                 self.mediaPlayer.stop()
                 self.videoPlayerView.titleLabel.text = newFilm.title
@@ -440,6 +458,8 @@ extension VideoPlayerController {
                 
                 let stoppedAt = viewingContent.stoppedAt
                 self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
+ 
+                self.fetchVideoTimestamps(duration: data.duration)
             case let .failure(error):
                 print(error) // TODO: show alert & exit
             }
