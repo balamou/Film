@@ -64,8 +64,16 @@ class VideoPlayerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        forceLandscapeOrientation()
         
+        forceLandscapeOrientation()
+        setupView()
+        setupPlayerHelpers()
+        fetchVideoURL()
+        setActions()
+        overrideVolumeBar()
+    }
+    
+    private func setupView() {
         videoPlayerView = VideoPlayerView(frame: view.frame)
         videoPlayerView.titleLabel.text = film.title
         if film.type == .movie {
@@ -74,11 +82,6 @@ class VideoPlayerController: UIViewController {
         }
         
         view = videoPlayerView
-        
-        setupPlayerHelpers()
-        fetchVideoURL()
-        setActions()
-        overrideVolumeBar()
     }
     
     private func processTimestamps(timestamps: [VideoTimestamp]) -> [(VideoTimestamp, SkipButton)] {
@@ -383,7 +386,6 @@ extension VideoPlayerController {
             case var .success(videoTimestamps):
                 videoTimestamps = self.addNextEpisodeTimestamp(videoTimestamps: videoTimestamps, duration: duration)
                 self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
-                print(videoTimestamps)
             case let .failure(error):
                 let videoTimestamps = self.addNextEpisodeTimestamp(videoTimestamps: [], duration: duration)
                 self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
