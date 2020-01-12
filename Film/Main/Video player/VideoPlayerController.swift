@@ -401,17 +401,16 @@ extension VideoPlayerController {
             
             switch result {
             case let .success(newFilm):
-                guard let videoURL = newFilm.URL else { return }
-                
                 self.film = newFilm
                 self.timestamps = [] // clear timestamps from previous video
                 self.fetchVideoTimestamps()
                 self.stateMachine.transitionTo(state: .initial)
                 self.mediaPlayer.stop()
-                self.setUpPlayer(url: videoURL, stoppedAt: 0)
                 self.videoPlayerView.titleLabel.text = newFilm.title
+                
+                self.fetchVideoURL()
             case let .failure(error):
-                print("Error occurred! \(error)") // TODO: Display alert
+                print("Error occurred! \(error)") // TODO: Exit
             }
             
             self.videoPlayerView.nextEpisodeButton.isEnabled = true
