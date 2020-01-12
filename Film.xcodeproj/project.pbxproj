@@ -153,6 +153,7 @@
 		EDF1B3DA23CA863B003D27B7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3D923CA863B003D27B7 /* StorageManager.swift */; };
 		EDF1B3DC23CA8B29003D27B7 /* VideoURLProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3DB23CA8B29003D27B7 /* VideoURLProvider.swift */; };
 		EDF1B3DE23CAAA38003D27B7 /* PostersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3DD23CAAA38003D27B7 /* PostersProvider.swift */; };
+		EDF1B3E223CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3E123CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift */; };
 		EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB055231497C90045E8D6 /* WatchingViewController.swift */; };
 		EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB0572314985A0045E8D6 /* WatchingView.swift */; };
 /* End PBXBuildFile section */
@@ -342,6 +343,7 @@
 		EDF1B3D923CA863B003D27B7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		EDF1B3DB23CA8B29003D27B7 /* VideoURLProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoURLProvider.swift; sourceTree = "<group>"; };
 		EDF1B3DD23CAAA38003D27B7 /* PostersProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostersProvider.swift; sourceTree = "<group>"; };
+		EDF1B3E123CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewedContentManager+WatchedAPI.swift"; sourceTree = "<group>"; };
 		EDFDB055231497C90045E8D6 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
 		EDFDB0572314985A0045E8D6 /* WatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -761,6 +763,7 @@
 				EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */,
 				EDF1B3D523CA3862003D27B7 /* ViewedContent+extensions.swift */,
 				EDF1B3D923CA863B003D27B7 /* StorageManager.swift */,
+				EDF1B3E123CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -1154,6 +1157,7 @@
 				EDACC49E231A0D8E005DC09C /* CustomMarginButton.swift in Sources */,
 				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,
 				EDEF975A231C264600025483 /* Series+mock.swift in Sources */,
+				EDF1B3E223CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift in Sources */,
 				EDEF975E231C26C900025483 /* SeriesItem+mock.swift in Sources */,
 				ED5AC12A2315A65F0098A161 /* UIViewController+extensions.swift in Sources */,
 				ED5AC1102314DDD00098A161 /* MoviesViewController.swift in Sources */,

@@ -13,7 +13,6 @@ struct Movie: Decodable {
     let id: Int
     let title: String
     let duration: Int
-    var videoURL: String
     
     var description: String?
     var poster: String?
@@ -26,7 +25,6 @@ struct Movie: Decodable {
     }
     
     mutating func fixURL(with urlFixer: (String?) -> String?) {
-        videoURL = urlFixer(videoURL) ?? videoURL
         poster = urlFixer(poster)
     }
 }

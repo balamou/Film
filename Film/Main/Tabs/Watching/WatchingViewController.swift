@@ -45,7 +45,7 @@ class WatchingViewController: UIViewController {
         view = watchingView
         
         alert = AlertViewController(parent: self)
-        apiManager = ViewedContentManager()
+        
         initializeSections()
         addCollectionView()
         initialLoadWatching()
@@ -108,6 +108,10 @@ class WatchingViewController: UIViewController {
             ].activate()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        print("APPEARED!")
+        
+    }
 }
 
 

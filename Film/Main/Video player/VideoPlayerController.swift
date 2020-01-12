@@ -350,8 +350,9 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
     }
     
     private func updateViewedContent(position: Int) {
-        viewingContent?.position = position
-        viewingContent?.lastPlayedTime = Date().timeIntervalSince1970
+        guard let viewingContent = viewingContent else { return } // TODO: Log as inconsistency
+        
+        viewedContentManager.update(viewingContent: viewingContent, with: position)
         viewedContentManager.save()
     }
     
@@ -398,12 +399,14 @@ extension VideoPlayerController {
             
             switch result {
             case let .success(newFilm):
+                guard let videoURL = newFilm.URL else { return }
+                
                 self.film = newFilm
                 self.timestamps = [] // clear timestamps from previous video
                 self.fetchVideoTimestamps()
                 self.stateMachine.transitionTo(state: .initial)
                 self.mediaPlayer.stop()
-                self.setUpPlayer(url: newFilm.URL, stoppedAt: 0)
+                self.setUpPlayer(url: videoURL, stoppedAt: 0)
                 self.videoPlayerView.titleLabel.text = newFilm.title
             case let .failure(error):
                 print("Error occurred! \(error)") // TODO: Display alert
@@ -428,7 +431,7 @@ extension VideoPlayerController {
             
             switch result {
             case let .success(data):
-                self.film = Film(id: data.id, URL: data.videoURL, type: .show, title: data.episodeTitle)
+                self.film = Film(id: data.id, type: .show, URL: data.videoURL, title: data.episodeTitle)
                 
                 let contentID: ViewedContent.ContentID = .episode(id: data.id, showId: data.showId, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
                 let value = ViewedContent(id: contentID, title: data.showTitle, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
@@ -448,7 +451,7 @@ extension VideoPlayerController {
             
             switch result {
             case let .success(data):
-                self.film = Film(id: data.id, URL: data.videoURL, type: .movie, title: data.title)
+                self.film = Film(id: data.id, type: .movie, URL: data.videoURL, title: data.title)
                 
                 let value = ViewedContent(id: .movie(id: data.id), title: data.title, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
                 self.viewingContent = self.viewedContentManager.findMovie(by: data.id, orAdd: value)

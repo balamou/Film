@@ -92,7 +92,7 @@ extension Coordinator: WatchingViewControllerDelegate {
     func watchingViewController(_ watchingViewController: WatchingViewController, selectMoreInfo watched: Watched) {
         switch watched.type {
         case .movie:
-            let movie = Movie(id: watched.id, title: watched.title ?? "", duration: 1, videoURL: watched.videoURL, poster: watched.posterURL, stoppedAt: watched.stoppedAt)
+            let movie = Movie(id: watched.id, title: watched.title ?? "", duration: 1, poster: watched.posterURL, stoppedAt: watched.stoppedAt)
             
             let movieInfoVC = factory.createMovieInfoViewController(delegate: self, movie: movie, settings: settings)
             navigationController.pushViewController(movieInfoVC, animated: false)
@@ -120,7 +120,7 @@ extension Coordinator: ShowsDelegate {
 extension Coordinator: MoviesDelegate {
     
     func moviesViewController(_ moviesViewController: MoviesViewController, selected movieItem: MovieItem) {
-        let movie = Movie(id: movieItem.id, title: "", duration: 100, videoURL: "", poster: movieItem.posterURL)
+        let movie = Movie(id: movieItem.id, title: "", duration: 100, poster: movieItem.posterURL)
         let movieInfoVC = factory.createMovieInfoViewController(delegate: self, movie: movie, settings: settings)
         
         navigationController.pushViewController(movieInfoVC, animated: false)

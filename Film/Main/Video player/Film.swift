@@ -15,8 +15,8 @@ enum FilmType: String, Codable {
 
 struct Film: Decodable {
     let id: Int // MovieID OR EpisodeID (this is not the show id)
-    var URL: String
     let type: FilmType
+    var URL: String? = nil
     var title: String?
     
     mutating func fixURL(with urlFixer: (String?) -> String?) {
@@ -59,7 +59,6 @@ struct Film: Decodable {
     
     static func from(watched: Watched) -> Film {
         return Film(id: watched.id,
-                    URL: watched.videoURL,
                     type: watched.type,
                     title: watched.title)
     }
@@ -71,14 +70,12 @@ struct Film: Decodable {
         }
         
         return Film(id: episode.id,
-                    URL: episode.videoURL,
                     type: .show,
                     title: newTitle)
     }
     
     static func from(movie: Movie) -> Film {
         return Film(id: movie.id,
-                    URL: movie.videoURL,
                     type: .movie,
                     title: movie.title)
     }
