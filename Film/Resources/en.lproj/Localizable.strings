@@ -37,6 +37,10 @@
 // Player VC
 "Next episode" = "Next episode";
 "No title" = "No title";
+"Skip intro" = "Skip intro";
+"Skip introduction" = "Skip introduction";
+"Next episode" = "Next episode";
+"The end" = "The end";
 
 // Settings
 "settings" = "settings";

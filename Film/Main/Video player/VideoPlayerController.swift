@@ -86,7 +86,7 @@ class VideoPlayerController: UIViewController {
     
     private func processTimestamps(timestamps: [VideoTimestamp]) -> [(VideoTimestamp, SkipButton)] {
         return timestamps.map { videoTimestamp in
-            let button = SkipButton(parentView: view, buttonText: videoTimestamp.name)
+            let button = SkipButton(parentView: view, buttonText: videoTimestamp.name.localize())
             button.attachAction { [weak self] skipButton in
                 guard let self = self else { return }
                 
@@ -406,7 +406,7 @@ extension VideoPlayerController {
         
         guard doesHaveNextEpisode else {
             let from = Int(Float(duration) * 0.95)
-            let timestamp = VideoTimestamp(name: "Next episode", action: .nextEpisode(from: from))
+            let timestamp = VideoTimestamp(name: "Next episode".localize(), action: .nextEpisode(from: from))
             return videoTimestamps + [timestamp]
         }
         
