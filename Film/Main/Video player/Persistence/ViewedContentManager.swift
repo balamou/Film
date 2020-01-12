@@ -36,17 +36,16 @@ class ViewedContentManager {
         })
     }
     
-    
-   private func findEpisode(by id: Int) -> ViewedContent? {
-       contents.first(where: { item in
-           switch item.id {
-           case .episode(let episodeId, _, _, _) where episodeId == id:
-               return true
-           default:
-               return false
-           }
-       })
-   }
+    private func findEpisode(by id: Int) -> ViewedContent? {
+        contents.first(where: { item in
+            switch item.id {
+            case .episode(let episodeId, _, _, _) where episodeId == id:
+                return true
+            default:
+                return false
+            }
+        })
+    }
     
     func findMovie(by id: Int, orAdd defaultValue: ViewedContent) -> ViewedContent {
         guard let movie = findMovie(by: id) else {

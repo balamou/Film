@@ -45,11 +45,17 @@ class VideoPlayerController: UIViewController {
     private var timestamps: [(VideoTimestamp, SkipButton)] = []
     private var timestampsProvider: TimestampsDataProvider
     
+    private let videoProvider: VideoURLProvider
+    private let viewedContentManager: ViewedContentManager
+    private var viewingContent: ViewedContent?
+    
     init(film: Film, settings: Settings) {
         self.film = film
         self.settings = settings
         self.nextEpisodeProvider = NextEpisodeNetworkProvider(settings: settings) // TODO: inject
         self.timestampsProvider = TimestampsNetworkProvider(settings: settings) // TODO: inject
+        self.videoProvider = VideoURLNetworkProvider(settings: settings) // TODO: inject
+        self.viewedContentManager = ViewedContentManager() // TODO: inject
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -71,7 +77,7 @@ class VideoPlayerController: UIViewController {
         view = videoPlayerView
         
         setupPlayerHelpers()
-        setUpPlayer(url: film.URL)
+        fetchVideoURL()
         setActions()
         overrideVolumeBar()
         
@@ -388,4 +394,54 @@ extension VideoPlayerController {
             forceLandscapeOrientation()
         }
     }
+}
+
+extension VideoPlayerController {
+    
+    func fetchVideoURL() {
+        switch film.type {
+        case .movie:
+            fetchMovieData()
+        case .show:
+            fetchEpisodeData()
+        }
+    }
+    
+    private func fetchEpisodeData() {
+        videoProvider.getEpisodeData(id: film.id) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(data):
+                self.film = Film(id: data.id, URL: data.videoURL, type: .show, title: data.episodeTitle)
+                self.setUpPlayer(url: data.videoURL)
+                
+                let contentID: ViewedContent.ContentID = .episode(id: data.id, showId: data.showId, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
+                let value = ViewedContent(id: contentID, title: data.showTitle, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
+                self.viewingContent = self.viewedContentManager.findEpisode(by: data.id, orAdd: value)
+            case let .failure(error):
+                print(error) // TODO: show alert & exit
+            }
+        }
+    }
+    
+    private func fetchMovieData() {
+        videoProvider.getMovieData(id: film.id) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(data):
+                self.film = Film(id: data.id, URL: data.videoURL, type: .movie, title: data.title)
+                self.setUpPlayer(url: data.videoURL)
+                
+                let value = ViewedContent(id: .movie(id: data.id), title: data.title, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
+                self.viewingContent = self.viewedContentManager.findMovie(by: data.id, orAdd: value)
+                
+                print(data)
+            case let .failure(error):
+                print(error) // TODO: show alert & exit
+            }
+        }
+    }
+    
 }

@@ -40,6 +40,8 @@ enum EndPoint {
     
     case timestamp(episodeId: Int)
     
+    case videoURL(id: Int, type: FilmType)
+    
     var path: String {
         switch self {
         case let .login(username):
@@ -70,6 +72,9 @@ enum EndPoint {
         
         case let .timestamp(episodeId):
             return "/episode_timestamps/\(episodeId)"
+            
+        case let .videoURL(id, type):
+            return "/video_url/\(id)/\(type)"
         }
     }
 }
