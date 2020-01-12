@@ -420,20 +420,48 @@ extension VideoPlayerController {
             guard let self = self else { return }
             
             switch result {
-            case let .success(newFilm):
-                self.film = newFilm
-                self.timestamps = [] // clear timestamps from previous video
-                self.stateMachine.transitionTo(state: .initial)
-                self.mediaPlayer.stop()
-                self.videoPlayerView.titleLabel.text = newFilm.title
-                
-                self.fetchVideoURL()
+            case let .success(nextEpisodeResult):
+                switch nextEpisodeResult {
+                case let .film(newFilm):
+                    self.film = newFilm
+                    self.timestamps = [] // clear timestamps from previous video
+                    self.stateMachine.transitionTo(state: .initial)
+                    self.mediaPlayer.stop()
+                    self.videoPlayerView.titleLabel.text = newFilm.title
+                    
+                    self.fetchVideoURL()
+                case .noMoreEpisodes:
+                    self.showTheEnd()
+                }
             case let .failure(error):
                 print("Error occurred! \(error)") // TODO: Exit
             }
             
             self.videoPlayerView.nextEpisodeButton.isEnabled = true
         })
+    }
+    
+    private func showTheEnd() {
+        mediaPlayer.stop()
+        
+        // UI
+        let redEndView = UIView(frame: videoPlayerView.controlView.frame)
+        redEndView.backgroundColor = .black
+        
+        let theEnd = UILabel()
+        theEnd.text = "The end".localize()
+        theEnd.textColor = .white
+        
+        // Position
+        redEndView.addSubviewLayout(theEnd)
+        
+        theEnd.centerXAnchor.constraint(equalTo: redEndView.centerXAnchor).isActive = true
+        theEnd.centerYAnchor.constraint(equalTo: redEndView.centerYAnchor).isActive = true
+
+        let tapToShowControls = UITapGestureRecognizer(target: self, action: #selector(showControls))
+        redEndView.addGestureRecognizer(tapToShowControls)
+        
+        view.insertSubview(redEndView, belowSubview: videoPlayerView.controlView)
     }
     
     private func fetchVideoURL() {
