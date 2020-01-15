@@ -35,6 +35,7 @@ class VideoPlayerController: UIViewController {
     
     private let backwardTime: Int32 = 10
     private let forwardTime: Int32 = 10
+    private let playNextEpisodeAfterWatchingPercentage: Float = 0.95
     
     private let nextEpisodeProvider: NextEpisodeNetworkProvider
     private let settings: Settings
@@ -45,11 +46,16 @@ class VideoPlayerController: UIViewController {
     private var timestamps: [(VideoTimestamp, SkipButton)] = []
     private var timestampsProvider: TimestampsDataProvider
     
-    init(film: Film, settings: Settings) {
+    private let videoProvider: VideoURLProvider
+    private let viewedContentManager: ViewedContentManager
+    
+    init(film: Film, settings: Settings, viewedContentManager: ViewedContentManager) {
         self.film = film
         self.settings = settings
         self.nextEpisodeProvider = NextEpisodeNetworkProvider(settings: settings) // TODO: inject
         self.timestampsProvider = TimestampsNetworkProvider(settings: settings) // TODO: inject
+        self.videoProvider = VideoURLNetworkProvider(settings: settings) // TODO: inject
+        self.viewedContentManager = viewedContentManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -59,8 +65,16 @@ class VideoPlayerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        forceLandscapeOrientation()
         
+        forceLandscapeOrientation()
+        setupView()
+        setupPlayerHelpers()
+        fetchVideoURL()
+        setActions()
+        overrideVolumeBar()
+    }
+    
+    private func setupView() {
         videoPlayerView = VideoPlayerView(frame: view.frame)
         videoPlayerView.titleLabel.text = film.title
         if film.type == .movie {
@@ -69,36 +83,11 @@ class VideoPlayerController: UIViewController {
         }
         
         view = videoPlayerView
-        
-        setupPlayerHelpers()
-        setUpPlayer(url: film.URL)
-        setActions()
-        overrideVolumeBar()
-        
-        fetchVideoTimestamps()
-    }
-    
-    private func fetchVideoTimestamps() {
-        guard case .show = film.type else { return } // TODO: implement movie timestamps provider
-        
-        timestampsProvider.getEpisodeTimestamps(episodeId: film.id) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case let .success(videoTimestamps):
-                self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
-                print(videoTimestamps)
-            case let .failure(error):
-                self.timestamps = []
-                print(error) // TODO: show alert perhaps?
-            }
-            
-        }
     }
     
     private func processTimestamps(timestamps: [VideoTimestamp]) -> [(VideoTimestamp, SkipButton)] {
         return timestamps.map { videoTimestamp in
-            let button = SkipButton(parentView: view, buttonText: videoTimestamp.name)
+            let button = SkipButton(parentView: view, buttonText: videoTimestamp.name.localize())
             button.attachAction { [weak self] skipButton in
                 guard let self = self else { return }
                 
@@ -132,15 +121,24 @@ class VideoPlayerController: UIViewController {
         skipBackwardAnimation = AnimationManager(view, button: videoPlayerView.backward10sButton, label: videoPlayerView.backward10sLabel, animationDirection: .backward)
     }
     
-    private func setUpPlayer(url: String) {
-        let streamURL = URL(string: url)!
+    private func setUpPlayer(url: String, stoppedAt: Float) {
+        guard let streamURL = URL(string: url) else {
+            print("Error reading the URL") // TODO: exit & alert
+            return
+        }
+        videoPlayerView.titleLabel.text = film.title
+        
         let vlcMedia = VLCMedia(url: streamURL)
         
         mediaPlayer.media = vlcMedia
         mediaPlayer.drawable = videoPlayerView.mediaView
         
         mediaPlayer.play()
-        playState = .playing
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { // update 0.5 seconds later to let the media load the video
+            self.mediaPlayer.position = stoppedAt
+            self.playState = .playing
+            self.videoPlayerView.slider.value = stoppedAt
+        })
     }
     
     //----------------------------------------------------------------------
@@ -232,29 +230,6 @@ class VideoPlayerController: UIViewController {
         navigationController?.popViewController(animated: false)
     }
     
-    @objc func playNextEpisode() {
-        videoPlayerView.nextEpisodeButton.isEnabled = false
-        
-        nextEpisodeProvider.getNextEpisode(episodeId: film.id, result: { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case let .success(newFilm):
-                self.film = newFilm
-                self.timestamps = [] // clear timestamps from previous video
-                self.fetchVideoTimestamps()
-                self.stateMachine.transitionTo(state: .initial)
-                self.mediaPlayer.stop()
-                self.setUpPlayer(url: newFilm.URL)
-                self.videoPlayerView.titleLabel.text = newFilm.title
-            case let .failure(error):
-                print("Error occurred! \(error)") // TODO: Display alert
-            }
-            
-            self.videoPlayerView.nextEpisodeButton.isEnabled = true
-        })
-    }
-    
     //----------------------------------------------------------------------
     // Orientation: Landscape
     //----------------------------------------------------------------------
@@ -339,6 +314,10 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
     }
     
     func observeSecondsChange(currentTimeSeconds: Int) {
+        updateViewedContent(position: currentTimeSeconds)
+        
+        guard stateMachine.shouldShowTimestamps else { return }
+        
         timestamps.forEach { (videoInfo, button) in
             switch videoInfo.action {
             case let .skip(from: from, to: to):
@@ -355,6 +334,11 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
                 }
             }
         }
+    }
+    
+    private func updateViewedContent(position: Int) {
+        viewedContentManager.update(id: film.id, type: film.type, with: position)
+        viewedContentManager.save()
     }
     
     func didStartScrolling() {
@@ -388,4 +372,155 @@ extension VideoPlayerController {
             forceLandscapeOrientation()
         }
     }
+}
+
+extension VideoPlayerController {
+    
+    /// duration is the video duration in seconds
+    private func fetchVideoTimestamps(duration: Int) {
+        guard case .show = film.type else { return } // TODO: implement movie timestamps provider
+        
+        timestampsProvider.getEpisodeTimestamps(episodeId: film.id) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case var .success(videoTimestamps):
+                videoTimestamps = self.addNextEpisodeTimestamp(videoTimestamps: videoTimestamps, duration: duration)
+                self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
+            case let .failure(error):
+                let videoTimestamps = self.addNextEpisodeTimestamp(videoTimestamps: [], duration: duration)
+                self.timestamps = self.processTimestamps(timestamps: videoTimestamps)
+                print(error) // TODO: show alert perhaps? (Not critical)
+            }
+        }
+    }
+    
+    private func addNextEpisodeTimestamp(videoTimestamps: [VideoTimestamp], duration: Int) -> [VideoTimestamp] {
+        let doesHaveNextEpisode = videoTimestamps.contains { timestamp in
+            switch timestamp.action {
+            case .nextEpisode:
+                return true
+            default:
+                return false
+            }
+        }
+        
+        guard doesHaveNextEpisode else {
+            let from = Int(Float(duration) * playNextEpisodeAfterWatchingPercentage)
+            let timestamp = VideoTimestamp(name: "Next episode".localize(), action: .nextEpisode(from: from))
+            return videoTimestamps + [timestamp]
+        }
+        
+        return videoTimestamps
+    }
+    
+    @objc func playNextEpisode() {
+        videoPlayerView.nextEpisodeButton.isEnabled = false
+        
+        nextEpisodeProvider.getNextEpisode(episodeId: film.id, result: { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(nextEpisodeResult):
+                switch nextEpisodeResult {
+                case let .film(newFilm):
+                    self.film = newFilm
+                    self.timestamps = [] // clear timestamps from previous video
+                    self.stateMachine.transitionTo(state: .initial)
+                    self.mediaPlayer.stop()
+                    self.videoPlayerView.titleLabel.text = newFilm.title
+                    
+                    self.fetchVideoURL()
+                case .noMoreEpisodes:
+                    self.showTheEnd()
+                }
+            case let .failure(error):
+                print("Error occurred! \(error)") // TODO: Exit
+            }
+            
+            self.videoPlayerView.nextEpisodeButton.isEnabled = true
+        })
+    }
+    
+    private func showTheEnd() {
+        mediaPlayer.stop()
+        
+        // UI
+        let redEndView = UIView(frame: videoPlayerView.controlView.frame)
+        redEndView.backgroundColor = .black
+        
+        let theEnd = UILabel()
+        theEnd.text = "The end".localize()
+        theEnd.textColor = .white
+        
+        // Position
+        redEndView.addSubviewLayout(theEnd)
+        
+        theEnd.centerXAnchor.constraint(equalTo: redEndView.centerXAnchor).isActive = true
+        theEnd.centerYAnchor.constraint(equalTo: redEndView.centerYAnchor).isActive = true
+
+        let tapToShowControls = UITapGestureRecognizer(target: self, action: #selector(showControls))
+        redEndView.addGestureRecognizer(tapToShowControls)
+        
+        view.insertSubview(redEndView, belowSubview: videoPlayerView.controlView)
+    }
+    
+    private func fetchVideoURL() {
+        switch film.type {
+        case .movie:
+            fetchMovieData()
+        case .show:
+            fetchEpisodeData()
+        }
+    }
+    
+    private func fetchEpisodeData() {
+        videoProvider.getEpisodeData(id: film.id) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(data):
+                let title = self.titleFromEpisode(title: data.episodeTitle, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
+                self.film = Film(id: data.id, type: .show, URL: data.videoURL, title: title)
+                
+                let contentID: ViewedContent.ContentID = .episode(id: data.id, showId: data.showId, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
+                let value = ViewedContent(id: contentID, title: data.showTitle, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
+                let viewingContent = self.viewedContentManager.addEpisodeIfNotAdded(id: data.id, value: value)
+                
+                let stoppedAt = viewingContent.stoppedAt
+                self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
+ 
+                self.fetchVideoTimestamps(duration: data.duration)
+            case let .failure(error):
+                print(error) // TODO: show alert & exit
+            }
+        }
+    }
+    
+    private func titleFromEpisode(title: String?, seasonNumber: Int, episodeNumber: Int) -> String {
+        let notitle = "No title".localize()
+        let newTitle = title ?? notitle
+      
+        return "S\(seasonNumber):E\(episodeNumber) \"\(newTitle)\""
+    }
+    
+    private func fetchMovieData() {
+        videoProvider.getMovieData(id: film.id) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case let .success(data):
+                self.film = Film(id: data.id, type: .movie, URL: data.videoURL, title: data.title)
+                
+                let value = ViewedContent(id: .movie(id: data.id), title: data.title, lastPlayedTime: Date().timeIntervalSince1970, position: 0, duration: data.duration)
+                let viewingContent = self.viewedContentManager.addMovieIfNotAdded(id: data.id, value: value)
+                
+                let stoppedAt = viewingContent.stoppedAt
+                self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
+            case let .failure(error):
+                print(error) // TODO: show alert & exit
+            }
+        }
+    }
+    
 }

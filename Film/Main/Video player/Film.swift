@@ -8,46 +8,58 @@
 
 import Foundation
 
-enum FilmType: String, Decodable {
+enum FilmType: String, Codable {
     case movie
     case show
 }
 
 struct Film: Decodable {
     let id: Int // MovieID OR EpisodeID (this is not the show id)
-    var URL: String
-    let duration: Int
     let type: FilmType
-    
-    var stoppedAt: Int?
+    var URL: String? = nil
     var title: String?
     
     mutating func fixURL(with urlFixer: (String?) -> String?) {
         URL = urlFixer(URL) ?? URL
     }
     
-    func durationMin() -> String {
-        return Film.durationMin(seconds: duration)
-    }
-    
     static func durationMin(seconds sec: Int) -> String {
-        let hours: Int = sec / 3600
-        let minutes: Int = (sec % 3600) / 60
-        let seconds: Int = sec - minutes * 60
+        let secondsInHour = 3600
+        let secondsInMinute = 60
+        
+        let hours: Int = sec / secondsInHour
+        let minutes: Int = (sec % secondsInHour) / secondsInMinute
+        let seconds: Int = sec - minutes * secondsInMinute
         
         if hours == 0 {
-            return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
-        } else {
-            return "\(String(format: "%02d", hours)):\(String(format: "%02d", minutes))"
+            return "\(addZero(to: minutes)):\(addZero(to: seconds))"
         }
+        
+        return "\(addZero(to: hours)):\(addZero(to: minutes))"
+    }
+    
+    static func durationMinWithTime(seconds sec: Int) -> String {
+        let secondsInHour = 3600
+        let secondsInMinute = 60
+        
+        let hours: Int = sec / secondsInHour
+        let minutes: Int = (sec % secondsInHour) / secondsInMinute
+        let seconds: Int = sec - minutes * secondsInMinute
+        
+        if hours == 0 {
+            return "\(minutes)min \(seconds)s"
+        }
+        
+        return "\(hours)h \(minutes)min"
+    }
+    
+    static private func addZero(to number: Int) -> String {
+        return String(format: "%02d", number)
     }
     
     static func from(watched: Watched) -> Film {
         return Film(id: watched.id,
-                    URL: watched.videoURL,
-                    duration: watched.duration,
                     type: watched.type,
-                    stoppedAt: watched.stoppedAt,
                     title: watched.title)
     }
     
@@ -58,19 +70,13 @@ struct Film: Decodable {
         }
         
         return Film(id: episode.id,
-                    URL: episode.videoURL,
-                    duration: episode.duration,
                     type: .show,
-                    stoppedAt: episode.stoppedAt,
                     title: newTitle)
     }
     
     static func from(movie: Movie) -> Film {
         return Film(id: movie.id,
-                    URL: movie.videoURL,
-                    duration: movie.duration,
                     type: .movie,
-                    stoppedAt: movie.stoppedAt,
                     title: movie.title)
     }
 }

@@ -37,6 +37,10 @@
 // Player VC
 "Next episode" = "Следующий эпизод";
 "No title" = "Без названия";
+"Skip intro" = "Пропустить начало";
+"Skip introduction" = "Пропустить начало";
+"Next episode" = "Следующий эпизод";
+"The end" = "Конец";
 
 // Settings
 "settings" = "настройки";

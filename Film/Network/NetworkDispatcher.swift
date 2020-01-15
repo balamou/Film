@@ -31,6 +31,11 @@ final class URLSessionNetworkDispatcher: NetworkDispatcher {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method.rawValue
         
+        if case .post = request.method {
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpBody = request.data
+        }
+        
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let error = error {
                 onError(error)

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol SeriesInfoAPI {
-    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode], [Int])>)
+    func getSeriesInfo(seriesId: Int, season: Int, result: @escaping Handler<(Series, [Episode], [Int])>)
     func getEpisodes(seriesId: Int, season: Int, result: @escaping Handler<[Episode]>)
 }
 
@@ -24,6 +24,7 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         mutating func fixURLs(urlFixer: (String?) -> String?) {
             episodes = episodes.fixURLs(urlFixer: urlFixer)
             series.lastWatchedEpisode?.fixURL(with: urlFixer)
+            series.posterURL = urlFixer(series.posterURL)
         }
     }
     
@@ -31,13 +32,8 @@ class ConcreteSeriesInfoAPI: SeriesInfoAPI {
         self.settings = settings
     }
     
-    func getSeriesInfo(seriesId: Int, result: @escaping Handler<(Series, [Episode], [Int])>) {
-        guard let userId = settings.userId else {
-            result(.failure(ConnectionError.custom("UserId is nil")))
-            return
-        }
-        
-        let requestData = RequestData(baseURL: settings.basePath, endPoint: .show(showId: seriesId, userId: userId), method: .get)
+    func getSeriesInfo(seriesId: Int, season: Int, result: @escaping Handler<(Series, [Episode], [Int])>) {
+        let requestData = RequestData(baseURL: settings.basePath, endPoint: .show(showId: seriesId, season: season), method: .get)
         let requestType = RequestType<WrapperSeries>(data: requestData)
         
         requestType.execute(onSuccess: { data in

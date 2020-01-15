@@ -63,6 +63,16 @@ class VideoPlayerStateMachine {
             return true
         }
     }
+    
+    var shouldShowTimestamps: Bool {
+        switch currentState {
+        case .initial,
+             .scrolling:
+            return false
+        default:
+            return true
+        }
+    }
         
     private func canTransition(from: VideoPlayerState, to: VideoPlayerState) -> Bool {
         switch (from, to) {

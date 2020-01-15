@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol WatchableContent {
+    func lastWatchedSeason(showId: Int) -> Int?
+    func fetchStoppedAt(for episodes: [Episode]) -> [Episode]
+}
+
 protocol ShowInfoViewControllerDelegate: class {
     func showInfoViewControllerDidExit(_ showInfoViewController: ShowInfoViewController)
     func showInfoViewController(_ showInfoViewController: ShowInfoViewController, play episode: Episode)
@@ -28,11 +33,14 @@ class ShowInfoViewController: UIViewController {
     
     private var availableSeasons: [Int] = []
     
+    private let watchableManager: WatchableContent
+    
     // API
     var apiManager: SeriesInfoAPI?
     
-    init(series: Series) {
+    init(series: Series, watchableManager: WatchableContent) {
         self.series = series
+        self.watchableManager = watchableManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -84,13 +92,16 @@ class ShowInfoViewController: UIViewController {
 extension ShowInfoViewController {
     
     func fetchSeries(by seriesId: Int) {
-        apiManager?.getSeriesInfo(seriesId: seriesId) { [weak self] result in
+        let flagForSmallestAvailableSeason = -1 // make the server fetch first available season
+        let season = watchableManager.lastWatchedSeason(showId: seriesId) ?? flagForSmallestAvailableSeason
+        
+        apiManager?.getSeriesInfo(seriesId: seriesId, season: season) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case .success((let seriesData, let episodes, let availableSeasons)):
                 self.series = seriesData
-                self.episodes = episodes
+                self.episodes = self.watchableManager.fetchStoppedAt(for: episodes)
                 self.availableSeasons = availableSeasons
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
@@ -110,7 +121,7 @@ extension ShowInfoViewController {
             
             switch result {
             case .success(let episodes):
-                self.episodes = episodes
+                self.episodes = self.watchableManager.fetchStoppedAt(for: episodes)
                 self.isLoadingEpisodes = false
                 self.episodesCollectionView.reloadData()
             case .failure(let error):

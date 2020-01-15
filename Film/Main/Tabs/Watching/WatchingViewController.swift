@@ -22,7 +22,7 @@ enum WatchingViewControllerMode {
 class WatchingViewController: UIViewController {
     
     weak var delegate: WatchingViewControllerDelegate?
-    var apiManager: WatchedAPI?
+    private let apiManager: WatchedAPI
     
     private var watchingView: WatchingView = WatchingView()
     private var data = [Watched]()
@@ -39,6 +39,17 @@ class WatchingViewController: UIViewController {
     
     // Alert
     var alert: AlertViewController?
+    
+    private var watchedContentUpdated = false
+    
+    init(apiManager: WatchedAPI) {
+        self.apiManager = apiManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,6 +119,13 @@ class WatchingViewController: UIViewController {
             ].activate()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        // Refresh if updated watched contents
+        if watchedContentUpdated {
+            refreshOnPull()
+            watchedContentUpdated = false
+        }
+    }
 }
 
 
@@ -117,12 +135,19 @@ class WatchingViewController: UIViewController {
 extension WatchingViewController {
     
     func initialLoadWatching() {
-        apiManager?.getWatched { [weak self] result in
+        apiManager.getWatched { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case .success(let watched):
                 self.data = watched
+                
+                guard watched.count > 0 else {
+                    self.loadingSection.hide()
+                    self.idleSection.show()
+                    self.collectionView.reloadData()
+                    return
+                }
                 
                 self.dataSection.numberOfItems = watched.count
                 self.dataSection.show()
@@ -140,7 +165,7 @@ extension WatchingViewController {
     }
     
     func refreshOnPull() {
-        apiManager?.getWatched { [weak self] result in
+        apiManager.getWatched { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -179,4 +204,12 @@ extension WatchingViewController: WatchingCellDelegate {
     func informationButtonTapped(row: Int) {
         delegate?.watchingViewController(self, selectMoreInfo: data[row])
     }
+}
+
+extension WatchingViewController: ViewContentManagerObservable {
+    
+    func didUpdateWatched() {
+        watchedContentUpdated = true
+    }
+    
 }

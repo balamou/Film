@@ -28,7 +28,7 @@ extension Film {
                                "Westworld" : "http://192.168.72.59:3000/en/shows/E03.mkv"]
     
     static func provideMock() -> Film {
-        return Film(id: 0, URL: serverVideos["Rick and morty S1E1"] ?? testVideos[0], duration: 15, type: .show)
+        return Film(id: 0, type: .show, URL: serverVideos["Rick and morty S1E1"] ?? testVideos[0])
     }
     
 }

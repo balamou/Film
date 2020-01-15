@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -128,6 +128,7 @@
 		EDB57E96231885F10049504E /* SeriesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E95231885F10049504E /* SeriesAPI.swift */; };
 		EDB57E9B231887030049504E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDB57E99231887030049504E /* InfoPlist.strings */; };
 		EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB57E9E23188B450049504E /* LoadingCell.swift */; };
+		EDBE1D2423C7ADD7009DEA01 /* ViewedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBE1D2323C7ADD7009DEA01 /* ViewedContent.swift */; };
 		EDBEC55323161AF500041D29 /* ShowInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */; };
 		EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBEC55423161B3E00041D29 /* ShowInfoView.swift */; };
 		EDC8AB422319970100400312 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AB412319970100400312 /* ViewControllerFactory.swift */; };
@@ -147,6 +148,12 @@
 		EDEF975C231C268E00025483 /* Watched+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975B231C268E00025483 /* Watched+mock.swift */; };
 		EDEF975E231C26C900025483 /* SeriesItem+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975D231C26C900025483 /* SeriesItem+mock.swift */; };
 		EDEF9760231C274500025483 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF975F231C274500025483 /* MockData.swift */; };
+		EDF1B3D623CA3862003D27B7 /* ViewedContent+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3D523CA3862003D27B7 /* ViewedContent+extensions.swift */; };
+		EDF1B3D823CA4741003D27B7 /* ViewedContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */; };
+		EDF1B3DA23CA863B003D27B7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3D923CA863B003D27B7 /* StorageManager.swift */; };
+		EDF1B3DC23CA8B29003D27B7 /* VideoURLProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3DB23CA8B29003D27B7 /* VideoURLProvider.swift */; };
+		EDF1B3DE23CAAA38003D27B7 /* PostersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3DD23CAAA38003D27B7 /* PostersProvider.swift */; };
+		EDF1B3E223CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF1B3E123CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift */; };
 		EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB055231497C90045E8D6 /* WatchingViewController.swift */; };
 		EDFDB0582314985A0045E8D6 /* WatchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFDB0572314985A0045E8D6 /* WatchingView.swift */; };
 /* End PBXBuildFile section */
@@ -311,6 +318,7 @@
 		EDB57E9C231887390049504E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDB57E9D2318873C0049504E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDB57E9E23188B450049504E /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
+		EDBE1D2323C7ADD7009DEA01 /* ViewedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedContent.swift; sourceTree = "<group>"; };
 		EDBEC55223161AF500041D29 /* ShowInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoViewController.swift; sourceTree = "<group>"; };
 		EDBEC55423161B3E00041D29 /* ShowInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInfoView.swift; sourceTree = "<group>"; };
 		EDC8AB412319970100400312 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
@@ -330,6 +338,12 @@
 		EDEF975B231C268E00025483 /* Watched+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Watched+mock.swift"; sourceTree = "<group>"; };
 		EDEF975D231C26C900025483 /* SeriesItem+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeriesItem+mock.swift"; sourceTree = "<group>"; };
 		EDEF975F231C274500025483 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		EDF1B3D523CA3862003D27B7 /* ViewedContent+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewedContent+extensions.swift"; sourceTree = "<group>"; };
+		EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedContentManager.swift; sourceTree = "<group>"; };
+		EDF1B3D923CA863B003D27B7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		EDF1B3DB23CA8B29003D27B7 /* VideoURLProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoURLProvider.swift; sourceTree = "<group>"; };
+		EDF1B3DD23CAAA38003D27B7 /* PostersProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostersProvider.swift; sourceTree = "<group>"; };
+		EDF1B3E123CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewedContentManager+WatchedAPI.swift"; sourceTree = "<group>"; };
 		EDFDB055231497C90045E8D6 /* WatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingViewController.swift; sourceTree = "<group>"; };
 		EDFDB0572314985A0045E8D6 /* WatchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -477,6 +491,7 @@
 		ED57FCAF231366A80001A9AB /* Video player */ = {
 			isa = PBXGroup;
 			children = (
+				EDBE1D2223C7ADBA009DEA01 /* Persistence */,
 				ED0F1E1823C583250062192B /* Animations */,
 				ED0F1E0923C4194F0062192B /* PlayPauseButton */,
 				ED82DBC3231464F900FEC56A /* Volume Controller */,
@@ -550,6 +565,8 @@
 				EDE494FF232EA78B00547830 /* MovieInfoAPI.swift */,
 				ED76BA3323C2E3E800CAC72D /* NextEpisodeProvider.swift */,
 				ED0F1E1B23C67D9D0062192B /* TimestampsDataProvider.swift */,
+				EDF1B3DB23CA8B29003D27B7 /* VideoURLProvider.swift */,
+				EDF1B3DD23CAAA38003D27B7 /* PostersProvider.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -739,6 +756,18 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		EDBE1D2223C7ADBA009DEA01 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				EDBE1D2323C7ADD7009DEA01 /* ViewedContent.swift */,
+				EDF1B3D523CA3862003D27B7 /* ViewedContent+extensions.swift */,
+				EDF1B3D723CA4741003D27B7 /* ViewedContentManager.swift */,
+				EDF1B3E123CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift */,
+				EDF1B3D923CA863B003D27B7 /* StorageManager.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		EDBEC5512316181A00041D29 /* Show Info */ = {
 			isa = PBXGroup;
 			children = (
@@ -849,6 +878,7 @@
 				ED909B36230F006600A67AC6 /* Sources */,
 				ED909B37230F006600A67AC6 /* Frameworks */,
 				ED909B38230F006600A67AC6 /* Resources */,
+				541C4903B62068A38E69BFEE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1004,6 +1034,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		541C4903B62068A38E69BFEE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Film/Pods-Film-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Film/Pods-Film-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Film/Pods-Film-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A985A2F7D4F51528ABED0832 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1039,6 +1086,7 @@
 				ED82DBC2231464E000FEC56A /* VideoPlayerController+Volume.swift in Sources */,
 				ED5AC12C2315A7600098A161 /* WatchingCell.swift in Sources */,
 				EDE494F3232DC37600547830 /* MoviesAPI.swift in Sources */,
+				EDF1B3DC23CA8B29003D27B7 /* VideoURLProvider.swift in Sources */,
 				EDFDB056231497C90045E8D6 /* WatchingViewController.swift in Sources */,
 				ED76BA2B23C0503200CAC72D /* CustomHeightSlider.swift in Sources */,
 				ED1B58CF2336A65500307EDC /* WelcomeAPI.swift in Sources */,
@@ -1055,7 +1103,9 @@
 				ED76BA2F23C17F6100CAC72D /* VideoPlayerSliderAction.swift in Sources */,
 				EDB57E96231885F10049504E /* SeriesAPI.swift in Sources */,
 				ED909B8423124C8F00A67AC6 /* UIView+extensions.swift in Sources */,
+				EDBE1D2423C7ADD7009DEA01 /* ViewedContent.swift in Sources */,
 				ED5AC1122314DDEF0098A161 /* MoviesView.swift in Sources */,
+				EDF1B3DE23CAAA38003D27B7 /* PostersProvider.swift in Sources */,
 				EDE494EF232D4FCF00547830 /* Array+extensions.swift in Sources */,
 				ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */,
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
@@ -1081,6 +1131,7 @@
 				EDE494FC232E9F3400547830 /* MovieInfoView.swift in Sources */,
 				ED1CC3A9231624FC0061EE21 /* HeaderView.swift in Sources */,
 				ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */,
+				EDF1B3DA23CA863B003D27B7 /* StorageManager.swift in Sources */,
 				EDCBAC5C2327245E0002FAE3 /* ChangeSeasonViewController.swift in Sources */,
 				ED909B8623124CC500A67AC6 /* VideoPlayerView.swift in Sources */,
 				EDE494FE232EA4D100547830 /* Movie.swift in Sources */,
@@ -1106,11 +1157,13 @@
 				ED1FEEBD2318B74100DE69AB /* AlertViewController.swift in Sources */,
 				EDB57E9423176EC70049504E /* AsyncImageView.swift in Sources */,
 				ED82DBC02314620F00FEC56A /* VolumeController.swift in Sources */,
+				EDF1B3D823CA4741003D27B7 /* ViewedContentManager.swift in Sources */,
 				EDB1C86F2383840F009D909F /* MockWelcomeAPI.swift in Sources */,
 				EDEF9760231C274500025483 /* MockData.swift in Sources */,
 				EDB57E9F23188B450049504E /* LoadingCell.swift in Sources */,
 				ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */,
 				ED5AC12623157A260098A161 /* Coordinator.swift in Sources */,
+				EDF1B3D623CA3862003D27B7 /* ViewedContent+extensions.swift in Sources */,
 				ED725116232ED83A0040C279 /* CustomTextField.swift in Sources */,
 				ED0F1E1123C437040062192B /* AnimationManager.swift in Sources */,
 				ED0F1E1C23C67D9D0062192B /* TimestampsDataProvider.swift in Sources */,
@@ -1122,6 +1175,7 @@
 				EDACC49E231A0D8E005DC09C /* CustomMarginButton.swift in Sources */,
 				ED57FCB123137CB30001A9AB /* Film.swift in Sources */,
 				EDEF975A231C264600025483 /* Series+mock.swift in Sources */,
+				EDF1B3E223CABEBD003D27B7 /* ViewedContentManager+WatchedAPI.swift in Sources */,
 				EDEF975E231C26C900025483 /* SeriesItem+mock.swift in Sources */,
 				ED5AC12A2315A65F0098A161 /* UIViewController+extensions.swift in Sources */,
 				ED5AC1102314DDD00098A161 /* MoviesViewController.swift in Sources */,

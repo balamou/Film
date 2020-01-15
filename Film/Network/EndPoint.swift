@@ -17,6 +17,7 @@ struct RequestData {
     var baseURL: String
     var endPoint: EndPoint
     var method: HTTPMethod
+    var data: Data?
 }
 
 enum EndPoint {
@@ -28,7 +29,7 @@ enum EndPoint {
     case shows(start: Int, quantity: Int, language: String)
     case movies(start: Int, quantity: Int, language: String)
     
-    case show(showId: Int, userId: Int)
+    case show(showId: Int, season: Int)
     case episodes(showId: Int, userId: Int, season: Int)
     
     case movie(movieId: Int, userId: Int)
@@ -39,6 +40,10 @@ enum EndPoint {
     case nextEpisode(episodeId: Int, userId: Int)
     
     case timestamp(episodeId: Int)
+    
+    case videoURL(id: Int, type: FilmType)
+    
+    case posters
     
     var path: String {
         switch self {
@@ -54,8 +59,8 @@ enum EndPoint {
         case let .movies(start, quantity, language):
             return "/movies/\(start)/\(quantity)/\(language)"
             
-        case let .show(showId, userId):
-            return "/show/\(showId)/\(userId)"
+        case let .show(showId, season):
+            return "/show/\(showId)/\(season)"
         case let .episodes(showId, userId, season):
             return "/episodes/\(showId)/\(userId)/\(season)"
             
@@ -70,6 +75,12 @@ enum EndPoint {
         
         case let .timestamp(episodeId):
             return "/episode_timestamps/\(episodeId)"
+            
+        case let .videoURL(id, type):
+            return "/video_url/\(id)/\(type)"
+        
+        case .posters:
+            return "/posters"
         }
     }
 }
