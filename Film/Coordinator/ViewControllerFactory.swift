@@ -67,7 +67,7 @@ class StandardFactory: ViewControllerFactory {
     }
     
     func createSettingsViewController(delegate: SettingsViewControllerDelegate?, settings: Settings) -> SettingsViewController {
-        let settingsVC = SettingsViewController(settings: settings)
+        let settingsVC = SettingsViewController(settings: settings, viewedContentManager: viewedContentManager)
         settingsVC.tabBarItem = UITabBarItem(title: "Settings".localize(), image: Images.Tabs.settingsImage, tag: 3)
         settingsVC.delegate = delegate
         
