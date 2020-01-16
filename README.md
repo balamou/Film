@@ -1,6 +1,6 @@
 # <img src="images/logo.png" width="30px" height="30px"/> FILM
 
-  A Netflix-like app that lets you play movies from your local server.
+  A Netflix-like app that lets you play movies from your local server. The **backend** can be found [here](https://github.com/balamou/Film_backend).
 
   <p align="center">
   <img src="images/watching.PNG" width="30%"/>
