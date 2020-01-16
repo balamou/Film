@@ -93,7 +93,9 @@ class VideoPlayerController: UIViewController {
                 
                 switch videoTimestamp.action {
                 case let .skip(from: _, to: to):
-                    self.mediaPlayer.position = Float(to)/Float(self.mediaPlayer.totalDuration)
+                    let position = Float(to)/Float(self.mediaPlayer.totalDuration)
+                    self.mediaPlayer.position = position
+                    self.videoPlayerView.slider.value = position
                 case .nextEpisode(from: _):
                     skipButton.animateHide()
                     self.playNextEpisode()
