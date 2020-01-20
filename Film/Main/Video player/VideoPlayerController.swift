@@ -427,7 +427,7 @@ extension VideoPlayerController {
                 switch nextEpisodeResult {
                 case let .film(newFilm):
                     self.film = newFilm
-                    self.timestamps = [] // clear timestamps from previous video
+                    self.clearTimestamps()
                     self.stateMachine.transitionTo(state: .initial)
                     self.mediaPlayer.stop()
                     self.videoPlayerView.titleLabel.text = newFilm.title
@@ -442,6 +442,14 @@ extension VideoPlayerController {
             
             self.videoPlayerView.nextEpisodeButton.isEnabled = true
         })
+    }
+    
+    private func clearTimestamps() {
+        timestamps.forEach { (_, button) in
+            button.removeFromSuperview()
+        }
+        
+        timestamps = [] // clear timestamps from previous video
     }
     
     private func showTheEnd() {
