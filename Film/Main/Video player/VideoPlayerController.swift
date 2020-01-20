@@ -184,6 +184,9 @@ class VideoPlayerController: UIViewController {
     }
     
     @objc func pausePlayButtonPressed(sender: UIButton) {
+//        print("AUDIO DELAY: \(mediaPlayer.audioTrackNames)")
+//        print("AUDIO DELAY: \(mediaPlayer.currentAudioTrackIndex)")
+//        mediaPlayer.currentAudioTrackIndex = 2
         switch playState {
         case .playing:
             mediaPlayer.pause()

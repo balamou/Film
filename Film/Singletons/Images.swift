@@ -25,15 +25,13 @@ struct Images {
     }
     
     struct Player {
-//        static let pauseImage = UIImage(named: "pause")
-//        static let playImage = UIImage(named: "play")
         static let forwardImage = UIImage(named: "forward")
         static let backwardImage = UIImage(named: "backward")
         static let nextEpisodeImage = UIImage(named: "next_episode")
         static let volumeImage = UIImage(named: "volume")
         static let airPlayImage = UIImage(named: "airplay")
         static let closeImage = UIImage(named: "close")
-        static let subtitlesImage = UIImage(named: "subtiles")
+        static let subtitlesImage = UIImage(named: "subtitles")
         static let airplayImage = UIImage(named: "airplay")
         static let thumbTrackImage = UIImage(named: "thumb_track")
     }

@@ -139,6 +139,16 @@ class VideoPlayerView: UIView {
         return label
     }()
     
+    var audioAndSubtitles: UIButton = {
+        let button = UIButton()
+        button.setTitle("Audio and subtitles".localize(), for: .normal)
+        button.setImage(Images.Player.subtitlesImage, for: .normal)
+        button.titleLabel?.font = Fonts.helveticaNeue(size: 15.0)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
+        
+        return button
+    }()
+    
     var nextEpisodeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Next episode".localize(), for: .normal)
@@ -147,6 +157,14 @@ class VideoPlayerView: UIView {
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
         
         return button
+    }()
+    
+    var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 30
+        
+        return stackView
     }()
     
     var subtitlesButton: UIButton = {
@@ -276,11 +294,6 @@ class VideoPlayerView: UIView {
             view.heightAnchor.constraint(equalTo: parent.heightAnchor).isActive = true
         }
         
-        static func setNextEpisodeButton(_ button: UIButton, _ parent: UIView) {
-            button.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -20.0).isActive = true
-            button.centerXAnchor.constraint(equalTo: parent.centerXAnchor).isActive = true
-        }
-        
         // VOLUME BAR
         static func setVolumeBar(_ progressView: UIProgressView, _ parent: UIView) {
             progressView.topAnchor.constraint(equalTo: parent.topAnchor, constant: 10.0).isActive = true
@@ -351,14 +364,20 @@ class VideoPlayerView: UIView {
         topBar.addSubviewLayout(airPlayButton)
         bottomBar.addSubviewLayout(durationLabel)
         bottomBar.addSubviewLayout(slider)
-        bottomBar.addSubviewLayout(nextEpisodeButton)
         
         Constraints.setTitleLabel(titleLabel, topBar)
         Constraints.setCloseButton(closeButton, titleLabel, topBar)
         Constraints.setAirPlayButton(airPlayButton, topBar)
         Constraints.setDurationLabel(durationLabel, bottomBar)
         Constraints.setSlider(slider, durationLabel, bottomBar)
-        Constraints.setNextEpisodeButton(nextEpisodeButton, bottomBar)
+        
+        //
+        stackView.addArrangedSubview(audioAndSubtitles)
+        stackView.addArrangedSubview(nextEpisodeButton)
+        
+        bottomBar.addSubviewLayout(stackView)
+        stackView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
     }
     
     func didAppear() {
