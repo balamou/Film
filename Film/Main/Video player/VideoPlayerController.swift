@@ -132,6 +132,7 @@ class VideoPlayerController: UIViewController {
         
         let vlcMedia = VLCMedia(url: streamURL)
         
+        vlcMedia.addOptions(["network-caching": 500])
         mediaPlayer.media = vlcMedia
         mediaPlayer.drawable = videoPlayerView.mediaView
         
