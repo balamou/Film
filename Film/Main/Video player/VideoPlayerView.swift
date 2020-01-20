@@ -196,7 +196,13 @@ class VideoPlayerView: UIView {
         return imageView
     }()
     
-    
+    var audioAndSubtitlesView: AudioAndSubtilesView = {
+        let view = AudioAndSubtilesView()
+        view.isHidden = true
+        
+        return view
+    }()
+
     class Constraints {
         
         static let topBottomBarsHeight: CGFloat = 80.0
@@ -318,6 +324,8 @@ class VideoPlayerView: UIView {
         setupSecondaryControls()
         
         controlView.addSubview(currentPositionLabel)
+        
+        setupAudioAndSubstitlesView()
     }
     
     private func setupMainViewComponents() {
@@ -378,6 +386,15 @@ class VideoPlayerView: UIView {
         bottomBar.addSubviewLayout(stackView)
         stackView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
+    }
+    
+    private func setupAudioAndSubstitlesView() {
+        addSubviewLayout(audioAndSubtitlesView)
+        
+        audioAndSubtitlesView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        audioAndSubtitlesView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        audioAndSubtitlesView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        audioAndSubtitlesView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
     
     func didAppear() {

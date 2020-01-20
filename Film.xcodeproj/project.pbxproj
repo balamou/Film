@@ -34,6 +34,7 @@
 		ED1CC3A9231624FC0061EE21 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1CC3A8231624FC0061EE21 /* HeaderView.swift */; };
 		ED1FEEBB2318B73900DE69AB /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1FEEBA2318B73900DE69AB /* AlertView.swift */; };
 		ED1FEEBD2318B74100DE69AB /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1FEEBC2318B74100DE69AB /* AlertViewController.swift */; };
+		ED271D2E23D54F96008B9ACA /* AudioAndSubtilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED271D2D23D54F96008B9ACA /* AudioAndSubtilesView.swift */; };
 		ED2DBB412315E356009250EC /* ShowsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2DBB402315E356009250EC /* ShowsCell.swift */; };
 		ED40BB76233725E2002FD07E /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40BB75233725E2002FD07E /* LanguagePickerView.swift */; };
 		ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */; };
@@ -200,6 +201,7 @@
 		ED1CC3A8231624FC0061EE21 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		ED1FEEBA2318B73900DE69AB /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		ED1FEEBC2318B74100DE69AB /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		ED271D2D23D54F96008B9ACA /* AudioAndSubtilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAndSubtilesView.swift; sourceTree = "<group>"; };
 		ED2DBB402315E356009250EC /* ShowsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsCell.swift; sourceTree = "<group>"; };
 		ED40BB75233725E2002FD07E /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
@@ -464,6 +466,21 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		ED271D2B23D54F48008B9ACA /* Audio and subtitles */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Audio and subtitles";
+			sourceTree = "<group>";
+		};
+		ED271D2C23D54F6D008B9ACA /* Audio and subtitles */ = {
+			isa = PBXGroup;
+			children = (
+				ED271D2D23D54F96008B9ACA /* AudioAndSubtilesView.swift */,
+			);
+			path = "Audio and subtitles";
+			sourceTree = "<group>";
+		};
 		ED57FC7D23134AF50001A9AB /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,6 +508,7 @@
 		ED57FCAF231366A80001A9AB /* Video player */ = {
 			isa = PBXGroup;
 			children = (
+				ED271D2C23D54F6D008B9ACA /* Audio and subtitles */,
 				EDBE1D2223C7ADBA009DEA01 /* Persistence */,
 				ED0F1E1823C583250062192B /* Animations */,
 				ED0F1E0923C4194F0062192B /* PlayPauseButton */,
@@ -837,6 +855,7 @@
 		EDFDB054231495EF0045E8D6 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				ED271D2B23D54F48008B9ACA /* Audio and subtitles */,
 				EDB0CD3C231B57EE00246CDF /* IdleCell.swift */,
 				EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */,
 				EDB57E9E23188B450049504E /* LoadingCell.swift */,
@@ -1110,6 +1129,7 @@
 				ED5AC1242314E6A40098A161 /* String+extensions.swift in Sources */,
 				ED909B3E230F006600A67AC6 /* AppDelegate.swift in Sources */,
 				ED8060A6231B76CD0032A128 /* SeriesItem.swift in Sources */,
+				ED271D2E23D54F96008B9ACA /* AudioAndSubtilesView.swift in Sources */,
 				EDE494ED232D4E8800547830 /* LoadingWaitCell.swift in Sources */,
 				EDEF975C231C268E00025483 /* Watched+mock.swift in Sources */,
 				ED1CC3A7231620790061EE21 /* EpisodeCell.swift in Sources */,

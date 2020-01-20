@@ -148,7 +148,7 @@ class VideoPlayerController: UIViewController {
     // MARK: Actions
     //----------------------------------------------------------------------
     private func setActions() {
-        videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
+        videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed), for: .touchUpInside)
         
         let tapToShowControls = UITapGestureRecognizer(target: self, action: #selector(showControls))
         tapToShowControls.numberOfTapsRequired = 1
@@ -169,6 +169,8 @@ class VideoPlayerController: UIViewController {
         videoPlayerView.mediaView.addGestureRecognizer(doubleTap)
         
         tapToShowControls.require(toFail: doubleTap)
+        
+        videoPlayerView.audioAndSubtitles.addTarget(self, action: #selector(audioAndSubtitlesTapped), for: .touchUpInside)
     }
     
     
@@ -183,10 +185,7 @@ class VideoPlayerController: UIViewController {
         stateMachine.hideControls()
     }
     
-    @objc func pausePlayButtonPressed(sender: UIButton) {
-//        print("AUDIO DELAY: \(mediaPlayer.audioTrackNames)")
-//        print("AUDIO DELAY: \(mediaPlayer.currentAudioTrackIndex)")
-//        mediaPlayer.currentAudioTrackIndex = 2
+    @objc func pausePlayButtonPressed() {
         switch playState {
         case .playing:
             mediaPlayer.pause()
@@ -234,6 +233,15 @@ class VideoPlayerController: UIViewController {
     
     @objc func closeVideo() {
         navigationController?.popViewController(animated: false)
+    }
+    
+    @objc func audioAndSubtitlesTapped() {
+        if case .playing = playState {
+            pausePlayButtonPressed() // Pause
+        }
+        
+        videoPlayerView.audioAndSubtitlesView.show()
+        videoPlayerView.audioAndSubtitlesView.setup(with: mediaPlayer)
     }
     
     //----------------------------------------------------------------------
