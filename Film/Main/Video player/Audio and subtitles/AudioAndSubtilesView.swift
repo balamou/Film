@@ -63,11 +63,11 @@ class AudioAndSubtilesView: UIView {
         let trackTitle = track.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if trackTitle ~= "(ru|rus|russian|ру|рус|русский)" {
-            return "Russian"
+            return "Russian".localize()
         }
         
         if trackTitle ~= "(en|eng|english|анг|английский)" {
-            return "English"
+            return "English".localize()
         }
         
         return trackTitle
