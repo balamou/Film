@@ -16,7 +16,7 @@ class AudioAndSubtilesView: UIView {
         let label = UILabel()
         label.text = "Audio tracks".localize()
         label.textColor = .white
-        label.font = Fonts.helveticaBold(size: 15.0)
+        label.font = Fonts.helveticaBold(size: 16.0)
         
         return label
     }()
@@ -80,11 +80,11 @@ class AudioAndSubtilesView: UIView {
             if offset == currentTrack - 1 {
                 item.button.setTitle("\u{2713} \(trackTitle)", for: .normal)
                 item.button.setTitleColor(.white, for: .normal)
-                item.button.titleLabel?.font = Fonts.helveticaBold(size: 15.0)
+                item.button.titleLabel?.font = Fonts.helveticaBold(size: 16.0)
             } else {
                 item.button.setTitle("    \(trackTitle)", for: .normal)
                 item.button.setTitleColor(.gray, for: .normal)
-                item.button.titleLabel?.font = Fonts.helveticaNeue(size: 15.0)
+                item.button.titleLabel?.font = Fonts.helveticaNeue(size: 16.0)
             }
         }
     }
@@ -110,7 +110,7 @@ class AudioAndSubtilesView: UIView {
         audioLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50).isActive = true
         
         addSubviewLayout(audioButtonStackView)
-        audioButtonStackView.topAnchor.constraint(equalTo: audioLabel.bottomAnchor, constant: 10).isActive = true
+        audioButtonStackView.topAnchor.constraint(equalTo: audioLabel.bottomAnchor, constant: 20).isActive = true
         audioButtonStackView.leadingAnchor.constraint(equalTo: audioLabel.leadingAnchor, constant: 20).isActive = true
         
         closeButton.addTarget(self, action: #selector(closeAudioAndSubtitles), for: .touchUpInside)
