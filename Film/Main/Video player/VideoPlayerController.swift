@@ -186,10 +186,6 @@ class VideoPlayerController: UIViewController {
     }
     
     @objc func pausePlayButtonPressed() {
-        print("Subtitles \(mediaPlayer.videoSubTitlesNames)")
-        print("Subtitles \(mediaPlayer.videoSubTitlesIndexes)")
-//        mediaPlayer.addPlaybackSlave(<#T##slaveURL: URL!##URL!#>, type: <#T##VLCMediaPlaybackSlaveType#>, enforce: <#T##Bool#>)
-        
         switch playState {
         case .playing:
             mediaPlayer.pause()

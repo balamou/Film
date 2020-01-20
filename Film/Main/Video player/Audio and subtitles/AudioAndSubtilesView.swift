@@ -53,10 +53,24 @@ class AudioAndSubtilesView: UIView {
                 self?.resetButonColors(currentTrack: offset)
             }
             
-            return (audioButton, track.trimmingCharacters(in: .whitespacesAndNewlines))
+            return (audioButton, guessTrackLanguage(from: track))
         }
         
         resetButonColors(currentTrack: Int(currentIndex))
+    }
+    
+    private func guessTrackLanguage(from track: String) -> String {
+        let trackTitle = track.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if trackTitle ~= "(ru|rus|russian|ру|рус|русский)" {
+            return "Russian"
+        }
+        
+        if trackTitle ~= "(en|eng|english|анг|английский)" {
+            return "English"
+        }
+        
+        return trackTitle
     }
     
     private func resetButonColors(currentTrack: Int) {
