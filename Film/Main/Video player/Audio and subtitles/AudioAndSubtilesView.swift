@@ -10,7 +10,7 @@ import UIKit
 
 class AudioAndSubtilesView: UIView {
     
-    var audioTrackButtons: [UIButton] = []
+    var audioTrackButtons: [(button: UIButton, track: String)] = []
     
     var audioLabel: UILabel = {
         let label = UILabel()
@@ -43,38 +43,34 @@ class AudioAndSubtilesView: UIView {
         }
         let currentIndex = mediaPlayer.currentAudioTrackIndex
         
-        audioTrackButtons.forEach { $0.removeFromSuperview() }
+        audioTrackButtons.forEach { $0.button.removeFromSuperview() }
         
         audioTrackButtons = audioTracks.enumerated().dropFirst(1).map { (offset, track) in
             let audioButton = ButtonActionable()
-            audioButton.setTitle(track.trimmingCharacters(in: .whitespacesAndNewlines), for: .normal)
-            audioButton.setTitleColor(.gray, for: .normal)
-            audioButton.titleLabel?.font = Fonts.helveticaNeue(size: 15.0)
-            
             audioButtonStackView.addArrangedSubview(audioButton)
-            
-            if offset == currentIndex {
-                audioButton.setTitleColor(.white, for: .normal)
-                audioButton.titleLabel?.font = Fonts.helveticaBold(size: 15.0)
-            }
-            
             audioButton.attachAction { [weak mediaPlayer, weak self] button in
                 mediaPlayer?.currentAudioTrackIndex = Int32(offset)
                 self?.resetButonColors(currentTrack: offset)
             }
             
-            return audioButton
+            return (audioButton, track.trimmingCharacters(in: .whitespacesAndNewlines))
         }
+        
+        resetButonColors(currentTrack: Int(currentIndex))
     }
     
-    func resetButonColors(currentTrack: Int) {
-        audioTrackButtons.enumerated().forEach { (offset, button) in
+    private func resetButonColors(currentTrack: Int) {
+        audioTrackButtons.enumerated().forEach { (offset, item) in
+            let trackTitle = item.track
+            
             if offset == currentTrack - 1 {
-                button.setTitleColor(.white, for: .normal)
-                button.titleLabel?.font = Fonts.helveticaBold(size: 15.0)
+                item.button.setTitle("\u{2713} \(trackTitle)", for: .normal)
+                item.button.setTitleColor(.white, for: .normal)
+                item.button.titleLabel?.font = Fonts.helveticaBold(size: 15.0)
             } else {
-                button.setTitleColor(.gray, for: .normal)
-                button.titleLabel?.font = Fonts.helveticaNeue(size: 15.0)
+                item.button.setTitle("    \(trackTitle)", for: .normal)
+                item.button.setTitleColor(.gray, for: .normal)
+                item.button.titleLabel?.font = Fonts.helveticaNeue(size: 15.0)
             }
         }
     }
