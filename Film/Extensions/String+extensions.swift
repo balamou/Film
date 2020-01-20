@@ -32,9 +32,17 @@ extension String {
         return self
     }
     
-    static func ~= (lhs: String, rhs: String) -> Bool {
-        guard let regex = try? NSRegularExpression(pattern: rhs, options: .caseInsensitive) else { return false }
-        let range = NSRange(location: 0, length: lhs.utf16.count)
-        return regex.firstMatch(in: lhs, options: [], range: range) != nil
+    /**
+     Tests the left hand side with the regular expression on the right hand side.
+     The test is case insensitive.
+     
+     - Parameters:
+        - test: the string to test
+        - regex: regular expression to match against
+     */
+    static func ~= (test: String, regex: String) -> Bool {
+        guard let regex = try? NSRegularExpression(pattern: regex, options: .caseInsensitive) else { return false }
+        let range = NSRange(location: 0, length: test.utf16.count)
+        return regex.firstMatch(in: test, options: [], range: range) != nil
     }
 }
