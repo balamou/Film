@@ -41,6 +41,11 @@
 "Skip introduction" = "Skip introduction";
 "Next episode" = "Next episode";
 "The end" = "The end";
+"Skip ad" = "Skip ad";
+"Skip reminder" = "Skip reminder";
+"Audio and subtitles" = "Audio and subtitles";
+"Russian" = "Russian";
+"English" = "English";
 
 // Settings
 "settings" = "settings";

@@ -41,6 +41,11 @@
 "Skip introduction" = "Пропустить начало";
 "Next episode" = "Следующий эпизод";
 "The end" = "Конец";
+"Skip ad" = "Пропустить рекламу";
+"Skip reminder" = "Пропустить напоминание";
+"Audio and subtitles" = "Звук и субтитры";
+"Russian" = "Русский";
+"English" = "Английский";
 
 // Settings
 "settings" = "настройки";

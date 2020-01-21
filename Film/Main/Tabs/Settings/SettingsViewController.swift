@@ -29,9 +29,11 @@ class SettingsViewController: UIViewController {
     private let settingsView: SettingsView = SettingsView()
     private let languages = Language.default
     private let pickerRowHeight: CGFloat = 30
+    private let viewedContentManager: ViewedContentManager
     
-    init(settings: Settings) {
+    init(settings: Settings, viewedContentManager: ViewedContentManager) {
         self.settings = settings
+        self.viewedContentManager = viewedContentManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,7 +54,7 @@ class SettingsViewController: UIViewController {
     
     func setupActions() {
         settingsView.saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        settingsView.refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
+        settingsView.clearWatchedButton.addTarget(self, action: #selector(clearWatchedButtonTapped), for: .touchUpInside)
         settingsView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         
         let languageTapGesture = UITapGestureRecognizer(target: self, action: #selector(switchLanguages))
@@ -101,8 +103,16 @@ class SettingsViewController: UIViewController {
         alert?.mode = .success("Successfully saved")
     }
     
-    @objc func refreshButtonTapped() {
-        print("Refresh")
+    @objc func clearWatchedButtonTapped() {
+        let alert = UIAlertController(title: "Are you sure you want to clear where you stopped on all shows and movies?", message: "You cannot restore it.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+            self.viewedContentManager.contents = []
+            self.viewedContentManager.save()
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        
+        present(alert, animated: true)
     }
     
     @objc func logoutButtonTapped() {

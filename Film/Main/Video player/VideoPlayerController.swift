@@ -93,7 +93,9 @@ class VideoPlayerController: UIViewController {
                 
                 switch videoTimestamp.action {
                 case let .skip(from: _, to: to):
-                    self.mediaPlayer.position = Float(to)/Float(self.mediaPlayer.totalDuration)
+                    let position = Float(to)/Float(self.mediaPlayer.totalDuration)
+                    self.mediaPlayer.position = position
+                    self.videoPlayerView.slider.value = position
                 case .nextEpisode(from: _):
                     skipButton.animateHide()
                     self.playNextEpisode()
@@ -130,6 +132,7 @@ class VideoPlayerController: UIViewController {
         
         let vlcMedia = VLCMedia(url: streamURL)
         
+        vlcMedia.addOptions(["network-caching": 500])
         mediaPlayer.media = vlcMedia
         mediaPlayer.drawable = videoPlayerView.mediaView
         
@@ -145,7 +148,7 @@ class VideoPlayerController: UIViewController {
     // MARK: Actions
     //----------------------------------------------------------------------
     private func setActions() {
-        videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed(sender:)), for: .touchUpInside)
+        videoPlayerView.pausePlayButton.addTarget(self, action: #selector(pausePlayButtonPressed), for: .touchUpInside)
         
         let tapToShowControls = UITapGestureRecognizer(target: self, action: #selector(showControls))
         tapToShowControls.numberOfTapsRequired = 1
@@ -166,6 +169,8 @@ class VideoPlayerController: UIViewController {
         videoPlayerView.mediaView.addGestureRecognizer(doubleTap)
         
         tapToShowControls.require(toFail: doubleTap)
+        
+        videoPlayerView.audioAndSubtitles.addTarget(self, action: #selector(audioAndSubtitlesTapped), for: .touchUpInside)
     }
     
     
@@ -180,7 +185,7 @@ class VideoPlayerController: UIViewController {
         stateMachine.hideControls()
     }
     
-    @objc func pausePlayButtonPressed(sender: UIButton) {
+    @objc func pausePlayButtonPressed() {
         switch playState {
         case .playing:
             mediaPlayer.pause()
@@ -228,6 +233,15 @@ class VideoPlayerController: UIViewController {
     
     @objc func closeVideo() {
         navigationController?.popViewController(animated: false)
+    }
+    
+    @objc func audioAndSubtitlesTapped() {
+        if case .playing = playState {
+            pausePlayButtonPressed() // Pause
+        }
+        
+        videoPlayerView.audioAndSubtitlesView.show()
+        videoPlayerView.audioAndSubtitlesView.setup(with: mediaPlayer)
     }
     
     //----------------------------------------------------------------------
@@ -425,7 +439,7 @@ extension VideoPlayerController {
                 switch nextEpisodeResult {
                 case let .film(newFilm):
                     self.film = newFilm
-                    self.timestamps = [] // clear timestamps from previous video
+                    self.clearTimestamps()
                     self.stateMachine.transitionTo(state: .initial)
                     self.mediaPlayer.stop()
                     self.videoPlayerView.titleLabel.text = newFilm.title
@@ -440,6 +454,14 @@ extension VideoPlayerController {
             
             self.videoPlayerView.nextEpisodeButton.isEnabled = true
         })
+    }
+    
+    private func clearTimestamps() {
+        timestamps.forEach { (_, button) in
+            button.removeFromSuperview()
+        }
+        
+        timestamps = [] // clear timestamps from previous video
     }
     
     private func showTheEnd() {

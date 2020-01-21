@@ -208,7 +208,7 @@ class VideoPlayerStateMachine {
         }
 
         view.closeButton.show()
-        view.nextEpisodeButton.show()
+        view.stackView.show()
         view.slider.isUserInteractionEnabled = true
         
         switch currentState {
@@ -250,7 +250,7 @@ class VideoPlayerStateMachine {
         case .loadingHidden:
             view.spinner.startAnimating()
         case .scrolling:
-            view.nextEpisodeButton.hide()
+            view.stackView.hide()
             view.airPlayButton.hide()
             view.pausePlayButton.hide()
             view.spinner.hide()

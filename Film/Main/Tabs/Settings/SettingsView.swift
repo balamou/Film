@@ -129,9 +129,9 @@ class SettingsView: UIView {
         return button
     }()
     
-    lazy var refreshButton: UIButton = {
+    lazy var clearWatchedButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Refresh".localize(), for: .normal)
+        button.setTitle("Clear watched".localize(), for: .normal)
         button.backgroundColor = buttonsColor
         button.titleLabel?.font = buttonsFont
         button.layer.cornerRadius = buttonRadius
@@ -274,7 +274,7 @@ class SettingsView: UIView {
         addSubviewLayout(portField)
         
         addSubviewLayout(saveButton)
-        addSubviewLayout(refreshButton)
+        addSubviewLayout(clearWatchedButton)
         addSubviewLayout(logoutButton)
         
         addSubviewLayout(pickerView)
@@ -292,7 +292,7 @@ class SettingsView: UIView {
         
         Constraints.setSaveButton(saveButton, portField, self)
         Constraints.setLogoutButton(logoutButton, self)
-        Constraints.setRefreshButton(refreshButton, logoutButton, self)
+        Constraints.setRefreshButton(clearWatchedButton, logoutButton, self)
         
         Constraints.setPickerView(pickerView, languageField, self)
         
