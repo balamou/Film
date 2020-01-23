@@ -74,6 +74,9 @@ class VideoPlayerController: UIViewController {
         overrideVolumeBar()
     }
     
+    //----------------------------------------------------------------------
+    // MARK: Setup
+    //----------------------------------------------------------------------
     private func setupView() {
         videoPlayerView = VideoPlayerView(frame: view.frame)
         videoPlayerView.titleLabel.text = film.title
@@ -245,7 +248,7 @@ class VideoPlayerController: UIViewController {
     }
     
     //----------------------------------------------------------------------
-    // Orientation: Landscape
+    // MARK: Orientation
     //----------------------------------------------------------------------
     func forceLandscapeOrientation() {
         let landscapeRight = UIInterfaceOrientation.landscapeRight.rawValue
@@ -261,7 +264,7 @@ class VideoPlayerController: UIViewController {
     }
     
     //----------------------------------------------------------------------
-    // Status bar
+    // MARK: Status bar
     //----------------------------------------------------------------------
     var isStatusBarHidden = false
     
@@ -388,6 +391,9 @@ extension VideoPlayerController {
     }
 }
 
+//----------------------------------------------------------------------
+// MARK: Network Fetching
+//----------------------------------------------------------------------
 extension VideoPlayerController {
     
     /// duration is the video duration in seconds
