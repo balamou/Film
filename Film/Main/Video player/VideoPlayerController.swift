@@ -50,7 +50,7 @@ class VideoPlayerController: UIViewController {
     private let viewedContentManager: ViewedContentManager
     
     private var subtitles: [SubtitleItem]? = nil
-    private let showSubtitles = false
+    private var showSubtitles = false
     
     init(film: Film, settings: Settings, viewedContentManager: ViewedContentManager) {
         self.film = film
@@ -242,6 +242,8 @@ class VideoPlayerController: UIViewController {
     }
     
     @objc func audioAndSubtitlesTapped() {
+        showSubtitles.toggle() // TODO: This is temporary (move it to subtitles on/off button)
+        
         if case .playing = playState {
             pausePlayButtonPressed() // Pause
         }
@@ -336,7 +338,7 @@ extension VideoPlayerController: VideoPlayerSliderActionDelegate {
         // print(currentMillisecond)
         
         // TODO: Optimizing using data structure
-        guard let subtitles = subtitles else { return }
+        guard showSubtitles, let subtitles = subtitles else { return }
         videoPlayerView.topSubtitleBox.hide()
         videoPlayerView.bottomSubtitleBox.hide()
         
