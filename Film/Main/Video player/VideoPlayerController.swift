@@ -50,7 +50,14 @@ class VideoPlayerController: UIViewController {
     private let viewedContentManager: ViewedContentManager
     
     private var subtitles: [SubtitleItem]? = nil
-    private var showSubtitles = false
+    private var showSubtitles = false {
+        willSet {
+            if newValue == false {
+                videoPlayerView.topSubtitleBox.hide()
+                videoPlayerView.bottomSubtitleBox.hide()
+            }
+        }
+    }
     
     init(film: Film, settings: Settings, viewedContentManager: ViewedContentManager) {
         self.film = film

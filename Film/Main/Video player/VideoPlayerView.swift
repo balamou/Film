@@ -209,10 +209,10 @@ class VideoPlayerView: UIView {
         label.isHidden = true
         label.text = "Subtitles"
         label.textColor = .white
-        label.backgroundColor = UIColor.black.withAlphaComponent(0.55)
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.53)
         label.layer.cornerRadius = 4
         label.clipsToBounds = true
-        label.font = Fonts.robotoMonoRegular(size: 15.0)
+        label.font = Fonts.robotoMonoRegular(size: 15.5)
         
         
         return label
@@ -223,10 +223,10 @@ class VideoPlayerView: UIView {
         label.isHidden = true
         label.text = "Subtitles"
         label.textColor = .white
-        label.backgroundColor = UIColor.black.withAlphaComponent(0.55)
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.53)
         label.layer.cornerRadius = 4
         label.clipsToBounds = true
-        label.font = Fonts.robotoMonoRegular(size: 15.0)
+        label.font = Fonts.robotoMonoRegular(size: 15.5)
         
         return label
     }()
@@ -433,7 +433,7 @@ class VideoPlayerView: UIView {
         insertSubview(bottomSubtitleBox, aboveSubview: mediaView)
         bottomSubtitleBox.translatesAutoresizingMaskIntoConstraints = false
         
-        bottomSubtitleBox.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
+        bottomSubtitleBox.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30).isActive = true
         bottomSubtitleBox.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
         topSubtitleBox.bottomAnchor.constraint(equalTo: bottomSubtitleBox.topAnchor).isActive = true
