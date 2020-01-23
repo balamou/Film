@@ -49,6 +49,16 @@ class VideoPlayerController: UIViewController {
     private let videoProvider: VideoURLProvider
     private let viewedContentManager: ViewedContentManager
     
+    private var subtitles: [SubtitleItem]? = nil
+    private var showSubtitles = false {
+        willSet {
+            if newValue == false {
+                videoPlayerView.topSubtitleBox.hide()
+                videoPlayerView.bottomSubtitleBox.hide()
+            }
+        }
+    }
+    
     init(film: Film, settings: Settings, viewedContentManager: ViewedContentManager) {
         self.film = film
         self.settings = settings
@@ -74,6 +84,9 @@ class VideoPlayerController: UIViewController {
         overrideVolumeBar()
     }
     
+    //----------------------------------------------------------------------
+    // MARK: Setup
+    //----------------------------------------------------------------------
     private func setupView() {
         videoPlayerView = VideoPlayerView(frame: view.frame)
         videoPlayerView.titleLabel.text = film.title
@@ -236,6 +249,8 @@ class VideoPlayerController: UIViewController {
     }
     
     @objc func audioAndSubtitlesTapped() {
+        showSubtitles.toggle() // TODO: This is temporary (move it to subtitles on/off button)
+        
         if case .playing = playState {
             pausePlayButtonPressed() // Pause
         }
@@ -245,7 +260,7 @@ class VideoPlayerController: UIViewController {
     }
     
     //----------------------------------------------------------------------
-    // Orientation: Landscape
+    // MARK: Orientation
     //----------------------------------------------------------------------
     func forceLandscapeOrientation() {
         let landscapeRight = UIInterfaceOrientation.landscapeRight.rawValue
@@ -261,7 +276,7 @@ class VideoPlayerController: UIViewController {
     }
     
     //----------------------------------------------------------------------
-    // Status bar
+    // MARK: Status bar
     //----------------------------------------------------------------------
     var isStatusBarHidden = false
     
@@ -324,7 +339,33 @@ extension VideoPlayerController: BufferingDelegate {
 }
 
 extension VideoPlayerController: VideoPlayerSliderActionDelegate {
-    func observeCurrentTime(percentagePlayed: Float, totalDuration: Int) {
+    func observeCurrentTime(percentagePlayed: Float, totalDuration: Int) { }
+    
+    func observeCurrentTimeMilliseconds(currentMillisecond: Int) {
+        // print(currentMillisecond)
+        
+        // TODO: Optimizing using data structure
+        guard showSubtitles, let subtitles = subtitles else { return }
+        videoPlayerView.topSubtitleBox.hide()
+        videoPlayerView.bottomSubtitleBox.hide()
+        
+        subtitles.forEach { item in
+            if currentMillisecond >= item.startTime  && currentMillisecond <= item.endTime {
+                let twoParts = item.text.split(separator: "\n")
+                
+                if twoParts.count > 1 {
+                    videoPlayerView.topSubtitleBox.attributedText = NSAttributedString(string: String(twoParts[0]))
+                    videoPlayerView.bottomSubtitleBox.attributedText = NSAttributedString(string: String(twoParts[1]))
+                    
+                    videoPlayerView.topSubtitleBox.show()
+                    videoPlayerView.bottomSubtitleBox.show()
+                } else {
+                    videoPlayerView.bottomSubtitleBox.attributedText = NSAttributedString(string: String(twoParts[0]))
+                    videoPlayerView.bottomSubtitleBox.show()
+                }
+            }
+            
+        }
     }
     
     func observeSecondsChange(currentTimeSeconds: Int) {
@@ -388,6 +429,9 @@ extension VideoPlayerController {
     }
 }
 
+//----------------------------------------------------------------------
+// MARK: Network Fetching
+//----------------------------------------------------------------------
 extension VideoPlayerController {
     
     /// duration is the video duration in seconds
@@ -513,8 +557,25 @@ extension VideoPlayerController {
                 self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
  
                 self.fetchVideoTimestamps(duration: data.duration)
+                
+                self.fetchSubtitles(seriesId: data.showId, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
             case let .failure(error):
                 print(error) // TODO: show alert & exit
+            }
+        }
+    }
+    
+    private func fetchSubtitles(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
+        subtitles = nil
+        let subtitlesProvider = SubtitlesNetworkProvider(settings: settings)
+        subtitlesProvider.getSubtitles(seriesId: seriesId, seasonNumber: seasonNumber, episodeNumber: episodeNumber) { result in
+            
+            switch result {
+            case let .success(subtitles):
+                self.subtitles = subtitles
+            case let .failure(error):
+                print(error)
+                break // TODO: show that there are no subtitles
             }
         }
     }

@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol AudioAndSubtilesViewDelegate: class {
+    func subtitlesOnOffTapped()
+}
+
 class AudioAndSubtilesView: UIView {
-    
+    weak var delegate: AudioAndSubtilesViewDelegate?
     var audioTrackButtons: [(button: UIButton, track: String)] = []
+    private var turnSubtitlesOn = true
     
     var audioLabel: UILabel = {
         let label = UILabel()
@@ -33,6 +38,14 @@ class AudioAndSubtilesView: UIView {
     var closeButton: CustomMarginButton = {
         let button = CustomMarginButton(horizontalMargin: 30, verticalMargin: 15)
         button.setImage(Images.Player.closeImage, for: .normal)
+        
+        return button
+    }()
+    
+    var subtitlesOnOffButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Turn subtitles: On", for: .normal)
+        button.titleLabel?.font = Fonts.helveticaBold(size: 16.0)
         
         return button
     }()
@@ -101,7 +114,13 @@ class AudioAndSubtilesView: UIView {
         
         backgroundColor = .gray
         setBlur()
+        setupConstraints()
         
+        closeButton.addTarget(self, action: #selector(closeAudioAndSubtitles), for: .touchUpInside)
+        subtitlesOnOffButton.addTarget(self, action: #selector(subtitlesOnOffButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setupConstraints() {
         addSubviewLayout(closeButton)
         Constraints.setCloseButton(closeButton, self)
         
@@ -113,11 +132,27 @@ class AudioAndSubtilesView: UIView {
         audioButtonStackView.topAnchor.constraint(equalTo: audioLabel.bottomAnchor, constant: 20).isActive = true
         audioButtonStackView.leadingAnchor.constraint(equalTo: audioLabel.leadingAnchor, constant: 20).isActive = true
         
-        closeButton.addTarget(self, action: #selector(closeAudioAndSubtitles), for: .touchUpInside)
+        // On Off subtitles
+        
+        addSubviewLayout(subtitlesOnOffButton)
+        subtitlesOnOffButton.topAnchor.constraint(equalTo: topAnchor, constant: 50).isActive = true
+        subtitlesOnOffButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant:  -80).isActive = true
     }
     
     @objc func closeAudioAndSubtitles() {
         self.hide()
+    }
+    
+    @objc func subtitlesOnOffButtonTapped() {
+        delegate?.subtitlesOnOffTapped()
+        
+        if turnSubtitlesOn {
+            subtitlesOnOffButton.setTitle("Turn subtitles: Off", for: .normal)
+            turnSubtitlesOn = false
+        } else {
+            subtitlesOnOffButton.setTitle("Turn subtitles: On", for: .normal)
+            turnSubtitlesOn = true
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

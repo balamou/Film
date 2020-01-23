@@ -14,6 +14,7 @@ protocol VideoPlayerSliderActionDelegate: class {
     func observeCurrentTime(percentagePlayed: Float, totalDuration: Int)
     
     func observeSecondsChange(currentTimeSeconds: Int)
+    func observeCurrentTimeMilliseconds(currentMillisecond: Int)
 }
 
 class VideoPlayerSliderAction: NSObject {
@@ -53,6 +54,7 @@ class VideoPlayerSliderAction: NSObject {
     
     private func notifyDelegate() {
         delegate?.observeCurrentTime(percentagePlayed: mediaPlayer.position, totalDuration: mediaPlayer.totalDuration)
+        delegate?.observeCurrentTimeMilliseconds(currentMillisecond: mediaPlayer.currentPositionInMilliseconds)
         
         let currentSecond = mediaPlayer.currentPositionInSeconds
         
@@ -163,4 +165,10 @@ extension VLCMediaPlayer {
         }
     }
     
+    /// Returns the current position in the media in milliseconds
+    var currentPositionInMilliseconds: Int {
+        get {
+            return Int(position * Float(media.length.intValue))
+        }
+    }
 }

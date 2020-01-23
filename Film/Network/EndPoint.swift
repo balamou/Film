@@ -45,6 +45,8 @@ enum EndPoint {
     
     case posters
     
+    case subtitles(seriesId: Int, seasonNumber: Int, episodeNumber: Int)
+    
     var path: String {
         switch self {
         case let .login(username):
@@ -81,6 +83,9 @@ enum EndPoint {
         
         case .posters:
             return "/posters"
+            
+        case let .subtitles(seriesId, seasonNumber, episodeNumber):
+            return "/subtitles/\(seriesId)/\(seasonNumber)/\(episodeNumber)"
         }
     }
 }
