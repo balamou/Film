@@ -49,6 +49,9 @@ class VideoPlayerController: UIViewController {
     private let videoProvider: VideoURLProvider
     private let viewedContentManager: ViewedContentManager
     
+    private var subtitles: [SubtitleItem]? = nil
+    private let showSubtitles = false
+    
     init(film: Film, settings: Settings, viewedContentManager: ViewedContentManager) {
         self.film = film
         self.settings = settings
@@ -328,6 +331,8 @@ extension VideoPlayerController: BufferingDelegate {
 
 extension VideoPlayerController: VideoPlayerSliderActionDelegate {
     func observeCurrentTime(percentagePlayed: Float, totalDuration: Int) {
+//        percentagePlayed*totalDuration
+        
     }
     
     func observeSecondsChange(currentTimeSeconds: Int) {
@@ -519,8 +524,25 @@ extension VideoPlayerController {
                 self.setUpPlayer(url: data.videoURL, stoppedAt: stoppedAt)
  
                 self.fetchVideoTimestamps(duration: data.duration)
+                
+                self.fetchSubtitles(seriesId: data.showId, seasonNumber: data.seasonNumber, episodeNumber: data.episodeNumber)
             case let .failure(error):
                 print(error) // TODO: show alert & exit
+            }
+        }
+    }
+    
+    private func fetchSubtitles(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
+        subtitles = nil
+        let subtitlesProvider = SubtitlesNetworkProvider(settings: settings)
+        subtitlesProvider.getSubtitles(seriesId: seriesId, seasonNumber: seasonNumber, episodeNumber: episodeNumber) { result in
+            
+            switch result {
+            case let .success(subtitles):
+                self.subtitles = subtitles
+            case let .failure(error):
+                print(error)
+                break // TODO: show that there are no subtitles
             }
         }
     }

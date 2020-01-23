@@ -35,6 +35,7 @@
 		ED1FEEBB2318B73900DE69AB /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1FEEBA2318B73900DE69AB /* AlertView.swift */; };
 		ED1FEEBD2318B74100DE69AB /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1FEEBC2318B74100DE69AB /* AlertViewController.swift */; };
 		ED271D2E23D54F96008B9ACA /* AudioAndSubtilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED271D2D23D54F96008B9ACA /* AudioAndSubtilesView.swift */; };
+		ED271D5423D93BA7008B9ACA /* SubtitlesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED271D5323D93BA7008B9ACA /* SubtitlesProvider.swift */; };
 		ED2DBB412315E356009250EC /* ShowsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2DBB402315E356009250EC /* ShowsCell.swift */; };
 		ED40BB76233725E2002FD07E /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40BB75233725E2002FD07E /* LanguagePickerView.swift */; };
 		ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */; };
@@ -202,6 +203,7 @@
 		ED1FEEBA2318B73900DE69AB /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		ED1FEEBC2318B74100DE69AB /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		ED271D2D23D54F96008B9ACA /* AudioAndSubtilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAndSubtilesView.swift; sourceTree = "<group>"; };
+		ED271D5323D93BA7008B9ACA /* SubtitlesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitlesProvider.swift; sourceTree = "<group>"; };
 		ED2DBB402315E356009250EC /* ShowsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsCell.swift; sourceTree = "<group>"; };
 		ED40BB75233725E2002FD07E /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
@@ -585,6 +587,7 @@
 				ED0F1E1B23C67D9D0062192B /* TimestampsDataProvider.swift */,
 				EDF1B3DB23CA8B29003D27B7 /* VideoURLProvider.swift */,
 				EDF1B3DD23CAAA38003D27B7 /* PostersProvider.swift */,
+				ED271D5323D93BA7008B9ACA /* SubtitlesProvider.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1149,6 +1152,7 @@
 				ED5AC12823158FED0098A161 /* CustomNavigationBar.swift in Sources */,
 				EDBEC55523161B3E00041D29 /* ShowInfoView.swift in Sources */,
 				EDE494FC232E9F3400547830 /* MovieInfoView.swift in Sources */,
+				ED271D5423D93BA7008B9ACA /* SubtitlesProvider.swift in Sources */,
 				ED1CC3A9231624FC0061EE21 /* HeaderView.swift in Sources */,
 				ED82DBC523146B0F00FEC56A /* Debugger.swift in Sources */,
 				EDF1B3DA23CA863B003D27B7 /* StorageManager.swift in Sources */,
