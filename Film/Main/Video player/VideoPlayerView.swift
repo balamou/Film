@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class VideoPlayerView: UIView {
     
@@ -202,6 +203,33 @@ class VideoPlayerView: UIView {
         
         return view
     }()
+    
+    var topSubtitleBox: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        label.text = "Subtitles"
+        label.textColor = .white
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.55)
+        label.layer.cornerRadius = 4
+        label.clipsToBounds = true
+        label.font = Fonts.robotoMonoRegular(size: 15.0)
+        
+        
+        return label
+    }()
+    
+    var bottomSubtitleBox: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        label.text = "Subtitles"
+        label.textColor = .white
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.55)
+        label.layer.cornerRadius = 4
+        label.clipsToBounds = true
+        label.font = Fonts.robotoMonoRegular(size: 15.0)
+        
+        return label
+    }()
 
     class Constraints {
         
@@ -326,6 +354,7 @@ class VideoPlayerView: UIView {
         controlView.addSubview(currentPositionLabel)
         
         setupAudioAndSubstitlesView()
+        setupSubtitleBox()
     }
     
     private func setupMainViewComponents() {
@@ -395,6 +424,20 @@ class VideoPlayerView: UIView {
         audioAndSubtitlesView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         audioAndSubtitlesView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         audioAndSubtitlesView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    }
+    
+    private func setupSubtitleBox() {
+        insertSubview(topSubtitleBox, aboveSubview: mediaView)
+        topSubtitleBox.translatesAutoresizingMaskIntoConstraints = false
+        
+        insertSubview(bottomSubtitleBox, aboveSubview: mediaView)
+        bottomSubtitleBox.translatesAutoresizingMaskIntoConstraints = false
+        
+        bottomSubtitleBox.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
+        bottomSubtitleBox.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        topSubtitleBox.bottomAnchor.constraint(equalTo: bottomSubtitleBox.topAnchor).isActive = true
+        topSubtitleBox.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
     func didAppear() {

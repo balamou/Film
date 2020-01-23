@@ -36,6 +36,8 @@
 		ED1FEEBD2318B74100DE69AB /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1FEEBC2318B74100DE69AB /* AlertViewController.swift */; };
 		ED271D2E23D54F96008B9ACA /* AudioAndSubtilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED271D2D23D54F96008B9ACA /* AudioAndSubtilesView.swift */; };
 		ED271D5423D93BA7008B9ACA /* SubtitlesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED271D5323D93BA7008B9ACA /* SubtitlesProvider.swift */; };
+		ED271D5823D94F40008B9ACA /* RobotoMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED271D5623D94F40008B9ACA /* RobotoMono-Light.ttf */; };
+		ED271D5923D94F40008B9ACA /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED271D5723D94F40008B9ACA /* RobotoMono-Regular.ttf */; };
 		ED2DBB412315E356009250EC /* ShowsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2DBB402315E356009250EC /* ShowsCell.swift */; };
 		ED40BB76233725E2002FD07E /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40BB75233725E2002FD07E /* LanguagePickerView.swift */; };
 		ED57FC7C2313398B0001A9AB /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */; };
@@ -204,6 +206,8 @@
 		ED1FEEBC2318B74100DE69AB /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		ED271D2D23D54F96008B9ACA /* AudioAndSubtilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAndSubtilesView.swift; sourceTree = "<group>"; };
 		ED271D5323D93BA7008B9ACA /* SubtitlesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitlesProvider.swift; sourceTree = "<group>"; };
+		ED271D5623D94F40008B9ACA /* RobotoMono-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Light.ttf"; sourceTree = "<group>"; };
+		ED271D5723D94F40008B9ACA /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 		ED2DBB402315E356009250EC /* ShowsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsCell.swift; sourceTree = "<group>"; };
 		ED40BB75233725E2002FD07E /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		ED57FC7B2313398B0001A9AB /* UIColor+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
@@ -483,9 +487,19 @@
 			path = "Audio and subtitles";
 			sourceTree = "<group>";
 		};
+		ED271D5523D94F29008B9ACA /* Roboto Mono */ = {
+			isa = PBXGroup;
+			children = (
+				ED271D5623D94F40008B9ACA /* RobotoMono-Light.ttf */,
+				ED271D5723D94F40008B9ACA /* RobotoMono-Regular.ttf */,
+			);
+			path = "Roboto Mono";
+			sourceTree = "<group>";
+		};
 		ED57FC7D23134AF50001A9AB /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				ED271D5523D94F29008B9ACA /* Roboto Mono */,
 				ED19987823234E3A005D48D3 /* Open Sans */,
 				ED90FC792322021300452408 /* Nunito Sans */,
 				ED9B00AE23149B68004D509C /* Roboto Condensed */,
@@ -988,6 +1002,7 @@
 				ED90FC912322023E00452408 /* NunitoSans-Light.ttf in Resources */,
 				ED909B45230F006A00A67AC6 /* Assets.xcassets in Resources */,
 				ED19988823234E75005D48D3 /* OpenSans-SemiBoldItalic.ttf in Resources */,
+				ED271D5823D94F40008B9ACA /* RobotoMono-Light.ttf in Resources */,
 				ED19988623234E75005D48D3 /* OpenSans-SemiBold.ttf in Resources */,
 				ED19988A23234E75005D48D3 /* OpenSans-BoldItalic.ttf in Resources */,
 				ED90FC8B2322023E00452408 /* NunitoSans-LightItalic.ttf in Resources */,
@@ -1021,6 +1036,7 @@
 				ED57FCA5231350F40001A9AB /* Roboto-Black.ttf in Resources */,
 				ED19988923234E75005D48D3 /* OpenSans-ExtraBold.ttf in Resources */,
 				ED19988B23234E75005D48D3 /* OpenSans-LightItalic.ttf in Resources */,
+				ED271D5923D94F40008B9ACA /* RobotoMono-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

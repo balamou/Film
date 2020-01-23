@@ -330,9 +330,33 @@ extension VideoPlayerController: BufferingDelegate {
 }
 
 extension VideoPlayerController: VideoPlayerSliderActionDelegate {
-    func observeCurrentTime(percentagePlayed: Float, totalDuration: Int) {
-//        percentagePlayed*totalDuration
+    func observeCurrentTime(percentagePlayed: Float, totalDuration: Int) { }
+    
+    func observeCurrentTimeMilliseconds(currentMillisecond: Int) {
+        // print(currentMillisecond)
         
+        // TODO: Optimizing using data structure
+        guard let subtitles = subtitles else { return }
+        videoPlayerView.topSubtitleBox.hide()
+        videoPlayerView.bottomSubtitleBox.hide()
+        
+        subtitles.forEach { item in
+            if currentMillisecond >= item.startTime  && currentMillisecond <= item.endTime {
+                let twoParts = item.text.split(separator: "\n")
+                
+                if twoParts.count > 1 {
+                    videoPlayerView.topSubtitleBox.attributedText = NSAttributedString(string: String(twoParts[0]))
+                    videoPlayerView.bottomSubtitleBox.attributedText = NSAttributedString(string: String(twoParts[1]))
+                    
+                    videoPlayerView.topSubtitleBox.show()
+                    videoPlayerView.bottomSubtitleBox.show()
+                } else {
+                    videoPlayerView.bottomSubtitleBox.attributedText = NSAttributedString(string: String(twoParts[0]))
+                    videoPlayerView.bottomSubtitleBox.show()
+                }
+            }
+            
+        }
     }
     
     func observeSecondsChange(currentTimeSeconds: Int) {

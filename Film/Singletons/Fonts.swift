@@ -32,6 +32,14 @@ struct Fonts {
         return UIFont(name: font, size: size) ?? defaultFont
     }
     
+    static func robotoMonoRegular(size: CGFloat) -> UIFont {
+        return UIFont(name: "RobotoMono-Regular", size: size) ?? defaultFont
+    }
+    
+    static func robotoMonoLight(size: CGFloat) -> UIFont {
+        return UIFont(name: "RobotoMono-Light", size: size) ?? defaultFont
+    }
+    
     // Helper method to display all fonts
     static func printAllFonts(subfamily: String? = nil) {
         print( UIFont.familyNames.reduce("") { $0 + "\n" + $1 })
