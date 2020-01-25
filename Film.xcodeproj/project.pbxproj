@@ -140,11 +140,17 @@
 		EDCBAC5C2327245E0002FAE3 /* ChangeSeasonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */; };
 		EDCBAC5E232726A90002FAE3 /* ChangeSeasonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */; };
 		EDDA14D523DBCF0B002C97D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14D423DBCF0B002C97D5 /* AppDelegate.swift */; };
-		EDDA14D723DBCF0B002C97D5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14D623DBCF0B002C97D5 /* ViewController.swift */; };
+		EDDA14D723DBCF0B002C97D5 /* VideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14D623DBCF0B002C97D5 /* VideoPlayerController.swift */; };
 		EDDA14DC23DBCF0B002C97D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDDA14DB23DBCF0B002C97D5 /* Assets.xcassets */; };
 		EDDA14DF23DBCF0B002C97D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDDA14DD23DBCF0B002C97D5 /* LaunchScreen.storyboard */; };
 		EDDA14E823DBCF87002C97D5 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14E723DBCF87002C97D5 /* Coordinator.swift */; };
 		EDDA14ED23DBD367002C97D5 /* header.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14EC23DBD367002C97D5 /* header.m */; };
+		EDDA14F123DBE007002C97D5 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14F023DBE007002C97D5 /* ViewControllerFactory.swift */; };
+		EDDA14F323DBE145002C97D5 /* ShowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14F223DBE145002C97D5 /* ShowsViewController.swift */; };
+		EDDA14F623DBE1FF002C97D5 /* GeneralCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14F523DBE1FF002C97D5 /* GeneralCollectionViewController.swift */; };
+		EDDA14FA23DBE482002C97D5 /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14F923DBE482002C97D5 /* ShowCell.swift */; };
+		EDDA14FD23DBE652002C97D5 /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14FC23DBE652002C97D5 /* UIViewController+extensions.swift */; };
+		EDDA14FF23DBE7F5002C97D5 /* UIView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14FE23DBE7F5002C97D5 /* UIView+extensions.swift */; };
 		EDE494EB232BC81200547830 /* AbstractedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */; };
 		EDE494ED232D4E8800547830 /* LoadingWaitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */; };
 		EDE494EF232D4FCF00547830 /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EE232D4FCF00547830 /* Array+extensions.swift */; };
@@ -344,13 +350,19 @@
 		EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSeasonView.swift; sourceTree = "<group>"; };
 		EDDA14D223DBCF0B002C97D5 /* FilmTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilmTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDDA14D423DBCF0B002C97D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EDDA14D623DBCF0B002C97D5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EDDA14D623DBCF0B002C97D5 /* VideoPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerController.swift; sourceTree = "<group>"; };
 		EDDA14DB23DBCF0B002C97D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EDDA14DE23DBCF0B002C97D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EDDA14E023DBCF0B002C97D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDDA14E723DBCF87002C97D5 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		EDDA14EB23DBD366002C97D5 /* FilmTV-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FilmTV-Bridging-Header.h"; sourceTree = "<group>"; };
 		EDDA14EC23DBD367002C97D5 /* header.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = header.m; sourceTree = "<group>"; };
+		EDDA14F023DBE007002C97D5 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
+		EDDA14F223DBE145002C97D5 /* ShowsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsViewController.swift; sourceTree = "<group>"; };
+		EDDA14F523DBE1FF002C97D5 /* GeneralCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewController.swift; sourceTree = "<group>"; };
+		EDDA14F923DBE482002C97D5 /* ShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
+		EDDA14FC23DBE652002C97D5 /* UIViewController+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extensions.swift"; sourceTree = "<group>"; };
+		EDDA14FE23DBE7F5002C97D5 /* UIView+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extensions.swift"; sourceTree = "<group>"; };
 		EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractedCollectionView.swift; sourceTree = "<group>"; };
 		EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingWaitCell.swift; sourceTree = "<group>"; };
 		EDE494EE232D4FCF00547830 /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
@@ -870,10 +882,11 @@
 		EDDA14D323DBCF0B002C97D5 /* FilmTV */ = {
 			isa = PBXGroup;
 			children = (
-				EDDA14E923DBD303002C97D5 /* Supporting Files */,
 				EDDA14E023DBCF0B002C97D5 /* Info.plist */,
 				EDDA14DD23DBCF0B002C97D5 /* LaunchScreen.storyboard */,
+				EDDA14FB23DBE63D002C97D5 /* Exensions */,
 				EDDA14E523DBCF60002C97D5 /* Main */,
+				EDDA14E923DBD303002C97D5 /* Supporting Files */,
 				EDDA14E623DBCF66002C97D5 /* Content */,
 				EDDA14E423DBCF45002C97D5 /* Resources */,
 			);
@@ -893,6 +906,7 @@
 			children = (
 				EDDA14D423DBCF0B002C97D5 /* AppDelegate.swift */,
 				EDDA14E723DBCF87002C97D5 /* Coordinator.swift */,
+				EDDA14F023DBE007002C97D5 /* ViewControllerFactory.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -900,7 +914,9 @@
 		EDDA14E623DBCF66002C97D5 /* Content */ = {
 			isa = PBXGroup;
 			children = (
-				EDDA14D623DBCF0B002C97D5 /* ViewController.swift */,
+				EDDA14F423DBE1EB002C97D5 /* Reusable Views */,
+				EDDA14EE23DBDE97002C97D5 /* Shows */,
+				EDDA14EF23DBDFB0002C97D5 /* VideoPlayer */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -912,6 +928,40 @@
 				EDDA14EC23DBD367002C97D5 /* header.m */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EDDA14EE23DBDE97002C97D5 /* Shows */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA14F223DBE145002C97D5 /* ShowsViewController.swift */,
+				EDDA14F923DBE482002C97D5 /* ShowCell.swift */,
+			);
+			path = Shows;
+			sourceTree = "<group>";
+		};
+		EDDA14EF23DBDFB0002C97D5 /* VideoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA14D623DBCF0B002C97D5 /* VideoPlayerController.swift */,
+			);
+			path = VideoPlayer;
+			sourceTree = "<group>";
+		};
+		EDDA14F423DBE1EB002C97D5 /* Reusable Views */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA14F523DBE1FF002C97D5 /* GeneralCollectionViewController.swift */,
+			);
+			path = "Reusable Views";
+			sourceTree = "<group>";
+		};
+		EDDA14FB23DBE63D002C97D5 /* Exensions */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA14FC23DBE652002C97D5 /* UIViewController+extensions.swift */,
+				EDDA14FE23DBE7F5002C97D5 /* UIView+extensions.swift */,
+			);
+			path = Exensions;
 			sourceTree = "<group>";
 		};
 		EDE494F8232E9E5900547830 /* Movie Info */ = {
@@ -1368,9 +1418,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDDA14F623DBE1FF002C97D5 /* GeneralCollectionViewController.swift in Sources */,
 				EDDA14ED23DBD367002C97D5 /* header.m in Sources */,
-				EDDA14D723DBCF0B002C97D5 /* ViewController.swift in Sources */,
+				EDDA14FA23DBE482002C97D5 /* ShowCell.swift in Sources */,
+				EDDA14F123DBE007002C97D5 /* ViewControllerFactory.swift in Sources */,
+				EDDA14D723DBCF0B002C97D5 /* VideoPlayerController.swift in Sources */,
+				EDDA14F323DBE145002C97D5 /* ShowsViewController.swift in Sources */,
+				EDDA14FF23DBE7F5002C97D5 /* UIView+extensions.swift in Sources */,
 				EDDA14D523DBCF0B002C97D5 /* AppDelegate.swift in Sources */,
+				EDDA14FD23DBE652002C97D5 /* UIViewController+extensions.swift in Sources */,
 				EDDA14E823DBCF87002C97D5 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

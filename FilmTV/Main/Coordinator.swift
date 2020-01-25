@@ -10,8 +10,10 @@ import UIKit
 
 class Coordinator {
     
+    private let factory = ViewControllerFactory()
+    
     func start() -> UIViewController {
-        return ViewController()
+        return factory.createShowsViewController()
     }
     
 }

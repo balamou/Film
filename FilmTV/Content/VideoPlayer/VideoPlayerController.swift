@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  VideoPlayerController.swift
 //  FilmTV
 //
 //  Created by Michel Balamou on 2020-01-24.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class VideoPlayerController: UIViewController {
 
     private let mediaPlayer = VLCMediaPlayer()
     private let mediaView = UIView()
