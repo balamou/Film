@@ -155,6 +155,10 @@ class VideoPlayerController: UIViewController {
             self.playState = .playing
             self.videoPlayerView.slider.value = stoppedAt
         })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+             self.mediaPlayer.disableSubtitles() // disable subtitles after giving media player some time to load
+        })
     }
     
     //----------------------------------------------------------------------

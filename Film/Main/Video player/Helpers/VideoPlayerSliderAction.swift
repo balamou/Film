@@ -171,4 +171,8 @@ extension VLCMediaPlayer {
             return Int(position * Float(media.length.intValue))
         }
     }
+    
+    func disableSubtitles() {
+        currentVideoSubTitleIndex = -1
+    }
 }
