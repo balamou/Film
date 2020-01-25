@@ -138,6 +138,11 @@
 		EDC8AB422319970100400312 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AB412319970100400312 /* ViewControllerFactory.swift */; };
 		EDCBAC5C2327245E0002FAE3 /* ChangeSeasonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */; };
 		EDCBAC5E232726A90002FAE3 /* ChangeSeasonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */; };
+		EDDA14D523DBCF0B002C97D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14D423DBCF0B002C97D5 /* AppDelegate.swift */; };
+		EDDA14D723DBCF0B002C97D5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14D623DBCF0B002C97D5 /* ViewController.swift */; };
+		EDDA14DC23DBCF0B002C97D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDDA14DB23DBCF0B002C97D5 /* Assets.xcassets */; };
+		EDDA14DF23DBCF0B002C97D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDDA14DD23DBCF0B002C97D5 /* LaunchScreen.storyboard */; };
+		EDDA14E823DBCF87002C97D5 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA14E723DBCF87002C97D5 /* Coordinator.swift */; };
 		EDE494EB232BC81200547830 /* AbstractedCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */; };
 		EDE494ED232D4E8800547830 /* LoadingWaitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */; };
 		EDE494EF232D4FCF00547830 /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE494EE232D4FCF00547830 /* Array+extensions.swift */; };
@@ -332,6 +337,13 @@
 		EDC8AB412319970100400312 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		EDCBAC5B2327245E0002FAE3 /* ChangeSeasonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSeasonViewController.swift; sourceTree = "<group>"; };
 		EDCBAC5D232726A80002FAE3 /* ChangeSeasonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSeasonView.swift; sourceTree = "<group>"; };
+		EDDA14D223DBCF0B002C97D5 /* FilmTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilmTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDDA14D423DBCF0B002C97D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EDDA14D623DBCF0B002C97D5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EDDA14DB23DBCF0B002C97D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EDDA14DE23DBCF0B002C97D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EDDA14E023DBCF0B002C97D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDDA14E723DBCF87002C97D5 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		EDE494EA232BC81100547830 /* AbstractedCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractedCollectionView.swift; sourceTree = "<group>"; };
 		EDE494EC232D4E8800547830 /* LoadingWaitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingWaitCell.swift; sourceTree = "<group>"; };
 		EDE494EE232D4FCF00547830 /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
@@ -370,6 +382,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				74E7E0C53A3EEBF1995B28C8 /* Pods_FilmTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDA14CF23DBCF0B002C97D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,6 +649,7 @@
 			children = (
 				ED909B3C230F006600A67AC6 /* Film */,
 				ED909B51230F006A00A67AC6 /* FilmTests */,
+				EDDA14D323DBCF0B002C97D5 /* FilmTV */,
 				ED909B3B230F006600A67AC6 /* Products */,
 				4884A9E89C7141F1731098EC /* Pods */,
 				9237282937059B30DB123997 /* Frameworks */,
@@ -641,6 +661,7 @@
 			children = (
 				ED909B3A230F006600A67AC6 /* Film.app */,
 				ED909B4E230F006A00A67AC6 /* FilmTests.xctest */,
+				EDDA14D223DBCF0B002C97D5 /* FilmTV.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -835,6 +856,43 @@
 			path = "Change season";
 			sourceTree = "<group>";
 		};
+		EDDA14D323DBCF0B002C97D5 /* FilmTV */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA14E023DBCF0B002C97D5 /* Info.plist */,
+				EDDA14DD23DBCF0B002C97D5 /* LaunchScreen.storyboard */,
+				EDDA14E523DBCF60002C97D5 /* Main */,
+				EDDA14E623DBCF66002C97D5 /* Content */,
+				EDDA14E423DBCF45002C97D5 /* Resources */,
+			);
+			path = FilmTV;
+			sourceTree = "<group>";
+		};
+		EDDA14E423DBCF45002C97D5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA14DB23DBCF0B002C97D5 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EDDA14E523DBCF60002C97D5 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA14D423DBCF0B002C97D5 /* AppDelegate.swift */,
+				EDDA14E723DBCF87002C97D5 /* Coordinator.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		EDDA14E623DBCF66002C97D5 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA14D623DBCF0B002C97D5 /* ViewController.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
 		EDE494F8232E9E5900547830 /* Movie Info */ = {
 			isa = PBXGroup;
 			children = (
@@ -944,13 +1002,30 @@
 			productReference = ED909B4E230F006A00A67AC6 /* FilmTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		EDDA14D123DBCF0B002C97D5 /* FilmTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDDA14E323DBCF0B002C97D5 /* Build configuration list for PBXNativeTarget "FilmTV" */;
+			buildPhases = (
+				EDDA14CE23DBCF0B002C97D5 /* Sources */,
+				EDDA14CF23DBCF0B002C97D5 /* Frameworks */,
+				EDDA14D023DBCF0B002C97D5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FilmTV;
+			productName = FilmTV;
+			productReference = EDDA14D223DBCF0B002C97D5 /* FilmTV.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		ED909B32230F006600A67AC6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = ElasticPanda;
 				TargetAttributes = {
@@ -961,6 +1036,9 @@
 					ED909B4D230F006A00A67AC6 = {
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = ED909B39230F006600A67AC6;
+					};
+					EDDA14D123DBCF0B002C97D5 = {
+						CreatedOnToolsVersion = 11.3.1;
 					};
 				};
 			};
@@ -980,6 +1058,7 @@
 			targets = (
 				ED909B39230F006600A67AC6 /* Film */,
 				ED909B4D230F006A00A67AC6 /* FilmTests */,
+				EDDA14D123DBCF0B002C97D5 /* FilmTV */,
 			);
 		};
 /* End PBXProject section */
@@ -1044,6 +1123,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDDA14D023DBCF0B002C97D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDDA14DF23DBCF0B002C97D5 /* LaunchScreen.storyboard in Resources */,
+				EDDA14DC23DBCF0B002C97D5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1231,6 +1319,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDDA14CE23DBCF0B002C97D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDDA14D723DBCF0B002C97D5 /* ViewController.swift in Sources */,
+				EDDA14D523DBCF0B002C97D5 /* AppDelegate.swift in Sources */,
+				EDDA14E823DBCF87002C97D5 /* Coordinator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1268,6 +1366,14 @@
 				EDB57E9D2318873C0049504E /* ru */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		EDDA14DD23DBCF0B002C97D5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EDDA14DE23DBCF0B002C97D5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1480,6 +1586,46 @@
 			};
 			name = Release;
 		};
+		EDDA14E123DBCF0B002C97D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4752B9296N;
+				INFOPLIST_FILE = FilmTV/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.elasticpanda.film.FilmTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.2;
+			};
+			name = Debug;
+		};
+		EDDA14E223DBCF0B002C97D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4752B9296N;
+				INFOPLIST_FILE = FilmTV/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.elasticpanda.film.FilmTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 13.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1506,6 +1652,15 @@
 			buildConfigurations = (
 				ED909B5B230F006A00A67AC6 /* Debug */,
 				ED909B5C230F006A00A67AC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDDA14E323DBCF0B002C97D5 /* Build configuration list for PBXNativeTarget "FilmTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDDA14E123DBCF0B002C97D5 /* Debug */,
+				EDDA14E223DBCF0B002C97D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

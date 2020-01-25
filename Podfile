@@ -15,3 +15,12 @@ target 'Film' do
   end
 
 end
+
+target 'FilmTV' do
+  platform :tvos, '13.0'
+#  use_frameworks!
+
+  pod 'TVVLCKit'
+  pod 'Kingfisher', '~> 5.0'
+  
+end
